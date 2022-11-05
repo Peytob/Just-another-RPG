@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group 'dev.peytob.rpg'
+version '1.0-SNAPSHOT'
+
+project.ext.libraries = [
+        junitApi: [
+                'org.junit.jupiter:junit-jupiter-api:5.8.0'
+        ],
+
+        junitEngine: [
+                'org.junit.jupiter:junit-jupiter-engine:5.8.0'
+        ]
+]
+
+subprojects {
+    group rootProject.group
+    version rootProject.version
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
