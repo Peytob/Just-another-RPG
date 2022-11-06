@@ -12,6 +12,10 @@ project.ext.libraries = [
 
         junitEngine: [
                 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
+        ],
+
+        guava: [
+                'com.google.guava:guava:31.1-jre'
         ]
 ]
 
@@ -24,9 +28,5 @@ subprojects {
 
     repositories {
         mavenCentral()
-    }
-
-    test {
-        useJUnitPlatform()
     }
 }

@@ -12,5 +12,7 @@ public interface ComponentManager {
 
     Collection<Component> getAllByType(Class<? extends Component> componentClass);
 
+    int getSize();
+
     void clear();
 }

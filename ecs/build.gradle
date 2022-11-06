@@ -3,6 +3,12 @@ plugins {
 }
 
 dependencies {
+    implementation libraries.guava
+
     testImplementation libraries.junitApi
     testRuntimeOnly libraries.junitEngine
+}
+
+test {
+    useJUnitPlatform()
 }
