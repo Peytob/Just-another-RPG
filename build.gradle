@@ -16,6 +16,10 @@ project.ext.libraries = [
 
         guava: [
                 'com.google.guava:guava:31.1-jre'
+        ],
+
+        mockito: [
+                'org.mockito:mockito-core:4.8.1'
         ]
 ]
 

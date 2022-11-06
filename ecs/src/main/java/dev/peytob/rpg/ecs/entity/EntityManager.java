@@ -10,5 +10,7 @@ public interface EntityManager {
 
     Collection<Entity> getAll();
 
+    int getSize();
+
     void clear();
 }
