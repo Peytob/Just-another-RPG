@@ -5,6 +5,7 @@ import dev.peytob.rpg.ecs.exception.ComponentAlreadyRegisteredException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public abstract class ComponentManagerTest extends EcsTests {
     abstract ComponentManager createInstance();
 
     @BeforeEach
-    void setUp() {
-        componentManager = createInstance();
+    void setUpComponentManagerInstance() {
+        this.componentManager = createInstance();
     }
 
     @Test
@@ -154,5 +155,29 @@ public abstract class ComponentManagerTest extends EcsTests {
 
         componentManager.register(component);
         assertThrows(ComponentAlreadyRegisteredException.class, () -> componentManager.register(component));
+    }
+
+    @Test
+    void typesCollectionShouldBeImmutable() {
+        Component component = new FirstTestComponent();
+        componentManager.register(component);
+
+        Collection<Class<? extends Component>> types = componentManager.getTypes();
+
+        assertThrows(UnsupportedOperationException.class, () -> types.add(Component.class));
+        assertThrows(UnsupportedOperationException.class, types::clear);
+        assertThrows(UnsupportedOperationException.class, () -> types.remove(component.getClass()));
+    }
+
+    @Test
+    void componentsCollectionShouldBeImmutable() {
+        Component component = new FirstTestComponent();
+        componentManager.register(component);
+
+        Collection<Component> components = componentManager.getAllByType(component.getClass());
+
+        assertThrows(UnsupportedOperationException.class, () -> components.add(new SecondTestComponent()));
+        assertThrows(UnsupportedOperationException.class, components::clear);
+        assertThrows(UnsupportedOperationException.class, () -> components.remove(component));
     }
 }

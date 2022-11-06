@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import dev.peytob.rpg.ecs.exception.ComponentAlreadyRegisteredException;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * This implementation just wraps guava multimap collection of components.
@@ -33,12 +34,12 @@ final class SimpleComponentManager implements ComponentManager {
 
     @Override
     public Collection<Class<? extends Component>> getTypes() {
-        return components.keySet();
+        return Collections.unmodifiableSet(components.keySet());
     }
 
     @Override
     public Collection<Component> getAllByType(Class<? extends Component> componentClass) {
-        return components.get(componentClass);
+        return Collections.unmodifiableCollection(components.get(componentClass));
     }
 
     @Override
