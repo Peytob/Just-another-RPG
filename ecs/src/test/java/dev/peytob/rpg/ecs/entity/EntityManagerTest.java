@@ -69,7 +69,7 @@ abstract class EntityManagerTest extends EcsTests {
     }
 
     @Test
-    void entityThrowsExceptionIfEntityWithSomeIdExists() {
+    void throwsExceptionIfEntityWithSomeIdExists() {
         final String id = "someid";
         Entity entity = createEntity(id);
         Entity otherEntityWithSomeId = createEntity(id);

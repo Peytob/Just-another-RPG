@@ -10,4 +10,8 @@ public final class EntityAlreadyRegisteredException extends RuntimeException {
         super("Entity already registered or entity with this id already exists");
         this.entity = entity;
     }
+
+    public Entity getEntity() {
+        return entity;
+    }
 }
