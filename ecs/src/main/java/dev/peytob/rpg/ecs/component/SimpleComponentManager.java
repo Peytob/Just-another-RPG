@@ -21,7 +21,7 @@ final class SimpleComponentManager implements ComponentManager {
     @Override
     public void register(Component component) {
         if (components.containsEntry(component.getClass(), component)) {
-            throw new ComponentAlreadyRegisteredException(component);
+            throw new ComponentAlreadyRegisteredException("Component already registered", component);
         }
 
         components.put(component.getClass(), component);

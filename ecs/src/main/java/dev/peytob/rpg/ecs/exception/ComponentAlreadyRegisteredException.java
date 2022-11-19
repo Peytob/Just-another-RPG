@@ -6,8 +6,8 @@ public final class ComponentAlreadyRegisteredException extends RuntimeException 
 
     private final Component component;
 
-    public ComponentAlreadyRegisteredException(Component component) {
-        super("Component already registered");
+    public ComponentAlreadyRegisteredException(String message, Component component) {
+        super(message);
         this.component = component;
     }
 
