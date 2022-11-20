@@ -71,4 +71,9 @@ final class SimpleSystemManager implements SystemManager {
         systems.clear();
         sortedSystems.clear();
     }
+
+    @Override
+    public int getSize() {
+        return systems.size();
+    }
 }

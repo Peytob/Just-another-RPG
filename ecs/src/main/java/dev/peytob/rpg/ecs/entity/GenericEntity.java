@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * This implementation just decorates Map collection.
  */
-final class GenericEntity implements Entity {
+public final class GenericEntity implements Entity {
 
     private final String id;
 

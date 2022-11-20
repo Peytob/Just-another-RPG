@@ -39,4 +39,9 @@ final class UnmodifiableSystemManager implements SystemManager {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public int getSize() {
+        return systemManager.getSize();
+    }
 }

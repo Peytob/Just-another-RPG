@@ -15,4 +15,6 @@ public interface SystemManager {
     boolean contains(System system);
 
     void clear();
+
+    int getSize();
 }
