@@ -12,6 +12,14 @@ project.ext.libraries = [
 
         junitEngine: [
                 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
+        ],
+
+        guava: [
+                'com.google.guava:guava:31.1-jre'
+        ],
+
+        mockito: [
+                'org.mockito:mockito-core:4.8.1'
         ]
 ]
 
@@ -24,9 +32,5 @@ subprojects {
 
     repositories {
         mavenCentral()
-    }
-
-    test {
-        useJUnitPlatform()
     }
 }

@@ -1,0 +1,15 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation libraries.guava
+
+    testImplementation libraries.mockito
+    testImplementation libraries.junitApi
+    testRuntimeOnly libraries.junitEngine
+}
+
+test {
+    useJUnitPlatform()
+}
