@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Just wraps Map class.
  */
-public class BaseRepository<R extends Record & Resource> implements Repository<R> {
+class BaseRepository<R extends Record & Resource> implements Repository<R> {
 
     private final Map<Integer, R> resourcesByNumberId;
 

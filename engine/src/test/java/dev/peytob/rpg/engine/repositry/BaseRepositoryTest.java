@@ -6,7 +6,7 @@ public class BaseRepositoryTest extends RepositoryTest<TestResource1> {
 
     @Override
     Repository<TestResource1> createInstance() {
-        return new BaseRepository<>();
+        return Repositories.mutable();
     }
 
     @Override
