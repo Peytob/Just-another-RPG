@@ -60,4 +60,9 @@ public final class GenericEntity implements Entity {
 
         components.put(componentClass, component);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return getComponents().isEmpty();
+    }
 }
