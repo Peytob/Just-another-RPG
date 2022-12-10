@@ -48,4 +48,9 @@ final class ContextEntity implements Entity {
         context.getComponentManager().register(component);
         entity.bindComponent(component);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return entity.isEmpty();
+    }
 }

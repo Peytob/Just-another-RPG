@@ -17,4 +17,6 @@ public interface Entity {
     <T extends Component> T removeComponent(Class<T> componentClass);
 
     void bindComponent(Component component);
+
+    boolean isEmpty();
 }
