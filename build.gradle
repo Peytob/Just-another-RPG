@@ -23,9 +23,21 @@ project.ext.libraries = [
         ],
 
         spring: [
-                'org.springframework:spring-core:5.3.19',
-                'org.springframework.boot:spring-boot:2.6.7'
+                "org.springframework.boot:spring-boot:${springBootVersion}"
         ],
+
+        jackson: [
+                'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+        ],
+
+        springTests: [
+                'org.springframework.boot:spring-boot-starter-test'
+        ]
+]
+
+project.ext.pluginsVersions = [
+        springBoot: '2.6.7',
+        springDependencyManagement: '1.0.11.RELEASE'
 ]
 
 subprojects {
