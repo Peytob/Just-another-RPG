@@ -32,6 +32,11 @@ project.ext.libraries = [
 
         springTests: [
                 'org.springframework.boot:spring-boot-starter-test'
+        ],
+
+        slf4j: [
+                'org.slf4j:slf4j-api:1.7.32',
+                'ch.qos.logback:logback-classic:1.2.3'
         ]
 ]
 

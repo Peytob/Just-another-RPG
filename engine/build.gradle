@@ -14,6 +14,7 @@ repositories {
 dependencies {
     implementation project(':ecs')
     implementation libraries.spring
+    implementation libraries.slf4j
 
     implementation libraries.jackson
 

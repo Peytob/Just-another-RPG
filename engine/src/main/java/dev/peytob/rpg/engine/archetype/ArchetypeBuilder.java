@@ -8,5 +8,5 @@ public interface ArchetypeBuilder {
 
     Collection<ComponentFactory<?>> getComponentFactories();
 
-    Archetype build();
+    Archetype build(Integer id, String textId);
 }
