@@ -1,12 +1,17 @@
 package dev.peytob.rpg.engine.archetype;
 
-import dev.peytob.rpg.ecs.entity.Entity;
+import dev.peytob.rpg.engine.resource.Resource;
 
 import java.util.Collection;
+import java.util.List;
 
-public interface Archetype {
+public record Archetype(
+        Integer id,
+        String textId,
+        Collection<ComponentFactory<?>> componentFactories
+) implements Resource {
 
-    Entity injectComponents(Entity entity);
-
-    Collection<ComponentFactory<?>> getComponentFactories();
+    public Archetype {
+        componentFactories = List.copyOf(componentFactories);
+    }
 }

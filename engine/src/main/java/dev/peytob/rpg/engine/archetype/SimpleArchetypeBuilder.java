@@ -10,7 +10,7 @@ final class SimpleArchetypeBuilder implements ArchetypeBuilder {
 
     private final Collection<ComponentFactory<?>> componentFactories;
 
-    public SimpleArchetypeBuilder(Collection<ComponentFactory<?>> componentFactories) {
+    public SimpleArchetypeBuilder() {
         this.componentFactories = new HashSet<>();
     }
 
@@ -29,8 +29,8 @@ final class SimpleArchetypeBuilder implements ArchetypeBuilder {
     }
 
     @Override
-    public Archetype build() {
-        return new TemplatedArchetype(componentFactories);
+    public Archetype build(Integer id, String textId) {
+        return new Archetype(id, textId, componentFactories);
     }
 
     private boolean containsSameFactory(ComponentFactory<?> componentFactory) {
