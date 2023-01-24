@@ -1,13 +1,16 @@
-package dev.peytob.rpg.engine.archetype;
+package dev.peytob.rpg.engine.loader.archetype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.peytob.rpg.engine.exception.archetype.ArchetypeParsingException;
+import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentAbstractFactory;
+import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentFactory;
+import dev.peytob.rpg.engine.resource.Archetype;
 import dev.peytob.rpg.engine.utils.reflection.GenericReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -58,7 +61,7 @@ public final class ArchetypeJsonDeserializer {
             throw new ArchetypeParsingException("The root node of the JSON tree must be object!");
         }
 
-        ArchetypeBuilder archetypeBuilder = Archetypes.builder();
+        Archetype.ArchetypeBuilder archetypeBuilder = new Archetype.ArchetypeBuilder();
 
         for (var i = json.fields(); i.hasNext(); ) {
             Map.Entry<String, JsonNode> entry = i.next();

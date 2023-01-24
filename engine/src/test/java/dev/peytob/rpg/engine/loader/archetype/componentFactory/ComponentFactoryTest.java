@@ -1,11 +1,11 @@
-package dev.peytob.rpg.engine.archetype;
+package dev.peytob.rpg.engine.loader.archetype.componentFactory;
 
 import dev.peytob.rpg.ecs.component.Component;
 import dev.peytob.rpg.engine.NonContextRpgEngineTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 abstract class ComponentFactoryTest<T extends Component> extends NonContextRpgEngineTest {
 
