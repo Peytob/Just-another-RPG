@@ -1,5 +1,6 @@
-package dev.peytob.rpg.engine.archetype;
+package dev.peytob.rpg.engine.spring.configuration;
 
+import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentAbstractFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

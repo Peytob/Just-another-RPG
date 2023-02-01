@@ -1,5 +1,6 @@
-package dev.peytob.rpg.engine.archetype;
+package dev.peytob.rpg.engine.loader.archetype;
 
+import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentAbstractFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

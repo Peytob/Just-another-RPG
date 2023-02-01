@@ -1,10 +1,12 @@
-package dev.peytob.rpg.engine.archetype;
+package dev.peytob.rpg.engine.loader.archetype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.peytob.rpg.engine.ContextRpgEngineTest;
 import dev.peytob.rpg.engine.component.TestPositionComponent;
 import dev.peytob.rpg.engine.component.TestTextureComponentPattern;
+import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentAbstractFactory;
+import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentFactory;
+import dev.peytob.rpg.engine.resource.Archetype;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -12,9 +14,9 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-class ArchetypeJsonDeserializerTest extends ContextRpgEngineTest {
+class ArchetypeJsonDeserializerTest {
 
     @Autowired
     ArchetypeJsonDeserializer archetypeJsonDeserializer;
