@@ -1,0 +1,27 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'java-library'
+}
+
+group 'dev.peytob.rpg'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':engine')
+
+    implementation libraries.spring
+    implementation libraries.slf4j
+
+    testImplementation libraries.junitApi
+    testRuntimeOnly libraries.junitEngine
+    testImplementation libraries.springTests
+}
+
+test {
+    useJUnitPlatform()
+}
