@@ -2,9 +2,11 @@ package dev.peytob.rpg.engine.pipeline;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public final class InitializingPipeline {
 
     private final Logger logger = LoggerFactory.getLogger(InitializingPipeline.class);

@@ -2,6 +2,7 @@ package dev.peytob.rpg.engine.loader.archetype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.peytob.rpg.engine.ContextRpgEngineTest;
 import dev.peytob.rpg.engine.component.TestPositionComponent;
 import dev.peytob.rpg.engine.component.TestTextureComponentPattern;
 import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentAbstractFactory;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArchetypeJsonDeserializerTest {
+class ArchetypeJsonDeserializerTest extends ContextRpgEngineTest {
 
     @Autowired
     ArchetypeJsonDeserializer archetypeJsonDeserializer;
