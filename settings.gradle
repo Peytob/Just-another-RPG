@@ -2,4 +2,5 @@ rootProject.name = 'JustAnotherRpg'
 include 'ecs'
 include 'engine'
 include 'core'
+include 'math'
 
