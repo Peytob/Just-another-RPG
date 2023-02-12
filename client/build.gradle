@@ -26,6 +26,10 @@ dependencies {
     testImplementation libraries.springTests
 }
 
+springBoot {
+    buildInfo()
+}
+
 test {
     useJUnitPlatform()
 }
