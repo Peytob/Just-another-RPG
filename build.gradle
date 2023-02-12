@@ -26,6 +26,10 @@ project.ext.libraries = [
                 "org.springframework.boot:spring-boot:${springBootVersion}"
         ],
 
+        springBootStarter: [
+                'org.springframework.boot:spring-boot-starter'
+        ],
+
         jackson: [
                 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
         ],
