@@ -3,4 +3,5 @@ include 'ecs'
 include 'engine'
 include 'core'
 include 'math'
+include 'client'
 
