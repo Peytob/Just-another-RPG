@@ -6,7 +6,7 @@ final class OrderedSystem implements System {
 
     static OrderedSystem wrap(System system, Integer order) {
         if (system instanceof OrderedSystem orderedSystem) {
-            if (orderedSystem.getSystem().equals(system)) {
+            if (orderedSystem.getOrder().equals(order)) {
                 return orderedSystem;
             }
 
