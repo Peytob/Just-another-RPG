@@ -14,5 +14,7 @@ public class RpgClientEntryPoint {
 
         RpgEngine engine = context.getBean(RpgEngine.class);
         engine.initialize();
+//        engine.updateEngineState(); // TODO Make default engine state
+        engine.runCycle();
     }
 }
