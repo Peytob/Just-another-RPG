@@ -2,9 +2,14 @@ package dev.peytob.rpg.ecs.system;
 
 import dev.peytob.rpg.ecs.context.EcsContext;
 
-final class OrderedSystem implements System {
+import java.util.Objects;
+
+public final class OrderedSystem implements System {
 
     static OrderedSystem wrap(System system, Integer order) {
+        Objects.requireNonNull(system, "System should be not null!");
+        Objects.requireNonNull(system, "Order should be not null!");
+
         if (system instanceof OrderedSystem orderedSystem) {
             if (orderedSystem.getOrder().equals(order)) {
                 return orderedSystem;

@@ -26,13 +26,17 @@ final class SimpleSystemManager implements SystemManager {
 
     @Override
     public boolean register(System system, int order) {
-        if (contains(system)) {
-            throw new SystemAlreadyRegisteredException(system);
+        return register(OrderedSystem.wrap(system, order));
+    }
+
+    @Override
+    public boolean register(OrderedSystem system) {
+        if (contains(system.getSystem())) {
+            throw new SystemAlreadyRegisteredException(system.getSystem());
         }
 
-        OrderedSystem orderedSystem = OrderedSystem.wrap(system, order);
-        sortedSystems.add(orderedSystem);
-        systems.add(system);
+        sortedSystems.add(system);
+        systems.add(system.getSystem());
 
         return true;
     }

@@ -73,6 +73,14 @@ abstract class SystemManagerTest extends EcsTests {
     }
 
     @Test
+    void sameSystemCantBeRegisteredByDifferentWays() {
+        System system = new TestSystem();
+
+        systemManager.register(system, 1);
+        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.register(OrderedSystem.wrap(system, 4)));
+    }
+
+    @Test
     void throwsExceptionIfSystemObjectAlreadyRegistered() {
         System system = ctx -> {};
         systemManager.register(system, 1);
