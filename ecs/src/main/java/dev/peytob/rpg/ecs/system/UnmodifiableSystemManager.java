@@ -21,6 +21,11 @@ final class UnmodifiableSystemManager implements SystemManager {
     }
 
     @Override
+    public boolean register(OrderedSystem system) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean remove(System system) {
         throw new UnsupportedOperationException();
     }

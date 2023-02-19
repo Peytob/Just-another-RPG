@@ -8,6 +8,8 @@ public interface SystemManager {
 
     boolean register(System system, int order);
 
+    boolean register(OrderedSystem system);
+
     boolean remove(System system);
 
     boolean contains(Class<? extends System> systemClass);

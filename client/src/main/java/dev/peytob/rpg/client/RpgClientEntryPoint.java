@@ -24,6 +24,8 @@ public class RpgClientEntryPoint {
 
         RpgEngine engine = context.getBean(RpgEngine.class);
         engine.initialize();
+//        engine.updateEngineState(); // TODO Make default engine state
+        engine.runCycle();
 
         // Should be closed before destroying C libraries, because
         // some system resources may be not free after destroying libraries.
