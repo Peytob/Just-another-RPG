@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public final class OrderedSystem implements System {
 
-    static OrderedSystem wrap(System system, Integer order) {
+    public static OrderedSystem wrap(System system, Integer order) {
         Objects.requireNonNull(system, "System should be not null!");
         Objects.requireNonNull(system, "Order should be not null!");
 

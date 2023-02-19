@@ -36,6 +36,28 @@ abstract class SystemManagerTest extends EcsTests {
     }
 
     @Test
+    void systemManagerCanFindSystemByClass() {
+        System firstSystem = ctx -> {};
+        System secondSystem = ctx -> {};
+
+        systemManager.register(firstSystem, 1);
+        systemManager.register(secondSystem, 2);
+
+        systemManager.contains(secondSystem.getClass());
+    }
+
+    @Test
+    void systemManagerCanFindSystemByObject() {
+        System firstSystem = ctx -> {};
+        System secondSystem = ctx -> {};
+
+        systemManager.register(firstSystem, 1);
+        systemManager.register(secondSystem, 2);
+
+        systemManager.contains(firstSystem);
+    }
+
+    @Test
     void systemSuccessfullyRemoved() {
         System firstSystem = ctx -> {};
         System secondSystem = ctx -> {};
