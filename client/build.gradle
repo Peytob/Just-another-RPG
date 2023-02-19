@@ -36,6 +36,7 @@ project.ext.slf4jVersion = '1.7.32'
 
 dependencies {
     implementation project(':core')
+    implementation project(':ecs')
     implementation project(':engine')
 
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
