@@ -3,22 +3,18 @@ package dev.peytob.rpg.engine.context;
 import dev.peytob.rpg.ecs.system.OrderedSystem;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.ecs.system.SystemManager;
-import dev.peytob.rpg.engine.NonContextRpgEngineTest;
+import dev.peytob.rpg.engine.ContextRpgEngineTest;
 import dev.peytob.rpg.engine.context.template.EcsContextTemplate;
 import dev.peytob.rpg.engine.context.template.TestEcsContextTemplate;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class EcsContextManagerTest extends NonContextRpgEngineTest {
+class EcsContextManagerTest extends ContextRpgEngineTest {
 
+    @Autowired
     private EcsContextManager contextManager;
-
-    @BeforeEach
-    void setUpContextManager() {
-        this.contextManager = new EcsContextManager();
-    }
 
     @Test
     void contextManagerInjectsSystemsAfterRefreshing() {
