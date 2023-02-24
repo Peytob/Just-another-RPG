@@ -2,7 +2,9 @@ package dev.peytob.rpg.engine.system;
 
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SecondTestSystem implements System {
 
     @Override
