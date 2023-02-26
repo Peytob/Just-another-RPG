@@ -2,6 +2,7 @@ package dev.peytob.rpg.ecs.context;
 
 import dev.peytob.rpg.ecs.component.ComponentManagers;
 import dev.peytob.rpg.ecs.entity.EntityManagers;
+import dev.peytob.rpg.ecs.event.EventManagers;
 import dev.peytob.rpg.ecs.system.SystemManagers;
 
 public enum Contexts {;
@@ -10,7 +11,8 @@ public enum Contexts {;
         return new MutableEcsContext(
                 ComponentManagers.mutable(),
                 EntityManagers.mutable(),
-                SystemManagers.mutable()
+                SystemManagers.mutable(),
+                EventManagers.mutable()
         );
     }
 }
