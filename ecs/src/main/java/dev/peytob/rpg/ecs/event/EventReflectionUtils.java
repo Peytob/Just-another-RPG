@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 /**
  * These utilities are a (poor) replacement for Spring Core's ReflectionUtils. I don't want to have such a big
  * dependency for just a few methods.
+ * This class should be removed later.
  */
 enum EventReflectionUtils {;
 
@@ -30,6 +31,4 @@ enum EventReflectionUtils {;
 
         throw new IllegalArgumentException("Event handler should directly implements EventHandler interface!");
     }
-
-
 }

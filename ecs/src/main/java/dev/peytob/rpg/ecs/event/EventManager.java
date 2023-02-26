@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface EventManager {
 
-    Collection<EventHandler<? extends Event>> getHandlersFor(Class<? extends Event> eventClass);
+    <T extends Event> Collection<EventHandler<T>> getHandlersFor(Class<T> eventClass);
 
     boolean register(EventHandler<? extends Event> eventHandler);
 

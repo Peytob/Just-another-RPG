@@ -17,8 +17,9 @@ public class SimpleEventManager implements EventManager {
     }
 
     @Override
-    public Collection<EventHandler<? extends Event>> getHandlersFor(Class<? extends Event> eventClass) {
-        return eventHandlers.get(eventClass);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public <T extends Event> Collection<EventHandler<T>> getHandlersFor(Class<T> eventClass) {
+        return (Collection) eventHandlers.get(eventClass);
     }
 
     @Override
