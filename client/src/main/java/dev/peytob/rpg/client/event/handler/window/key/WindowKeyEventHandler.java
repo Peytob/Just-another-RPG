@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.service.handler.event.window;
+package dev.peytob.rpg.client.event.handler.window.key;
 
 import dev.peytob.rpg.client.model.control.KeyAction;
 import dev.peytob.rpg.client.model.control.KeyModifiers;
@@ -16,5 +16,5 @@ public abstract class WindowKeyEventHandler implements GLFWKeyCallbackI {
         handle(new KeyboardKey(key, scancode), KeyAction.fromGlfwAction(action), new KeyModifiers(mods));
     }
 
-    abstract void handle(KeyboardKey key, KeyAction action, KeyModifiers modifiers);
+    public abstract void handle(KeyboardKey key, KeyAction action, KeyModifiers modifiers);
 }

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.service.handler.event.window;
+package dev.peytob.rpg.client.event.handler.window.key;
 
 import dev.peytob.rpg.client.model.control.KeyAction;
 import dev.peytob.rpg.client.model.control.KeyModifiers;
@@ -13,7 +13,7 @@ public final class WindowKeyLoggerEventHandler extends WindowKeyEventHandler {
     private final Logger logger = LoggerFactory.getLogger(WindowKeyLoggerEventHandler.class);
 
     @Override
-    void handle(KeyboardKey key, KeyAction action, KeyModifiers modifiers) {
+    public void handle(KeyboardKey key, KeyAction action, KeyModifiers modifiers) {
         logger.info("Key {} {} with modifiers {}", key, action, modifiers);
     }
 }

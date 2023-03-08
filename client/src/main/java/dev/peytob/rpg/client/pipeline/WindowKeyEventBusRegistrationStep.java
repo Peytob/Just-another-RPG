@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.pipeline;
 
 import dev.peytob.rpg.client.model.graphics.Window;
-import dev.peytob.rpg.client.service.handler.event.window.WindowKeyEventBus;
+import dev.peytob.rpg.client.event.handler.window.key.WindowKeyEventBus;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;

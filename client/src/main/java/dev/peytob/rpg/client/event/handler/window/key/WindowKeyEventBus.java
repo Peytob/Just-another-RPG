@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.service.handler.event.window;
+package dev.peytob.rpg.client.event.handler.window.key;
 
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.springframework.stereotype.Component;
