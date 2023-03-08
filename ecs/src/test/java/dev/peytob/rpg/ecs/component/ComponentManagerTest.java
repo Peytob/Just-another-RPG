@@ -42,8 +42,8 @@ public abstract class ComponentManagerTest extends EcsTests {
 
     @Test
     void oneComponentSuccessfullyRegistered() {
-        Component component = new FirstTestComponent();
-        Class<? extends Component> componentClass = component.getClass();
+        FirstTestComponent component = new FirstTestComponent();
+        Class<FirstTestComponent> componentClass = FirstTestComponent.class;
 
         componentManager.register(component);
 
@@ -60,10 +60,10 @@ public abstract class ComponentManagerTest extends EcsTests {
 
     @Test
     void manyComponentsWithSingleTypeSuccessfullyRegistered() {
-        Component component1 = new FirstTestComponent();
-        Component component2 = new FirstTestComponent();
-        Component component3 = new FirstTestComponent();
-        Class<? extends Component> componentClass = component1.getClass();
+        FirstTestComponent component1 = new FirstTestComponent();
+        FirstTestComponent component2 = new FirstTestComponent();
+        FirstTestComponent component3 = new FirstTestComponent();
+        Class<FirstTestComponent> componentClass = FirstTestComponent.class;
 
         componentManager.register(component1);
         componentManager.register(component2);
@@ -84,8 +84,8 @@ public abstract class ComponentManagerTest extends EcsTests {
 
     @Test
     void manyComponentsWithDifferentTypesSuccessfullyRegistered() {
-        Component firstComponent = new FirstTestComponent();
-        Component secondComponent = new SecondTestComponent();
+        FirstTestComponent firstComponent = new FirstTestComponent();
+        SecondTestComponent secondComponent = new SecondTestComponent();
 
         componentManager.register(firstComponent);
         componentManager.register(secondComponent);
@@ -99,12 +99,12 @@ public abstract class ComponentManagerTest extends EcsTests {
 
         assertElementsEquals(
                 Collections.singleton(firstComponent),
-                componentManager.getAllByType(firstComponent.getClass())
+                componentManager.getAllByType(FirstTestComponent.class)
         );
 
         assertElementsEquals(
                 Collections.singleton(secondComponent),
-                componentManager.getAllByType(secondComponent.getClass())
+                componentManager.getAllByType(SecondTestComponent.class)
         );
     }
 
@@ -171,12 +171,12 @@ public abstract class ComponentManagerTest extends EcsTests {
 
     @Test
     void componentsCollectionShouldBeImmutable() {
-        Component component = new FirstTestComponent();
+        FirstTestComponent component = new FirstTestComponent();
         componentManager.register(component);
 
-        Collection<Component> components = componentManager.getAllByType(component.getClass());
+        Collection<FirstTestComponent> components = componentManager.getAllByType(FirstTestComponent.class);
 
-        assertThrows(UnsupportedOperationException.class, () -> components.add(new SecondTestComponent()));
+        assertThrows(UnsupportedOperationException.class, () -> components.add(new FirstTestComponent()));
         assertThrows(UnsupportedOperationException.class, components::clear);
         assertThrows(UnsupportedOperationException.class, () -> components.remove(component));
     }
