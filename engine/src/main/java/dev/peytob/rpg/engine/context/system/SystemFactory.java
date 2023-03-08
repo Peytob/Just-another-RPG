@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * facade that allows access to all available systems for easier construction of engine states, scripts ant other
+ * Facade that allows access to all available systems for easier construction of engine states, scripts and other
  */
 @Component
 public final class SystemFactory {
