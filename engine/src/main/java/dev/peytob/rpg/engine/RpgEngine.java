@@ -35,7 +35,7 @@ public final class RpgEngine {
     }
 
     public void updateEngineState(EngineState engineState) {
-        logger.info("Start updating engine state");
+        logger.info("Start updating engine state to {}", engineState.getName());
 
         logger.info("Refreshing context state");
         ecsContextManager.refreshContext(engineState.getEcsContextTemplate());

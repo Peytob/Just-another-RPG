@@ -15,6 +15,6 @@ public class ComponentFactoryConfiguration {
     @Bean
     Map<String, ComponentAbstractFactory<?, ?>> componentAbstractFactoryMap(List<ComponentAbstractFactory<?, ?>> componentAbstractFactories) {
         return componentAbstractFactories.stream()
-                .collect(Collectors.toMap(ComponentAbstractFactory::getSerializedName, Function.identity()));
+                .collect(Collectors.toUnmodifiableMap(ComponentAbstractFactory::getSerializedName, Function.identity()));
     }
 }
