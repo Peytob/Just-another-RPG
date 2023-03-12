@@ -4,12 +4,8 @@ import dev.peytob.rpg.ecs.EcsTests;
 import dev.peytob.rpg.ecs.component.FirstTestComponent;
 import dev.peytob.rpg.ecs.component.SecondTestComponent;
 import dev.peytob.rpg.ecs.entity.Entity;
-import dev.peytob.rpg.ecs.event.EventHandler;
-import dev.peytob.rpg.ecs.event.implementation.event.FirstEvent;
-import dev.peytob.rpg.ecs.event.implementation.handler.FirstEventHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.Collections;
 
@@ -60,11 +56,11 @@ abstract class EcsContextTest extends EcsTests {
 
         assertElementsEquals(
                 Collections.singleton(first),
-                ecsContext.getUnmodifiableComponentManager().getAllByType(first.getClass()));
+                ecsContext.getUnmodifiableComponentManager().getAllByType(FirstTestComponent.class));
 
         assertElementsEquals(
                 Collections.singleton(second),
-                ecsContext.getUnmodifiableComponentManager().getAllByType(second.getClass()));
+                ecsContext.getUnmodifiableComponentManager().getAllByType(SecondTestComponent.class));
 
         entity.removeComponent(first.getClass());
 
@@ -73,38 +69,6 @@ abstract class EcsContextTest extends EcsTests {
 
         assertElementsEquals(
                 Collections.singleton(second),
-                ecsContext.getUnmodifiableComponentManager().getAllByType(second.getClass()));
-    }
-
-    @Test
-    void contextCanCatchSimpleEvent() {
-        FirstEventHandler firstEventHandler = Mockito.mock(FirstEventHandler.class);
-
-        FirstEvent event = new FirstEvent();
-        FirstEventHandlerWrapper wrapper = new FirstEventHandlerWrapper(firstEventHandler);
-
-        ecsContext.getEventManager().register(wrapper);
-
-        assertDoesNotThrow(() -> ecsContext.catchEvent(event));
-
-        Mockito.verify(firstEventHandler).handle(ecsContext, event);
-    }
-
-    /**
-     * TODO Remove wrapper after fix EventReflectionUtilsTest::resolveHandlerEventType method fix!
-     * Wrapper, that allows to passing event handlers mocks to current realisation of resolveHandlerEventType method.
-     */
-    private static class FirstEventHandlerWrapper implements EventHandler<FirstEvent> {
-
-        private final FirstEventHandler eventHandler;
-
-        public FirstEventHandlerWrapper(FirstEventHandler eventHandler) {
-            this.eventHandler = eventHandler;
-        }
-
-        @Override
-        public void handle(EcsContext context, FirstEvent event) {
-            eventHandler.handle(context, event);
-        }
+                ecsContext.getUnmodifiableComponentManager().getAllByType(SecondTestComponent.class));
     }
 }

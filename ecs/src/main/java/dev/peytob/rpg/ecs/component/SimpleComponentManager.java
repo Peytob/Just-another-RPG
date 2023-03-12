@@ -38,8 +38,11 @@ final class SimpleComponentManager implements ComponentManager {
     }
 
     @Override
-    public Collection<Component> getAllByType(Class<? extends Component> componentClass) {
-        return Collections.unmodifiableCollection(components.get(componentClass));
+    @SuppressWarnings("unchecked")
+    public <T extends Component> Collection<T> getAllByType(Class<T> componentClass) {
+        Collection<Component> typedComponents = components.get(componentClass);
+
+        return Collections.unmodifiableCollection((Collection<T>) typedComponents);
     }
 
     @Override

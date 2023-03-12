@@ -10,7 +10,7 @@ public interface ComponentManager {
 
     Collection<Class<? extends Component>> getTypes();
 
-    Collection<Component> getAllByType(Class<? extends Component> componentClass);
+    <T extends Component> Collection<T> getAllByType(Class<T> componentClass);
 
     int getSize();
 

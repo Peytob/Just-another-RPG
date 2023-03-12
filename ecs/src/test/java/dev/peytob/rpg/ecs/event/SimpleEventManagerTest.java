@@ -1,6 +1,6 @@
 package dev.peytob.rpg.ecs.event;
 
-class SimpleEventManagerTest extends EventManagerTest {
+public class SimpleEventManagerTest extends EventManagerTest {
 
     @Override
     EventManager createInstance() {

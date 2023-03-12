@@ -26,7 +26,7 @@ final class UnmodifiableComponentManager implements ComponentManager {
     }
 
     @Override
-    public Collection<Component> getAllByType(Class<? extends Component> componentClass) {
+    public <T extends Component> Collection<T> getAllByType(Class<T> componentClass) {
         return componentManager.getAllByType(componentClass);
     }
 

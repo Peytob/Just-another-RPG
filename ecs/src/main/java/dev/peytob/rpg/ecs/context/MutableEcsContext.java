@@ -6,13 +6,10 @@ import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.entity.EntityManager;
 import dev.peytob.rpg.ecs.entity.EntityManagers;
 import dev.peytob.rpg.ecs.entity.GenericEntity;
-import dev.peytob.rpg.ecs.event.Event;
-import dev.peytob.rpg.ecs.event.EventHandler;
 import dev.peytob.rpg.ecs.event.EventManager;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.ecs.system.SystemManager;
 
-import java.util.Collection;
 import java.util.List;
 
 public class MutableEcsContext implements EcsContext {
@@ -70,13 +67,6 @@ public class MutableEcsContext implements EcsContext {
             .forEach(componentManager::remove);
 
         return entityManager.remove(entity);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends Event> void catchEvent(T event) {
-        Collection<EventHandler<T>> handlers = eventManager.getHandlersFor((Class<T>) event.getClass());
-        handlers.forEach(eventHandler -> eventHandler.handle(this, event));
     }
 
     @Override

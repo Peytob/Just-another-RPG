@@ -2,68 +2,49 @@ package dev.peytob.rpg.ecs.event;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.peytob.rpg.ecs.exception.EventHandlerAlreadyRegisteredException;
 
 import java.util.Collection;
-
-import static dev.peytob.rpg.ecs.event.EventReflectionUtils.resolveHandlerEventType;
+import java.util.Collections;
 
 public class SimpleEventManager implements EventManager {
 
-    private final Multimap<Class<? extends Event>, EventHandler<?>> eventHandlers;
+    private final Multimap<Class<? extends Event>, Event> events;
 
-    SimpleEventManager() {
-        this.eventHandlers = HashMultimap.create();
+    public SimpleEventManager() {
+        this.events = HashMultimap.create();
     }
 
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public <T extends Event> Collection<EventHandler<T>> getHandlersFor(Class<T> eventClass) {
-        return (Collection) eventHandlers.get(eventClass);
+    public void register(Event event) {
+        Class<? extends Event> eventClass = event.getClass();
+        events.put(eventClass, event);
     }
 
     @Override
-    public boolean register(EventHandler<? extends Event> eventHandler) {
-        Class<? extends Event> eventType = resolveHandlerEventType(eventHandler);
-
-        if (contains(eventType, eventHandler)) {
-            throw new EventHandlerAlreadyRegisteredException("Event handler already registered", eventHandler);
-        }
-
-        return eventHandlers.put(eventType, eventHandler);
+    public boolean remove(Event event) {
+        Class<? extends Event> eventClass = event.getClass();
+        return events.remove(eventClass, event);
     }
 
     @Override
-    public boolean remove(EventHandler<? extends Event> eventHandler) {
-        Class<? extends Event> eventType = resolveHandlerEventType(eventHandler);
-
-        return eventHandlers.remove(eventType, eventHandler);
+    public Collection<Class<? extends Event>> getTypes() {
+        return Collections.unmodifiableCollection(events.keySet());
     }
 
     @Override
-    public boolean contains(EventHandler<? extends Event> eventHandler) {
-        Class<? extends Event> eventType = resolveHandlerEventType(eventHandler);
-        return contains(eventType, eventHandler);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private boolean contains(Class<? extends Event> eventType, EventHandler<? extends Event> eventHandler) {
-        Collection<EventHandler<?>> eventHandlers = this.eventHandlers.get(eventType);
-        Class<? extends EventHandler> eventHandlerClass = eventHandler.getClass();
-
-        return eventHandlers.contains(eventHandler) ||
-                eventHandlers
-                .stream()
-                .anyMatch(handler -> handler.getClass().equals(eventHandlerClass));
-    }
-
-    @Override
-    public void clear() {
-        eventHandlers.clear();
+    @SuppressWarnings("unchecked")
+    public <T extends Event> Collection<T> getAllByType(Class<T> eventClass) {
+        Collection<T> eventsCollection = (Collection<T>) events.get(eventClass);
+        return Collections.unmodifiableCollection(eventsCollection);
     }
 
     @Override
     public int getSize() {
-        return eventHandlers.size();
+        return events.size();
+    }
+
+    @Override
+    public void clear() {
+        events.clear();
     }
 }

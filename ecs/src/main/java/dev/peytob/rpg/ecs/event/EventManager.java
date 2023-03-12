@@ -4,15 +4,15 @@ import java.util.Collection;
 
 public interface EventManager {
 
-    <T extends Event> Collection<EventHandler<T>> getHandlersFor(Class<T> eventClass);
+    void register(Event event);
 
-    boolean register(EventHandler<? extends Event> eventHandler);
+    boolean remove(Event event);
 
-    boolean remove(EventHandler<? extends Event> eventHandler);
+    Collection<Class<? extends Event>> getTypes();
 
-    boolean contains(EventHandler<? extends Event> eventHandler);
-
-    void clear();
+    <T extends Event> Collection<T> getAllByType(Class<T> eventClass);
 
     int getSize();
+
+    void clear();
 }
