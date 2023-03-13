@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.event.handler.window.mouse.key.scroll;
+package dev.peytob.rpg.client.event.handler.window.mouse.button;
 
 import dev.peytob.rpg.client.model.control.KeyAction;
 import dev.peytob.rpg.client.model.control.KeyModifiers;
