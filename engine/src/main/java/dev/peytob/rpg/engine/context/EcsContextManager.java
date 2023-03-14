@@ -3,6 +3,7 @@ package dev.peytob.rpg.engine.context;
 import dev.peytob.rpg.ecs.context.Contexts;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.entity.Entity;
+import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.ecs.system.OrderedSystem;
 import dev.peytob.rpg.ecs.system.SystemManager;
 import dev.peytob.rpg.engine.context.initializer.entity.SystemEntityComponentInitializer;
@@ -45,6 +46,11 @@ public final class EcsContextManager {
 
     public void executeSystems() {
         ecsContext.executeSystems();
+        ecsContext.getEventManager().clear();
+    }
+
+    public void raiseEvent(Event event) {
+        ecsContext.getEventManager().register(event);
     }
 
     // This method needs only for testing... It needs to be removed in the future

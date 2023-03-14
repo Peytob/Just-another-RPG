@@ -15,6 +15,10 @@ public class Window implements AutoCloseable {
 
     private final long pointer;
 
+    private int width;
+
+    private int height;
+
     public static Window create(String title, int width, int height) {
         logger.info("Creating new GLFW window");
 
@@ -37,7 +41,7 @@ public class Window implements AutoCloseable {
 
         logger.info("Window ({}) has been created", pointer);
 
-        return new Window(pointer);
+        return new Window(pointer, width, height);
     }
 
     public static void destroy(long pointer) {
@@ -47,8 +51,10 @@ public class Window implements AutoCloseable {
         logger.info("Window ({}) has been destroyed", pointer);
     }
 
-    private Window(long pointer) {
+    private Window(long pointer, int width, int height) {
         this.pointer = pointer;
+        this.width = width;
+        this.height = height;
     }
 
     public boolean isShouldClose() {
@@ -78,5 +84,13 @@ public class Window implements AutoCloseable {
 
     public long getPointer() {
         return pointer;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

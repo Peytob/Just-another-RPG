@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.event.handler.window.mouse.key.scroll;
+package dev.peytob.rpg.client.event.handler.window.mouse.button;
 
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
 import org.springframework.stereotype.Component;

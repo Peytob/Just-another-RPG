@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.pipeline;
 
-import dev.peytob.rpg.client.event.handler.window.mouse.key.scroll.WindowMouseButtonEventBus;
+import dev.peytob.rpg.client.event.handler.window.mouse.button.WindowMouseButtonEventBus;
 import dev.peytob.rpg.client.model.graphics.Window;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.lwjgl.glfw.GLFW;
