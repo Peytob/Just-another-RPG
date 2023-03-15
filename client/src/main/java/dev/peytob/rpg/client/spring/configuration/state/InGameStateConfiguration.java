@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.sping.configuration.state;
+package dev.peytob.rpg.client.spring.configuration.state;
 
 import dev.peytob.rpg.client.context.system.window.WindowEventPoolingSystem;
 import dev.peytob.rpg.client.context.system.window.WindowSwappingBuffersSystem;
