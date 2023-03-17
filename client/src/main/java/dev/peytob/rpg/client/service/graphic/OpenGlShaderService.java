@@ -118,6 +118,16 @@ public final class OpenGlShaderService implements ShaderService {
         return shaderProgramRepository.remove(shaderProgramFromRepository);
     }
 
+    @Override
+    public ShaderProgram getShaderProgramById(String textId) {
+        return shaderProgramRepository.getById(textId);
+    }
+
+    @Override
+    public ShaderProgram getShaderProgramById(Integer id) {
+        return shaderProgramRepository.getById(id);
+    }
+
     private Map<String, ShaderProgram.ShaderProgramUniform> searchUniforms(int id) {
         int totalUniforms = glGetProgrami(id, GL_ACTIVE_UNIFORMS);
         IntBuffer sizeBuffer = BufferUtils.createIntBuffer(totalUniforms);

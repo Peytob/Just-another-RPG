@@ -12,4 +12,8 @@ public interface ShaderService {
     boolean removeShader(Shader shader);
 
     boolean removeShaderProgram(ShaderProgram shaderProgram);
+
+    ShaderProgram getShaderProgramById(String textId);
+
+    ShaderProgram getShaderProgramById(Integer id);
 }
