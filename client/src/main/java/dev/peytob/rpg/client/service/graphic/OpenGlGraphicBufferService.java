@@ -49,6 +49,6 @@ public final class OpenGlGraphicBufferService implements GraphicBufferService {
 
     @Override
     public void updateBufferData(Buffer buffer, float[] data, int usage) {
-        glBufferData(buffer.id(), data, usage);
+        glBufferData(buffer.target(), data, usage);
     }
 }
