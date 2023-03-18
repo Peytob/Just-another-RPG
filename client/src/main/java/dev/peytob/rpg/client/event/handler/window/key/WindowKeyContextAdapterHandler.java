@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.event.handler.window.key;
 
-import dev.peytob.rpg.client.event.context.input.KeyboardKeyEvent;
+import dev.peytob.rpg.client.context.event.input.KeyboardKeyEvent;
 import dev.peytob.rpg.client.model.control.KeyAction;
 import dev.peytob.rpg.client.model.control.KeyModifiers;
 import dev.peytob.rpg.client.model.control.KeyboardKey;

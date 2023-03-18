@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.model.graphics;
+package dev.peytob.rpg.client.model.graphic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

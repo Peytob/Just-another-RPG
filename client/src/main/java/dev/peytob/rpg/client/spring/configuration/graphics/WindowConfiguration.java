@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.spring.configuration.graphics;
 
-import dev.peytob.rpg.client.model.graphics.Window;
+import dev.peytob.rpg.client.model.graphic.Window;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

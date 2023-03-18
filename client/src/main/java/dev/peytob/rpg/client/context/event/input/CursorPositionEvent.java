@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.event.context.input;
+package dev.peytob.rpg.client.context.event.input;
 
 import dev.peytob.rpg.ecs.event.Event;
 
