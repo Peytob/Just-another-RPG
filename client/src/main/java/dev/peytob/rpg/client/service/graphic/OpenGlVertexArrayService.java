@@ -11,7 +11,7 @@ import java.util.Collection;
 import static org.lwjgl.opengl.GL33.*;
 
 @Service
-public class OpenGlVertexArrayService implements VertexArrayService {
+public final class OpenGlVertexArrayService implements VertexArrayService {
 
     private static final Logger logger = LoggerFactory.getLogger(OpenGlVertexArrayService.class);
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import static dev.peytob.rpg.client.model.resource.graphic.DefaultShaderProgramsIds.TILEMAP_SHADER_PROGRAM_TEXT_ID;
 
 @Component
-public class DefaultShaderProgramsFacadeService implements DefaultShaderProgramsService {
+public final class DefaultShaderProgramsFacadeService implements DefaultShaderProgramsService {
 
     private final ShaderService shaderService;
 

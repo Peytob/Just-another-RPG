@@ -7,4 +7,6 @@ public interface GraphicBufferService {
     Buffer createBuffer(String textId, int target);
 
     boolean removeBuffer(Buffer buffer);
+
+    void updateBufferData(Buffer buffer, float[] data, int drawingMode);
 }

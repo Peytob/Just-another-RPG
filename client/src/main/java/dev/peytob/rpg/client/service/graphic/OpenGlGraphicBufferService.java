@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import static org.lwjgl.opengl.GL33.*;
 
 @Service
-public class OpenGlGraphicBufferService implements GraphicBufferService {
+public final class OpenGlGraphicBufferService implements GraphicBufferService {
 
     private static final Logger logger = LoggerFactory.getLogger(OpenGlGraphicBufferService.class);
 
@@ -45,5 +45,10 @@ public class OpenGlGraphicBufferService implements GraphicBufferService {
 
         logger.info("Removed buffer with id {} ({})", buffer.textId(), buffer.id());
         return bufferRepository.remove(bufferFromRepository);
+    }
+
+    @Override
+    public void updateBufferData(Buffer buffer, float[] data, int usage) {
+        glBufferData(buffer.id(), data, usage);
     }
 }
