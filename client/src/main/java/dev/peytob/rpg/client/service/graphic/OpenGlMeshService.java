@@ -65,6 +65,17 @@ public class OpenGlMeshService implements MeshService {
 
     @Override
     public boolean removeMesh(Mesh mesh) {
-        return false;
+        logger.debug("Removing mesh with id {} ({})", mesh.textId(), mesh.id());
+
+        if (!meshRepository.contains(mesh.id())) {
+            logger.warn("Mesh with id {} ({}) not found while removing", mesh.textId(), mesh.id());
+            return false;
+        }
+
+        vertexArrayService.removeVertexArray(mesh.vertexArray());
+        graphicBufferService.removeBuffer(mesh.vertexBufferObject());
+
+        logger.debug("Removed mesh with id {} ({})", mesh.textId(), mesh.id());
+        return meshRepository.remove(mesh);
     }
 }
