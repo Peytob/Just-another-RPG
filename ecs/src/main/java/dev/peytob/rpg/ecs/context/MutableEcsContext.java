@@ -6,13 +6,14 @@ import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.entity.EntityManager;
 import dev.peytob.rpg.ecs.entity.EntityManagers;
 import dev.peytob.rpg.ecs.entity.GenericEntity;
+import dev.peytob.rpg.ecs.entity.filer.FilterManager;
 import dev.peytob.rpg.ecs.event.EventManager;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.ecs.system.SystemManager;
 
 import java.util.List;
 
-public class MutableEcsContext implements EcsContext {
+final class MutableEcsContext implements EcsContext {
 
     private final ComponentManager componentManager;
 
@@ -22,7 +23,10 @@ public class MutableEcsContext implements EcsContext {
 
     private final EventManager eventManager;
 
+    private final FilterManager filterManager;
+
     public MutableEcsContext(ComponentManager componentManager,
+                             FilterManager filterManager,
                              EntityManager entityManager,
                              SystemManager systemManager,
                              EventManager eventManager) {
@@ -30,6 +34,7 @@ public class MutableEcsContext implements EcsContext {
         this.entityManager = entityManager;
         this.systemManager = systemManager;
         this.eventManager = eventManager;
+        this.filterManager = filterManager;
     }
 
     @Override
@@ -50,6 +55,11 @@ public class MutableEcsContext implements EcsContext {
     @Override
     public EventManager getEventManager() {
         return eventManager;
+    }
+
+    @Override
+    public FilterManager getFilterManager() {
+        return filterManager;
     }
 
     @Override

@@ -1,12 +1,14 @@
-package dev.peytob.rpg.ecs.entity;
+package dev.peytob.rpg.ecs.entity.filer;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.peytob.rpg.ecs.entity.filer.Filter;
-import dev.peytob.rpg.ecs.entity.filer.FilterManager;
+import dev.peytob.rpg.ecs.entity.Entity;
+import dev.peytob.rpg.ecs.entity.EntityManager;
 import dev.peytob.rpg.ecs.exception.FilterAlreadyRegisteredException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class EntityManagerFilteredDecorator implements EntityManager, FilterManager {
 
