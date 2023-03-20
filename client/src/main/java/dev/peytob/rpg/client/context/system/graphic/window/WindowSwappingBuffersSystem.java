@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.context.system.window;
+package dev.peytob.rpg.client.context.system.graphic.window;
 
 import dev.peytob.rpg.client.model.graphic.Window;
 import dev.peytob.rpg.ecs.context.EcsContext;

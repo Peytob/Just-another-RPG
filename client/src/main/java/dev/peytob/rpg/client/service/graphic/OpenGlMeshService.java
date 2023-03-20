@@ -78,4 +78,14 @@ public class OpenGlMeshService implements MeshService {
         logger.debug("Removed mesh with id {} ({})", mesh.textId(), mesh.id());
         return meshRepository.remove(mesh);
     }
+
+    @Override
+    public Mesh getMeshById(Integer meshId) {
+        return meshRepository.getById(meshId);
+    }
+
+    @Override
+    public Mesh getMeshByTextId(String meshId) {
+        return meshRepository.getById(meshId);
+    }
 }

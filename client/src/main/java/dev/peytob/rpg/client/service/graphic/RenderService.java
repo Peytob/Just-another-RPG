@@ -6,4 +6,6 @@ import dev.peytob.rpg.client.resource.Mesh;
 public interface RenderService {
 
     void renderMesh(Mesh mesh, RenderContext renderContext);
+
+    void clearFramebuffer();
 }
