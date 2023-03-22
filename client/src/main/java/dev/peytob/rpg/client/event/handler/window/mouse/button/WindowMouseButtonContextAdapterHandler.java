@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.event.handler.window.mouse.button;
 
-import dev.peytob.rpg.client.event.context.input.MouseButtonEvent;
+import dev.peytob.rpg.client.context.event.input.MouseButtonEvent;
 import dev.peytob.rpg.client.model.control.KeyAction;
 import dev.peytob.rpg.client.model.control.KeyModifiers;
 import dev.peytob.rpg.client.model.control.MouseButton;

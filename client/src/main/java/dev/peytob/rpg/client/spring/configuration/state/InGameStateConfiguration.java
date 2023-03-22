@@ -1,7 +1,9 @@
-package dev.peytob.rpg.client.sping.configuration.state;
+package dev.peytob.rpg.client.spring.configuration.state;
 
-import dev.peytob.rpg.client.context.system.window.WindowEventPoolingSystem;
-import dev.peytob.rpg.client.context.system.window.WindowSwappingBuffersSystem;
+import dev.peytob.rpg.client.context.system.graphic.rendering.MeshRenderingSystem;
+import dev.peytob.rpg.client.context.system.graphic.rendering.FramebufferClearSystem;
+import dev.peytob.rpg.client.context.system.graphic.window.WindowEventPoolingSystem;
+import dev.peytob.rpg.client.context.system.graphic.window.WindowSwappingBuffersSystem;
 import dev.peytob.rpg.ecs.system.OrderedSystem;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
@@ -43,6 +45,8 @@ public class InGameStateConfiguration {
     private List<System> unorderedSystems() {
         return List.of(
                 systemFactory.getSystem(WindowEventPoolingSystem.class),
+                systemFactory.getSystem(FramebufferClearSystem.class),
+                systemFactory.getSystem(MeshRenderingSystem.class),
                 systemFactory.getSystem(WindowSwappingBuffersSystem.class)
         );
     }

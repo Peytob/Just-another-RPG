@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.event.handler.window.mouse.scroll;
 
-import dev.peytob.rpg.client.event.context.input.MouseScrollEvent;
+import dev.peytob.rpg.client.context.event.input.MouseScrollEvent;
 import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.engine.context.EcsContextManager;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.pipeline;
 
-import dev.peytob.rpg.client.model.graphics.Window;
+import dev.peytob.rpg.client.model.graphic.Window;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.springframework.stereotype.Component;
 

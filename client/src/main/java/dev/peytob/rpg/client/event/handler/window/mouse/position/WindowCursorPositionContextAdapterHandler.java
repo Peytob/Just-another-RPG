@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.event.handler.window.mouse.position;
 
-import dev.peytob.rpg.client.event.context.input.CursorPositionEvent;
-import dev.peytob.rpg.client.model.graphics.Window;
+import dev.peytob.rpg.client.context.event.input.CursorPositionEvent;
+import dev.peytob.rpg.client.model.graphic.Window;
 import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.engine.context.EcsContextManager;
 import org.springframework.stereotype.Component;
