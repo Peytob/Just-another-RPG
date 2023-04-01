@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     implementation project(':engine')
+    implementation project(':math')
 
     implementation libraries.spring
     implementation libraries.slf4j
