@@ -25,4 +25,19 @@ public enum Matrices {;
 
         return new ImmutableMat4(mat4);
     }
+
+    /**
+     * Creates orthographic matrix. See <a href="https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml">glOrtho method</a> for details.
+     */
+    public static Mat4 ortho(float left, float right, float bottom, float top, float nearVal, float farVal) {
+        float tx = -((right + left) / (right - left));
+        float ty = -((top + bottom) / (top - bottom));
+        float tz = -((farVal + nearVal) / (farVal - nearVal));
+
+        return mutableMat4(
+                2 / (right - left), 0, 0, 0,
+                0, 2 / (top - bottom), 0, 0,
+                0, 0, -2 / (farVal - nearVal), 0,
+                tx, ty, tz, 1);
+    }
 }
