@@ -38,6 +38,7 @@ dependencies {
     implementation project(':core')
     implementation project(':ecs')
     implementation project(':engine')
+    implementation project(':math')
 
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     implementation 'org.lwjgl:lwjgl'

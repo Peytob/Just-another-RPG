@@ -28,6 +28,7 @@ public enum Matrices {;
 
     /**
      * Creates orthographic matrix. See <a href="https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml">glOrtho method</a> for details.
+     * Computed matrix will be **mutable**!
      */
     public static Mat4 ortho(float left, float right, float bottom, float top, float nearVal, float farVal) {
         float tx = -((right + left) / (right - left));
@@ -39,5 +40,13 @@ public enum Matrices {;
                 0, 2 / (top - bottom), 0, 0,
                 0, 0, -2 / (farVal - nearVal), 0,
                 tx, ty, tz, 1);
+    }
+
+    /**
+     * Creates 2D orthographic matrix. See <a href="https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/gluOrtho2D.xml">glOrtho2D method</a> for details.
+     * Computed matrix will be **mutable**!
+     */
+    public static Mat4 ortho2D(float left, float right, float bottom, float top) {
+        return ortho(left, right, bottom, top, -1.0f, 1.0f);
     }
 }
