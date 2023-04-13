@@ -8,7 +8,6 @@ import dev.peytob.rpg.ecs.system.OrderedSystem;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
 import dev.peytob.rpg.engine.context.template.EcsContextTemplate;
-import dev.peytob.rpg.engine.context.template.EcsContextTemplates;
 import dev.peytob.rpg.engine.state.EngineState;
 import dev.peytob.rpg.engine.state.EngineStates;
 import org.springframework.context.annotation.Bean;
@@ -37,9 +36,9 @@ public class InGameStateConfiguration {
     }
 
     private EcsContextTemplate ecsTemplate() {
-        Collection<OrderedSystem> systems = asOrderedSystems(unorderedSystems());
-
-        return EcsContextTemplates.unmodifiable(systems);
+        return new EcsContextTemplate(
+                asOrderedSystems(unorderedSystems())
+        );
     }
 
     private List<System> unorderedSystems() {

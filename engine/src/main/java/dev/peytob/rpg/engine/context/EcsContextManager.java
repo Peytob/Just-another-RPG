@@ -36,7 +36,7 @@ public final class EcsContextManager {
         clearContext();
 
         logger.info("Injecting context systems in new ECS context");
-        injectSystems(ecsContextTemplate.getDefaultContextSystems());
+        injectSystems(ecsContextTemplate.defaultSystems());
 
         logger.info("Creating and injecting base system entities");
         injectSystemEntities(systemEntitiesComponentsInitializers);
