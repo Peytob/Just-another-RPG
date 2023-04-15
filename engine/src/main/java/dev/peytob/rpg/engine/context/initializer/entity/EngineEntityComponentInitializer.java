@@ -6,7 +6,7 @@ import dev.peytob.rpg.ecs.entity.Entity;
  * Injects components to entity.
  * It will be used while initializing game state to create base ECS system entities, if necessary.
  */
-public interface SystemEntityComponentInitializer {
+public interface EngineEntityComponentInitializer {
 
     void inject(Entity entity);
 

@@ -29,7 +29,7 @@ class EcsContextManagerTest extends ContextRpgEngineTest {
         );
 
         contextManager.refreshContext(ecsContextTemplate);
-        SystemManager systemManager = contextManager.getEcsContext().getSystemManager();
+        SystemManager systemManager = contextManager.getRawEcsContext().getSystemManager();
 
         boolean isAllSystemsRegisteredInSystemManager = ecsContextTemplate.defaultSystems().stream()
                 .map(OrderedSystem::getSystem)

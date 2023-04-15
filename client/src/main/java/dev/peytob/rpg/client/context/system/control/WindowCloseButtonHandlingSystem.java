@@ -11,12 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class WindowCloseButtonHandlingSystem implements System {
 
+    private static final Integer EXIT = GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_ESCAPE);
+
     @Override
     public void execute(EcsContext context) {
         EventManager eventManager = context.getEventManager();
         eventManager.getAllByType(KeyboardKeyEvent.class).stream()
             // TODO Make an control settings class
-            .filter(event -> event.key().scancode().equals(GLFW.GLFW_KEY_ESCAPE))
+            .filter(event -> event.key().scancode().equals(EXIT))
             .findFirst()
             .ifPresent(event -> context.getEventManager().register(new WindowCloseEvent()));
     }

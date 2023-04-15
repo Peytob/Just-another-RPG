@@ -16,6 +16,11 @@ final class UnmodifiableEntityManager implements EntityManager {
     }
 
     @Override
+    public Entity getById(String id) {
+        return entityManager.getById(id);
+    }
+
+    @Override
     public boolean remove(Entity entity) {
         throw new UnsupportedOperationException();
     }

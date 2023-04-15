@@ -1,16 +1,17 @@
 package dev.peytob.rpg.engine.state;
 
+import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.OrderedSystem;
 
 import java.util.Collection;
-import java.util.List;
 
-public record EngineState(
-        String name,
-        Collection<OrderedSystem> systems
-) {
+public interface EngineState {
 
-    public EngineState {
-        systems = List.copyOf(systems);
-    }
+    String getName();
+
+    Collection<OrderedSystem> getSystems();
+
+    void onSetUp(EcsContext ecsContext);
+
+    void onTearDown(EcsContext ecsContext);
 }

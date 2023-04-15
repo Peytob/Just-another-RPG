@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
@@ -22,9 +23,12 @@ public final class RpgEngine {
 
     private final AtomicBoolean isRunning;
 
+    private EngineState currentEngineState;
+
     public RpgEngine(InitializingPipeline initializingPipeline, EcsContextManager ecsContextManager) {
         this.initializingPipeline = initializingPipeline;
         this.ecsContextManager = ecsContextManager;
+        this.currentEngineState = null;
 
         this.isRunning = new AtomicBoolean(false);
     }
@@ -36,11 +40,23 @@ public final class RpgEngine {
     }
 
     public void updateEngineState(EngineState engineState) {
-        logger.info("Start updating engine state to {}", engineState.name());
+        Objects.requireNonNull(engineState, "Engine state cant be null!");
+
+        logger.info("Start updating engine state to {}", engineState.getName());
+
+        if (currentEngineState != null) {
+            logger.info("Tearing down previous engine state");
+            currentEngineState.onTearDown(ecsContextManager.getRawEcsContext());
+        }
 
         logger.info("Refreshing context state");
         EcsContextTemplate ecsContextTemplate = createEcsContextTemplate(engineState);
         ecsContextManager.refreshContext(ecsContextTemplate);
+
+        currentEngineState = engineState;
+
+        logger.info("Setting up new engine state");
+        currentEngineState.onSetUp(ecsContextManager.getRawEcsContext());
 
         logger.info("Engine state has been updated");
     }
@@ -66,7 +82,7 @@ public final class RpgEngine {
 
     private EcsContextTemplate createEcsContextTemplate(EngineState engineState) {
         return new EcsContextTemplate(
-                engineState.systems()
+                engineState.getSystems()
         );
     }
 }

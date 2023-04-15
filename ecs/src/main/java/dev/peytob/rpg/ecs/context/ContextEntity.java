@@ -53,4 +53,9 @@ final class ContextEntity implements Entity {
     public boolean isEmpty() {
         return entity.isEmpty();
     }
+
+    @Override
+    public boolean isAlive() {
+        return context.getUnmodifiableEntityManager().getById(getId()) != null;
+    }
 }

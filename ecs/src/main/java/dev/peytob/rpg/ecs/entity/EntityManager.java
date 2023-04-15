@@ -4,6 +4,8 @@ import java.util.Collection;
 
 public interface EntityManager {
 
+    Entity getById(String id);
+
     void register(Entity entity);
 
     boolean remove(Entity entity);
