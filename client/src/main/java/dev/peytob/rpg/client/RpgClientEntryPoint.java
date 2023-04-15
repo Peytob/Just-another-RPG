@@ -31,7 +31,7 @@ public class RpgClientEntryPoint {
         EngineStateFactory engineStateFactory = context.getBean(EngineStateFactory.class);
 
         engine.initialize();
-        engine.updateEngineState(engineStateFactory.getState("inGameState")); // TODO Make default state constant
+        engine.updateEngineState(engineStateFactory.getState("InGame")); // TODO Make default state constant
         engine.runCycle();
 
         // Should be closed before destroying C libraries, because

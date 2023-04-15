@@ -1,6 +1,7 @@
 package dev.peytob.rpg.engine;
 
 import dev.peytob.rpg.engine.context.EcsContextManager;
+import dev.peytob.rpg.engine.context.template.EcsContextTemplate;
 import dev.peytob.rpg.engine.pipeline.InitializingPipeline;
 import dev.peytob.rpg.engine.state.EngineState;
 import dev.peytob.rpg.engine.utils.ExitCode;
@@ -35,10 +36,11 @@ public final class RpgEngine {
     }
 
     public void updateEngineState(EngineState engineState) {
-        logger.info("Start updating engine state to {}", engineState.getName());
+        logger.info("Start updating engine state to {}", engineState.name());
 
         logger.info("Refreshing context state");
-        ecsContextManager.refreshContext(engineState.getEcsContextTemplate());
+        EcsContextTemplate ecsContextTemplate = createEcsContextTemplate(engineState);
+        ecsContextManager.refreshContext(ecsContextTemplate);
 
         logger.info("Engine state has been updated");
     }
@@ -60,5 +62,11 @@ public final class RpgEngine {
         }
 
         return ExitCode.SUCCESS;
+    }
+
+    private EcsContextTemplate createEcsContextTemplate(EngineState engineState) {
+        return new EcsContextTemplate(
+                engineState.systems()
+        );
     }
 }
