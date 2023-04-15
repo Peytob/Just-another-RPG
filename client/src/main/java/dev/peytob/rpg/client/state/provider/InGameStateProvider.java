@@ -1,7 +1,9 @@
 package dev.peytob.rpg.client.state.provider;
 
+import dev.peytob.rpg.client.context.system.control.WindowCloseButtonHandlingSystem;
 import dev.peytob.rpg.client.context.system.graphic.rendering.FramebufferClearSystem;
 import dev.peytob.rpg.client.context.system.graphic.rendering.MeshRenderingSystem;
+import dev.peytob.rpg.client.context.system.graphic.window.WindowClosingHandlingSystem;
 import dev.peytob.rpg.client.context.system.graphic.window.WindowEventPoolingSystem;
 import dev.peytob.rpg.client.context.system.graphic.window.WindowSwappingBuffersSystem;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
@@ -24,9 +26,14 @@ public final class InGameStateProvider implements EngineStateProvider {
         return new EngineStateBuilder()
             .setName("InGame")
             .nextSystem(systemFactory.getSystem(WindowEventPoolingSystem.class))
+
+            .nextSystem(systemFactory.getSystem(WindowCloseButtonHandlingSystem.class))
+
             .nextSystem(systemFactory.getSystem(FramebufferClearSystem.class))
             .nextSystem(systemFactory.getSystem(MeshRenderingSystem.class))
             .nextSystem(systemFactory.getSystem(WindowSwappingBuffersSystem.class))
+
+            .nextSystem(systemFactory.getSystem(WindowClosingHandlingSystem.class))
             .build();
     }
 }
