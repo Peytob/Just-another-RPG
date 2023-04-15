@@ -52,7 +52,7 @@ public record Archetype(
 
             return componentFactories.stream()
                     .anyMatch(existsFactory -> {
-                        Class<?> factoryType = resolveTypeArgument(existsFactory.getClass(),ComponentFactory.class);
+                        Class<?> factoryType = resolveTypeArgument(existsFactory.getClass(), ComponentFactory.class);
                         return factoryType.equals(componentClass);
                     });
         }
