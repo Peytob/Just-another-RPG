@@ -31,20 +31,19 @@ public final class LoadArchetypesInitializingPipelineStep implements Initializin
         // conflicting names and IDs
 
         if (archetypeProviders.isEmpty()) {
-            logger.info("Repository providers not found");
+            logger.info("Archetypes providers not found");
         }
 
-        archetypeProviders
-                .forEach(this::processArchetypeProvider);
+        archetypeProviders.stream()
+            .flatMap(provider -> loadArchetypes(provider).stream())
+            .forEach(this::registerArchetype);
     }
 
-    private void processArchetypeProvider(ArchetypeProvider archetypeProvider) {
+    private Collection<Archetype> loadArchetypes(ArchetypeProvider archetypeProvider) {
         logger.info("Processing {} archetypes provider", archetypeProvider.getName());
 
         try {
-            archetypeProvider
-                    .loadArchetypes()
-                    .forEach(this::registerArchetype);
+            return archetypeProvider.loadArchetypes();
         } catch (Exception exception) {
             logger.error("Exception while loading archetypes from archetype provider");
             throw exception;

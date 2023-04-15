@@ -17,8 +17,7 @@ public class EngineStateConfiguration {
             .toList();
     }
 
-    @Bean
-    EngineState engineState(EngineStateProvider stateProvider) {
+    private EngineState engineState(EngineStateProvider stateProvider) {
         return stateProvider.createEngineState();
     }
 }
