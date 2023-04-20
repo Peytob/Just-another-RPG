@@ -1,6 +1,5 @@
 package dev.peytob.rpg.engine.context;
 
-import dev.peytob.rpg.ecs.context.Contexts;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.event.Event;

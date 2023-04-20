@@ -38,6 +38,11 @@ final class SimpleEntityManager implements EntityManager {
     }
 
     @Override
+    public Entity getById(String entityId) {
+        return entities.get(entityId);
+    }
+
+    @Override
     public int getSize() {
         return entities.size();
     }

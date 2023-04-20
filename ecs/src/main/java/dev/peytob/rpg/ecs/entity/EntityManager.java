@@ -8,6 +8,8 @@ public interface EntityManager {
 
     boolean remove(Entity entity);
 
+    Entity getById(String entityId);
+
     Collection<Entity> getAll();
 
     int getSize();

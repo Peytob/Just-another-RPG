@@ -65,4 +65,10 @@ public final class GenericEntity implements Entity {
     public boolean isEmpty() {
         return getComponents().isEmpty();
     }
+
+    @Override
+    public boolean isAlive() {
+        // Generic entity is always alive
+        return true;
+    }
 }
