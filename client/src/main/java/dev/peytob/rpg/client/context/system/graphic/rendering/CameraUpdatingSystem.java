@@ -13,8 +13,7 @@ public class CameraUpdatingSystem implements System {
     @Override
     public void execute(EcsContext context) {
         context
-            .getUnmodifiableComponentManager()
-            .getAllByType(CameraComponent.class)
+            .getComponentsByType(CameraComponent.class)
             .forEach(cameraComponent -> {
                 Camera camera = cameraComponent.getCamera();
                 cameraComponent.setProjectionMatrix(computeOrthoMatrix(camera));

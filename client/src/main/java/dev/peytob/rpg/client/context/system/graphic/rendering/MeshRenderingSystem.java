@@ -30,9 +30,7 @@ public final class MeshRenderingSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        Collection<MeshComponent> meshes = context
-                .getUnmodifiableComponentManager()
-                .getAllByType(MeshComponent.class);
+        Collection<MeshComponent> meshes = context.getComponentsByType(MeshComponent.class);
 
         ShaderProgram shaderProgram = defaultShaderProgramsService.getTilemapShaderProgram();
 

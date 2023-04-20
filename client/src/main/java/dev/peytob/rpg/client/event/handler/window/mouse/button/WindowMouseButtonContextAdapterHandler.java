@@ -20,6 +20,6 @@ public final class WindowMouseButtonContextAdapterHandler extends WindowMouseBut
     @Override
     public void handle(MouseButton button, KeyAction action, KeyModifiers modifiers) {
         Event event = new MouseButtonEvent(button, action, modifiers);
-        ecsContextManager.raiseEvent(event);
+        ecsContextManager.addEvent(event);
     }
 }
