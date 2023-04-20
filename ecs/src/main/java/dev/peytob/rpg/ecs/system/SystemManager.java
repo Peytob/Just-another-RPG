@@ -4,19 +4,19 @@ import java.util.Collection;
 
 public interface SystemManager {
 
-    Collection<System> getAll();
+    Collection<System> getAllSystems();
 
-    boolean register(System system, int order);
+    boolean registerSystem(System system, int order);
 
-    boolean register(OrderedSystem system);
+    boolean registerSystem(OrderedSystem system);
 
-    boolean remove(System system);
+    boolean removeSystem(System system);
 
-    boolean contains(Class<? extends System> systemClass);
+    boolean containsSystem(Class<? extends System> systemClass);
 
-    boolean contains(System system);
+    boolean containsSystem(System system);
+
+    int getSystemsCount();
 
     void clear();
-
-    int getSize();
 }

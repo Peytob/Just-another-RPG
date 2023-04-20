@@ -35,17 +35,17 @@ class SimpleEcsContext implements EcsContext {
         this.systemManager = SystemManagers.mutable();
         this.eventManager = EventManagers.mutable();
 
-        systems.forEach(systemManager::register);
+        systems.forEach(systemManager::registerSystem);
     }
 
     @Override
     public Optional<Entity> getEntityById(String entityId) {
-        return Optional.ofNullable(entityManager.getById(entityId));
+        return Optional.ofNullable(entityManager.getEntityById(entityId));
     }
 
     @Override
     public Collection<Entity> getAllEntities() {
-        return entityManager.getAll();
+        return entityManager.getAllEntities();
     }
 
     @Override
@@ -57,14 +57,14 @@ class SimpleEcsContext implements EcsContext {
             .map(Component::getClass)
             .forEach(entity::removeComponent);
 
-        return entityManager.remove(entity);
+        return entityManager.removeEntity(entity);
     }
 
     @Override
     public Entity createEntity(String entityId) {
         Entity entity = new GenericEntity(entityId);
         Entity contextEntity = new ContextEntity(entity);
-        entityManager.register(contextEntity);
+        entityManager.addEntity(contextEntity);
         return contextEntity;
     }
 
@@ -76,32 +76,32 @@ class SimpleEcsContext implements EcsContext {
 
     @Override
     public <T extends Component> Collection<T> getComponentsByType(Class<T> componentType) {
-        return componentManager.getAllByType(componentType);
+        return componentManager.getComponentsByType(componentType);
     }
 
     @Override
     public Collection<Class<? extends Component>> getComponentTypes() {
-        return componentManager.getTypes();
+        return componentManager.getComponentTypes();
     }
 
     @Override
     public Collection<System> getSystems() {
-        return systemManager.getAll();
+        return systemManager.getAllSystems();
     }
 
     @Override
     public void addEvent(Event event) {
-        eventManager.register(event);
+        eventManager.addEvent(event);
     }
 
     @Override
     public <T extends Event> Collection<T> getEventsByType(Class<T> event) {
-        return eventManager.getAllByType(event);
+        return eventManager.getEventsByType(event);
     }
 
     @Override
     public Collection<Class<? extends Event>> getEventTypes() {
-        return eventManager.getTypes();
+        return eventManager.getEventTypes();
     }
 
     @Override
@@ -111,15 +111,15 @@ class SimpleEcsContext implements EcsContext {
 
     @Override
     public boolean removeEvent(Event event) {
-        return eventManager.remove(event);
+        return eventManager.removeEvent(event);
     }
 
     protected void bindEntityComponent(Component component, Entity entity) {
-        componentManager.register(component);
+        componentManager.addComponent(component);
     }
 
     protected void removeEntityComponent(Component component, Entity entity) {
-        componentManager.remove(component);
+        componentManager.removeComponent(component);
     }
 
     final class ContextEntity implements Entity {

@@ -4,15 +4,15 @@ import java.util.Collection;
 
 public interface ComponentManager {
 
-    void register(Component component);
+    void addComponent(Component component);
 
-    boolean remove(Component component);
+    boolean removeComponent(Component component);
 
-    Collection<Class<? extends Component>> getTypes();
+    Collection<Class<? extends Component>> getComponentTypes();
 
-    <T extends Component> Collection<T> getAllByType(Class<T> componentClass);
+    <T extends Component> Collection<T> getComponentsByType(Class<T> componentType);
 
-    int getSize();
+    int getComponentsCount();
 
     void clear();
 }
