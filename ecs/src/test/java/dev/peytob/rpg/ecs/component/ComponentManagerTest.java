@@ -26,17 +26,17 @@ public abstract class ComponentManagerTest extends EcsTests {
     void componentsManagerIsClearAfterCreating() {
         assertElementsEquals(
                 Collections.emptyList(),
-                componentManager.getTypes()
+                componentManager.getComponentTypes()
         );
 
-        assertEquals(0, componentManager.getSize());
+        assertEquals(0, componentManager.getComponentsCount());
     }
 
     @Test
     void returnsEmptyCollectionAtNotExistsType() {
         assertIterableEquals(
                 Collections.emptyList(),
-                componentManager.getAllByType(FirstTestComponent.class)
+                componentManager.getComponentsByType(FirstTestComponent.class)
         );
     }
 
@@ -45,15 +45,15 @@ public abstract class ComponentManagerTest extends EcsTests {
         FirstTestComponent component = new FirstTestComponent();
         Class<FirstTestComponent> componentClass = FirstTestComponent.class;
 
-        componentManager.register(component);
+        componentManager.addComponent(component);
 
         assertElementsEquals(
-                componentManager.getTypes(),
+                componentManager.getComponentTypes(),
                 Collections.singleton(componentClass)
         );
 
         assertElementsEquals(
-                componentManager.getAllByType(componentClass),
+                componentManager.getComponentsByType(componentClass),
                 Collections.singleton(component)
         );
     }
@@ -65,20 +65,20 @@ public abstract class ComponentManagerTest extends EcsTests {
         FirstTestComponent component3 = new FirstTestComponent();
         Class<FirstTestComponent> componentClass = FirstTestComponent.class;
 
-        componentManager.register(component1);
-        componentManager.register(component2);
-        componentManager.register(component3);
+        componentManager.addComponent(component1);
+        componentManager.addComponent(component2);
+        componentManager.addComponent(component3);
 
-        assertEquals(3, componentManager.getSize());
+        assertEquals(3, componentManager.getComponentsCount());
 
         assertElementsEquals(
                 Collections.singleton(componentClass),
-                componentManager.getTypes()
+                componentManager.getComponentTypes()
         );
 
         assertElementsEquals(
                 List.of(component1, component2, component3),
-                componentManager.getAllByType(componentClass)
+                componentManager.getComponentsByType(componentClass)
         );
     }
 
@@ -87,24 +87,24 @@ public abstract class ComponentManagerTest extends EcsTests {
         FirstTestComponent firstComponent = new FirstTestComponent();
         SecondTestComponent secondComponent = new SecondTestComponent();
 
-        componentManager.register(firstComponent);
-        componentManager.register(secondComponent);
+        componentManager.addComponent(firstComponent);
+        componentManager.addComponent(secondComponent);
 
-        assertEquals(2, componentManager.getSize());
+        assertEquals(2, componentManager.getComponentsCount());
 
         assertElementsEquals(
                 List.of(firstComponent.getClass(), secondComponent.getClass()),
-                componentManager.getTypes()
+                componentManager.getComponentTypes()
         );
 
         assertElementsEquals(
                 Collections.singleton(firstComponent),
-                componentManager.getAllByType(FirstTestComponent.class)
+                componentManager.getComponentsByType(FirstTestComponent.class)
         );
 
         assertElementsEquals(
                 Collections.singleton(secondComponent),
-                componentManager.getAllByType(SecondTestComponent.class)
+                componentManager.getComponentsByType(SecondTestComponent.class)
         );
     }
 
@@ -113,22 +113,22 @@ public abstract class ComponentManagerTest extends EcsTests {
         Component firstComponent = new FirstTestComponent();
         Component secondComponent = new SecondTestComponent();
 
-        componentManager.register(firstComponent);
-        componentManager.register(secondComponent);
+        componentManager.addComponent(firstComponent);
+        componentManager.addComponent(secondComponent);
 
-        componentManager.remove(firstComponent);
+        componentManager.removeComponent(firstComponent);
 
         assertElementsEquals(
                 Collections.singleton(secondComponent.getClass()),
-                componentManager.getTypes()
+                componentManager.getComponentTypes()
         );
 
         assertIterableEquals(
                 Collections.emptyList(),
-                componentManager.getAllByType(firstComponent.getClass())
+                componentManager.getComponentsByType(firstComponent.getClass())
         );
 
-        assertEquals(1, componentManager.getSize());
+        assertEquals(1, componentManager.getComponentsCount());
     }
 
     @Test
@@ -136,33 +136,33 @@ public abstract class ComponentManagerTest extends EcsTests {
         Component firstComponent = new FirstTestComponent();
         Component secondComponent = new SecondTestComponent();
 
-        componentManager.register(firstComponent);
-        componentManager.register(secondComponent);
+        componentManager.addComponent(firstComponent);
+        componentManager.addComponent(secondComponent);
 
         componentManager.clear();
 
         assertElementsEquals(
                 Collections.emptyList(),
-                componentManager.getTypes()
+                componentManager.getComponentTypes()
         );
 
-        assertEquals(0, componentManager.getSize());
+        assertEquals(0, componentManager.getComponentsCount());
     }
 
     @Test
     void componentManagerThrowsExceptionIfComponentAlreadyExists() {
         Component component = new FirstTestComponent();
 
-        componentManager.register(component);
-        assertThrows(ComponentAlreadyRegisteredException.class, () -> componentManager.register(component));
+        componentManager.addComponent(component);
+        assertThrows(ComponentAlreadyRegisteredException.class, () -> componentManager.addComponent(component));
     }
 
     @Test
     void typesCollectionShouldBeImmutable() {
         Component component = new FirstTestComponent();
-        componentManager.register(component);
+        componentManager.addComponent(component);
 
-        Collection<Class<? extends Component>> types = componentManager.getTypes();
+        Collection<Class<? extends Component>> types = componentManager.getComponentTypes();
 
         assertThrows(UnsupportedOperationException.class, () -> types.add(Component.class));
         assertThrows(UnsupportedOperationException.class, types::clear);
@@ -172,9 +172,9 @@ public abstract class ComponentManagerTest extends EcsTests {
     @Test
     void componentsCollectionShouldBeImmutable() {
         FirstTestComponent component = new FirstTestComponent();
-        componentManager.register(component);
+        componentManager.addComponent(component);
 
-        Collection<FirstTestComponent> components = componentManager.getAllByType(FirstTestComponent.class);
+        Collection<FirstTestComponent> components = componentManager.getComponentsByType(FirstTestComponent.class);
 
         assertThrows(UnsupportedOperationException.class, () -> components.add(new FirstTestComponent()));
         assertThrows(UnsupportedOperationException.class, components::clear);

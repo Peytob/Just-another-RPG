@@ -27,17 +27,17 @@ abstract class EventManagerTest extends EcsTests {
     void eventManagerIsClearAfterCreating() {
         assertElementsEquals(
                 Collections.emptyList(),
-                eventManager.getTypes()
+                eventManager.getEventTypes()
         );
 
-        assertEquals(0, eventManager.getSize());
+        assertEquals(0, eventManager.getEventsCount());
     }
 
     @Test
     void returnsEmptyCollectionAtNotExistsType() {
         assertIterableEquals(
                 Collections.emptyList(),
-                eventManager.getAllByType(FirstEvent.class)
+                eventManager.getEventsByType(FirstEvent.class)
         );
     }
 
@@ -46,15 +46,15 @@ abstract class EventManagerTest extends EcsTests {
         FirstEvent event = new FirstEvent();
         Class<FirstEvent> eventClass = FirstEvent.class;
 
-        eventManager.register(event);
+        eventManager.addEvent(event);
 
         assertElementsEquals(
-                eventManager.getTypes(),
+                eventManager.getEventTypes(),
                 Collections.singleton(eventClass)
         );
 
         assertElementsEquals(
-                eventManager.getAllByType(eventClass),
+                eventManager.getEventsByType(eventClass),
                 Collections.singleton(event)
         );
     }
@@ -66,20 +66,20 @@ abstract class EventManagerTest extends EcsTests {
         FirstEvent event3 = new FirstEvent();
         Class<FirstEvent> eventClass = FirstEvent.class;
 
-        eventManager.register(event1);
-        eventManager.register(event2);
-        eventManager.register(event3);
+        eventManager.addEvent(event1);
+        eventManager.addEvent(event2);
+        eventManager.addEvent(event3);
 
-        assertEquals(3, eventManager.getSize());
+        assertEquals(3, eventManager.getEventsCount());
 
         assertElementsEquals(
                 Collections.singleton(eventClass),
-                eventManager.getTypes()
+                eventManager.getEventTypes()
         );
 
         assertElementsEquals(
                 List.of(event1, event2, event3),
-                eventManager.getAllByType(eventClass)
+                eventManager.getEventsByType(eventClass)
         );
     }
 
@@ -88,24 +88,24 @@ abstract class EventManagerTest extends EcsTests {
         FirstEvent firstEvent = new FirstEvent();
         SecondEvent secondEvent = new SecondEvent();
 
-        eventManager.register(firstEvent);
-        eventManager.register(secondEvent);
+        eventManager.addEvent(firstEvent);
+        eventManager.addEvent(secondEvent);
 
-        assertEquals(2, eventManager.getSize());
+        assertEquals(2, eventManager.getEventsCount());
 
         assertElementsEquals(
                 List.of(firstEvent.getClass(), secondEvent.getClass()),
-                eventManager.getTypes()
+                eventManager.getEventTypes()
         );
 
         assertElementsEquals(
                 Collections.singleton(firstEvent),
-                eventManager.getAllByType(FirstEvent.class)
+                eventManager.getEventsByType(FirstEvent.class)
         );
 
         assertElementsEquals(
                 Collections.singleton(secondEvent),
-                eventManager.getAllByType(SecondEvent.class)
+                eventManager.getEventsByType(SecondEvent.class)
         );
     }
 
@@ -114,22 +114,22 @@ abstract class EventManagerTest extends EcsTests {
         Event firstEvent = new FirstEvent();
         Event secondEvent = new SecondEvent();
 
-        eventManager.register(firstEvent);
-        eventManager.register(secondEvent);
+        eventManager.addEvent(firstEvent);
+        eventManager.addEvent(secondEvent);
 
-        eventManager.remove(firstEvent);
+        eventManager.removeEvent(firstEvent);
 
         assertElementsEquals(
                 Collections.singleton(secondEvent.getClass()),
-                eventManager.getTypes()
+                eventManager.getEventTypes()
         );
 
         assertIterableEquals(
                 Collections.emptyList(),
-                eventManager.getAllByType(firstEvent.getClass())
+                eventManager.getEventsByType(firstEvent.getClass())
         );
 
-        assertEquals(1, eventManager.getSize());
+        assertEquals(1, eventManager.getEventsCount());
     }
 
     @Test
@@ -137,25 +137,25 @@ abstract class EventManagerTest extends EcsTests {
         Event firstEvent = new FirstEvent();
         Event secondEvent = new SecondEvent();
 
-        eventManager.register(firstEvent);
-        eventManager.register(secondEvent);
+        eventManager.addEvent(firstEvent);
+        eventManager.addEvent(secondEvent);
 
         eventManager.clear();
 
         assertElementsEquals(
                 Collections.emptyList(),
-                eventManager.getTypes()
+                eventManager.getEventTypes()
         );
 
-        assertEquals(0, eventManager.getSize());
+        assertEquals(0, eventManager.getEventsCount());
     }
 
     @Test
     void typesCollectionShouldBeImmutable() {
         Event event = new FirstEvent();
-        eventManager.register(event);
+        eventManager.addEvent(event);
 
-        Collection<Class<? extends Event>> types = eventManager.getTypes();
+        Collection<Class<? extends Event>> types = eventManager.getEventTypes();
 
         assertThrows(UnsupportedOperationException.class, () -> types.add(Event.class));
         assertThrows(UnsupportedOperationException.class, types::clear);
@@ -165,9 +165,9 @@ abstract class EventManagerTest extends EcsTests {
     @Test
     void eventsCollectionShouldBeImmutable() {
         FirstEvent event = new FirstEvent();
-        eventManager.register(event);
+        eventManager.addEvent(event);
 
-        Collection<FirstEvent> events = eventManager.getAllByType(FirstEvent.class);
+        Collection<FirstEvent> events = eventManager.getEventsByType(FirstEvent.class);
 
         assertThrows(UnsupportedOperationException.class, () -> events.add(new FirstEvent()));
         assertThrows(UnsupportedOperationException.class, events::clear);

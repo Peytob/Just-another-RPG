@@ -19,4 +19,6 @@ public interface Entity {
     void bindComponent(Component component);
 
     boolean isEmpty();
+
+    boolean isAlive();
 }

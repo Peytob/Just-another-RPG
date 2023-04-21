@@ -20,6 +20,6 @@ public final class WindowKeyContextAdapterHandler extends WindowKeyEventHandler 
     @Override
     public void handle(KeyboardKey key, KeyAction action, KeyModifiers modifiers) {
         Event event = new KeyboardKeyEvent(key, action, modifiers);
-        ecsContextManager.raiseEvent(event);
+        ecsContextManager.addEvent(event);
     }
 }

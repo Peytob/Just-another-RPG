@@ -11,28 +11,28 @@ final class UnmodifiableComponentManager implements ComponentManager {
     }
 
     @Override
-    public void register(Component component) {
+    public void addComponent(Component component) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean remove(Component component) {
+    public boolean removeComponent(Component component) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Collection<Class<? extends Component>> getTypes() {
-        return componentManager.getTypes();
+    public Collection<Class<? extends Component>> getComponentTypes() {
+        return componentManager.getComponentTypes();
     }
 
     @Override
-    public <T extends Component> Collection<T> getAllByType(Class<T> componentClass) {
-        return componentManager.getAllByType(componentClass);
+    public <T extends Component> Collection<T> getComponentsByType(Class<T> componentType) {
+        return componentManager.getComponentsByType(componentType);
     }
 
     @Override
-    public int getSize() {
-        return componentManager.getSize();
+    public int getComponentsCount() {
+        return componentManager.getComponentsCount();
     }
 
     @Override

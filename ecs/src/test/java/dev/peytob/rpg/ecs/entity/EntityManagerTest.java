@@ -26,14 +26,14 @@ abstract class EntityManagerTest extends EcsTests {
 
     @Test
     void newEntityManagerIsEmpty() {
-        assertTrue(entityManager.getAll().isEmpty());
+        assertTrue(entityManager.getAllEntities().isEmpty());
     }
 
     @Test
     void entitySuccessfullyRegistered() {
         Entity entity = createEntity("someEntity");
-        assertDoesNotThrow(() -> entityManager.register(entity));
-        assertEquals(1, entityManager.getSize());
+        assertDoesNotThrow(() -> entityManager.addEntity(entity));
+        assertEquals(1, entityManager.getEntitiesCount());
     }
 
     @Test
@@ -42,30 +42,30 @@ abstract class EntityManagerTest extends EcsTests {
         Entity second = createEntity("b");
         Entity third = createEntity("c");
 
-        entityManager.register(first);
-        entityManager.register(second);
-        entityManager.register(third);
+        entityManager.addEntity(first);
+        entityManager.addEntity(second);
+        entityManager.addEntity(third);
 
-        entityManager.remove(second);
+        entityManager.removeEntity(second);
 
         assertElementsEquals(
                 List.of(first, third),
-                entityManager.getAll()
+                entityManager.getAllEntities()
         );
     }
 
     @Test
     void entityManagerIsEmptyAfterClear() {
-        entityManager.register(createEntity("a"));
-        entityManager.register(createEntity("b"));
-        entityManager.register(createEntity("c"));
+        entityManager.addEntity(createEntity("a"));
+        entityManager.addEntity(createEntity("b"));
+        entityManager.addEntity(createEntity("c"));
 
-        assertEquals(3, entityManager.getSize());
+        assertEquals(3, entityManager.getEntitiesCount());
 
         entityManager.clear();
 
-        assertTrue(entityManager.getAll().isEmpty());
-        assertEquals(0, entityManager.getSize());
+        assertTrue(entityManager.getAllEntities().isEmpty());
+        assertEquals(0, entityManager.getEntitiesCount());
     }
 
     @Test
@@ -74,16 +74,16 @@ abstract class EntityManagerTest extends EcsTests {
         Entity entity = createEntity(id);
         Entity otherEntityWithSomeId = createEntity(id);
 
-        entityManager.register(entity);
-        assertThrows(EntityAlreadyRegisteredException.class, () -> entityManager.register(otherEntityWithSomeId));
+        entityManager.addEntity(entity);
+        assertThrows(EntityAlreadyRegisteredException.class, () -> entityManager.addEntity(otherEntityWithSomeId));
     }
 
     @Test
     void entityCantBeRegisteredTwoTimes() {
         Entity entity = createEntity("sdfa");
 
-        entityManager.register(entity);
-        assertThrows(EntityAlreadyRegisteredException.class, () -> entityManager.register(entity));
+        entityManager.addEntity(entity);
+        assertThrows(EntityAlreadyRegisteredException.class, () -> entityManager.addEntity(entity));
     }
 
     private Entity createEntity(String id) {

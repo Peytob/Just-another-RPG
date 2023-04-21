@@ -26,6 +26,6 @@ public final class WindowCursorPositionContextAdapterHandler extends WindowCurso
                 newX - window.getWidth() / 2.0,
                 newY - window.getHeight() / 2.0);
 
-        ecsContextManager.raiseEvent(event);
+        ecsContextManager.addEvent(event);
     }
 }

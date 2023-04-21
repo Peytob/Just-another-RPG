@@ -19,7 +19,7 @@ final class SimpleEntityManager implements EntityManager {
     }
 
     @Override
-    public void register(Entity entity) {
+    public void addEntity(Entity entity) {
         if (entities.containsValue(entity) || entities.containsKey(entity.getId())) {
             throw new EntityAlreadyRegisteredException(entity);
         }
@@ -28,17 +28,22 @@ final class SimpleEntityManager implements EntityManager {
     }
 
     @Override
-    public boolean remove(Entity entity) {
+    public boolean removeEntity(Entity entity) {
         return entities.remove(entity.getId()) != null;
     }
 
     @Override
-    public Collection<Entity> getAll() {
+    public Collection<Entity> getAllEntities() {
         return Collections.unmodifiableCollection(entities.values());
     }
 
     @Override
-    public int getSize() {
+    public Entity getEntityById(String entityId) {
+        return entities.get(entityId);
+    }
+
+    @Override
+    public int getEntitiesCount() {
         return entities.size();
     }
 

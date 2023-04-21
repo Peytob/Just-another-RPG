@@ -4,13 +4,15 @@ import java.util.Collection;
 
 public interface EntityManager {
 
-    void register(Entity entity);
+    void addEntity(Entity entity);
 
-    boolean remove(Entity entity);
+    boolean removeEntity(Entity entity);
 
-    Collection<Entity> getAll();
+    Entity getEntityById(String entityId);
 
-    int getSize();
+    Collection<Entity> getAllEntities();
+
+    int getEntitiesCount();
 
     void clear();
 }

@@ -20,18 +20,18 @@ final class SimpleSystemManager implements SystemManager {
     }
 
     @Override
-    public Collection<System> getAll() {
+    public Collection<System> getAllSystems() {
         return Collections.unmodifiableCollection(systems);
     }
 
     @Override
-    public boolean register(System system, int order) {
-        return register(OrderedSystem.wrap(system, order));
+    public boolean registerSystem(System system, int order) {
+        return registerSystem(OrderedSystem.wrap(system, order));
     }
 
     @Override
-    public boolean register(OrderedSystem system) {
-        if (contains(system.getSystem())) {
+    public boolean registerSystem(OrderedSystem system) {
+        if (containsSystem(system.getSystem())) {
             throw new SystemAlreadyRegisteredException(system.getSystem());
         }
 
@@ -42,8 +42,8 @@ final class SimpleSystemManager implements SystemManager {
     }
 
     @Override
-    public boolean remove(System system) {
-        if (!contains(system)) {
+    public boolean removeSystem(System system) {
+        if (!containsSystem(system)) {
             throw new SystemAlreadyRegisteredException(system);
         }
 
@@ -59,15 +59,15 @@ final class SimpleSystemManager implements SystemManager {
     }
 
     @Override
-    public boolean contains(Class<? extends System> systemClass) {
+    public boolean containsSystem(Class<? extends System> systemClass) {
         return systems
                 .stream()
                 .anyMatch(system -> system.getClass().equals(systemClass));
     }
 
     @Override
-    public boolean contains(System system) {
-        return systems.contains(system) || contains(system.getClass());
+    public boolean containsSystem(System system) {
+        return systems.contains(system) || containsSystem(system.getClass());
     }
 
     @Override
@@ -77,7 +77,7 @@ final class SimpleSystemManager implements SystemManager {
     }
 
     @Override
-    public int getSize() {
+    public int getSystemsCount() {
         return systems.size();
     }
 }
