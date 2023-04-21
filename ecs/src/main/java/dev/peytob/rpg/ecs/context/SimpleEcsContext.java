@@ -17,7 +17,9 @@ import dev.peytob.rpg.ecs.system.SystemManagers;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 class SimpleEcsContext implements EcsContext {
 
@@ -29,11 +31,15 @@ class SimpleEcsContext implements EcsContext {
 
     private final EventManager eventManager;
 
+    // TODO Make separated module
+    private final Map<Component, Entity> componentToEntityMap;
+
     SimpleEcsContext(Collection<OrderedSystem> systems) {
         this.entityManager = EntityManagers.mutable();
         this.componentManager = ComponentManagers.mutable();
         this.systemManager = SystemManagers.mutable();
         this.eventManager = EventManagers.mutable();
+        this.componentToEntityMap = new ConcurrentHashMap<>();
 
         systems.forEach(systemManager::registerSystem);
     }
@@ -70,8 +76,7 @@ class SimpleEcsContext implements EcsContext {
 
     @Override
     public Entity getComponentEntity(Component component) {
-        // TODO implement this method
-        return null;
+        return componentToEntityMap.get(component);
     }
 
     @Override
@@ -115,10 +120,12 @@ class SimpleEcsContext implements EcsContext {
     }
 
     protected void bindEntityComponent(Component component, Entity entity) {
+        componentToEntityMap.put(component, entity);
         componentManager.addComponent(component);
     }
 
     protected void removeEntityComponent(Component component, Entity entity) {
+        componentToEntityMap.remove(component);
         componentManager.removeComponent(component);
     }
 
@@ -155,7 +162,7 @@ class SimpleEcsContext implements EcsContext {
             T component = getComponent(componentClass);
 
             if (component != null) {
-                SimpleEcsContext.this.removeEntityComponent(component, entity);
+                SimpleEcsContext.this.removeEntityComponent(component, this);
             }
 
             return entity.removeComponent(componentClass);
@@ -164,7 +171,7 @@ class SimpleEcsContext implements EcsContext {
         @Override
         public void bindComponent(Component component) {
             entity.bindComponent(component);
-            SimpleEcsContext.this.bindEntityComponent(component, entity);
+            SimpleEcsContext.this.bindEntityComponent(component, this);
         }
 
         @Override

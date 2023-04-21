@@ -141,4 +141,26 @@ abstract class EcsContextTest extends EcsTests {
         assertTrue(ecsContext.getEventsByType(FirstEvent.class).isEmpty());
         assertTrue(ecsContext.getEventsByType(SecondEvent.class).isEmpty());
     }
+
+    @Test
+    void contextCanReturnEntityBoundToComponent() {
+        Entity firstEntity = ecsContext.createEntity("entityWithComponent");
+        Entity secondEntity = ecsContext.createEntity("entityWithTwoComponents");
+        ecsContext.createEntity("entityWithoutComponent");
+
+        firstEntity.bindComponent(new FirstTestComponent());
+
+        secondEntity.bindComponent(new FirstTestComponent());
+        secondEntity.bindComponent(new SecondTestComponent());
+
+        firstEntity.getComponents().forEach(component -> {
+            Entity componentEntity = ecsContext.getComponentEntity(component);
+            assertSame(firstEntity, componentEntity);
+        });
+
+        secondEntity.getComponents().forEach(component -> {
+            Entity componentEntity = ecsContext.getComponentEntity(component);
+            assertSame(secondEntity, componentEntity);
+        });
+    }
 }

@@ -1,5 +1,6 @@
 package dev.peytob.rpg.ecs.context;
 
+import dev.peytob.rpg.ecs.component.Component;
 import dev.peytob.rpg.ecs.component.FirstTestComponent;
 import dev.peytob.rpg.ecs.component.SecondTestComponent;
 import dev.peytob.rpg.ecs.entity.Entity;
@@ -7,8 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MutableEcsContextTest extends EcsContextTest {
 
@@ -37,6 +37,19 @@ public class MutableEcsContextTest extends EcsContextTest {
         entity.removeComponent(SecondTestComponent.class);
 
         assertContextIsSyncedToSingletonEntity(ecsContext, entity);
+    }
+
+    @Test
+    void contextUnbindsEntityComponentsAfterRemoving() {
+        Component component = new FirstTestComponent();
+        Entity entity = ecsContext.createEntity("contextUnbindsEntityComponentsAfterRemoving");
+        entity.bindComponent(component);
+
+        assertSame(entity, ecsContext.getComponentEntity(component));
+
+        entity.removeComponent(component.getClass());
+
+        assertNull(ecsContext.getComponentEntity(component));
     }
 
     @Test
