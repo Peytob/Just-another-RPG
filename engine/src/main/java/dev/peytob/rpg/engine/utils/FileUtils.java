@@ -22,7 +22,7 @@ public enum FileUtils {;
                 buf.write((byte) result);
             }
 
-            return buf.toString(StandardCharsets.UTF_8.name());
+            return buf.toString(StandardCharsets.UTF_8);
         }
     }
 }

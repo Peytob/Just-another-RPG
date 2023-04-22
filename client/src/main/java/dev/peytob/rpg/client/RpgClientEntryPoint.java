@@ -1,9 +1,9 @@
 package dev.peytob.rpg.client;
 
+import dev.peytob.rpg.client.state.provider.InGameEngineState;
 import dev.peytob.rpg.client.system.library.GlfwLibraryHandler;
 import dev.peytob.rpg.client.system.library.StaticLibraryHandler;
 import dev.peytob.rpg.engine.RpgEngine;
-import dev.peytob.rpg.engine.state.EngineStateFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -28,10 +28,10 @@ public class RpgClientEntryPoint {
                 .run(RpgClientEntryPoint.class);
 
         RpgEngine engine = context.getBean(RpgEngine.class);
-        EngineStateFactory engineStateFactory = context.getBean(EngineStateFactory.class);
+        InGameEngineState startEngineState = context.getBean(InGameEngineState.class);
 
         engine.initialize();
-        engine.updateEngineState(engineStateFactory.getState("inGameState")); // TODO Make default state constant
+        engine.updateEngineState(startEngineState); // TODO Make default state constant
         engine.runCycle();
 
         // Should be closed before destroying C libraries, because

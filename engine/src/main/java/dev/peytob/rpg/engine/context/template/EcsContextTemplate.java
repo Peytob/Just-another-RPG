@@ -3,8 +3,13 @@ package dev.peytob.rpg.engine.context.template;
 import dev.peytob.rpg.ecs.system.OrderedSystem;
 
 import java.util.Collection;
+import java.util.List;
 
-public interface EcsContextTemplate {
+public record EcsContextTemplate(
+        Collection<OrderedSystem> defaultSystems
+) {
 
-    Collection<OrderedSystem> getDefaultContextSystems();
+    public EcsContextTemplate {
+        defaultSystems = List.copyOf(defaultSystems);
+    }
 }

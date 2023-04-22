@@ -1,10 +1,17 @@
 package dev.peytob.rpg.engine.state;
 
-import dev.peytob.rpg.engine.context.template.EcsContextTemplate;
+import dev.peytob.rpg.ecs.context.EcsContext;
+import dev.peytob.rpg.ecs.system.OrderedSystem;
+
+import java.util.Collection;
 
 public interface EngineState {
 
-    EcsContextTemplate getEcsContextTemplate();
-
     String getName();
+
+    Collection<OrderedSystem> getSystems();
+
+    void onSetUp(EcsContext ecsContext);
+
+    void onTearDown(EcsContext ecsContext);
 }
