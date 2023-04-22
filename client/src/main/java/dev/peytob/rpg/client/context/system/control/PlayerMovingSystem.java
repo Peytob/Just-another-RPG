@@ -10,6 +10,8 @@ import dev.peytob.rpg.math.vector.Vectors;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 // Test implementation!
 
 @Component
@@ -28,9 +30,14 @@ public final class PlayerMovingSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        Entity player = context.getUnmodifiableEntityManager().getById("player");
+        Optional<Entity> player = context
+            .getEntityById("player");
 
-        PositionComponent positionComponent = player.getComponent(PositionComponent.class);
+        if (player.isEmpty()) {
+            return;
+        }
+
+        PositionComponent positionComponent = player.get().getComponent(PositionComponent.class);
 
         Vec2 currentPosition = positionComponent.getPosition();
         float speed = 0.01f;

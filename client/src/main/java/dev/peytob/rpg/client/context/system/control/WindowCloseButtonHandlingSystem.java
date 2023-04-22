@@ -15,11 +15,10 @@ public class WindowCloseButtonHandlingSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        EventManager eventManager = context.getEventManager();
-        eventManager.getAllByType(KeyboardKeyEvent.class).stream()
+        context.getEventsByType(KeyboardKeyEvent.class).stream()
             // TODO Make an control settings class
             .filter(event -> event.key().scancode().equals(EXIT))
             .findFirst()
-            .ifPresent(event -> context.getEventManager().register(new WindowCloseEvent()));
+            .ifPresent(event -> context.addEvent(new WindowCloseEvent()));
     }
 }

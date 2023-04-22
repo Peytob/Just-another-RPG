@@ -68,6 +68,7 @@ public final class GenericEntity implements Entity {
 
     @Override
     public boolean isAlive() {
+        // Generic entity is always alive
         return true;
     }
 }

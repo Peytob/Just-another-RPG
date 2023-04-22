@@ -2,7 +2,6 @@ package dev.peytob.rpg.engine.context;
 
 import dev.peytob.rpg.ecs.system.OrderedSystem;
 import dev.peytob.rpg.ecs.system.System;
-import dev.peytob.rpg.ecs.system.SystemManager;
 import dev.peytob.rpg.engine.ContextRpgEngineTest;
 import dev.peytob.rpg.engine.context.template.EcsContextTemplate;
 import dev.peytob.rpg.engine.system.FirstTestSystem;
@@ -11,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,12 +30,16 @@ class EcsContextManagerTest extends ContextRpgEngineTest {
         );
 
         contextManager.refreshContext(ecsContextTemplate);
-        SystemManager systemManager = contextManager.getRawEcsContext().getSystemManager();
+        List<? extends Class<? extends System>> systems = contextManager.getRawEcsContext().getSystems()
+            .stream()
+            .map(System::getClass)
+            .toList();
 
         boolean isAllSystemsRegisteredInSystemManager = ecsContextTemplate.defaultSystems().stream()
-                .map(OrderedSystem::getSystem)
-                .map(System::getClass)
-                .allMatch(systemManager::contains);
+            .sorted(Comparator.comparingInt(OrderedSystem::getOrder))
+            .map(OrderedSystem::getSystem)
+            .map(System::getClass)
+            .allMatch(systems::contains);
         assertTrue(isAllSystemsRegisteredInSystemManager);
     }
 }

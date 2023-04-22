@@ -19,7 +19,7 @@ final class SimpleComponentManager implements ComponentManager {
     }
 
     @Override
-    public void register(Component component) {
+    public void addComponent(Component component) {
         if (components.containsEntry(component.getClass(), component)) {
             throw new ComponentAlreadyRegisteredException("Component already registered", component);
         }
@@ -28,25 +28,25 @@ final class SimpleComponentManager implements ComponentManager {
     }
 
     @Override
-    public boolean remove(Component component) {
+    public boolean removeComponent(Component component) {
         return components.remove(component.getClass(), component);
     }
 
     @Override
-    public Collection<Class<? extends Component>> getTypes() {
+    public Collection<Class<? extends Component>> getComponentTypes() {
         return Collections.unmodifiableSet(components.keySet());
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends Component> Collection<T> getAllByType(Class<T> componentClass) {
-        Collection<Component> typedComponents = components.get(componentClass);
+    public <T extends Component> Collection<T> getComponentsByType(Class<T> componentType) {
+        Collection<Component> typedComponents = components.get(componentType);
 
         return Collections.unmodifiableCollection((Collection<T>) typedComponents);
     }
 
     @Override
-    public int getSize() {
+    public int getComponentsCount() {
         return components.size();
     }
 

@@ -15,14 +15,16 @@ public final class PositionsSyncSystem implements System {
     @Override
     public void execute(EcsContext context) {
         Collection<EntitiesPositionsSyncComponent> syncComponents = context
-            .getUnmodifiableComponentManager().getAllByType(EntitiesPositionsSyncComponent.class);
+            .getComponentsByType(EntitiesPositionsSyncComponent.class);
 
         syncComponents.forEach(component -> {
             Entity source = component.getSource();
             Entity target = component.getTarget();
 
             if (!source.isAlive() || !target.isAlive()) {
-                // TODO Delete relationship on destroying one of entities
+                Entity entity = context.getComponentEntity(component);
+                entity.removeComponent(component.getClass());
+                return;
             }
 
             PositionComponent sourcePosition = source.getComponent(PositionComponent.class);

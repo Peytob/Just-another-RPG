@@ -23,16 +23,16 @@ abstract class SystemManagerTest extends EcsTests {
 
     @Test
     void newSystemManagerIsEmpty() {
-        assertTrue(systemManager.getAll().isEmpty());
+        assertTrue(systemManager.getAllSystems().isEmpty());
     }
 
     @Test
     void systemSuccessfullyRegistered() {
         System system = ctx -> {};
-        systemManager.register(system, 1);
+        systemManager.registerSystem(system, 1);
 
-        assertElementsEquals(Collections.singleton(system), systemManager.getAll());
-        assertTrue(systemManager.contains(system));
+        assertElementsEquals(Collections.singleton(system), systemManager.getAllSystems());
+        assertTrue(systemManager.containsSystem(system));
     }
 
     @Test
@@ -40,10 +40,10 @@ abstract class SystemManagerTest extends EcsTests {
         System firstSystem = ctx -> {};
         System secondSystem = ctx -> {};
 
-        systemManager.register(firstSystem, 1);
-        systemManager.register(secondSystem, 2);
+        systemManager.registerSystem(firstSystem, 1);
+        systemManager.registerSystem(secondSystem, 2);
 
-        systemManager.contains(secondSystem.getClass());
+        systemManager.containsSystem(secondSystem.getClass());
     }
 
     @Test
@@ -51,10 +51,10 @@ abstract class SystemManagerTest extends EcsTests {
         System firstSystem = ctx -> {};
         System secondSystem = ctx -> {};
 
-        systemManager.register(firstSystem, 1);
-        systemManager.register(secondSystem, 2);
+        systemManager.registerSystem(firstSystem, 1);
+        systemManager.registerSystem(secondSystem, 2);
 
-        systemManager.contains(firstSystem);
+        systemManager.containsSystem(firstSystem);
     }
 
     @Test
@@ -63,24 +63,24 @@ abstract class SystemManagerTest extends EcsTests {
         System secondSystem = ctx -> {};
         System thirdSystem = ctx -> {};
 
-        systemManager.register(firstSystem, 1);
-        systemManager.register(secondSystem, 1);
-        systemManager.register(thirdSystem, 1);
+        systemManager.registerSystem(firstSystem, 1);
+        systemManager.registerSystem(secondSystem, 1);
+        systemManager.registerSystem(thirdSystem, 1);
 
-        assertDoesNotThrow(() -> systemManager.remove(secondSystem));
+        assertDoesNotThrow(() -> systemManager.removeSystem(secondSystem));
 
-        assertElementsEquals(List.of(firstSystem, thirdSystem), systemManager.getAll());
+        assertElementsEquals(List.of(firstSystem, thirdSystem), systemManager.getAllSystems());
     }
 
     @Test
     void systemManagerIsEmptyAfterClear() {
-        systemManager.register(ctx -> {}, 1);
-        systemManager.register(ctx -> {}, 2);
-        systemManager.register(ctx -> {}, 3);
+        systemManager.registerSystem(ctx -> {}, 1);
+        systemManager.registerSystem(ctx -> {}, 2);
+        systemManager.registerSystem(ctx -> {}, 3);
 
         systemManager.clear();
 
-        assertTrue(systemManager.getAll().isEmpty());
+        assertTrue(systemManager.getAllSystems().isEmpty());
     }
 
     @Test
@@ -89,23 +89,23 @@ abstract class SystemManagerTest extends EcsTests {
         System secondSystem = new TestSystem();
         System thirdSystem = new TestSystem();
 
-        systemManager.register(firstSystem, 1);
-        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.register(secondSystem, 1));
-        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.register(thirdSystem, 5));
+        systemManager.registerSystem(firstSystem, 1);
+        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.registerSystem(secondSystem, 1));
+        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.registerSystem(thirdSystem, 5));
     }
 
     @Test
     void sameSystemCantBeRegisteredByDifferentWays() {
         System system = new TestSystem();
 
-        systemManager.register(system, 1);
-        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.register(OrderedSystem.wrap(system, 4)));
+        systemManager.registerSystem(system, 1);
+        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.registerSystem(OrderedSystem.wrap(system, 4)));
     }
 
     @Test
     void throwsExceptionIfSystemObjectAlreadyRegistered() {
         System system = ctx -> {};
-        systemManager.register(system, 1);
-        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.register(system, 3));
+        systemManager.registerSystem(system, 1);
+        assertThrows(SystemAlreadyRegisteredException.class, () -> systemManager.registerSystem(system, 3));
     }
 }

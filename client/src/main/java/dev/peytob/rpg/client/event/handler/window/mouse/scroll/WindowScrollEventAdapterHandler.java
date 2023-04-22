@@ -17,6 +17,6 @@ public final class WindowScrollEventAdapterHandler extends WindowScrollEventHand
     @Override
     public void handle(double xOffset, double yOffset) {
         Event event = new MouseScrollEvent(xOffset, yOffset);
-        ecsContextManager.raiseEvent(event);
+        ecsContextManager.addEvent(event);
     }
 }

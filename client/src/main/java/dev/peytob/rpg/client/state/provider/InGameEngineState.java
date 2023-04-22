@@ -66,7 +66,7 @@ public final class InGameEngineState implements EngineState {
         Entity camera = createEntity(ecsContext, "camera");
         Entity player = createEntity(ecsContext, "player");
 
-        Entity cameraPlayerSync = ecsContext.newEntity("camera_player_sync");
+        Entity cameraPlayerSync = ecsContext.createEntity("camera_player_sync");
         cameraPlayerSync.bindComponent(new EntitiesPositionsSyncComponent(player, camera));
     }
 
@@ -77,7 +77,7 @@ public final class InGameEngineState implements EngineState {
 
     private Entity createEntity(EcsContext ecsContext, String archetypeId) {
         Archetype archetype = archetypeRepository.getById(archetypeId);
-        Entity entity = ecsContext.newEntity(archetypeId);
+        Entity entity = ecsContext.createEntity(archetypeId);
 
         archetype.componentFactories().stream()
             .map(ComponentFactory::create)

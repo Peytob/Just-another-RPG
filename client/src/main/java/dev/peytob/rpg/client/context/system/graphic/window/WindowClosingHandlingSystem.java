@@ -17,7 +17,7 @@ public class WindowClosingHandlingSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        boolean isWindowCloseEventPresented = !context.getEventManager().getAllByType(WindowCloseEvent.class).isEmpty();
+        boolean isWindowCloseEventPresented = !context.getEventsByType(WindowCloseEvent.class).isEmpty();
 
         if (isWindowCloseEventPresented) {
             rpgEngine.close();

@@ -15,31 +15,31 @@ public class SimpleEventManager implements EventManager {
     }
 
     @Override
-    public void register(Event event) {
+    public void addEvent(Event event) {
         Class<? extends Event> eventClass = event.getClass();
         events.put(eventClass, event);
     }
 
     @Override
-    public boolean remove(Event event) {
+    public boolean removeEvent(Event event) {
         Class<? extends Event> eventClass = event.getClass();
         return events.remove(eventClass, event);
     }
 
     @Override
-    public Collection<Class<? extends Event>> getTypes() {
+    public Collection<Class<? extends Event>> getEventTypes() {
         return Collections.unmodifiableCollection(events.keySet());
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends Event> Collection<T> getAllByType(Class<T> eventClass) {
+    public <T extends Event> Collection<T> getEventsByType(Class<T> eventClass) {
         Collection<T> eventsCollection = (Collection<T>) events.get(eventClass);
         return Collections.unmodifiableCollection(eventsCollection);
     }
 
     @Override
-    public int getSize() {
+    public int getEventsCount() {
         return events.size();
     }
 
