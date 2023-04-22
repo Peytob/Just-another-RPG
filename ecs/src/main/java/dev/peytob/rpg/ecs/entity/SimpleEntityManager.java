@@ -28,11 +28,6 @@ final class SimpleEntityManager implements EntityManager {
     }
 
     @Override
-    public Entity getById(String id) {
-        return entities.get(id);
-    }
-
-    @Override
     public boolean removeEntity(Entity entity) {
         return entities.remove(entity.getId()) != null;
     }

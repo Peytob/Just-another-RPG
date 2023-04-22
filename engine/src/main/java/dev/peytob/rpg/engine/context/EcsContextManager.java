@@ -45,10 +45,7 @@ public final class EcsContextManager {
     }
 
     public void executeSystems() {
-        ecsContext.getSystems().forEach(system -> {
-            system.execute(ecsContext);
-        });
-
+        ecsContext.getSystems().forEach(system -> system.execute(ecsContext));
         ecsContext.clearEvents();
     }
 
