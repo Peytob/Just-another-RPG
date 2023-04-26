@@ -1,6 +1,7 @@
 package dev.peytob.rpg.client.service.graphic;
 
 import dev.peytob.rpg.client.resource.ShaderProgram;
+import dev.peytob.rpg.client.service.graphic.vendor.ShaderService;
 import org.springframework.stereotype.Component;
 
 import static dev.peytob.rpg.client.model.resource.graphic.DefaultShaderProgramsIds.TILEMAP_SHADER_PROGRAM_TEXT_ID;

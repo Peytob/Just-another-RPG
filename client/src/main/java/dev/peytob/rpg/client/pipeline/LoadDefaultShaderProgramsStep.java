@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.pipeline;
 
 import dev.peytob.rpg.client.resource.Shader;
-import dev.peytob.rpg.client.service.graphic.ShaderService;
+import dev.peytob.rpg.client.service.graphic.vendor.ShaderService;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

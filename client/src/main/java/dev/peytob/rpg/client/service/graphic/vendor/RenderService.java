@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.service.graphic;
+package dev.peytob.rpg.client.service.graphic.vendor;
 
 import dev.peytob.rpg.client.model.graphic.RenderContext;
 import dev.peytob.rpg.client.resource.Mesh;
