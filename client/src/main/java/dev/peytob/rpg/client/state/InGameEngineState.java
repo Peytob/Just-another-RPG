@@ -3,8 +3,9 @@ package dev.peytob.rpg.client.state;
 import dev.peytob.rpg.client.context.component.relation.EntitiesPositionsSyncComponent;
 import dev.peytob.rpg.client.context.system.control.PlayerMovingSystem;
 import dev.peytob.rpg.client.context.system.control.WindowCloseButtonHandlingSystem;
+import dev.peytob.rpg.client.context.system.graphic.rendering.CameraUpdatingSystem;
 import dev.peytob.rpg.client.context.system.graphic.rendering.FramebufferClearSystem;
-import dev.peytob.rpg.client.context.system.graphic.rendering.MeshRenderingSystem;
+import dev.peytob.rpg.client.context.system.graphic.rendering.TilemapRenderSystem;
 import dev.peytob.rpg.client.context.system.graphic.window.WindowClosingHandlingSystem;
 import dev.peytob.rpg.client.context.system.graphic.window.WindowEventPoolingSystem;
 import dev.peytob.rpg.client.context.system.graphic.window.WindowSwappingBuffersSystem;
@@ -57,7 +58,8 @@ public final class InGameEngineState implements EngineState {
             OrderedSystem.wrap(systemFactory.getSystem(PositionsSyncSystem.class), position++),
 
             OrderedSystem.wrap(systemFactory.getSystem(FramebufferClearSystem.class), position++),
-            OrderedSystem.wrap(systemFactory.getSystem(MeshRenderingSystem.class), position++),
+            OrderedSystem.wrap(systemFactory.getSystem(CameraUpdatingSystem.class), position++),
+            OrderedSystem.wrap(systemFactory.getSystem(TilemapRenderSystem.class), position++),
             OrderedSystem.wrap(systemFactory.getSystem(WindowSwappingBuffersSystem.class), position++),
 
             OrderedSystem.wrap(systemFactory.getSystem(WindowClosingHandlingSystem.class), position++)

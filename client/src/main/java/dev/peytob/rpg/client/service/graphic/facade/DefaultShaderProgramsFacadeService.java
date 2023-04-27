@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.service.graphic;
+package dev.peytob.rpg.client.service.graphic.facade;
 
 import dev.peytob.rpg.client.resource.ShaderProgram;
 import dev.peytob.rpg.client.service.graphic.vendor.ShaderService;
