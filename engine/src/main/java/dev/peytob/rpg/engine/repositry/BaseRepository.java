@@ -5,20 +5,18 @@ import dev.peytob.rpg.engine.resource.Resource;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Just wraps Map class.
  */
-class BaseRepository<R extends Record & Resource> implements Repository<R> {
+public abstract class BaseRepository<R extends Record & Resource> implements Repository<R> {
 
-    private final Map<Integer, R> resourcesByNumberId;
+    private final Map<Integer, R> resourcesByNumberId = new ConcurrentHashMap<>();
 
-    private final Map<String, R> resourcesByTextId;
+    private final Map<String, R> resourcesByTextId = new ConcurrentHashMap<>();
 
-    BaseRepository() {
-        this.resourcesByNumberId = new ConcurrentHashMap<>();
-        this.resourcesByTextId = new ConcurrentHashMap<>();
-    }
+    private final Collection<RepositoryIndex<?>> repositoryIndices = new CopyOnWriteArrayList<>();
 
     @Override
     public final R getById(Integer id)  {
@@ -52,27 +50,64 @@ class BaseRepository<R extends Record & Resource> implements Repository<R> {
 
     @Override
     public final boolean append(R resource) {
-        if (isResourcePresented(resource)) {
+        if (contains(resource)) {
             return false;
         }
 
         resourcesByNumberId.put(resource.id(), resource);
         resourcesByTextId.put(resource.textId(), resource);
+        repositoryIndices.forEach(index -> index.append(resource));
         return true;
     }
 
     @Override
     public final boolean remove(R resource) {
-        if (!isResourcePresented(resource)) {
+        if (!contains(resource)) {
             return false;
         }
 
         resourcesByNumberId.remove(resource.id(), resource);
         resourcesByTextId.remove(resource.textId(), resource);
+        repositoryIndices.forEach(index -> index.remove(resource));
         return true;
     }
 
-    private boolean isResourcePresented(R resource) {
+    private boolean contains(R resource) {
         return contains(resource.id()) || contains(resource.textId());
+    }
+
+    protected void registerIndex(RepositoryIndex<?> repositoryIndex) {
+        this.repositoryIndices.add(repositoryIndex);
+    }
+
+    protected abstract class RepositoryIndex<K> {
+
+        // Todo Make guava multimap later
+        private final Map<K, R> resourceByKey;
+
+        public RepositoryIndex() {
+            this.resourceByKey = new ConcurrentHashMap<>();
+        }
+
+        final public void append(R resource) {
+            K key = extractKey(resource);
+            resourceByKey.put(key, resource);
+        }
+
+        final public void remove(R resource) {
+            K key = extractKey(resource);
+            resourceByKey.remove(key, resource);
+        }
+
+        final public boolean contains(R resource) {
+            K key = extractKey(resource);
+            return resourceByKey.containsKey(key);
+        }
+
+        final public R get(K key) {
+            return resourceByKey.get(key);
+        }
+
+        protected abstract K extractKey(R resource);
     }
 }
