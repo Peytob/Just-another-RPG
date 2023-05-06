@@ -1,6 +1,7 @@
 package dev.peytob.rpg.ecs.component;
 
 import java.util.Collection;
+import java.util.Optional;
 
 final class UnmodifiableComponentManager implements ComponentManager {
 
@@ -28,6 +29,11 @@ final class UnmodifiableComponentManager implements ComponentManager {
     @Override
     public <T extends Component> Collection<T> getComponentsByType(Class<T> componentType) {
         return componentManager.getComponentsByType(componentType);
+    }
+
+    @Override
+    public <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType) {
+        return componentManager.getSingletonComponentByType(componentType);
     }
 
     @Override

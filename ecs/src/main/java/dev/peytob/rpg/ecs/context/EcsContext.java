@@ -22,6 +22,8 @@ public interface EcsContext {
 
     <T extends Component> Collection<T> getComponentsByType(Class<T> componentType);
 
+    <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType);
+
     Collection<Class<? extends Component>> getComponentTypes();
 
     Collection<System> getSystems();

@@ -85,6 +85,11 @@ class SimpleEcsContext implements EcsContext {
     }
 
     @Override
+    public <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType) {
+        return componentManager.getSingletonComponentByType(componentType);
+    }
+
+    @Override
     public Collection<Class<? extends Component>> getComponentTypes() {
         return componentManager.getComponentTypes();
     }

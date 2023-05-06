@@ -6,6 +6,7 @@ import dev.peytob.rpg.ecs.exception.ComponentAlreadyRegisteredException;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 /**
  * This implementation just wraps guava multimap collection of components.
@@ -43,6 +44,15 @@ final class SimpleComponentManager implements ComponentManager {
         Collection<Component> typedComponents = components.get(componentType);
 
         return Collections.unmodifiableCollection((Collection<T>) typedComponents);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType) {
+        return (Optional<T>) components
+            .get(componentType)
+            .stream()
+            .findFirst();
     }
 
     @Override

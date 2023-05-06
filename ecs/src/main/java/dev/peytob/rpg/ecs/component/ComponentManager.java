@@ -1,6 +1,7 @@
 package dev.peytob.rpg.ecs.component;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface ComponentManager {
 
@@ -11,6 +12,8 @@ public interface ComponentManager {
     Collection<Class<? extends Component>> getComponentTypes();
 
     <T extends Component> Collection<T> getComponentsByType(Class<T> componentType);
+
+    <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType);
 
     int getComponentsCount();
 

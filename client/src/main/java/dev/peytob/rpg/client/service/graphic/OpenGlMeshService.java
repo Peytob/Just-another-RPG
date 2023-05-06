@@ -3,6 +3,8 @@ package dev.peytob.rpg.client.service.graphic;
 import dev.peytob.rpg.client.resource.Buffer;
 import dev.peytob.rpg.client.resource.Mesh;
 import dev.peytob.rpg.client.resource.VertexArray;
+import dev.peytob.rpg.client.service.graphic.vendor.GraphicBufferService;
+import dev.peytob.rpg.client.service.graphic.vendor.VertexArrayService;
 import dev.peytob.rpg.engine.repositry.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
