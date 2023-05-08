@@ -1,7 +1,7 @@
-package dev.peytob.rpg.core.model.location.tilemap;
+package dev.peytob.rpg.core.module.location.model.tilemap;
 
 import dev.peytob.rpg.core.NonContextRpgCoreTest;
-import dev.peytob.rpg.core.resource.Tile;
+import dev.peytob.rpg.core.module.location.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

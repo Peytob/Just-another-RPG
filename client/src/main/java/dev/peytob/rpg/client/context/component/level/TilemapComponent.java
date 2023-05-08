@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.context.component.level;
 
-import dev.peytob.rpg.core.model.location.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.ecs.component.Component;
 
 public class TilemapComponent implements Component {

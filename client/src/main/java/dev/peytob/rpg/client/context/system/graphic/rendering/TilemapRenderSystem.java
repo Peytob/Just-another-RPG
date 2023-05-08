@@ -4,7 +4,7 @@ import dev.peytob.rpg.client.context.component.graphic.CameraComponent;
 import dev.peytob.rpg.client.context.component.level.TilemapComponent;
 import dev.peytob.rpg.client.model.graphic.Camera;
 import dev.peytob.rpg.client.service.graphic.render.TilemapRenderingService;
-import dev.peytob.rpg.core.model.location.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
 import org.slf4j.Logger;

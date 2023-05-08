@@ -10,7 +10,7 @@ import dev.peytob.rpg.client.context.system.graphic.window.WindowClosingHandling
 import dev.peytob.rpg.client.context.system.graphic.window.WindowEventPoolingSystem;
 import dev.peytob.rpg.client.context.system.graphic.window.WindowSwappingBuffersSystem;
 import dev.peytob.rpg.client.context.system.relationship.PositionsSyncSystem;
-import dev.peytob.rpg.core.model.location.tilemap.Tilemaps;
+import dev.peytob.rpg.core.module.location.model.tilemap.Tilemaps;
 import dev.peytob.rpg.client.context.component.level.TilemapComponent;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.entity.Entity;

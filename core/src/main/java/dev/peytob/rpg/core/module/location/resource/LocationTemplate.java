@@ -1,6 +1,6 @@
-package dev.peytob.rpg.core.resource;
+package dev.peytob.rpg.core.module.location.resource;
 
-import dev.peytob.rpg.core.model.location.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.engine.resource.Resource;
 
 /**

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.core.model.location.tilemap;
+package dev.peytob.rpg.core.module.location.model.tilemap;
 
 import dev.peytob.rpg.math.vector.Vec2i;
 
