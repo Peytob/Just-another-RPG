@@ -1,12 +1,12 @@
-package dev.peytob.rpg.engine.pipeline.step;
+package dev.peytob.rpg.engine.module.archetype.pipeline;
 
-import dev.peytob.rpg.engine.exception.archetype.ArchetypeBuildingException;
-import dev.peytob.rpg.engine.exception.archetype.ArchetypeRegisteringException;
-import dev.peytob.rpg.engine.loader.archetype.provider.ArchetypeProvider;
-import dev.peytob.rpg.engine.loader.archetype.provider.classpath.ArchetypeTemplate;
+import dev.peytob.rpg.engine.module.archetype.exception.ArchetypeBuildingException;
+import dev.peytob.rpg.engine.module.archetype.exception.ArchetypeRegisteringException;
+import dev.peytob.rpg.engine.module.archetype.loader.provider.ArchetypeProvider;
+import dev.peytob.rpg.engine.module.archetype.loader.provider.classpath.ArchetypeTemplate;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import dev.peytob.rpg.engine.repositry.Repository;
-import dev.peytob.rpg.engine.resource.Archetype;
+import dev.peytob.rpg.engine.module.archetype.resource.Archetype;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.engine.loader.archetype.provider.classpath;
+package dev.peytob.rpg.engine.module.archetype.loader.provider.classpath;
 
 public interface ClasspathArchetypeFactory {
 

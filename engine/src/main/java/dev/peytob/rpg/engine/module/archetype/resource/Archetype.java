@@ -1,6 +1,7 @@
-package dev.peytob.rpg.engine.resource;
+package dev.peytob.rpg.engine.module.archetype.resource;
 
-import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentFactory;
+import dev.peytob.rpg.engine.module.archetype.loader.componentFactory.ComponentFactory;
+import dev.peytob.rpg.engine.resource.Resource;
 
 import java.util.Collection;
 import java.util.Collections;

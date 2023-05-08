@@ -1,6 +1,6 @@
-package dev.peytob.rpg.engine.loader.archetype.provider.classpath;
+package dev.peytob.rpg.engine.module.archetype.loader.provider.classpath;
 
-import dev.peytob.rpg.engine.loader.archetype.provider.ArchetypeProvider;
+import dev.peytob.rpg.engine.module.archetype.loader.provider.ArchetypeProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

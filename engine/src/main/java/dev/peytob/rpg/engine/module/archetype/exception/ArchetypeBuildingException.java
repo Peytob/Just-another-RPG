@@ -1,4 +1,4 @@
-package dev.peytob.rpg.engine.exception.archetype;
+package dev.peytob.rpg.engine.module.archetype.exception;
 
 public class ArchetypeBuildingException extends RuntimeException {
 

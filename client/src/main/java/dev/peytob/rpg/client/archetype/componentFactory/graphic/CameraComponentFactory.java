@@ -2,7 +2,7 @@ package dev.peytob.rpg.client.archetype.componentFactory.graphic;
 
 import dev.peytob.rpg.client.context.component.graphic.CameraComponent;
 import dev.peytob.rpg.client.model.graphic.Camera;
-import dev.peytob.rpg.engine.loader.archetype.componentFactory.ComponentFactory;
+import dev.peytob.rpg.engine.module.archetype.loader.componentFactory.ComponentFactory;
 import dev.peytob.rpg.math.vector.Vectors;
 import org.springframework.stereotype.Component;
 

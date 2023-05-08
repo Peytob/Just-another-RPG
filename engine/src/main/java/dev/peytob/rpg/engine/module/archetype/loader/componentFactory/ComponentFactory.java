@@ -1,4 +1,4 @@
-package dev.peytob.rpg.engine.loader.archetype.componentFactory;
+package dev.peytob.rpg.engine.module.archetype.loader.componentFactory;
 
 import dev.peytob.rpg.ecs.component.Component;
 

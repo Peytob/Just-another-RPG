@@ -1,6 +1,6 @@
-package dev.peytob.rpg.engine.loader.archetype.provider;
+package dev.peytob.rpg.engine.module.archetype.loader.provider;
 
-import dev.peytob.rpg.engine.loader.archetype.provider.classpath.ArchetypeTemplate;
+import dev.peytob.rpg.engine.module.archetype.loader.provider.classpath.ArchetypeTemplate;
 
 import java.util.Collection;
 

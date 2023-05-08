@@ -1,6 +1,6 @@
-package dev.peytob.rpg.engine.exception.archetype;
+package dev.peytob.rpg.engine.module.archetype.exception;
 
-import dev.peytob.rpg.engine.resource.Archetype;
+import dev.peytob.rpg.engine.module.archetype.resource.Archetype;
 
 public final class ArchetypeRegisteringException extends RuntimeException {
 
