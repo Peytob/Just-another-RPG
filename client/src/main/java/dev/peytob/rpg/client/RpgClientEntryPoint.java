@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client;
 
 import dev.peytob.rpg.client.state.InGameEngineState;
-import dev.peytob.rpg.client.system.library.GlfwLibraryHandler;
+import dev.peytob.rpg.client.module.graphic.system.library.GlfwLibraryHandler;
 import dev.peytob.rpg.client.system.library.StaticLibraryHandler;
 import dev.peytob.rpg.engine.RpgEngine;
 import org.slf4j.Logger;

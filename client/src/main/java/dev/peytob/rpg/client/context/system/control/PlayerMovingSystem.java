@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.context.system.control;
 
 import dev.peytob.rpg.client.context.component.basic.PositionComponent;
-import dev.peytob.rpg.client.model.graphic.Window;
+import dev.peytob.rpg.client.module.graphic.model.Window;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.system.System;

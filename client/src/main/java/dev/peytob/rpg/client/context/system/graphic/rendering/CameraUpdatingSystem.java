@@ -1,8 +1,7 @@
 package dev.peytob.rpg.client.context.system.graphic.rendering;
 
 import dev.peytob.rpg.client.context.component.graphic.CameraComponent;
-import dev.peytob.rpg.client.model.graphic.Camera;
-import dev.peytob.rpg.client.service.graphic.vendor.RenderService;
+import dev.peytob.rpg.client.module.graphic.model.Camera;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.math.matrix.Mat4;

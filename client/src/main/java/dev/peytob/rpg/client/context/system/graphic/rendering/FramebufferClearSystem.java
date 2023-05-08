@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.context.system.graphic.rendering;
 
-import dev.peytob.rpg.client.service.graphic.vendor.RenderService;
+import dev.peytob.rpg.client.module.graphic.service.vendor.RenderService;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
 import org.springframework.stereotype.Component;
