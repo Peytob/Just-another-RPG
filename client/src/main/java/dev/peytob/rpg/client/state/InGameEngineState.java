@@ -1,14 +1,14 @@
 package dev.peytob.rpg.client.state;
 
 import dev.peytob.rpg.client.context.component.relation.EntitiesPositionsSyncComponent;
-import dev.peytob.rpg.client.context.system.control.PlayerMovingSystem;
-import dev.peytob.rpg.client.context.system.control.WindowCloseButtonHandlingSystem;
-import dev.peytob.rpg.client.context.system.graphic.rendering.CameraUpdatingSystem;
-import dev.peytob.rpg.client.context.system.graphic.rendering.FramebufferClearSystem;
-import dev.peytob.rpg.client.context.system.graphic.rendering.TilemapRenderSystem;
-import dev.peytob.rpg.client.context.system.graphic.window.WindowClosingHandlingSystem;
-import dev.peytob.rpg.client.context.system.graphic.window.WindowEventPoolingSystem;
-import dev.peytob.rpg.client.context.system.graphic.window.WindowSwappingBuffersSystem;
+import dev.peytob.rpg.client.module.control.context.system.PlayerMovingSystem;
+import dev.peytob.rpg.client.module.control.context.system.WindowCloseButtonHandlingSystem;
+import dev.peytob.rpg.client.module.graphic.context.system.rendering.CameraUpdatingSystem;
+import dev.peytob.rpg.client.module.graphic.context.system.rendering.FramebufferClearSystem;
+import dev.peytob.rpg.client.module.graphic.context.system.rendering.TilemapRenderSystem;
+import dev.peytob.rpg.client.module.graphic.context.system.window.WindowClosingHandlingSystem;
+import dev.peytob.rpg.client.module.graphic.context.system.window.WindowEventPoolingSystem;
+import dev.peytob.rpg.client.module.graphic.context.system.window.WindowSwappingBuffersSystem;
 import dev.peytob.rpg.client.context.system.relationship.PositionsSyncSystem;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemaps;
 import dev.peytob.rpg.client.context.component.level.TilemapComponent;

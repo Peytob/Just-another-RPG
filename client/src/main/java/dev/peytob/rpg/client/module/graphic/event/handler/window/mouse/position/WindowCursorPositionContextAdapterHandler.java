@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.module.graphic.event.handler.window.mouse.position;
 
-import dev.peytob.rpg.client.context.event.input.CursorPositionEvent;
+import dev.peytob.rpg.client.module.control.context.event.CursorPositionEvent;
 import dev.peytob.rpg.client.module.graphic.model.Window;
 import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.engine.context.EcsContextManager;

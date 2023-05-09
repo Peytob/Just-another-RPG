@@ -1,9 +1,9 @@
 package dev.peytob.rpg.client.module.graphic.event.handler.window.key;
 
-import dev.peytob.rpg.client.context.event.input.KeyboardKeyEvent;
-import dev.peytob.rpg.client.model.control.KeyAction;
-import dev.peytob.rpg.client.model.control.KeyModifiers;
-import dev.peytob.rpg.client.model.control.KeyboardKey;
+import dev.peytob.rpg.client.module.control.context.event.KeyboardKeyEvent;
+import dev.peytob.rpg.client.module.control.model.KeyAction;
+import dev.peytob.rpg.client.module.control.model.KeyModifiers;
+import dev.peytob.rpg.client.module.control.model.KeyboardKey;
 import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.engine.context.EcsContextManager;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,8 @@
 package dev.peytob.rpg.client.module.graphic.event.handler.window.mouse.button;
 
-import dev.peytob.rpg.client.model.control.KeyAction;
-import dev.peytob.rpg.client.model.control.KeyModifiers;
-import dev.peytob.rpg.client.model.control.MouseButton;
+import dev.peytob.rpg.client.module.control.model.KeyAction;
+import dev.peytob.rpg.client.module.control.model.KeyModifiers;
+import dev.peytob.rpg.client.module.control.model.MouseButton;
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
 
 /**
