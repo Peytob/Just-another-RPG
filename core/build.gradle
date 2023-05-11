@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':ecs')
     implementation project(':engine')
     implementation project(':math')
 

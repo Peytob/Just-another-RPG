@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.context.component.basic;
+package dev.peytob.rpg.core.module.base.context.component;
 
 import dev.peytob.rpg.ecs.component.Component;
 import dev.peytob.rpg.math.vector.Vec2;

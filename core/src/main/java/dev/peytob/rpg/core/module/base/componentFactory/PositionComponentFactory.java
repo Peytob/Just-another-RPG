@@ -1,6 +1,6 @@
-package dev.peytob.rpg.client.archetype.componentFactory.common;
+package dev.peytob.rpg.core.module.base.componentFactory;
 
-import dev.peytob.rpg.client.context.component.basic.PositionComponent;
+import dev.peytob.rpg.core.module.base.context.component.PositionComponent;
 import dev.peytob.rpg.engine.module.archetype.loader.componentFactory.ComponentFactory;
 import dev.peytob.rpg.math.vector.Vectors;
 import org.springframework.stereotype.Component;

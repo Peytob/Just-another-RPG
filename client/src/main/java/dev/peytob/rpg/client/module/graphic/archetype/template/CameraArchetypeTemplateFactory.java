@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.module.graphic.archetype.template;
 
-import dev.peytob.rpg.client.archetype.componentFactory.common.PositionComponentFactory;
+import dev.peytob.rpg.core.module.base.componentFactory.PositionComponentFactory;
 import dev.peytob.rpg.client.module.graphic.archetype.componentFactory.CameraComponentFactory;
 import dev.peytob.rpg.engine.module.archetype.loader.provider.classpath.ArchetypeTemplate;
 import dev.peytob.rpg.engine.module.archetype.loader.provider.classpath.ClasspathArchetypeFactory;
