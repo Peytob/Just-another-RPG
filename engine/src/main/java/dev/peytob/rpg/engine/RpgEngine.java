@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Component
 public final class RpgEngine {
 
-    private final Logger logger = LoggerFactory.getLogger(RpgEngine.class);
+    private final static Logger logger = LoggerFactory.getLogger(RpgEngine.class);
 
     private final InitializingPipeline initializingPipeline;
 
@@ -81,8 +81,6 @@ public final class RpgEngine {
     }
 
     private EcsContextTemplate createEcsContextTemplate(EngineState engineState) {
-        return new EcsContextTemplate(
-                engineState.getSystems()
-        );
+        return new EcsContextTemplate(engineState.getSystems());
     }
 }

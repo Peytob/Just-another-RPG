@@ -1,5 +1,7 @@
 package dev.peytob.rpg.core.resource;
 
+import dev.peytob.rpg.core.module.location.resource.Tile;
+
 public enum TestTiles {;
 
     public static final Tile TEST_TILE_1 = new Tile(1, "test_tile_1");
