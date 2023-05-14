@@ -16,6 +16,8 @@ public interface EcsContext {
 
     boolean removeEntity(Entity entity);
 
+    Entity createEntity();
+
     Entity createEntity(String entityId);
 
     Entity getComponentEntity(Component component);

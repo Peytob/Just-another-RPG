@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation libraries.guava
+    implementation libraries.apacheCommon
 
     testImplementation libraries.mockito
     testImplementation libraries.junitApi
