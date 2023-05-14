@@ -1,0 +1,40 @@
+package dev.peytob.rpg.engine.state.event;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import dev.peytob.rpg.engine.state.EngineState;
+import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Objects;
+
+import static dev.peytob.rpg.engine.utils.reflection.GenericReflectionUtils.*;
+
+@Component
+public final class StateSetUpEventBus {
+
+    private static final Method TEAR_DOWN_METHOD =
+        Objects.requireNonNull(
+            findMethod(StateSetUpEventHandler.class, "onStateSetUp", EngineState.class),
+            "onStateSetUp method not found in StateSetUpEventHandler interface!");
+
+    private final Multimap<Class<? extends EngineState>, StateSetUpEventHandler<? extends EngineState>> stateSetUpEventHandlers;
+
+    public StateSetUpEventBus(Collection<StateSetUpEventHandler<? extends EngineState>> stateSetUpEventHandlers) {
+        this.stateSetUpEventHandlers = HashMultimap.create();
+        stateSetUpEventHandlers
+            .forEach(handler -> this.stateSetUpEventHandlers.put(resolveEngineStateClass(handler), handler));
+    }
+
+    public void onStateSetUp(EngineState engineState) {
+        stateSetUpEventHandlers
+            .get(engineState.getClass())
+            .forEach(handler -> invokeMethod(TEAR_DOWN_METHOD, handler, engineState));
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<? extends EngineState> resolveEngineStateClass(StateSetUpEventHandler<? extends EngineState> handler) {
+        return (Class<? extends EngineState>) resolveTypeArgument(EngineState.class, handler.getClass());
+    }
+}

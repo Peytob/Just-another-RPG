@@ -4,12 +4,12 @@ import dev.peytob.rpg.engine.context.EcsContextManager;
 import dev.peytob.rpg.engine.context.template.EcsContextTemplate;
 import dev.peytob.rpg.engine.pipeline.InitializingPipeline;
 import dev.peytob.rpg.engine.state.EngineState;
+import dev.peytob.rpg.engine.state.EngineStateManager;
 import dev.peytob.rpg.engine.utils.ExitCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
@@ -23,12 +23,12 @@ public final class RpgEngine {
 
     private final AtomicBoolean isRunning;
 
-    private EngineState currentEngineState;
+    private final EngineStateManager engineStateManager;
 
-    public RpgEngine(InitializingPipeline initializingPipeline, EcsContextManager ecsContextManager) {
+    public RpgEngine(InitializingPipeline initializingPipeline, EcsContextManager ecsContextManager, EngineStateManager engineStateManager) {
         this.initializingPipeline = initializingPipeline;
         this.ecsContextManager = ecsContextManager;
-        this.currentEngineState = null;
+        this.engineStateManager = engineStateManager;
 
         this.isRunning = new AtomicBoolean(false);
     }
@@ -40,25 +40,7 @@ public final class RpgEngine {
     }
 
     public void updateEngineState(EngineState engineState) {
-        Objects.requireNonNull(engineState, "Engine state cant be null!");
-
-        logger.info("Start updating engine state to {}", engineState.getName());
-
-        if (currentEngineState != null) {
-            logger.info("Tearing down previous engine state");
-            currentEngineState.onTearDown(ecsContextManager.getRawEcsContext());
-        }
-
-        logger.info("Refreshing context state");
-        EcsContextTemplate ecsContextTemplate = createEcsContextTemplate(engineState);
-        ecsContextManager.refreshContext(ecsContextTemplate);
-
-        currentEngineState = engineState;
-
-        logger.info("Setting up new engine state");
-        currentEngineState.onSetUp(ecsContextManager.getRawEcsContext());
-
-        logger.info("Engine state has been updated");
+        engineStateManager.updateEngineState(engineState);
     }
 
     public void close() {
@@ -66,6 +48,10 @@ public final class RpgEngine {
     }
 
     public ExitCode runCycle() {
+        if (!engineStateManager.isStateInitialized()) {
+            throw new IllegalStateException("Engine state should be initialized before game cycle start!");
+        }
+
         isRunning.set(true);
 
         while (isRunning.get()) {

@@ -2,11 +2,8 @@ package dev.peytob.rpg.engine.context;
 
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.context.EcsContexts;
-import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.ecs.system.OrderedSystem;
-import dev.peytob.rpg.engine.context.initializer.entity.EngineEntityComponentInitializer;
-import dev.peytob.rpg.engine.context.template.EcsContextTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,24 +19,19 @@ public final class EcsContextManager {
 
     private EcsContext ecsContext;
 
-    private final List<EngineEntityComponentInitializer> systemEntitiesComponentsInitializers;
-
-    public EcsContextManager(List<EngineEntityComponentInitializer> systemEntitiesComponentsInitializers) {
-        this.systemEntitiesComponentsInitializers = systemEntitiesComponentsInitializers;
+    public EcsContextManager() {
         this.ecsContext = createContext(Collections.emptyList());
     }
 
-    public void refreshContext(EcsContextTemplate ecsContextTemplate) {
+    public void refreshContext() {
         logger.info("Refreshing ECS context started");
 
         logger.info("Clearing current context");
         clearContextEntities();
 
         logger.info("Creating new ECS context");
-        ecsContext = createContext(ecsContextTemplate.defaultSystems());
-
-        logger.info("Creating and injecting base engine entities");
-        injectSystemEntities(systemEntitiesComponentsInitializers);
+        // TODO Temporary empty
+        ecsContext = createContext(Collections.emptyList());
 
         logger.info("ECS context has been refreshed");
     }
@@ -55,13 +47,6 @@ public final class EcsContextManager {
 
     public EcsContext getRawEcsContext() {
         return ecsContext;
-    }
-
-    private void injectSystemEntities(List<EngineEntityComponentInitializer> initializers) {
-        initializers.forEach(initializer -> {
-            Entity entity = ecsContext.createEntity(initializer.getId());
-            initializer.inject(entity);
-        });
     }
 
     private void clearContextEntities() {
