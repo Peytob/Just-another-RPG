@@ -65,8 +65,4 @@ public final class RpgEngine {
 
         return ExitCode.SUCCESS;
     }
-
-    private EcsContextTemplate createEcsContextTemplate(EngineState engineState) {
-        return new EcsContextTemplate(engineState.getSystems());
-    }
 }

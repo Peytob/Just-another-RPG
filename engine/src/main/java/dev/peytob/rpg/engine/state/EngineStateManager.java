@@ -1,6 +1,8 @@
 package dev.peytob.rpg.engine.state;
 
 import dev.peytob.rpg.engine.context.EcsContextManager;
+import dev.peytob.rpg.engine.state.event.StateSetUpEventBus;
+import dev.peytob.rpg.engine.state.event.StateTearDownEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,10 +16,16 @@ public final class EngineStateManager {
 
     private final EcsContextManager ecsContextManager;
 
+    private final StateTearDownEventBus stateTearDownEventBus;
+
+    private final StateSetUpEventBus stateSetUpEventBus;
+
     private EngineState currentEngineState;
 
-    public EngineStateManager(EcsContextManager ecsContextManager) {
+    public EngineStateManager(EcsContextManager ecsContextManager, StateTearDownEventBus stateTearDownEventBus, StateSetUpEventBus stateSetUpEventBus) {
         this.ecsContextManager = ecsContextManager;
+        this.stateTearDownEventBus = stateTearDownEventBus;
+        this.stateSetUpEventBus = stateSetUpEventBus;
         this.currentEngineState = null;
     }
 
@@ -28,10 +36,11 @@ public final class EngineStateManager {
 
         if (currentEngineState != null) {
             logger.info("Tearing down previous engine state");
-            currentEngineState.onTearDown(ecsContextManager.getRawEcsContext());
+            stateTearDownEventBus.onStateTearDown(engineState, ecsContextManager.getRawEcsContext());
         }
 
         ecsContextManager.refreshContext();
+        stateSetUpEventBus.onStateSetUp(engineState);
 
         this.currentEngineState = engineState;
 
@@ -39,6 +48,6 @@ public final class EngineStateManager {
     }
 
     public boolean isStateInitialized() {
-        return currentEngineState == null;
+        return currentEngineState != null;
     }
 }

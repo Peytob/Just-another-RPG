@@ -11,4 +11,8 @@ public interface StateSetUpEventHandler<T extends EngineState> extends Ordered {
     default int getOrder() {
         return 0;
     }
+
+    default String getName() {
+        return getClass().getSimpleName();
+    }
 }

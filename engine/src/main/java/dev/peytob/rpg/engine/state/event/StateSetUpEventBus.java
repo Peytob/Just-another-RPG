@@ -3,10 +3,13 @@ package dev.peytob.rpg.engine.state.event;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import dev.peytob.rpg.engine.state.EngineState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 
 import static dev.peytob.rpg.engine.utils.reflection.GenericReflectionUtils.*;
@@ -14,7 +17,9 @@ import static dev.peytob.rpg.engine.utils.reflection.GenericReflectionUtils.*;
 @Component
 public final class StateSetUpEventBus {
 
-    private static final Method TEAR_DOWN_METHOD =
+    private static final Logger logger = LoggerFactory.getLogger(StateSetUpEventBus.class);
+
+    private static final Method STATE_UP_METHOD =
         Objects.requireNonNull(
             findMethod(StateSetUpEventHandler.class, "onStateSetUp", EngineState.class),
             "onStateSetUp method not found in StateSetUpEventHandler interface!");
@@ -28,9 +33,15 @@ public final class StateSetUpEventBus {
     }
 
     public void onStateSetUp(EngineState engineState) {
-        stateSetUpEventHandlers
-            .get(engineState.getClass())
-            .forEach(handler -> invokeMethod(TEAR_DOWN_METHOD, handler, engineState));
+        logger.info("Handling {} state set up", engineState.getName());
+
+        stateSetUpEventHandlers.entries().stream()
+            .filter(entry -> entry.getKey().isInstance(engineState))
+            .map(Map.Entry::getValue)
+            .forEach(handler -> {
+                logger.info("Handling set up event by {} event handler", handler.getName());
+                invokeMethod(STATE_UP_METHOD, handler, engineState);
+            });
     }
 
     @SuppressWarnings("unchecked")
