@@ -1,5 +1,7 @@
 package dev.peytob.rpg.engine.state;
 
+import dev.peytob.rpg.ecs.context.EcsContextBuilder;
+import dev.peytob.rpg.ecs.context.EcsContexts;
 import dev.peytob.rpg.engine.context.EcsContextManager;
 import dev.peytob.rpg.engine.state.event.StateSetUpEventBus;
 import dev.peytob.rpg.engine.state.event.StateTearDownEventBus;
@@ -39,8 +41,9 @@ public final class EngineStateManager {
             stateTearDownEventBus.onStateTearDown(engineState, ecsContextManager.getRawEcsContext());
         }
 
-        ecsContextManager.refreshContext();
-        stateSetUpEventBus.onStateSetUp(engineState);
+        EcsContextBuilder ecsContextBuilder = EcsContexts.builder();
+        stateSetUpEventBus.onStateSetUp(ecsContextBuilder, engineState);
+        ecsContextManager.refreshContext(ecsContextBuilder);
 
         this.currentEngineState = engineState;
 

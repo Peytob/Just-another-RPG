@@ -47,6 +47,6 @@ public final class StateTearDownEventBus {
 
     @SuppressWarnings("unchecked")
     private Class<? extends EngineState> resolveEngineStateClass(StateTearDownEventHandler<? extends EngineState> handler) {
-        return (Class<? extends EngineState>) resolveTypeArgument(EngineState.class, handler.getClass());
+        return (Class<? extends EngineState>) resolveTypeArgument(handler.getClass(), StateTearDownEventBus.class);
     }
 }

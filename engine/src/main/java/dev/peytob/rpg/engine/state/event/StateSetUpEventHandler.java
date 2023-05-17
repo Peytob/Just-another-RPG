@@ -1,11 +1,12 @@
 package dev.peytob.rpg.engine.state.event;
 
+import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.engine.state.EngineState;
 import org.springframework.core.Ordered;
 
 public interface StateSetUpEventHandler<T extends EngineState> extends Ordered {
 
-    void onStateSetUp(T engineState);
+    void onStateSetUp(EcsContextBuilder contextBuilder, T engineState);
 
     @Override
     default int getOrder() {
