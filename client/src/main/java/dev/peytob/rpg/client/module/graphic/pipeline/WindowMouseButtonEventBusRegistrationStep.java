@@ -1,7 +1,11 @@
 package dev.peytob.rpg.client.module.graphic.pipeline;
 
-import dev.peytob.rpg.client.module.graphic.event.handler.window.mouse.button.WindowMouseButtonEventBus;
+import dev.peytob.rpg.client.module.control.context.event.MouseButtonEvent;
+import dev.peytob.rpg.client.module.control.model.KeyAction;
+import dev.peytob.rpg.client.module.control.model.KeyModifiers;
+import dev.peytob.rpg.client.module.control.model.MouseButton;
 import dev.peytob.rpg.client.module.graphic.model.Window;
+import dev.peytob.rpg.engine.event.MainEventBus;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;
@@ -11,16 +15,24 @@ public final class WindowMouseButtonEventBusRegistrationStep implements Initiali
 
     private final Window window;
 
-    private final WindowMouseButtonEventBus windowMouseButtonEventBus;
+    private final MainEventBus mainEventBus;
 
-    public WindowMouseButtonEventBusRegistrationStep(Window window, WindowMouseButtonEventBus windowMouseButtonEventBus) {
+    public WindowMouseButtonEventBusRegistrationStep(Window window, MainEventBus mainEventBus) {
         this.window = window;
-        this.windowMouseButtonEventBus = windowMouseButtonEventBus;
+        this.mainEventBus = mainEventBus;
     }
 
     @Override
     public void execute() {
-        GLFW.glfwSetMouseButtonCallback(window.getPointer(), windowMouseButtonEventBus);
+        GLFW.glfwSetMouseButtonCallback(window.getPointer(), (window, button, action, mods) -> {
+            MouseButtonEvent event = createEvent(button, action, mods);
+            mainEventBus.addEvent(event);
+        });
+    }
+
+    private MouseButtonEvent createEvent(int button, int action, int mods) {
+        // TODO Add memorization for all GLFW mouse buttons and possible modifiers sets
+        return new MouseButtonEvent(new MouseButton(button), KeyAction.fromGlfwAction(action), new KeyModifiers(mods));
     }
 
     @Override
