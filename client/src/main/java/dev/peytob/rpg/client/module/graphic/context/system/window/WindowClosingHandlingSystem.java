@@ -1,18 +1,18 @@
 package dev.peytob.rpg.client.module.graphic.context.system.window;
 
 import dev.peytob.rpg.client.module.graphic.context.event.window.WindowCloseEvent;
+import dev.peytob.rpg.client.module.graphic.model.Window;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
-import dev.peytob.rpg.engine.RpgEngine;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WindowClosingHandlingSystem implements System {
+public final class WindowClosingHandlingSystem implements System {
 
-    private final RpgEngine rpgEngine;
+    private final Window window;
 
-    public WindowClosingHandlingSystem(RpgEngine rpgEngine) {
-        this.rpgEngine = rpgEngine;
+    public WindowClosingHandlingSystem(Window window) {
+        this.window = window;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class WindowClosingHandlingSystem implements System {
         boolean isWindowCloseEventPresented = !context.getEventsByType(WindowCloseEvent.class).isEmpty();
 
         if (isWindowCloseEventPresented) {
-            rpgEngine.close();
+            window.close();
         }
     }
 }

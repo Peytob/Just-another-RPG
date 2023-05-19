@@ -14,11 +14,9 @@ import dev.peytob.rpg.ecs.system.OrderedSystem;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.ecs.system.SystemManager;
 import dev.peytob.rpg.ecs.system.SystemManagers;
+import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 class SimpleEcsContext implements EcsContext {
@@ -67,7 +65,14 @@ class SimpleEcsContext implements EcsContext {
     }
 
     @Override
+    public Entity createEntity() {
+        return createEntity(null);
+    }
+
+    @Override
     public Entity createEntity(String entityId) {
+        entityId = Objects.requireNonNull(entityId, this::createRandomId);
+
         Entity entity = new GenericEntity(entityId);
         Entity contextEntity = new ContextEntity(entity);
         entityManager.addEntity(contextEntity);
@@ -132,6 +137,14 @@ class SimpleEcsContext implements EcsContext {
     protected void removeEntityComponent(Component component, Entity entity) {
         componentToEntityMap.remove(component);
         componentManager.removeComponent(component);
+    }
+
+    private String createRandomId() {
+        String id;
+        do {
+            id = RandomStringUtils.randomAlphanumeric(12);
+        } while (entityManager.getEntityById(id) != null);
+        return id;
     }
 
     final class ContextEntity implements Entity {
