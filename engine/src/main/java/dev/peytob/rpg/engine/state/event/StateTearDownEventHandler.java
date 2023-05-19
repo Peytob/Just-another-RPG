@@ -1,19 +1,22 @@
 package dev.peytob.rpg.engine.state.event;
 
 import dev.peytob.rpg.ecs.context.EcsContext;
+import dev.peytob.rpg.engine.event.EventHandler;
 import dev.peytob.rpg.engine.state.EngineState;
-import org.springframework.core.Ordered;
+import dev.peytob.rpg.engine.state.event.instance.StateTearDownEvent;
+import dev.peytob.rpg.engine.utils.reflection.GenericReflectionUtils;
 
-public interface StateTearDownEventHandler<T extends EngineState> extends Ordered {
+public abstract class StateTearDownEventHandler<T extends EngineState> implements EventHandler<StateTearDownEvent> {
 
-    void onStateTearDown(T engineState, EcsContext ecsContext);
+    abstract public void handleStateTearDown(T engineState, EcsContext oldContext);
 
     @Override
-    default int getOrder() {
-        return 0;
-    }
+    @SuppressWarnings("unchecked")
+    public final void handleEvent(StateTearDownEvent event) {
+        Class<?> engineStateClass = GenericReflectionUtils.resolveTypeArgument(getClass(), StateTearDownEventHandler.class);
 
-    default String getName() {
-        return getClass().getSimpleName();
+        if (engineStateClass.equals(event.engineState().getClass())) {
+            handleStateTearDown((T) event.engineState(), event.context());
+        }
     }
 }

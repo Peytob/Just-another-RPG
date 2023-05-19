@@ -5,5 +5,5 @@ import dev.peytob.rpg.engine.state.EngineState;
 /**
  * Recommend separated interface for tearDown engine event handlers, that allows any engine state event class.
  */
-public interface AnyStateTearDownEventHandler extends StateTearDownEventHandler<EngineState> {
+public abstract class AnyStateTearDownEventHandler extends StateTearDownEventHandler<EngineState> {
 }
