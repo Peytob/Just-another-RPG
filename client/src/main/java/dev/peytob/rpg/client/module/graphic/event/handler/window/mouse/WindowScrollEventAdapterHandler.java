@@ -1,12 +1,12 @@
-package dev.peytob.rpg.client.module.graphic.event.handler.window.mouse.scroll;
+package dev.peytob.rpg.client.module.graphic.event.handler.window.mouse;
 
 import dev.peytob.rpg.client.module.control.context.event.MouseScrollEvent;
-import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.engine.context.EcsContextManager;
+import dev.peytob.rpg.engine.event.EventHandler;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class WindowScrollEventAdapterHandler extends WindowScrollEventHandler {
+public final class WindowScrollEventAdapterHandler implements EventHandler<MouseScrollEvent> {
 
     private final EcsContextManager ecsContextManager;
 
@@ -15,8 +15,7 @@ public final class WindowScrollEventAdapterHandler extends WindowScrollEventHand
     }
 
     @Override
-    public void handle(double xOffset, double yOffset) {
-        Event event = new MouseScrollEvent(xOffset, yOffset);
+    public void handleEvent(MouseScrollEvent event) {
         ecsContextManager.addEvent(event);
     }
 }

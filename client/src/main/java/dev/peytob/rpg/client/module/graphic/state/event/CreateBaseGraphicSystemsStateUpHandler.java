@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import static dev.peytob.rpg.client.module.graphic.model.RenderSystemDefaultOrder.*;
 
 @Component
-public class CreateBaseGraphicSystemsStateUpHandler implements StateSetUpEventHandler<InGameEngineState> {
+public class CreateBaseGraphicSystemsStateUpHandler extends StateSetUpEventHandler<InGameEngineState> {
 
     private final SystemFactory systemFactory;
 
@@ -21,7 +21,7 @@ public class CreateBaseGraphicSystemsStateUpHandler implements StateSetUpEventHa
     }
 
     @Override
-    public void onStateSetUp(EcsContextBuilder contextBuilder, InGameEngineState engineState) {
+    public void onStateSetUp(InGameEngineState engineState, EcsContextBuilder contextBuilder) {
         contextBuilder
             .addSystem(systemFactory.getSystem(FramebufferClearSystem.class), BEFORE_MAIN_RENDERING)
             .addSystem(systemFactory.getSystem(CameraUpdatingSystem.class), MAIN_RENDERING - 1)

@@ -1,15 +1,12 @@
 package dev.peytob.rpg.client.module.graphic.event.handler.window.key;
 
 import dev.peytob.rpg.client.module.control.context.event.KeyboardKeyEvent;
-import dev.peytob.rpg.client.module.control.model.KeyAction;
-import dev.peytob.rpg.client.module.control.model.KeyModifiers;
-import dev.peytob.rpg.client.module.control.model.KeyboardKey;
-import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.engine.context.EcsContextManager;
+import dev.peytob.rpg.engine.event.EventHandler;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class WindowKeyContextAdapterHandler extends WindowKeyEventHandler {
+public final class WindowKeyContextAdapterHandler implements EventHandler<KeyboardKeyEvent> {
 
     private final EcsContextManager ecsContextManager;
 
@@ -18,8 +15,7 @@ public final class WindowKeyContextAdapterHandler extends WindowKeyEventHandler 
     }
 
     @Override
-    public void handle(KeyboardKey key, KeyAction action, KeyModifiers modifiers) {
-        Event event = new KeyboardKeyEvent(key, action, modifiers);
+    public void handleEvent(KeyboardKeyEvent event) {
         ecsContextManager.addEvent(event);
     }
 }

@@ -1,19 +1,22 @@
 package dev.peytob.rpg.engine.state.event;
 
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
+import dev.peytob.rpg.engine.event.EventHandler;
 import dev.peytob.rpg.engine.state.EngineState;
-import org.springframework.core.Ordered;
+import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
+import dev.peytob.rpg.engine.utils.reflection.GenericReflectionUtils;
 
-public interface StateSetUpEventHandler<T extends EngineState> extends Ordered {
+public abstract class StateSetUpEventHandler<T extends EngineState> implements EventHandler<StateSetUpEvent> {
 
-    void onStateSetUp(EcsContextBuilder contextBuilder, T engineState);
+    abstract public void onStateSetUp(T engineState, EcsContextBuilder contextBuilder);
 
     @Override
-    default int getOrder() {
-        return 0;
-    }
+    @SuppressWarnings("unchecked")
+    public void handleEvent(StateSetUpEvent event) {
+        Class<?> engineStateClass = GenericReflectionUtils.resolveTypeArgument(getClass(), StateSetUpEventHandler.class);
 
-    default String getName() {
-        return getClass().getSimpleName();
+        if (engineStateClass.isInstance(event.engineState())) {
+            onStateSetUp((T) event.engineState(), event.contextBuilder());
+        }
     }
 }

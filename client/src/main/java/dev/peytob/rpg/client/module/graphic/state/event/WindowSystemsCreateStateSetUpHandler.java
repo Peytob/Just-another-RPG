@@ -12,7 +12,7 @@ import static dev.peytob.rpg.ecs.model.SystemDefaultOrder.AFTER_ALL;
 import static dev.peytob.rpg.ecs.model.SystemDefaultOrder.UPDATE_POOLING;
 
 @Component
-public class WindowSystemsCreateStateSetUpHandler implements AnyStateSetUpEventHandler {
+public class WindowSystemsCreateStateSetUpHandler extends AnyStateSetUpEventHandler {
 
     private final SystemFactory systemFactory;
 
@@ -21,7 +21,7 @@ public class WindowSystemsCreateStateSetUpHandler implements AnyStateSetUpEventH
     }
 
     @Override
-    public void onStateSetUp(EcsContextBuilder contextBuilder, EngineState engineState) {
+    public void onStateSetUp(EngineState engineState, EcsContextBuilder contextBuilder) {
         contextBuilder
             .addSystem(systemFactory.getSystem(WindowEventPoolingSystem.class), UPDATE_POOLING)
             .addSystem(systemFactory.getSystem(WindowClosingHandlingSystem.class), AFTER_ALL);
