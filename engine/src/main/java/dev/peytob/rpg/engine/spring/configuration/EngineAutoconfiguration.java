@@ -1,10 +1,10 @@
 package dev.peytob.rpg.engine.spring.configuration;
 
-import dev.peytob.rpg.engine.RpgEngine;
+import dev.peytob.rpg.engine.Engine;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackageClasses = RpgEngine.class)
+@ComponentScan(basePackageClasses = Engine.class)
 public class EngineAutoconfiguration {
 }
