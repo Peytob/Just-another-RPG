@@ -1,10 +1,10 @@
 package dev.peytob.rpg.client.module.graphic.context.component;
 
 import dev.peytob.rpg.client.module.graphic.model.Camera;
-import dev.peytob.rpg.ecs.component.Component;
+import dev.peytob.rpg.ecs.component.SingletonComponent;
 import dev.peytob.rpg.math.matrix.Mat4;
 
-public final class CameraComponent implements Component {
+public final class CameraComponent implements SingletonComponent {
 
     private final Camera camera;
     private Mat4 projectionMatrix;

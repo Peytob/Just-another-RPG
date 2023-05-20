@@ -1,7 +1,7 @@
 package dev.peytob.rpg.core.module.base.context.system;
 
 import dev.peytob.rpg.core.module.base.context.component.PositionComponent;
-import dev.peytob.rpg.core.module.base.context.component.EntitiesPositionsSyncComponent;
+import dev.peytob.rpg.core.module.base.context.component.EntitiesPositionsSyncRelationship;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.system.System;
@@ -14,8 +14,8 @@ public final class PositionsSyncSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        Collection<EntitiesPositionsSyncComponent> syncComponents = context
-            .getComponentsByType(EntitiesPositionsSyncComponent.class);
+        Collection<EntitiesPositionsSyncRelationship> syncComponents = context
+            .getComponentsByType(EntitiesPositionsSyncRelationship.class);
 
         syncComponents.forEach(component -> {
             Entity source = component.getSource();

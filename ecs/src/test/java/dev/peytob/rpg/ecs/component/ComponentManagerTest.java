@@ -180,4 +180,39 @@ public abstract class ComponentManagerTest extends EcsTests {
         assertThrows(UnsupportedOperationException.class, components::clear);
         assertThrows(UnsupportedOperationException.class, () -> components.remove(component));
     }
+
+    @Test
+    void singletonComponentCanBeRegistered() {
+        SingletonComponent singletonComponent = new FirstSingletonComponent();
+
+        assertDoesNotThrow(() -> componentManager.addComponent(singletonComponent));
+    }
+
+    @Test
+    void otherSingletonComponentCanBeRegisteredAfterRemovingFirst() {
+        SingletonComponent singletonComponent1 = new FirstSingletonComponent();
+        SingletonComponent singletonComponent2 = new FirstSingletonComponent();
+
+        assertDoesNotThrow(() -> componentManager.addComponent(singletonComponent1));
+        assertThrows(ComponentAlreadyRegisteredException.class, () -> componentManager.addComponent(singletonComponent2));
+    }
+
+    @Test
+    void twoSameSingletonComponentCantBeRegistered() {
+        SingletonComponent singletonComponent1 = new FirstSingletonComponent();
+        SingletonComponent singletonComponent2 = new FirstSingletonComponent();
+
+        componentManager.addComponent(singletonComponent1);
+        componentManager.removeComponent(singletonComponent1);
+        assertDoesNotThrow(() -> componentManager.addComponent(singletonComponent2));
+    }
+
+    @Test
+    void twoDifferentSingletonCanBeRegistered() {
+        SingletonComponent singletonComponent1 = new FirstSingletonComponent();
+        SingletonComponent singletonComponent2 = new SecondSingletonComponent();
+
+        assertDoesNotThrow(() -> componentManager.addComponent(singletonComponent1));
+        assertDoesNotThrow(() -> componentManager.addComponent(singletonComponent2));
+    }
 }

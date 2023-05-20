@@ -3,6 +3,7 @@ package dev.peytob.rpg.ecs.context;
 import dev.peytob.rpg.ecs.component.Component;
 import dev.peytob.rpg.ecs.component.ComponentManager;
 import dev.peytob.rpg.ecs.component.ComponentManagers;
+import dev.peytob.rpg.ecs.component.SingletonComponent;
 import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.entity.EntityManager;
 import dev.peytob.rpg.ecs.entity.EntityManagers;
@@ -90,7 +91,7 @@ class SimpleEcsContext implements EcsContext {
     }
 
     @Override
-    public <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType) {
+    public <T extends SingletonComponent> Optional<T> getSingletonComponentByType(Class<T> componentType) {
         return componentManager.getSingletonComponentByType(componentType);
     }
 
