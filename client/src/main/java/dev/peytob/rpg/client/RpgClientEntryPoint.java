@@ -3,7 +3,7 @@ package dev.peytob.rpg.client;
 import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.client.module.graphic.system.library.GlfwLibraryHandler;
 import dev.peytob.rpg.client.system.library.StaticLibraryHandler;
-import dev.peytob.rpg.engine.RpgEngine;
+import dev.peytob.rpg.engine.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -27,7 +27,7 @@ public class RpgClientEntryPoint {
         ConfigurableApplicationContext context = SpringApplication
                 .run(RpgClientEntryPoint.class);
 
-        RpgEngine engine = context.getBean(RpgEngine.class);
+        Engine engine = context.getBean(Engine.class);
         InGameEngineState startEngineState = context.getBean(InGameEngineState.class);
 
         engine.initialize();
