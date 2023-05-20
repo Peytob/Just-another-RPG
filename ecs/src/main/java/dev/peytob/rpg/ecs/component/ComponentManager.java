@@ -13,7 +13,7 @@ public interface ComponentManager {
 
     <T extends Component> Collection<T> getComponentsByType(Class<T> componentType);
 
-    <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType);
+    <T extends SingletonComponent> Optional<T> getSingletonComponentByType(Class<T> componentType);
 
     int getComponentsCount();
 

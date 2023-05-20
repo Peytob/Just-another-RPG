@@ -32,7 +32,7 @@ final class UnmodifiableComponentManager implements ComponentManager {
     }
 
     @Override
-    public <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType) {
+    public <T extends SingletonComponent> Optional<T> getSingletonComponentByType(Class<T> componentType) {
         return componentManager.getSingletonComponentByType(componentType);
     }
 

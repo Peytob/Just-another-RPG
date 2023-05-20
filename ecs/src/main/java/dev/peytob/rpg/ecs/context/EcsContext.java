@@ -1,6 +1,7 @@
 package dev.peytob.rpg.ecs.context;
 
 import dev.peytob.rpg.ecs.component.Component;
+import dev.peytob.rpg.ecs.component.SingletonComponent;
 import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.event.Event;
 import dev.peytob.rpg.ecs.system.System;
@@ -24,7 +25,7 @@ public interface EcsContext {
 
     <T extends Component> Collection<T> getComponentsByType(Class<T> componentType);
 
-    <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType);
+    <T extends SingletonComponent> Optional<T> getSingletonComponentByType(Class<T> componentType);
 
     Collection<Class<? extends Component>> getComponentTypes();
 

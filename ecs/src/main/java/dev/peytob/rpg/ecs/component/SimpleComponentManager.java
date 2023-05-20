@@ -25,6 +25,10 @@ final class SimpleComponentManager implements ComponentManager {
             throw new ComponentAlreadyRegisteredException("Component already registered", component);
         }
 
+        if (component instanceof SingletonComponent singletonComponent && components.containsKey(singletonComponent.getClass())) {
+            throw new ComponentAlreadyRegisteredException("Two same typed singleton components cant be registered", component);
+        }
+
         components.put(component.getClass(), component);
     }
 
@@ -48,11 +52,12 @@ final class SimpleComponentManager implements ComponentManager {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends Component> Optional<T> getSingletonComponentByType(Class<T> componentType) {
+    public <T extends SingletonComponent> Optional<T> getSingletonComponentByType(Class<T> componentType) {
         return (Optional<T>) components
             .get(componentType)
             .stream()
-            .findFirst();
+            .findFirst()
+            .map(component -> (SingletonComponent) component);
     }
 
     @Override
