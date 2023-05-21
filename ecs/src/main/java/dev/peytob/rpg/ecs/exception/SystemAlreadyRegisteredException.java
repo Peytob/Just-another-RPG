@@ -7,7 +7,7 @@ public class SystemAlreadyRegisteredException extends RuntimeException {
     private final System system;
 
     public SystemAlreadyRegisteredException(System system) {
-        super("System already registered");
+        super("System " + system.getClass().getSimpleName() + " is already registered");
         this.system = system;
     }
 

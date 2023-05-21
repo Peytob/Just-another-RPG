@@ -95,6 +95,19 @@ abstract class SystemManagerTest extends EcsTests {
     }
 
     @Test
+    void systemStoredInRightOrder() {
+        System firstSystem = ctx -> {};
+        System secondSystem = ctx -> {};
+        System thirdSystem = ctx -> {};
+
+        systemManager.registerSystem(secondSystem, 3);
+        systemManager.registerSystem(firstSystem, 1);
+        systemManager.registerSystem(thirdSystem, 12);
+
+        assertElementsEquals(List.of(firstSystem, secondSystem, thirdSystem), systemManager.getAllSystems());
+    }
+
+    @Test
     void sameSystemCantBeRegisteredByDifferentWays() {
         System system = new TestSystem();
 
