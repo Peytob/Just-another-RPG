@@ -7,7 +7,7 @@ import dev.peytob.rpg.core.module.location.model.tilemap.Tilemaps;
 import dev.peytob.rpg.core.module.location.repository.TileRepository;
 import dev.peytob.rpg.core.module.location.resource.Tile;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
-import dev.peytob.rpg.engine.state.event.StateSetUpEventHandler;
+import dev.peytob.rpg.engine.state.event.handler.StateSetUpEventHandler;
 import dev.peytob.rpg.math.vector.Vectors;
 import org.springframework.stereotype.Component;
 

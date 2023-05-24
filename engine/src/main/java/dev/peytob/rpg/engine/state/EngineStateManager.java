@@ -4,6 +4,7 @@ import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.context.EcsContexts;
 import dev.peytob.rpg.engine.context.EcsContextManager;
 import dev.peytob.rpg.engine.event.EventBus;
+import dev.peytob.rpg.engine.state.event.instance.AfterStateSetUpEvent;
 import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
 import dev.peytob.rpg.engine.state.event.instance.StateTearDownEvent;
 import org.slf4j.Logger;
@@ -44,6 +45,8 @@ public final class EngineStateManager {
         StateSetUpEvent stateSetUpEvent = new StateSetUpEvent(engineState, ecsContextBuilder);
         eventBus.addEvent(stateSetUpEvent);
         ecsContextManager.refreshContext(ecsContextBuilder);
+        AfterStateSetUpEvent afterStateSetUpEvent = new AfterStateSetUpEvent(engineState, ecsContextManager.getRawEcsContext());
+        eventBus.addEvent(afterStateSetUpEvent);
 
         this.currentEngineState = engineState;
 

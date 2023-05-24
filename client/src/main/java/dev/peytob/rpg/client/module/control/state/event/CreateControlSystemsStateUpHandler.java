@@ -5,7 +5,7 @@ import dev.peytob.rpg.client.module.control.context.system.WindowCloseButtonHand
 import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
-import dev.peytob.rpg.engine.state.event.StateSetUpEventHandler;
+import dev.peytob.rpg.engine.state.event.handler.StateSetUpEventHandler;
 import org.springframework.stereotype.Component;
 
 import static dev.peytob.rpg.ecs.model.SystemDefaultOrder.INPUT_HANDLING;

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.engine.state.event;
+package dev.peytob.rpg.engine.state.event.handler;
 
 import dev.peytob.rpg.engine.state.EngineState;
 

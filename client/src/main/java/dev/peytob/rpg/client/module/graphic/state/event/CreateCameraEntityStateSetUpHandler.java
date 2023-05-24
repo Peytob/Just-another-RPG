@@ -5,7 +5,7 @@ import dev.peytob.rpg.client.module.graphic.model.Camera;
 import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.core.module.base.context.component.PositionComponent;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
-import dev.peytob.rpg.engine.state.event.StateSetUpEventHandler;
+import dev.peytob.rpg.engine.state.event.handler.StateSetUpEventHandler;
 import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vectors;
 import org.springframework.stereotype.Component;
