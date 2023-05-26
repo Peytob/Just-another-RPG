@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.nio.ByteBuffer;
+
 import static org.lwjgl.opengl.GL33.*;
 
 @Service
@@ -48,7 +50,7 @@ public final class OpenGlGraphicBufferService implements GraphicBufferService {
     }
 
     @Override
-    public void updateBufferData(Buffer buffer, float[] data, int usage) {
+    public void updateBufferData(Buffer buffer, ByteBuffer data, int usage) {
         glBufferData(buffer.target(), data, usage);
     }
 }

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class OpenGlMeshService implements MeshService {
     }
 
     @Override
-    public Mesh createMesh(float[] vertices, String textId) {
+    public Mesh createMesh(ByteBuffer buffer, int verticesCount, String textId) {
         logger.info("Creating mesh with id {}", textId);
 
         VertexArray vertexArray = vertexArrayService.createVertexArray(textId + "_vertexArray");
@@ -45,18 +46,18 @@ public class OpenGlMeshService implements MeshService {
         glBindVertexArray(vertexArray.id());
 
         glBindBuffer(vertexBuffer.target(), vertexBuffer.id());
-        graphicBufferService.updateBufferData(vertexBuffer, vertices, GL_STATIC_DRAW);
+        graphicBufferService.updateBufferData(vertexBuffer, buffer, GL_STATIC_DRAW);
 
         vertexArrayService.enableVertexAttributes(DEFAULT_ATTRIBUTES);
 
         logger.info("Mesh with id {} created and bound to vertex array id {}", textId, vertexArray.id());
 
         Mesh mesh = new Mesh(
-                vertexArray.id(), // Now ID equals to vertex array
-                textId,
-                vertexArray,
-                vertexBuffer,
-                vertices.length / 2); // TODO Make 2 not hardcoded...
+            vertexArray.id(),
+            textId,
+            vertexArray,
+            vertexBuffer,
+            verticesCount);
 
         meshRepository.append(mesh);
 
