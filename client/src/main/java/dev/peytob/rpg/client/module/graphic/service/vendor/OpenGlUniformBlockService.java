@@ -7,8 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL31.GL_UNIFORM_BUFFER;
+import static org.lwjgl.opengl.GL31.*;
 
 @Component
 public class OpenGlUniformBlockService implements UniformBlockService {
@@ -40,6 +39,8 @@ public class OpenGlUniformBlockService implements UniformBlockService {
         glBindBuffer(GL_UNIFORM_BUFFER, buffer.id());
         glBufferData(GL_UNIFORM_BUFFER, sizesInBytes, GL_STATIC_DRAW);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+        glBindBufferRange(GL_UNIFORM_BUFFER, bindingIndex, buffer.id(), 0, sizesInBytes);
 
         uniformBlockRepository.append(uniformBlock);
 
