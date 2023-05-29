@@ -17,4 +17,9 @@ final class ImmutableMat4 implements Mat4 {
     public void set(int row, int column, int data) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public float[] getRaw() {
+        return mat4.getRaw();
+    }
 }
