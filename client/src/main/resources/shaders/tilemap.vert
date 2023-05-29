@@ -2,10 +2,11 @@
 
 layout (location = 0) in uint a_tileId;
 
-/**
- * Sizes of map in tiles.
-**/
-uniform ivec2 mapSize;
+//uniform ivec2 u_mapSizeTiles;
+
+layout (std140) uniform Camera {
+    mat4 projection;
+};
 
 out VS_OUT {
     uint tileId;
@@ -16,8 +17,8 @@ void main() {
     ivec2 u_mapSizeTiles = ivec2(16, 16);
 
     vec2 tileCoordinates = vec2(
-        index / mapSize.y,
-        index % mapSize.y
+        index / u_mapSizeTiles.y,
+        index % u_mapSizeTiles.y
     );
 
     gl_Position = projection * vec4(tileCoordinates, 0, 1);

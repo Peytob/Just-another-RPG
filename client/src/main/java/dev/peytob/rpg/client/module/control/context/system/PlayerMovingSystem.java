@@ -45,7 +45,7 @@ public final class PlayerMovingSystem implements System {
         }
 
         Vec2 currentPosition = cameraPosition.getPosition();
-        float speed = 0.01f;
+        float speed = 1f;
 
         if (GLFW.glfwGetKey(window.getPointer(), FORWARD) == GLFW.GLFW_PRESS) {
             currentPosition = currentPosition.plus(Vectors.immutableVec2(0.0f, speed));

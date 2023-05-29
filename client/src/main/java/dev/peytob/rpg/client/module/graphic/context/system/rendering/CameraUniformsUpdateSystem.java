@@ -23,7 +23,6 @@ public class CameraUniformsUpdateSystem implements System {
     }
 
     private void updateCameraUniforms(CameraComponent cameraComponent) {
-        java.lang.System.out.println(cameraComponent.getProjectionMatrix());
         cameraUniformBlockFacade.setProjectionMatrix(cameraComponent.getProjectionMatrix());
     }
 }
