@@ -7,4 +7,6 @@ public interface Mat4 {
     float get(int row, int column);
 
     void set(int row, int column, int data);
+
+    float[] getRaw();
 }
