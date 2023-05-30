@@ -1,9 +1,10 @@
 package dev.peytob.rpg.client.module.graphic.model;
 
 import dev.peytob.rpg.math.matrix.Mat4;
+import dev.peytob.rpg.math.vector.Vec2i;
 
 public enum DefaultUniformBlocksData {
-    CAMERA("Camera", Mat4.BYTES, 0);
+    CAMERA("Camera", Mat4.BYTES + Vec2i.BYTES, 0);
 
     private final String name;
     private final int bytes;

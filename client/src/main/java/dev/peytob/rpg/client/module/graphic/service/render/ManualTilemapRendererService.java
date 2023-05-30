@@ -5,20 +5,17 @@ import dev.peytob.rpg.client.module.graphic.model.RenderContext;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.ShaderProgram;
 import dev.peytob.rpg.client.module.graphic.service.MeshService;
-import dev.peytob.rpg.client.module.graphic.service.facade.DefaultMeshesService;
 import dev.peytob.rpg.client.module.graphic.service.facade.DefaultShaderProgramsService;
 import dev.peytob.rpg.client.module.graphic.service.vendor.RenderService;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.core.module.location.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 import dev.peytob.rpg.math.vector.Vectors;
-import org.lwjgl.BufferUtils;
 import org.springframework.stereotype.Component;
 
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11C.GL_POINTS;
 
 // TODO Optimize tilemap rendering process later
 @Component
