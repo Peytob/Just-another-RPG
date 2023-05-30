@@ -32,6 +32,11 @@ final class MutableMat4 implements Mat4 {
         values[toIndex(row, column)] = data;
     }
 
+    @Override
+    public float[] getRaw() {
+        return values;
+    }
+
     private int toIndex(int row, int column) {
         return row * 4 + column;
     }

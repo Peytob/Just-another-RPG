@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.*;
 
 // TODO Optimize tilemap rendering process later
 @Component
@@ -45,10 +45,15 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
 
         ByteBuffer tilemapBuffer = makeTilemapBuffer(tilemap, Vectors.immutableVec2i(), tilemap.getSizes());
         int tilesCount = tilemap.getSizes().x() * tilemap.getSizes().y();
+
         Mesh tilemapMesh = meshService.createMesh(tilemapBuffer, tilesCount, "tilemap");
 
         ShaderProgram tilemapShaderProgram = defaultShaderProgramsService.getTilemapShaderProgram();
-        if ()
+
+        RenderContext renderContext = new RenderContext();
+        renderContext.setRenderMode(GL_POINTS);
+        renderContext.setShaderProgramId(tilemapShaderProgram.id());
+        renderService.renderMesh(tilemapMesh, renderContext);
 
         meshService.removeMesh(tilemapMesh);
     }
