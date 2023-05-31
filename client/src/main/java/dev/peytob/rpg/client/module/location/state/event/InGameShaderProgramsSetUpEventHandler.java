@@ -5,6 +5,7 @@ import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.core.module.location.context.component.TilemapComponent;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.engine.state.event.handler.AfterStateSetUpEventHandler;
+import dev.peytob.rpg.math.vector.Vectors;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +26,7 @@ public class InGameShaderProgramsSetUpEventHandler extends AfterStateSetUpEventH
 
     private void setUpTilemapShader(TilemapComponent tilemapComponent) {
         tilemapShaderProgramFacade.setTilemapSizes(tilemapComponent.getTilemap().getSizes());
+        // TODO Make not hardcoded
+        tilemapShaderProgramFacade.setTileSizes(Vectors.immutableVec2i(32, 32));
     }
 }

@@ -7,7 +7,7 @@ public interface ShaderService {
 
     Shader compileShader(String code, String textId, int type);
 
-    ShaderProgram createShaderProgram(Shader vertexShader, Shader fragmentShader, String textId);
+    ShaderProgram createShaderProgram(Shader vertexShader, Shader fragmentShader, Shader geometryShader, String textId);
 
     boolean removeShader(Shader shader);
 

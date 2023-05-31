@@ -7,5 +7,7 @@ public interface TilemapShaderProgramFacade {
 
     void setTilemapSizes(Vec2i sizes);
 
+    void setTileSizes(Vec2i sizes);
+
     ShaderProgram getTilemapShaderProgram();
 }

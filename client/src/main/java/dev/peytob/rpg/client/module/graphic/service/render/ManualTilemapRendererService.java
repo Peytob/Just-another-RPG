@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.ByteBuffer;
 
-import static org.lwjgl.opengl.GL11C.GL_POINTS;
+import static org.lwjgl.opengl.GL32.*;
 
 // TODO Optimize tilemap rendering process later
 @Component
@@ -45,6 +45,7 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
         RenderContext renderContext = new RenderContext();
         renderContext.setRenderMode(GL_POINTS);
         renderContext.setShaderProgramId(tilemapShaderProgram.id());
+        renderContext.setPolygonMode(GL_LINE);
         renderService.renderMesh(tilemapMesh, renderContext);
 
         meshService.removeMesh(tilemapMesh);

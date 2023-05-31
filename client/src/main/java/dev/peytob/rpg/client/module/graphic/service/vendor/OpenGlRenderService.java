@@ -11,6 +11,8 @@ public final class OpenGlRenderService implements RenderService {
 
     @Override
     public void renderMesh(Mesh mesh, RenderContext renderContext) {
+        glPolygonMode(GL_FRONT_AND_BACK, renderContext.getPolygonMode());
+
         glUseProgram(renderContext.getShaderProgramId());
         glBindVertexArray(mesh.vertexArray().id());
         glDrawArrays(renderContext.getRenderMode(), 0, mesh.verticesCount());

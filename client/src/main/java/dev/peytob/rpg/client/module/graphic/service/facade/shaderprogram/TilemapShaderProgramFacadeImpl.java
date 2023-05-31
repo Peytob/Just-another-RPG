@@ -14,6 +14,7 @@ import static org.lwjgl.opengl.GL31.*;
 public class TilemapShaderProgramFacadeImpl implements TilemapShaderProgramFacade {
 
     private static final String MAP_SIZE_TILES_UNIFORM = "u_mapSizeTiles";
+    private static final String TILE_SIZE_TILES_UNIFORM = "u_tileSizesPixels";
 
     private static final Logger logger = LoggerFactory.getLogger(TilemapShaderProgramFacadeImpl.class);
 
@@ -30,6 +31,21 @@ public class TilemapShaderProgramFacadeImpl implements TilemapShaderProgramFacad
 
         if (tilemapSizesUniform == null) {
             logger.error("{} uniform not found in tilemap shader", MAP_SIZE_TILES_UNIFORM);
+            return;
+        }
+
+        glUseProgram(shaderProgram.id());
+        glUniform2i(tilemapSizesUniform.location(), sizes.x(), sizes.y());
+        glUseProgram(0);
+    }
+
+    @Override
+    public void setTileSizes(Vec2i sizes) {
+        ShaderProgram shaderProgram = getTilemapShaderProgram();
+        ShaderProgram.ShaderProgramUniform tilemapSizesUniform = shaderProgram.uniformLocations().get(TILE_SIZE_TILES_UNIFORM);
+
+        if (tilemapSizesUniform == null) {
+            logger.error("{} uniform not found in tilemap shader", TILE_SIZE_TILES_UNIFORM);
             return;
         }
 

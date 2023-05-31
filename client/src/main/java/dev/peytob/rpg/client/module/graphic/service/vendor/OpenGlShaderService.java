@@ -56,11 +56,12 @@ public final class OpenGlShaderService implements ShaderService {
     }
 
     @Override
-    public ShaderProgram createShaderProgram(Shader vertexShader, Shader fragmentShader, String textId) {
+    public ShaderProgram createShaderProgram(Shader vertexShader, Shader fragmentShader, Shader geometryShader, String textId) {
         logger.info("Creating new shader program with id {}", textId);
 
         assert vertexShader.type() == GL_VERTEX_SHADER;
         assert fragmentShader.type() == GL_FRAGMENT_SHADER;
+        assert geometryShader == null || geometryShader.type() == GL_GEOMETRY_SHADER;
 
         int shaderProgramId = glCreateProgram();
 
@@ -69,8 +70,14 @@ public final class OpenGlShaderService implements ShaderService {
         glAttachShader(shaderProgramId, vertexShader.id());
 
         logger.info("Attaching fragment shader with id {} ({}) to shader program {} ({})",
-                vertexShader.textId(), vertexShader.id(), textId, shaderProgramId);
+                fragmentShader.textId(), fragmentShader.id(), textId, shaderProgramId);
         glAttachShader(shaderProgramId, fragmentShader.id());
+
+        if (geometryShader != null) {
+            logger.info("Attaching geometry shader with id {} ({}) to shader program {} ({})",
+                geometryShader.textId(), geometryShader.id(), textId, shaderProgramId);
+            glAttachShader(shaderProgramId, geometryShader.id());
+        }
 
         logger.info("Linking shader program with id {} ({})", textId, shaderProgramId);
         glLinkProgram(shaderProgramId);
