@@ -2,7 +2,7 @@
 
 layout (location = 0) in uint a_tileId;
 
-//uniform ivec2 u_mapSizeTiles;
+uniform ivec2 u_mapSizeTiles;
 
 layout (std140) uniform Camera {
     mat4 projection;
@@ -14,9 +14,6 @@ out VS_OUT {
 } vs_out;
 
 void main() {
-    // Mock uniforms
-    ivec2 u_mapSizeTiles = ivec2(16, 16);
-
     ivec2 tileSizesPixels = ivec2(
         resolution.x / u_mapSizeTiles.x,
         resolution.y / u_mapSizeTiles.y
