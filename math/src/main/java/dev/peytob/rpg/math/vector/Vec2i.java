@@ -2,6 +2,8 @@ package dev.peytob.rpg.math.vector;
 
 public interface Vec2i {
 
+    int BYTES = Integer.BYTES * 2;
+
     int x();
 
     int y();

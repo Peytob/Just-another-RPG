@@ -5,38 +5,30 @@ import dev.peytob.rpg.client.module.graphic.model.RenderContext;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.ShaderProgram;
 import dev.peytob.rpg.client.module.graphic.service.MeshService;
-import dev.peytob.rpg.client.module.graphic.service.facade.DefaultMeshesService;
-import dev.peytob.rpg.client.module.graphic.service.facade.DefaultShaderProgramsService;
+import dev.peytob.rpg.client.module.graphic.service.facade.shaderprogram.TilemapShaderProgramFacade;
 import dev.peytob.rpg.client.module.graphic.service.vendor.RenderService;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.core.module.location.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 import dev.peytob.rpg.math.vector.Vectors;
-import org.lwjgl.BufferUtils;
 import org.springframework.stereotype.Component;
 
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL32.*;
 
 // TODO Optimize tilemap rendering process later
 @Component
 public final class ManualTilemapRendererService implements TilemapRenderingService {
 
-    private final DefaultShaderProgramsService defaultShaderProgramsService;
-
     private final MeshService meshService;
     private final RenderService renderService;
+    private final TilemapShaderProgramFacade tilemapShaderProgramFacade;
 
-    public ManualTilemapRendererService(
-        DefaultShaderProgramsService defaultShaderProgramsService,
-        MeshService meshService,
-        RenderService renderService
-    ) {
-        this.defaultShaderProgramsService = defaultShaderProgramsService;
+    public ManualTilemapRendererService(MeshService meshService, RenderService renderService, TilemapShaderProgramFacade tilemapShaderProgramFacade) {
         this.meshService = meshService;
         this.renderService = renderService;
+        this.tilemapShaderProgramFacade = tilemapShaderProgramFacade;
     }
 
     @Override
@@ -48,11 +40,12 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
 
         Mesh tilemapMesh = meshService.createMesh(tilemapBuffer, tilesCount, "tilemap");
 
-        ShaderProgram tilemapShaderProgram = defaultShaderProgramsService.getTilemapShaderProgram();
+        ShaderProgram tilemapShaderProgram = tilemapShaderProgramFacade.getTilemapShaderProgram();
 
         RenderContext renderContext = new RenderContext();
         renderContext.setRenderMode(GL_POINTS);
         renderContext.setShaderProgramId(tilemapShaderProgram.id());
+        renderContext.setPolygonMode(GL_LINE);
         renderService.renderMesh(tilemapMesh, renderContext);
 
         meshService.removeMesh(tilemapMesh);

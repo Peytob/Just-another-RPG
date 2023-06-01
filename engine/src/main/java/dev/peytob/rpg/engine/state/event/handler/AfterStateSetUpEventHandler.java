@@ -8,12 +8,12 @@ import dev.peytob.rpg.engine.utils.reflection.GenericReflectionUtils;
 
 public abstract class AfterStateSetUpEventHandler<T extends EngineState> implements EventHandler<AfterStateSetUpEvent> {
 
-    abstract public void handleStateTearDown(T engineState, EcsContext oldContext);
+    abstract public void handleStateTearDown(T engineState, EcsContext newContext);
 
     @Override
     @SuppressWarnings("unchecked")
     public final void handleEvent(AfterStateSetUpEvent event) {
-        Class<?> engineStateClass = GenericReflectionUtils.resolveTypeArgument(getClass(), AfterStateSetUpEvent.class);
+        Class<?> engineStateClass = GenericReflectionUtils.resolveTypeArgument(getClass(), AfterStateSetUpEventHandler.class);
 
         if (engineStateClass.equals(event.engineState().getClass())) {
             handleStateTearDown((T) event.engineState(), event.context());

@@ -24,5 +24,6 @@ public class CameraUniformsUpdateSystem implements System {
 
     private void updateCameraUniforms(CameraComponent cameraComponent) {
         cameraUniformBlockFacade.setProjectionMatrix(cameraComponent.getProjectionMatrix());
+        cameraUniformBlockFacade.setScreenResolution(cameraComponent.getCamera().getResolution());
     }
 }

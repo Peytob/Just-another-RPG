@@ -11,8 +11,7 @@ import java.io.IOException;
 
 import static dev.peytob.rpg.client.module.graphic.model.DefaultShaderProgramsIds.TILEMAP_SHADER_PROGRAM_TEXT_ID;
 import static dev.peytob.rpg.engine.utils.FileUtils.readClasspathFile;
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
+import static org.lwjgl.opengl.GL32.*;
 
 // TODO Its can be optimized - some shaders might be loaded and compiled many times
 
@@ -32,12 +31,13 @@ public final class LoadDefaultShaderProgramsStep implements InitializingPipeline
         final String defaultFilter = "shaders";
 
         loadShaderProgram(
-                TILEMAP_SHADER_PROGRAM_TEXT_ID,
-                defaultFilter + "/tilemap.vert",
-                defaultFilter + "/tilemap.frag");
+            TILEMAP_SHADER_PROGRAM_TEXT_ID,
+            defaultFilter + "/tilemap.vert",
+            defaultFilter + "/tilemap.frag",
+            defaultFilter + "/tilemap.geom");
     }
 
-    private void loadShaderProgram(String programTextId, String vertexShaderFile, String fragmentShaderFile) {
+    private void loadShaderProgram(String programTextId, String vertexShaderFile, String fragmentShaderFile, String geometryShaderFile) {
         logger.info("Loading default shader program with id {}", programTextId);
         ClassLoader classLoader = getClass().getClassLoader();
 
@@ -48,10 +48,14 @@ public final class LoadDefaultShaderProgramsStep implements InitializingPipeline
             String fragmentShaderCode = readClasspathFile(classLoader, fragmentShaderFile);
             Shader fragmentShader = shaderService.compileShader(fragmentShaderCode, programTextId + "_fragment", GL_FRAGMENT_SHADER);
 
-            shaderService.createShaderProgram(vertexShader, fragmentShader, programTextId);
+            String geometryShaderCode = readClasspathFile(classLoader, geometryShaderFile);
+            Shader geometryShader = shaderService.compileShader(geometryShaderCode, programTextId + "_geometry", GL_GEOMETRY_SHADER);
+
+            shaderService.createShaderProgram(vertexShader, fragmentShader, geometryShader, programTextId);
 
             shaderService.removeShader(fragmentShader);
             shaderService.removeShader(vertexShader);
+            shaderService.removeShader(geometryShader);
         } catch (IOException e) {
             throw new IllegalStateException("Default shader program file not found in classpath", e);
         }

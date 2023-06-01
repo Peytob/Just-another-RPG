@@ -23,6 +23,10 @@ public final class Camera {
         this.position = Vectors.immutableVec2(position);
     }
 
+    public void setCenter(Vec2 position) {
+        this.position = position.plus(resolution.x() / 2.0f, -resolution.y() / 2.0f);
+    }
+
     public Vec2i getResolution() {
         return resolution;
     }
