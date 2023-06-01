@@ -1,7 +1,8 @@
 package dev.peytob.rpg.client.module.location.state.event;
 
+import dev.peytob.rpg.client.module.graphic.model.RenderableTilemap;
 import dev.peytob.rpg.client.state.InGameEngineState;
-import dev.peytob.rpg.core.module.location.context.component.TilemapComponent;
+import dev.peytob.rpg.client.module.graphic.context.component.TilemapComponent;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemaps;
 import dev.peytob.rpg.core.module.location.repository.TileRepository;
@@ -32,6 +33,9 @@ public class MockTilemapCreatorSetUpEventHandler extends StateSetUpEventHandler<
             }
         }
 
-        contextBuilder.initializeEntity((entity, ecsContext) -> entity.bindComponent(new TilemapComponent(tilemap)));
+        RenderableTilemap renderableTilemap = new RenderableTilemap(tilemap, Vectors.immutableVec2i(64, 64));
+
+        contextBuilder.initializeEntity((entity, ecsContext) ->
+                entity.bindComponent(new TilemapComponent(renderableTilemap)));
     }
 }

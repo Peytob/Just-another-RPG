@@ -1,8 +1,9 @@
 package dev.peytob.rpg.client.module.location.state.event;
 
+import dev.peytob.rpg.client.module.graphic.model.RenderableTilemap;
 import dev.peytob.rpg.client.module.graphic.service.facade.shaderprogram.TilemapShaderProgramFacade;
 import dev.peytob.rpg.client.state.InGameEngineState;
-import dev.peytob.rpg.core.module.location.context.component.TilemapComponent;
+import dev.peytob.rpg.client.module.graphic.context.component.TilemapComponent;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.engine.state.event.handler.AfterStateSetUpEventHandler;
 import dev.peytob.rpg.math.vector.Vectors;
@@ -25,8 +26,8 @@ public class InGameShaderProgramsSetUpEventHandler extends AfterStateSetUpEventH
     }
 
     private void setUpTilemapShader(TilemapComponent tilemapComponent) {
+        RenderableTilemap tilemap = tilemapComponent.getRenderableTilemap();
         tilemapShaderProgramFacade.setTilemapSizes(tilemapComponent.getTilemap().getSizes());
-        // TODO Make not hardcoded
-        tilemapShaderProgramFacade.setTileSizes(Vectors.immutableVec2i(32, 32));
+        tilemapShaderProgramFacade.setTileSizes(tilemap.getRenderingTileSize());
     }
 }

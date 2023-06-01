@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.module.graphic.context.system.rendering;
 
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
-import dev.peytob.rpg.core.module.location.context.component.TilemapComponent;
+import dev.peytob.rpg.client.module.graphic.context.component.TilemapComponent;
 import dev.peytob.rpg.client.module.graphic.model.Camera;
 import dev.peytob.rpg.client.module.graphic.service.render.TilemapRenderingService;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
