@@ -4,6 +4,8 @@ import dev.peytob.rpg.client.module.graphic.exception.ImageLoadingException;
 import dev.peytob.rpg.client.module.graphic.model.Image;
 import dev.peytob.rpg.math.vector.Vec2i;
 import dev.peytob.rpg.math.vector.Vectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -13,10 +15,14 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 @Component
-public class ImageLoaderImpl implements ImageLoader {
+public class ImageIoImageLoader implements ImageLoader {
+
+    private static final Logger logger = LoggerFactory.getLogger(ImageIoImageLoader.class);
 
     @Override
     public Image loaderClasspathImage(String path) {
+        logger.info("Loading classpath image: {}", path);
+
         try (InputStream imageResource = getClass().getResourceAsStream(path)) {
             if (imageResource == null) {
                 throw new ImageLoadingException("Classpath resource with path '" + path + "' not found");

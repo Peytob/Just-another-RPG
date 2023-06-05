@@ -2,8 +2,10 @@ package dev.peytob.rpg.client.module.graphic.service.render;
 
 import dev.peytob.rpg.client.module.graphic.model.Camera;
 import dev.peytob.rpg.client.module.graphic.model.RenderContext;
+import dev.peytob.rpg.client.module.graphic.repository.TextureRepository;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.ShaderProgram;
+import dev.peytob.rpg.client.module.graphic.resource.Texture;
 import dev.peytob.rpg.client.module.graphic.service.MeshService;
 import dev.peytob.rpg.client.module.graphic.service.facade.shaderprogram.TilemapShaderProgramFacade;
 import dev.peytob.rpg.client.module.graphic.service.vendor.RenderService;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.ByteBuffer;
 
+import static dev.peytob.rpg.client.module.graphic.model.DefaultTexturesIds.DEFAULT_TEXTURE_ATLAS_ID;
 import static org.lwjgl.opengl.GL32.*;
 
 // TODO Optimize tilemap rendering process later
@@ -24,11 +27,16 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
     private final MeshService meshService;
     private final RenderService renderService;
     private final TilemapShaderProgramFacade tilemapShaderProgramFacade;
+    private final TextureRepository textureRepository;
 
-    public ManualTilemapRendererService(MeshService meshService, RenderService renderService, TilemapShaderProgramFacade tilemapShaderProgramFacade) {
+    public ManualTilemapRendererService(MeshService meshService,
+                                        RenderService renderService,
+                                        TilemapShaderProgramFacade tilemapShaderProgramFacade,
+                                        TextureRepository textureRepository) {
         this.meshService = meshService;
         this.renderService = renderService;
         this.tilemapShaderProgramFacade = tilemapShaderProgramFacade;
+        this.textureRepository = textureRepository;
     }
 
     @Override
@@ -42,10 +50,12 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
 
         ShaderProgram tilemapShaderProgram = tilemapShaderProgramFacade.getTilemapShaderProgram();
 
+        Texture textureAtlas = textureRepository.getById(DEFAULT_TEXTURE_ATLAS_ID);
+
         RenderContext renderContext = new RenderContext();
         renderContext.setRenderMode(GL_POINTS);
         renderContext.setShaderProgramId(tilemapShaderProgram.id());
-        renderContext.setPolygonMode(GL_LINE);
+        renderContext.setTextureId(textureAtlas.id());
         renderService.renderMesh(tilemapMesh, renderContext);
 
         meshService.removeMesh(tilemapMesh);

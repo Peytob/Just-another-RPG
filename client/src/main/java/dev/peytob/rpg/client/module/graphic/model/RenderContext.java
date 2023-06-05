@@ -10,6 +10,8 @@ public final class RenderContext {
 
     private Integer polygonMode = GL_FILL;
 
+    private Integer textureId;
+
     public Integer getShaderProgramId() {
         return shaderProgramId;
     }
@@ -32,5 +34,13 @@ public final class RenderContext {
 
     public void setPolygonMode(Integer polygonMode) {
         this.polygonMode = polygonMode;
+    }
+
+    public void setTextureId(Integer textureId) {
+        this.textureId = textureId;
+    }
+
+    public Integer getTextureId() {
+        return this.textureId;
     }
 }

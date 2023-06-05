@@ -23,7 +23,7 @@ public class OpenGlTextureService implements TextureService {
     }
 
     @Override
-    public void createTexture(String textId, Integer format, Integer dataType, Vec2i sizes, ByteBuffer data) {
+    public Texture createTexture(String textId, Integer format, Vec2i sizes, ByteBuffer data) {
         logger.info("Creating new texture with id {}", textId);
 
         int textureId = glGenTextures();
@@ -33,19 +33,21 @@ public class OpenGlTextureService implements TextureService {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, sizes.x(), sizes.y(), 0, format, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, sizes.x(), sizes.y(), 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
 
         Texture texture = new Texture(
             textureId,
             textId,
             format,
-            dataType,
             sizes,
             data.asReadOnlyBuffer());
 
         logger.info("Created texture with id {} ({})", textId, textureId);
 
         textureRepository.append(texture);
+
+        return texture;
     }
 
     @Override
