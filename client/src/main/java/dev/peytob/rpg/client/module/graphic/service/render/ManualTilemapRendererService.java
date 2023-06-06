@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.ByteBuffer;
 
-import static dev.peytob.rpg.client.module.graphic.model.DefaultTexturesIds.DEFAULT_TEXTURE_ATLAS_ID;
+import static dev.peytob.rpg.client.module.graphic.model.DefaultTexturesIds.DEFAULT_TILE_ATLAS_ID;
 import static org.lwjgl.opengl.GL32.*;
 
 // TODO Optimize tilemap rendering process later
@@ -50,7 +50,7 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
 
         ShaderProgram tilemapShaderProgram = tilemapShaderProgramFacade.getTilemapShaderProgram();
 
-        Texture textureAtlas = textureRepository.getById(DEFAULT_TEXTURE_ATLAS_ID);
+        Texture textureAtlas = textureRepository.getById(DEFAULT_TILE_ATLAS_ID);
 
         RenderContext renderContext = new RenderContext();
         renderContext.setRenderMode(GL_POINTS);

@@ -1,5 +1,7 @@
 package dev.peytob.rpg.engine.repositry;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import dev.peytob.rpg.engine.resource.Resource;
 
 import java.util.Collection;
@@ -90,12 +92,12 @@ public abstract class BaseRepository<R extends Record & Resource> implements Rep
     protected final class RepositoryIndex<K> {
 
         // Todo Make guava multimap later
-        private final Map<K, R> resourceByKey;
+        private final Multimap<K, R> resourceByKey;
 
         private final Function<R, K> keyExtractor;
 
         public RepositoryIndex(Function<R, K> keyExtractor) {
-            this.resourceByKey = new ConcurrentHashMap<>();
+            this.resourceByKey = HashMultimap.create();
             this.keyExtractor = keyExtractor;
         }
 
@@ -114,7 +116,7 @@ public abstract class BaseRepository<R extends Record & Resource> implements Rep
             return resourceByKey.containsKey(key);
         }
 
-        public R get(K key) {
+        public Collection<R> get(K key) {
             return resourceByKey.get(key);
         }
     }
