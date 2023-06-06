@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Function;
 
 /**
  * Just wraps Map class.
@@ -76,38 +77,45 @@ public abstract class BaseRepository<R extends Record & Resource> implements Rep
         return contains(resource.id()) || contains(resource.textId());
     }
 
-    protected void registerIndex(RepositoryIndex<?> repositoryIndex) {
+    protected <K> RepositoryIndex<K> registerIndex(Function<R, K> keyExtractor) {
+        RepositoryIndex<K> index = new RepositoryIndex<>(keyExtractor);
+        registerIndex(new RepositoryIndex<>(keyExtractor));
+        return index;
+    }
+
+    private void registerIndex(RepositoryIndex<?> repositoryIndex) {
         this.repositoryIndices.add(repositoryIndex);
     }
 
-    protected abstract class RepositoryIndex<K> {
+    protected final class RepositoryIndex<K> {
 
         // Todo Make guava multimap later
         private final Map<K, R> resourceByKey;
 
-        public RepositoryIndex() {
+        private final Function<R, K> keyExtractor;
+
+        public RepositoryIndex(Function<R, K> keyExtractor) {
             this.resourceByKey = new ConcurrentHashMap<>();
+            this.keyExtractor = keyExtractor;
         }
 
-        final public void append(R resource) {
-            K key = extractKey(resource);
+        public void append(R resource) {
+            K key = keyExtractor.apply(resource);
             resourceByKey.put(key, resource);
         }
 
-        final public void remove(R resource) {
-            K key = extractKey(resource);
+        public void remove(R resource) {
+            K key = keyExtractor.apply(resource);
             resourceByKey.remove(key, resource);
         }
 
-        final public boolean contains(R resource) {
-            K key = extractKey(resource);
+        public boolean contains(R resource) {
+            K key = keyExtractor.apply(resource);
             return resourceByKey.containsKey(key);
         }
 
-        final public R get(K key) {
+        public R get(K key) {
             return resourceByKey.get(key);
         }
-
-        protected abstract K extractKey(R resource);
     }
 }
