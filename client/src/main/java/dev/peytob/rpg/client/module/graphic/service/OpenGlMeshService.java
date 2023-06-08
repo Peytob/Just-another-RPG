@@ -21,8 +21,14 @@ public class OpenGlMeshService implements MeshService {
 
     private static final Logger logger = LoggerFactory.getLogger(OpenGlMeshService.class);
 
-    private static final Collection<VertexArray.VertexArrayAttribute> TILEMAP_BUFFER_ATTRIBUTES = List.of(
-            new VertexArray.VertexArrayAttribute(0, 1, GL_FLOAT, false, Float.BYTES, 0L));
+    /**
+     * Target shader layout:
+     * layout (location = 0) in vec2 a_tilePosition;
+     * layout (location = 1) in vec2 a_normalizedTextureCoordinates;
+     */
+    private static final Collection<VertexArray.VertexArrayAttribute> SPRITE_BUFFER_ATTRIBUTES = List.of(
+        new VertexArray.VertexArrayAttribute(0, 2, GL_FLOAT, false, 2 * Float.BYTES, 0L),
+        new VertexArray.VertexArrayAttribute(0, 2, GL_FLOAT, false, 2 * Float.BYTES, 8L));
 
     private final VertexArrayService vertexArrayService;
 
@@ -48,7 +54,7 @@ public class OpenGlMeshService implements MeshService {
         glBindBuffer(vertexBuffer.target(), vertexBuffer.id());
         graphicBufferService.updateBufferData(vertexBuffer, buffer, GL_STATIC_DRAW);
 
-        vertexArrayService.enableVertexAttributes(TILEMAP_BUFFER_ATTRIBUTES);
+        vertexArrayService.enableVertexAttributes(SPRITE_BUFFER_ATTRIBUTES);
 
         logger.info("Mesh with id {} created and bound to vertex array id {}", textId, vertexArray.id());
 

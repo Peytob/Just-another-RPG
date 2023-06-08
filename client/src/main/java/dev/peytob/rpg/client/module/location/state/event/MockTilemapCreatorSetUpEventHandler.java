@@ -24,18 +24,10 @@ public class MockTilemapCreatorSetUpEventHandler extends StateSetUpEventHandler<
     @Override
     public void onStateSetUp(InGameEngineState engineState, EcsContextBuilder contextBuilder) {
         Tilemap tilemap = Tilemaps.mutable(Vectors.immutableVec2i(16, 16));
-        Tile tile1 = new Tile(1, "test_tile1");
-        tileRepository.append(tile1);
-        Tile tile2 = new Tile(2, "test_tile2");
-        tileRepository.append(tile2);
-        Tile tile3 = new Tile(3, "test_tile3");
-        tileRepository.append(tile3);
-        Tile tile4 = new Tile(4, "test_tile4");
-        tileRepository.append(tile4);
 
         for (int x = 0, tileId = 0; x < tilemap.getSizes().x(); x++) {
             for (int y = 0; y < tilemap.getSizes().y(); y++) {
-                Tile tile = tileRepository.getById(tileId);
+                Tile tile = tileRepository.getById(tileId % 4 + 1);
                 tileId++;
                 tilemap.setTile(x, y, tile);
             }

@@ -1,10 +1,13 @@
 #version 330 core
 
-out vec4 fo_fragmentColor;
-in vec2 textureCoordinates;
-
 uniform sampler2D textureAtlas;
 
+in VS_OUT {
+    vec2 textureCoordinates;
+} vs_in;
+
+out vec4 fo_fragmentColor;
+
 void main() {
-    fo_fragmentColor = texture(textureAtlas, textureCoordinates);
+    fo_fragmentColor = texture(textureAtlas, vs_in.textureCoordinates);
 }

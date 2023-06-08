@@ -33,11 +33,11 @@ public final class LoadDefaultShaderProgramsStep implements InitializingPipeline
         loadShaderProgram(
             TILEMAP_SHADER_PROGRAM_TEXT_ID,
             defaultFilter + "/tilemap.vert",
-            defaultFilter + "/tilemap.frag",
-            defaultFilter + "/tilemap.geom");
+            defaultFilter + "/tilemap.frag"
+        );
     }
 
-    private void loadShaderProgram(String programTextId, String vertexShaderFile, String fragmentShaderFile, String geometryShaderFile) {
+    private void loadShaderProgram(String programTextId, String vertexShaderFile, String fragmentShaderFile) {
         logger.info("Loading default shader program with id {}", programTextId);
         ClassLoader classLoader = getClass().getClassLoader();
 
@@ -48,14 +48,10 @@ public final class LoadDefaultShaderProgramsStep implements InitializingPipeline
             String fragmentShaderCode = readClasspathFile(classLoader, fragmentShaderFile);
             Shader fragmentShader = shaderService.compileShader(fragmentShaderCode, programTextId + "_fragment", GL_FRAGMENT_SHADER);
 
-            String geometryShaderCode = readClasspathFile(classLoader, geometryShaderFile);
-            Shader geometryShader = shaderService.compileShader(geometryShaderCode, programTextId + "_geometry", GL_GEOMETRY_SHADER);
-
-            shaderService.createShaderProgram(vertexShader, fragmentShader, geometryShader, programTextId);
+            shaderService.createShaderProgram(vertexShader, fragmentShader, null, programTextId);
 
             shaderService.removeShader(fragmentShader);
             shaderService.removeShader(vertexShader);
-            shaderService.removeShader(geometryShader);
         } catch (IOException e) {
             throw new IllegalStateException("Default shader program file not found in classpath", e);
         }

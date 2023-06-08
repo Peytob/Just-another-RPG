@@ -32,7 +32,7 @@ public class TextureAtlasLoadingStep implements InitializingPipelineStep {
     @Override
     public void execute() {
         Image testTile = imageLoader.loaderClasspathImage(TILES_DIRECTORY + "/test_tile.png");
-        Texture texture = textureService.createTexture(DEFAULT_TILE_ATLAS_ID, GL_RGBA8, testTile);
+        Texture texture = textureService.createTexture(DEFAULT_TILE_ATLAS_ID + "_texture", GL_RGBA8, testTile);
         Vec2i tileSize = immutableVec2i(160, 160);
         Map<String, TextureAtlas.Sprite> atlasSprites = Map.of(
                 "test_tile1", new TextureAtlas.Sprite(0, immutableVec2i(0, 0), tileSize),
@@ -41,7 +41,7 @@ public class TextureAtlasLoadingStep implements InitializingPipelineStep {
                 "test_tile4", new TextureAtlas.Sprite(3, immutableVec2i(160, 160), tileSize)
         );
 
-        textureService.wrapTextureAsAtlas("test_texture_atlas", texture, atlasSprites);
+        textureService.wrapTextureAsAtlas(DEFAULT_TILE_ATLAS_ID, texture, atlasSprites);
     }
 
     @Override
