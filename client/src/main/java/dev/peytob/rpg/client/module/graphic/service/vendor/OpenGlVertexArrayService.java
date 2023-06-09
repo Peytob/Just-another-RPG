@@ -22,12 +22,16 @@ public final class OpenGlVertexArrayService implements VertexArrayService {
     }
 
     @Override
-    public VertexArray createVertexArray(String id) {
+    public VertexArray createVertexArray(String id, Collection<VertexArray.VertexArrayAttribute> tilemapBufferAttributes) {
         logger.info("Creating new vertex array with id {}", id);
 
         int vertexArrayId = glGenVertexArrays();
         VertexArray vertexArray = new VertexArray(vertexArrayId, id);
         vertexArrayRepository.append(vertexArray);
+
+        glBindVertexArray(vertexArrayId);
+        enableVertexAttributes(tilemapBufferAttributes);
+        glBindVertexArray(0);
 
         logger.info("Created new vertex array with id {}", id);
         return vertexArray;
@@ -49,8 +53,7 @@ public final class OpenGlVertexArrayService implements VertexArrayService {
         return vertexArrayRepository.remove(vertexArrayFromRepository);
     }
 
-    @Override
-    public void enableVertexAttributes(Collection<VertexArray.VertexArrayAttribute> defaultVertexArrayAttributes) {
+    private void enableVertexAttributes(Collection<VertexArray.VertexArrayAttribute> defaultVertexArrayAttributes) {
         defaultVertexArrayAttributes.forEach(attribute -> {
             glVertexAttribPointer(
                     attribute.index(),

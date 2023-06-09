@@ -6,9 +6,7 @@ import java.util.Collection;
 
 public interface VertexArrayService {
 
-    VertexArray createVertexArray(String id);
+    VertexArray createVertexArray(String id, Collection<VertexArray.VertexArrayAttribute> tilemapBufferAttributes);
 
     boolean removeVertexArray(VertexArray vertexArray);
-
-    void enableVertexAttributes(Collection<VertexArray.VertexArrayAttribute> defaultVertexArrayAttributes);
 }

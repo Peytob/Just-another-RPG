@@ -20,9 +20,6 @@ public class OpenGlMeshService implements MeshService {
 
     private static final Logger logger = LoggerFactory.getLogger(OpenGlMeshService.class);
 
-    private static final Collection<VertexArray.VertexArrayAttribute> DEFAULT_ATTRIBUTES = List.of(
-            new VertexArray.VertexArrayAttribute(0, 2, GL_FLOAT, false, 2 * Float.BYTES, 0L));
-
     private final VertexArrayService vertexArrayService;
 
     private final GraphicBufferService graphicBufferService;
@@ -36,18 +33,16 @@ public class OpenGlMeshService implements MeshService {
     }
 
     @Override
-    public Mesh createMesh(float[] vertices, String textId) {
+    public Mesh createMesh(String textId, float[] vertices, Collection<VertexArray.VertexArrayAttribute> attributes) {
         logger.info("Creating mesh with id {}", textId);
 
-        VertexArray vertexArray = vertexArrayService.createVertexArray(textId + "_vertexArray");
+        VertexArray vertexArray = vertexArrayService.createVertexArray(textId + "_vertexArray", attributes);
         Buffer vertexBuffer = graphicBufferService.createBuffer(textId + "_vbo", GL_ARRAY_BUFFER);
 
         glBindVertexArray(vertexArray.id());
 
         glBindBuffer(vertexBuffer.target(), vertexBuffer.id());
         graphicBufferService.updateBufferData(vertexBuffer, vertices, GL_STATIC_DRAW);
-
-        vertexArrayService.enableVertexAttributes(DEFAULT_ATTRIBUTES);
 
         logger.info("Mesh with id {} created and bound to vertex array id {}", textId, vertexArray.id());
 
