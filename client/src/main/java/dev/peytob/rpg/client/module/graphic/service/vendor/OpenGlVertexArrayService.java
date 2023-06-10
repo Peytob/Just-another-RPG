@@ -22,16 +22,12 @@ public final class OpenGlVertexArrayService implements VertexArrayService {
     }
 
     @Override
-    public VertexArray createVertexArray(String id, Collection<VertexArray.VertexArrayAttribute> tilemapBufferAttributes) {
+    public VertexArray createVertexArray(String id) {
         logger.info("Creating new vertex array with id {}", id);
 
         int vertexArrayId = glGenVertexArrays();
         VertexArray vertexArray = new VertexArray(vertexArrayId, id);
         vertexArrayRepository.append(vertexArray);
-
-        glBindVertexArray(vertexArrayId);
-        enableVertexAttributes(tilemapBufferAttributes);
-        glBindVertexArray(0);
 
         logger.info("Created new vertex array with id {}", id);
         return vertexArray;
