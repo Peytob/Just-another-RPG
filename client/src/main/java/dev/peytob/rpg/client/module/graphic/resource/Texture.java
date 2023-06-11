@@ -9,7 +9,6 @@ public record Texture(
     Integer id,
     String textId,
     Integer format,
-    Integer dataType,
     Vec2i sizes,
     ByteBuffer data
 ) implements Resource {
