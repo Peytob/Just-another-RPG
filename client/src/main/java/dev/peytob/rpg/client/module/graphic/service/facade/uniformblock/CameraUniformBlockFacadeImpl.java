@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 
 import static org.lwjgl.opengl.GL31.*;
 
+/**
+ * Facade for uniform buffer:
+ * layout (std140) uniform Camera {
+ *     mat4 projection;
+ * };
+ */
 @Component
 public class CameraUniformBlockFacadeImpl implements CameraUniformBlockFacade {
 
