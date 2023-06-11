@@ -72,7 +72,7 @@ class SimpleEcsContext implements EcsContext {
 
     @Override
     public Entity createEntity(String entityId) {
-        entityId = Objects.requireNonNull(entityId, this::createRandomId);
+        entityId = Objects.requireNonNullElseGet(entityId, this::createRandomId);
 
         Entity entity = new GenericEntity(entityId);
         Entity contextEntity = new ContextEntity(entity);

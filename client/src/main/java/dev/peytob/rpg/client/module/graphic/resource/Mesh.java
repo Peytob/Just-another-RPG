@@ -6,7 +6,7 @@ public record Mesh(
         Integer id,
         String textId,
         VertexArray vertexArray,
-        Buffer vertexBufferObject,
+        Buffer vertexBuffer,
         Integer verticesCount
 ) implements Resource {
 }

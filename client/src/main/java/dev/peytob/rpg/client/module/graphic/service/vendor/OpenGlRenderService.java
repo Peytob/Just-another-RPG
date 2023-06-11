@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import static org.lwjgl.opengl.GL33.*;
 
+/**
+ * TODO Use DrawIndices, instead DrawArrays.
+ */
 @Service
 public final class OpenGlRenderService implements RenderService {
 

@@ -46,9 +46,4 @@ public final class OpenGlGraphicBufferService implements GraphicBufferService {
         logger.info("Removed buffer with id {} ({})", buffer.textId(), buffer.id());
         return bufferRepository.remove(bufferFromRepository);
     }
-
-    @Override
-    public void updateBufferData(Buffer buffer, float[] data, int usage) {
-        glBufferData(buffer.target(), data, usage);
-    }
 }

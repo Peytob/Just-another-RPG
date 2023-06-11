@@ -49,8 +49,7 @@ public final class OpenGlVertexArrayService implements VertexArrayService {
         return vertexArrayRepository.remove(vertexArrayFromRepository);
     }
 
-    @Override
-    public void enableVertexAttributes(Collection<VertexArray.VertexArrayAttribute> defaultVertexArrayAttributes) {
+    private void enableVertexAttributes(Collection<VertexArray.VertexArrayAttribute> defaultVertexArrayAttributes) {
         defaultVertexArrayAttributes.forEach(attribute -> {
             glVertexAttribPointer(
                     attribute.index(),

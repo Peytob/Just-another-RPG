@@ -2,10 +2,8 @@ package dev.peytob.rpg.ecs.system;
 
 import dev.peytob.rpg.ecs.exception.SystemAlreadyRegisteredException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 final class SimpleSystemManager implements SystemManager {
 
@@ -14,13 +12,23 @@ final class SimpleSystemManager implements SystemManager {
 
     private final Collection<System> systems;
 
+    private final AtomicBoolean isSystemsSorted;
+
     SimpleSystemManager() {
         this.sortedSystems = Collections.synchronizedList(new ArrayList<>());
         this.systems = Collections.synchronizedList(new ArrayList<>());
+        this.isSystemsSorted = new AtomicBoolean(false);
     }
 
     @Override
     public Collection<System> getAllSystems() {
+        if (!isSystemsSorted.get()) {
+            sortedSystems.sort(Comparator.comparingInt(OrderedSystem::getOrder));
+            systems.clear();
+            sortedSystems.forEach(orderedSystem -> systems.add(orderedSystem.getSystem()));
+            isSystemsSorted.set(true);
+        }
+
         return Collections.unmodifiableCollection(systems);
     }
 
@@ -37,6 +45,7 @@ final class SimpleSystemManager implements SystemManager {
 
         sortedSystems.add(system);
         systems.add(system.getSystem());
+        isSystemsSorted.set(false);
 
         return true;
     }
@@ -49,11 +58,13 @@ final class SimpleSystemManager implements SystemManager {
 
         systems.remove(system);
         OrderedSystem ordered = sortedSystems
-                .stream()
-                .filter(orderedSystem -> orderedSystem.getSystem().equals(system))
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
+            .stream()
+            .filter(orderedSystem -> orderedSystem.getSystem().equals(system))
+            .findFirst()
+            .orElseThrow(IllegalStateException::new);
         sortedSystems.remove(ordered);
+
+        isSystemsSorted.set(false);
 
         return true;
     }
@@ -61,8 +72,8 @@ final class SimpleSystemManager implements SystemManager {
     @Override
     public boolean containsSystem(Class<? extends System> systemClass) {
         return systems
-                .stream()
-                .anyMatch(system -> system.getClass().equals(systemClass));
+            .stream()
+            .anyMatch(system -> system.getClass().equals(systemClass));
     }
 
     @Override

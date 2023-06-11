@@ -4,52 +4,45 @@ import dev.peytob.rpg.client.module.graphic.model.Camera;
 import dev.peytob.rpg.client.module.graphic.model.RenderContext;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.ShaderProgram;
-import dev.peytob.rpg.client.module.graphic.service.facade.DefaultMeshesService;
 import dev.peytob.rpg.client.module.graphic.service.facade.DefaultShaderProgramsService;
+import dev.peytob.rpg.client.module.graphic.service.facade.TilemapMeshService;
+import dev.peytob.rpg.client.module.graphic.service.vendor.MeshService;
 import dev.peytob.rpg.client.module.graphic.service.vendor.RenderService;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
-import dev.peytob.rpg.math.vector.Vec2i;
-import dev.peytob.rpg.math.vector.Vectors;
 import org.springframework.stereotype.Component;
 
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.*;
 
-// TODO Optimize tilemap rendering process later
 @Component
 public final class ManualTilemapRendererService implements TilemapRenderingService {
 
-    private final DefaultShaderProgramsService defaultShaderProgramsService;
+    private final TilemapMeshService tilemapMeshService;
 
-    private final DefaultMeshesService defaultMeshesService;
+    private final MeshService meshService;
 
     private final RenderService renderService;
 
-    public ManualTilemapRendererService(
-        DefaultShaderProgramsService defaultShaderProgramsService,
-        DefaultMeshesService defaultMeshesService,
-        RenderService renderService
-    ) {
-        this.defaultShaderProgramsService = defaultShaderProgramsService;
-        this.defaultMeshesService = defaultMeshesService;
+    private final DefaultShaderProgramsService defaultShaderProgramsService;
+
+    public ManualTilemapRendererService(TilemapMeshService tilemapMeshService, MeshService meshService, DefaultShaderProgramsService defaultShaderProgramsService, RenderService renderService) {
+        this.tilemapMeshService = tilemapMeshService;
+        this.meshService = meshService;
         this.renderService = renderService;
+        this.defaultShaderProgramsService = defaultShaderProgramsService;
     }
 
     @Override
     public void renderTilemap(Camera camera, Tilemap tilemap) {
+        Mesh mesh = tilemapMeshService.buildTilemapMesh("frame_rendering_tilemap", tilemap);
+
         ShaderProgram tilemapShaderProgram = defaultShaderProgramsService.getTilemapShaderProgram();
-        Mesh tileMesh = defaultMeshesService.getTileMesh();
 
         RenderContext renderContext = new RenderContext();
-        renderContext.setShaderProgramId(tilemapShaderProgram.id());
         renderContext.setRenderMode(GL_TRIANGLES);
+        renderContext.setShaderProgramId(tilemapShaderProgram.id());
 
-        Vec2i from = Vectors.immutableVec2i(0, 0);
-        Vec2i to = tilemap.getSizes();
+        renderService.renderMesh(mesh, renderContext);
 
-        for (int x = from.x(); x < to.x(); x++) {
-            for (int y = from.y(); y < to.y(); y++) {
-                renderService.renderMesh(tileMesh, renderContext);
-            }
-        }
+        meshService.removeMesh(mesh);
     }
 }
