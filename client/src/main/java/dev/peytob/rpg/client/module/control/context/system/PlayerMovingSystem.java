@@ -1,9 +1,8 @@
 package dev.peytob.rpg.client.module.control.context.system;
 
-import dev.peytob.rpg.core.module.base.context.component.PositionComponent;
+import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
 import dev.peytob.rpg.client.module.graphic.model.Window;
 import dev.peytob.rpg.ecs.context.EcsContext;
-import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vectors;
@@ -28,19 +27,19 @@ public final class PlayerMovingSystem implements System {
         this.window = window;
     }
 
+    // Temporary just controls camera position
     @Override
     public void execute(EcsContext context) {
-        Optional<Entity> player = context
-            .getEntityById("player");
+        Optional<CameraComponent> optionalCamera = context.getSingletonComponentByType(CameraComponent.class);
 
-        if (player.isEmpty()) {
+        if (optionalCamera.isEmpty()) {
             return;
         }
 
-        PositionComponent positionComponent = player.get().getComponent(PositionComponent.class);
+        CameraComponent camera = optionalCamera.get();
 
-        Vec2 currentPosition = positionComponent.getPosition();
-        float speed = 0.01f;
+        Vec2 currentPosition = camera.getCamera().getPosition();
+        float speed = 1f;
 
         if (GLFW.glfwGetKey(window.getPointer(), FORWARD) == GLFW.GLFW_PRESS) {
             currentPosition = currentPosition.plus(Vectors.immutableVec2(0.0f, speed));
@@ -58,6 +57,6 @@ public final class PlayerMovingSystem implements System {
             currentPosition = currentPosition.plus(Vectors.immutableVec2(speed, 0.0f));
         }
 
-        positionComponent.setPosition(currentPosition);
+        camera.getCamera().setPosition(currentPosition);
     }
 }
