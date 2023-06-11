@@ -5,5 +5,5 @@ import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 
 public interface TilemapMeshService {
 
-    Mesh buildTilemapMesh(Tilemap tilemap);
+    Mesh buildTilemapMesh(String textId, Tilemap tilemap);
 }

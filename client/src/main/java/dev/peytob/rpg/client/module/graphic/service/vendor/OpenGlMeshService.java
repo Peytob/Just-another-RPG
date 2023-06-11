@@ -71,7 +71,7 @@ public class OpenGlMeshService implements MeshService {
         }
 
         vertexArrayService.removeVertexArray(mesh.vertexArray());
-        graphicBufferService.removeBuffer(mesh.vertexBufferObject());
+        graphicBufferService.removeBuffer(mesh.vertexBuffer());
 
         logger.debug("Removed mesh with id {} ({})", mesh.textId(), mesh.id());
         return meshRepository.remove(mesh);

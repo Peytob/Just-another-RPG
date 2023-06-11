@@ -33,7 +33,7 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
 
     @Override
     public void renderTilemap(Camera camera, Tilemap tilemap) {
-        Mesh mesh = tilemapMeshService.buildTilemapMesh(tilemap);
+        Mesh mesh = tilemapMeshService.buildTilemapMesh("frame_rendering_tilemap", tilemap);
 
         ShaderProgram tilemapShaderProgram = defaultShaderProgramsService.getTilemapShaderProgram();
 
