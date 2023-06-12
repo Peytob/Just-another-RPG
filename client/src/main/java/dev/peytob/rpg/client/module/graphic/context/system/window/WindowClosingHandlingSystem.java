@@ -20,7 +20,7 @@ public final class WindowClosingHandlingSystem implements System {
         boolean isWindowCloseEventPresented = !context.getEventsByType(WindowCloseEvent.class).isEmpty();
 
         if (isWindowCloseEventPresented) {
-            window.close();
+            window.setCloseFlag(true);
         }
     }
 }
