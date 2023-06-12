@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.module.graphic.state.event;
 
-import dev.peytob.rpg.client.module.graphic.context.component.TextureAtlasComponent;
+import dev.peytob.rpg.client.module.graphic.context.component.TilemapTextureAtlasComponent;
 import dev.peytob.rpg.client.module.graphic.model.Image;
 import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
 import dev.peytob.rpg.client.module.graphic.resource.Texture;
@@ -39,6 +39,6 @@ public class CreateMockTextureAtlas extends StateSetUpEventHandler<InGameEngineS
         TextureAtlas builtAtlas = textureAtlasBuilder.build();
 
         contextBuilder.initializeEntity((entity, ecsContext) ->
-            entity.bindComponent(new TextureAtlasComponent(builtAtlas)));
+            entity.bindComponent(new TilemapTextureAtlasComponent(builtAtlas)));
     }
 }
