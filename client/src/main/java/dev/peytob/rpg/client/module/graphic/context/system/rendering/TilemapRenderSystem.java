@@ -1,6 +1,8 @@
 package dev.peytob.rpg.client.module.graphic.context.system.rendering;
 
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
+import dev.peytob.rpg.client.module.graphic.context.component.TilemapTextureAtlasComponent;
+import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
 import dev.peytob.rpg.core.module.location.context.component.TilemapComponent;
 import dev.peytob.rpg.client.module.graphic.model.Camera;
 import dev.peytob.rpg.client.module.graphic.service.render.TilemapRenderingService;
@@ -22,25 +24,35 @@ public class TilemapRenderSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        Optional<TilemapComponent> tilemapComponent = context.getSingletonComponentByType(TilemapComponent.class);
+        Optional<TilemapComponent> tilemapComponent =
+            context.getSingletonComponentByType(TilemapComponent.class);
 
         if (tilemapComponent.isEmpty()) {
             return;
         }
 
-        Optional<CameraComponent> cameraComponent = context.getSingletonComponentByType(CameraComponent.class);
+        Optional<CameraComponent> cameraComponent =
+            context.getSingletonComponentByType(CameraComponent.class);
 
         if (cameraComponent.isEmpty()) {
             return;
         }
 
-        renderTilemap(cameraComponent.get(), tilemapComponent.get());
+        Optional<TilemapTextureAtlasComponent> textureAtlasComponent =
+            context.getSingletonComponentByType(TilemapTextureAtlasComponent.class);
+
+        if (textureAtlasComponent.isEmpty()) {
+            return;
+        }
+
+        renderTilemap(cameraComponent.get(), tilemapComponent.get(), textureAtlasComponent.get());
     }
 
-    private void renderTilemap(CameraComponent cameraComponent, TilemapComponent tilemapComponent) {
+    private void renderTilemap(CameraComponent cameraComponent, TilemapComponent tilemapComponent, TilemapTextureAtlasComponent textureAtlasComponent) {
         Camera camera = cameraComponent.getCamera();
         Tilemap tilemap = tilemapComponent.getTilemap();
+        TextureAtlas textureAtlas = textureAtlasComponent.getTextureAtlas();
 
-        tilemapRenderingService.renderTilemap(camera, tilemap);
+        tilemapRenderingService.renderTilemap(camera, tilemap, textureAtlas);
     }
 }

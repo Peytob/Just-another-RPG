@@ -1,10 +1,13 @@
 package dev.peytob.rpg.client.module.graphic.service.facade;
 
+import dev.peytob.rpg.client.module.graphic.model.Sprite;
+import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.VertexArray;
 import dev.peytob.rpg.client.module.graphic.service.vendor.MeshService;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.core.module.location.resource.Tile;
+import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vec2i;
 import org.lwjgl.BufferUtils;
 import org.springframework.stereotype.Component;
@@ -19,15 +22,16 @@ import static org.lwjgl.opengl.GL11.GL_FLOAT;
 @Component
 public class TilemapMeshServiceImpl implements TilemapMeshService {
 
+    private static final int BYTES_PER_VERTEX = 4 * Float.BYTES;
+
     /**
      * Target shader layout:
      * layout (location = 0) in vec2 a_tilePosition;
      * layout (location = 1) in vec2 a_normalizedTextureCoordinates;
      */
     private static final Collection<VertexArray.VertexArrayAttribute> SPRITE_BUFFER_ATTRIBUTES = List.of(
-        new VertexArray.VertexArrayAttribute(0, 2, GL_FLOAT, false, 2 * Float.BYTES, 0L));
-
-    private static final int BYTES_PER_VERTEX = 2 * Float.BYTES;
+        new VertexArray.VertexArrayAttribute(0, 2, GL_FLOAT, false, BYTES_PER_VERTEX, 0L),
+        new VertexArray.VertexArrayAttribute(1, 2, GL_FLOAT, false, BYTES_PER_VERTEX, 2L * Float.BYTES));
 
     private final MeshService meshService;
 
@@ -36,12 +40,12 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
     }
 
     @Override
-    public Mesh buildTilemapMesh(String textId, Tilemap tilemap) {
+    public Mesh buildTilemapMesh(String textId, Tilemap tilemap, TextureAtlas textureAtlas) {
 
         // One rectangle -> Two triangles -> Six vertexes.
         int maximalVerticesCount = tilemap.getSizes().x() * tilemap.getSizes().y() * 6;
         int bufferCapacity = maximalVerticesCount * BYTES_PER_VERTEX;
-        TilemapMeshBuilder tilemapMeshBuilder = new TilemapMeshBuilder(bufferCapacity, TILE_SIZE);
+        TilemapMeshBuilder tilemapMeshBuilder = new TilemapMeshBuilder(bufferCapacity, TILE_SIZE, textureAtlas);
 
         for (int x = 0; x < tilemap.getSizes().x(); x++) {
             for (int y = 0; y < tilemap.getSizes().y(); y++) {
@@ -64,22 +68,36 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
         private final Vec2i tileSize;
 
+        private final TextureAtlas textureAtlas;
+
         private int totalVertices;
 
-        public TilemapMeshBuilder(int bufferCapacity, Vec2i tileSize) {
+
+        public TilemapMeshBuilder(int bufferCapacity, Vec2i tileSize, TextureAtlas textureAtlas) {
             this.buffer = BufferUtils.createByteBuffer(bufferCapacity);
             this.tileSize = tileSize;
+            this.textureAtlas = textureAtlas;
             this.totalVertices = 0;
         }
 
         public void appendTile(float positionX, float positionY, Tile tile) {
-            appendVertex(positionX, positionY);
-            appendVertex(positionX + tileSize.x(), positionY);
-            appendVertex(positionX, positionY + tileSize.y());
+            Sprite sprite = textureAtlas.getSpriteByEntityId(tile.textId());
 
-            appendVertex(positionX + tileSize.x(), positionY);
-            appendVertex(positionX, positionY + tileSize.y());
-            appendVertex(positionX + tileSize.y(), positionY + tileSize.y());
+            if (sprite == null) {
+                // TODO Create default not-found texture
+                return;
+            }
+
+            Vec2 texturePosition = sprite.normalizedTextureRect().topLeft();
+            Vec2 textureSize = sprite.normalizedTextureRect().size();
+
+            appendVertex(positionX, positionY, texturePosition.x(), texturePosition.y());
+            appendVertex(positionX + tileSize.x(), positionY, texturePosition.x() + textureSize.x(), texturePosition.y());
+            appendVertex(positionX, positionY + tileSize.y(), texturePosition.x(), texturePosition.y() + textureSize.y());
+
+            appendVertex(positionX + tileSize.x(), positionY, texturePosition.x() + textureSize.x(), texturePosition.y());
+            appendVertex(positionX, positionY + tileSize.y(), texturePosition.x(), texturePosition.y() + textureSize.y());
+            appendVertex(positionX + tileSize.y(), positionY + tileSize.y(), texturePosition.x() + textureSize.x(), texturePosition.y() + textureSize.y());
         }
 
         public ByteBuffer build() {
@@ -90,10 +108,11 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
             return totalVertices;
         }
 
-        private void appendVertex(float positionX, float positionY) {
+        private void appendVertex(float positionX, float positionY, float textureX, float textureY) {
             this.totalVertices += 1;
             buffer
-                .putFloat(positionX).putFloat(positionY);
+                .putFloat(positionX).putFloat(positionY)
+                .putFloat(textureX).putFloat(textureY);
         }
     }
 }

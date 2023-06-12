@@ -2,6 +2,7 @@ package dev.peytob.rpg.client.module.graphic.service.render;
 
 import dev.peytob.rpg.client.module.graphic.model.Camera;
 import dev.peytob.rpg.client.module.graphic.model.RenderContext;
+import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.ShaderProgram;
 import dev.peytob.rpg.client.module.graphic.service.facade.DefaultShaderProgramsService;
@@ -32,8 +33,8 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
     }
 
     @Override
-    public void renderTilemap(Camera camera, Tilemap tilemap) {
-        Mesh mesh = tilemapMeshService.buildTilemapMesh("frame_rendering_tilemap", tilemap);
+    public void renderTilemap(Camera camera, Tilemap tilemap, TextureAtlas textureAtlas) {
+        Mesh mesh = tilemapMeshService.buildTilemapMesh("frame_rendering_tilemap", tilemap, textureAtlas);
 
         ShaderProgram tilemapShaderProgram = defaultShaderProgramsService.getTilemapShaderProgram();
 
