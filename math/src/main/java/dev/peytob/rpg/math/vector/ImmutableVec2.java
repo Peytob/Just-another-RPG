@@ -3,8 +3,8 @@ package dev.peytob.rpg.math.vector;
 import java.util.Objects;
 
 record ImmutableVec2(
-        float x,
-        float y
+    float x,
+    float y
 ) implements Vec2 {
 
     @Override
@@ -33,5 +33,10 @@ record ImmutableVec2(
     @Override
     public String toString() {
         return "(" + x() + ", " + y() + ")";
+    }
+
+    @Override
+    public Vec2 division(float x, float y) {
+        return new ImmutableVec2(this.x / x, this.y / y);
     }
 }

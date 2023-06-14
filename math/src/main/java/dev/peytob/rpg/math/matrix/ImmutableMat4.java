@@ -1,5 +1,7 @@
 package dev.peytob.rpg.math.matrix;
 
+import java.util.Objects;
+
 final class ImmutableMat4 implements Mat4 {
 
     private final Mat4 mat4;
@@ -21,5 +23,18 @@ final class ImmutableMat4 implements Mat4 {
     @Override
     public float[] getRaw() {
         return mat4.getRaw();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ImmutableMat4 that = (ImmutableMat4) o;
+        return mat4.equals(that.mat4);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mat4);
     }
 }
