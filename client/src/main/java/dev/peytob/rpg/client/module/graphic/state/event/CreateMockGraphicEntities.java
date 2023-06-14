@@ -11,6 +11,8 @@ import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.engine.state.event.StateSetUpEventHandler;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
+
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 
@@ -34,10 +36,11 @@ public class CreateMockGraphicEntities extends StateSetUpEventHandler<InGameEngi
             new Tile(3, "tile3"),
             new Tile(4, "tile4")
         };
+        Random random = new Random();
 
         for (int x = 0; x < tilemap.getSizes().x(); x++) {
             for (int y = 0; y < tilemap.getSizes().y(); y++) {
-                int mockTileIndex = (y * tilemap.getSizes().x() + x) % mockTiles.length;
+                int mockTileIndex = random.nextInt(mockTiles.length);
                 tilemap.setTile(x, y, mockTiles[mockTileIndex]);
             }
         }

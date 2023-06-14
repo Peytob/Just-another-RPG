@@ -39,21 +39,21 @@ public final class PlayerMovingSystem implements System {
         CameraComponent camera = optionalCamera.get();
 
         Vec2 currentPosition = camera.getCamera().getPosition();
-        float speed = 1f;
+        float speed = 3f;
 
         if (GLFW.glfwGetKey(window.getPointer(), FORWARD) == GLFW.GLFW_PRESS) {
-            currentPosition = currentPosition.plus(Vectors.immutableVec2(0.0f, speed));
-        }
-
-        if (GLFW.glfwGetKey(window.getPointer(),BACK) == GLFW.GLFW_PRESS) {
             currentPosition = currentPosition.plus(Vectors.immutableVec2(0.0f, -speed));
         }
 
-        if (GLFW.glfwGetKey(window.getPointer(),LEFT) == GLFW.GLFW_PRESS) {
+        if (GLFW.glfwGetKey(window.getPointer(), BACK) == GLFW.GLFW_PRESS) {
+            currentPosition = currentPosition.plus(Vectors.immutableVec2(0.0f, speed));
+        }
+
+        if (GLFW.glfwGetKey(window.getPointer(), LEFT) == GLFW.GLFW_PRESS) {
             currentPosition = currentPosition.plus(Vectors.immutableVec2(-speed, 0.0f));
         }
 
-        if (GLFW.glfwGetKey(window.getPointer(),RIGHT) == GLFW.GLFW_PRESS) {
+        if (GLFW.glfwGetKey(window.getPointer(), RIGHT) == GLFW.GLFW_PRESS) {
             currentPosition = currentPosition.plus(Vectors.immutableVec2(speed, 0.0f));
         }
 
