@@ -1,26 +1,29 @@
 package dev.peytob.rpg.client.module.graphic.model;
 
+import dev.peytob.rpg.math.geometry.Rect;
 import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vec2i;
 import dev.peytob.rpg.math.vector.Vectors;
 
-public final class Camera {
+import static dev.peytob.rpg.math.geometry.Rectangles.rect;
 
-    private Vec2 position;
+public final class Camera {
 
     private Vec2i resolution;
 
+    private Rect visionRectangle;
+
     public Camera(Vec2 position, Vec2i resolution) {
-        this.setPosition(position);
-        this.setResolution(resolution);
+        this.resolution = resolution;
+        this.updateVisibleRectangle(position);
     }
 
     public Vec2 getPosition() {
-        return position;
+        return visionRectangle.topLeft();
     }
 
     public void setPosition(Vec2 position) {
-        this.position = Vectors.immutableVec2(position);
+        this.updateVisibleRectangle(position);
     }
 
     public Vec2i getResolution() {
@@ -29,9 +32,19 @@ public final class Camera {
 
     public void setResolution(Vec2i resolution) {
         this.resolution = Vectors.immutableVec2i(resolution);
+        this.updateVisibleRectangle(getPosition());
     }
 
     public void move(Vec2 diff) {
-        this.position.plus(diff);
+        Vec2 newPosition = getPosition().plus(diff);
+        setPosition(newPosition);
+    }
+
+    public Rect getVisionRectangle() {
+        return this.visionRectangle;
+    }
+
+    private void updateVisibleRectangle(Vec2 newPosition) {
+        this.visionRectangle = rect(newPosition, newPosition.plus(resolution));
     }
 }
