@@ -45,6 +45,6 @@ public final class Camera {
     }
 
     private void updateVisibleRectangle(Vec2 newPosition) {
-        this.visionRectangle = rect(newPosition, newPosition.plus(resolution));
+        this.visionRectangle = rect(newPosition.x(), newPosition.y(), resolution.x(), resolution.y());
     }
 }

@@ -10,8 +10,14 @@ import dev.peytob.rpg.client.module.graphic.service.facade.TilemapMeshService;
 import dev.peytob.rpg.client.module.graphic.service.vendor.MeshService;
 import dev.peytob.rpg.client.module.graphic.service.vendor.RenderService;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
+import dev.peytob.rpg.math.geometry.RectI;
+import dev.peytob.rpg.math.vector.Vec2;
+import dev.peytob.rpg.math.vector.Vec2i;
 import org.springframework.stereotype.Component;
 
+import static dev.peytob.rpg.core.module.base.constants.PhysicsConstants.TILE_SIZE;
+import static dev.peytob.rpg.math.geometry.Rectangles.rectI;
+import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 import static org.lwjgl.opengl.GL11.*;
 
 @Component
@@ -34,7 +40,8 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
 
     @Override
     public void renderTilemap(Camera camera, Tilemap tilemap, TextureAtlas textureAtlas) {
-        Mesh mesh = tilemapMeshService.buildTilemapMesh("frame_rendering_tilemap", tilemap, textureAtlas);
+        RectI cullingTilesRect = cimputeCullingTilesRect(camera, TILE_SIZE);
+        Mesh mesh = tilemapMeshService.buildTilemapMesh("frame_rendering_tilemap", tilemap, textureAtlas, cullingTilesRect);
 
         ShaderProgram tilemapShaderProgram = defaultShaderProgramsService.getTilemapShaderProgram();
 
@@ -45,5 +52,15 @@ public final class ManualTilemapRendererService implements TilemapRenderingServi
         renderService.renderMesh(mesh, renderContext);
 
         meshService.removeMesh(mesh);
+    }
+
+    private RectI cimputeCullingTilesRect(Camera camera, Vec2i renderingTileSize) {
+        Vec2 topLeft = camera.getVisionRectangle().topLeft().division(renderingTileSize);
+        Vec2 sizes = camera.getVisionRectangle().size().division(renderingTileSize).plus(immutableVec2i(2, 2));
+
+        return rectI(
+            immutableVec2i(topLeft),
+            immutableVec2i(sizes)
+        );
     }
 }
