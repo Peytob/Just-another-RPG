@@ -44,9 +44,15 @@ final class MutableMat4 implements Mat4 {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MutableMat4 that = (MutableMat4) o;
-        return Arrays.equals(values, that.values);
+        if (o == null) return false;
+
+        if (o instanceof MutableMat4 that) {
+            return Arrays.equals(values, that.values);
+        } else if (o instanceof Mat4 that) {
+            return Arrays.equals(values, that.getRaw());
+        } else {
+            return false;
+        }
     }
 
     @Override

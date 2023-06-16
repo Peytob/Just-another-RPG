@@ -18,6 +18,11 @@ record ImmutableVec2i(
     }
 
     @Override
+    public Vec2i division(int x, int y) {
+        return new ImmutableVec2i(this.x / x, this.y / y);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

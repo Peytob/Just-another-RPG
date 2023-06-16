@@ -7,6 +7,7 @@ import dev.peytob.rpg.client.module.graphic.resource.VertexArray;
 import dev.peytob.rpg.client.module.graphic.service.vendor.MeshService;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.core.module.location.resource.Tile;
+import dev.peytob.rpg.math.geometry.RectI;
 import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vec2i;
 import org.lwjgl.BufferUtils;
@@ -17,6 +18,8 @@ import java.util.Collection;
 import java.util.List;
 
 import static dev.peytob.rpg.core.module.base.constants.PhysicsConstants.TILE_SIZE;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 
 @Component
@@ -40,19 +43,24 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
     }
 
     @Override
-    public Mesh buildTilemapMesh(String textId, Tilemap tilemap, TextureAtlas textureAtlas) {
+    public Mesh buildTilemapMesh(String textId, Tilemap tilemap, TextureAtlas textureAtlas, RectI cullingTilesRect) {
 
         // One rectangle -> Two triangles -> Six vertexes.
-        int maximalVerticesCount = tilemap.getSizes().x() * tilemap.getSizes().y() * 6;
+        int maximalVerticesCount = cullingTilesRect.size().x() * cullingTilesRect.size().y() * 6;
         int bufferCapacity = maximalVerticesCount * BYTES_PER_VERTEX;
         TilemapMeshBuilder tilemapMeshBuilder = new TilemapMeshBuilder(bufferCapacity, TILE_SIZE, textureAtlas);
 
-        for (int x = 0; x < tilemap.getSizes().x(); x++) {
-            for (int y = 0; y < tilemap.getSizes().y(); y++) {
+        int fromX = max(cullingTilesRect.topLeft().x(), 0);
+        int toX = min(cullingTilesRect.bottomRight().x(), tilemap.getSizes().x());
+        int fromY = max(cullingTilesRect.topLeft().y(), 0);
+        int toY = min(cullingTilesRect.bottomRight().y(), tilemap.getSizes().y());
+
+        for (int x = fromX, positionX = fromX * TILE_SIZE.x(); x < toX; x++, positionX += TILE_SIZE.x()) {
+            for (int y = fromY, positionY = fromY * TILE_SIZE.y(); y < toY; y++, positionY += TILE_SIZE.y()) {
                 Tile tile = tilemap.getTile(x, y);
 
                 if (tile != null) {
-                    tilemapMeshBuilder.appendTile(x * TILE_SIZE.x(), y * TILE_SIZE.y(), tile);
+                    tilemapMeshBuilder.appendTile(positionX, positionY, tile);
                 }
             }
         }
