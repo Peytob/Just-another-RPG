@@ -1,5 +1,6 @@
 package dev.peytob.rpg.client.module.graphic.service.facade;
 
+import dev.peytob.rpg.client.module.graphic.model.RenderableTilemap;
 import dev.peytob.rpg.client.module.graphic.model.Sprite;
 import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
@@ -43,12 +44,15 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
     }
 
     @Override
-    public Mesh buildTilemapMesh(String textId, Tilemap tilemap, TextureAtlas textureAtlas, RectI cullingTilesRect) {
+    public Mesh buildTilemapMesh(String textId, RenderableTilemap renderableTilemap) {
 
-        // One rectangle -> Two triangles -> Six vertexes.
-        int maximalVerticesCount = cullingTilesRect.size().x() * cullingTilesRect.size().y() * 6;
-        int bufferCapacity = maximalVerticesCount * BYTES_PER_VERTEX;
-        TilemapMeshBuilder tilemapMeshBuilder = new TilemapMeshBuilder(bufferCapacity, TILE_SIZE, textureAtlas);
+        RectI cullingTilesRect = renderableTilemap.getCullingTilesRect();
+        Tilemap tilemap = renderableTilemap.getTilemap();
+
+        TilemapMeshBuilder tilemapMeshBuilder = new TilemapMeshBuilder(
+            cullingTilesRect.size().x() * cullingTilesRect.size().y(),
+            TILE_SIZE,
+            renderableTilemap.getTextureAtlas());
 
         int fromX = max(cullingTilesRect.topLeft().x(), 0);
         int toX = min(cullingTilesRect.bottomRight().x(), tilemap.getSizes().x());
@@ -80,8 +84,9 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
         private int totalVertices;
 
-
-        public TilemapMeshBuilder(int bufferCapacity, Vec2i tileSize, TextureAtlas textureAtlas) {
+        public TilemapMeshBuilder(int spritesCapacity, Vec2i tileSize, TextureAtlas textureAtlas) {
+            // One rectangle -> Two triangles -> Six vertexes.
+            int bufferCapacity = spritesCapacity * 6 * BYTES_PER_VERTEX;
             this.buffer = BufferUtils.createByteBuffer(bufferCapacity);
             this.tileSize = tileSize;
             this.textureAtlas = textureAtlas;

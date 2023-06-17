@@ -1,10 +1,9 @@
 package dev.peytob.rpg.client.module.graphic.service.render;
 
 import dev.peytob.rpg.client.module.graphic.model.Camera;
-import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
-import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
+import dev.peytob.rpg.client.module.graphic.model.RenderableTilemap;
 
 public interface TilemapRenderingService {
 
-    void renderTilemap(Camera camera, Tilemap tilemap, TextureAtlas textureAtlas);
+    void renderTilemap(Camera camera, RenderableTilemap renderableTilemap);
 }

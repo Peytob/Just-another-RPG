@@ -8,6 +8,9 @@ import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 
 public enum Rectangles {;
 
+    private static final Rect ZERO_RECT = new ImmutableRect(immutableVec2(), immutableVec2());
+    private static final RectI ZERO_RECTI = new ImmutableRectI(immutableVec2i(), immutableVec2i());
+
     public static RectI rectI(Vec2i topLeft, Vec2i sizes) {
         return new ImmutableRectI(topLeft, sizes);
     }
@@ -16,11 +19,19 @@ public enum Rectangles {;
         return rectI(immutableVec2i(topLeftX, topLeftY), immutableVec2i(width, height));
     }
 
+    public static RectI rectI() {
+        return ZERO_RECTI;
+    }
+
     public static Rect rect(Vec2 topLeft, Vec2 sizes) {
         return new ImmutableRect(topLeft, sizes);
     }
 
     public static Rect rect(float topLeftX, float topLeftY, float width, float height) {
         return rect(immutableVec2(topLeftX, topLeftY), immutableVec2(width, height));
+    }
+
+    public static Rect rect() {
+        return ZERO_RECT;
     }
 }
