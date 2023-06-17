@@ -32,10 +32,10 @@ public class CreateMockTextureAtlas extends StateSetUpEventHandler<InGameEngineS
         Texture textureAtlas = textureService.createTexture("tilemap_test_atlas", GL_RGBA8, testAtlas);
 
         TextureAtlas.TextureAtlasBuilder textureAtlasBuilder = new TextureAtlas.TextureAtlasBuilder(textureAtlas);
-        textureAtlasBuilder.appendSprite("tile1", rect(0, 0, 0.5f, 0.5f));
-        textureAtlasBuilder.appendSprite("tile2", rect(0.5f, 0, 0.5f, 0.5f));
-        textureAtlasBuilder.appendSprite("tile3", rect(0, 0.5f, 0.5f, 0.5f));
-        textureAtlasBuilder.appendSprite("tile4", rect(0.5f, 0.5f, 0.5f, 0.5f));
+        textureAtlasBuilder.appendSprite("blue_tile", rect(0, 0, 0.5f, 0.5f));
+        textureAtlasBuilder.appendSprite("red_tile", rect(0.5f, 0, 0.5f, 0.5f));
+        textureAtlasBuilder.appendSprite("pink_tile", rect(0, 0.5f, 0.5f, 0.5f));
+        textureAtlasBuilder.appendSprite("green_tile", rect(0.5f, 0.5f, 0.5f, 0.5f));
         TextureAtlas builtAtlas = textureAtlasBuilder.build();
 
         contextBuilder.initializeEntity((entity, ecsContext) ->

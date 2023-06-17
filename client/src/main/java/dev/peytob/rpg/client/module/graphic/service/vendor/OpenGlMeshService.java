@@ -32,7 +32,7 @@ public class OpenGlMeshService implements MeshService {
 
     @Override
     public Mesh createMesh(String textId, ByteBuffer vertices, int verticesCount, Collection<VertexArray.VertexArrayAttribute> attributes) {
-        logger.info("Creating mesh with id {}", textId);
+        logger.trace("Creating mesh with id {}", textId);
 
         VertexArray vertexArray = vertexArrayService.createVertexArray(textId + "_vertexArray");
         Buffer vertexBuffer = graphicBufferService.createBuffer(textId + "_vbo", GL_ARRAY_BUFFER);
@@ -45,7 +45,7 @@ public class OpenGlMeshService implements MeshService {
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        logger.info("Mesh with id {} created and bound to vertex array id {}", textId, vertexArray.id());
+        logger.trace("Mesh with id {} created and bound to vertex array id {}", textId, vertexArray.id());
 
         Mesh mesh = new Mesh(
             vertexArray.id(),
@@ -63,7 +63,7 @@ public class OpenGlMeshService implements MeshService {
 
     @Override
     public boolean removeMesh(Mesh mesh) {
-        logger.debug("Removing mesh with id {} ({})", mesh.textId(), mesh.id());
+        logger.trace("Removing mesh with id {} ({})", mesh.textId(), mesh.id());
 
         if (!meshRepository.contains(mesh.id())) {
             logger.warn("Mesh with id {} ({}) not found while removing", mesh.textId(), mesh.id());
@@ -73,7 +73,7 @@ public class OpenGlMeshService implements MeshService {
         vertexArrayService.removeVertexArray(mesh.vertexArray());
         graphicBufferService.removeBuffer(mesh.vertexBuffer());
 
-        logger.debug("Removed mesh with id {} ({})", mesh.textId(), mesh.id());
+        logger.trace("Removed mesh with id {} ({})", mesh.textId(), mesh.id());
         return meshRepository.remove(mesh);
     }
 
