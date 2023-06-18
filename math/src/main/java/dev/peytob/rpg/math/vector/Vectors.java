@@ -21,8 +21,8 @@ public enum Vectors {;
         return new ImmutableVec2(from.x(), from.y());
     }
 
-    public static Vec2i immutableVec2(Vec2i from) {
-        return immutableVec2i(from.x(), from.y());
+    public static Vec2 immutableVec2(Vec2i from) {
+        return immutableVec2(from.x(), from.y());
     }
 
     public static Vec2i immutableVec2i() {

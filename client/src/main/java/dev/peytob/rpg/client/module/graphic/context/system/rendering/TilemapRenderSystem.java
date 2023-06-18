@@ -2,14 +2,13 @@ package dev.peytob.rpg.client.module.graphic.context.system.rendering;
 
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
 import dev.peytob.rpg.client.module.graphic.context.component.TilemapTextureAtlasComponent;
-import dev.peytob.rpg.client.module.graphic.model.RenderableTilemap;
-import dev.peytob.rpg.core.module.location.context.component.TilemapComponent;
 import dev.peytob.rpg.client.module.graphic.model.Camera;
+import dev.peytob.rpg.client.module.graphic.model.RenderableTilemap;
 import dev.peytob.rpg.client.module.graphic.service.render.TilemapRenderingService;
+import dev.peytob.rpg.core.module.location.context.component.TilemapComponent;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.math.geometry.RectI;
-import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vec2i;
 import org.springframework.stereotype.Component;
 
@@ -65,15 +64,13 @@ public class TilemapRenderSystem implements System {
             renderingTileSize,
             textureAtlasComponent.getTextureAtlas());
 
-        renderableTilemap.setCullingTilesRect(computeCullingTilesRect(camera, renderingTileSize));
+        renderableTilemap.setCullingTilesRect(computeCullingTilesRect(camera, renderableTilemap));
 
         tilemapRenderingService.renderTilemap(camera, renderableTilemap);
     }
 
-    private RectI computeCullingTilesRect(Camera camera, Vec2i renderingTileSize) {
-        Vec2 topLeft = camera.getVisionRectangle().topLeft().division(renderingTileSize);
-        Vec2 sizes = camera.getVisionRectangle().size().division(renderingTileSize).plus(immutableVec2i(2, 2));
-
+    private RectI computeCullingTilesRect(Camera camera, RenderableTilemap renderableTilemap) {
+        // TODO Temporary returns all possible map
         return rectI(
             immutableVec2i(),
             immutableVec2i(Integer.MAX_VALUE, Integer.MAX_VALUE)
