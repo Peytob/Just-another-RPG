@@ -75,8 +75,8 @@ public class TilemapRenderSystem implements System {
         Vec2 sizes = camera.getVisionRectangle().size().division(renderingTileSize).plus(immutableVec2i(2, 2));
 
         return rectI(
-            immutableVec2i(topLeft),
-            immutableVec2i(sizes)
+            immutableVec2i(),
+            immutableVec2i(Integer.MAX_VALUE, Integer.MAX_VALUE)
         );
     }
 }

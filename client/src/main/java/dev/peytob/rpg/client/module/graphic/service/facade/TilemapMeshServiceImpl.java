@@ -5,6 +5,7 @@ import dev.peytob.rpg.client.module.graphic.model.Sprite;
 import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.VertexArray;
+import dev.peytob.rpg.client.module.graphic.service.math.ScreenCoordinatesConverter;
 import dev.peytob.rpg.client.module.graphic.service.vendor.MeshService;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.core.module.location.resource.Tile;
@@ -18,7 +19,8 @@ import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.List;
 
-import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 
 @Component
@@ -37,8 +39,11 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
     private final MeshService meshService;
 
-    public TilemapMeshServiceImpl(MeshService meshService) {
+    private final ScreenCoordinatesConverter screenCoordinatesConverter;
+
+    public TilemapMeshServiceImpl(MeshService meshService, ScreenCoordinatesConverter screenCoordinatesConverter) {
         this.meshService = meshService;
+        this.screenCoordinatesConverter = screenCoordinatesConverter;
     }
 
     @Override
@@ -53,15 +58,10 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
             tileSize,
             renderableTilemap.getTextureAtlas());
 
-//        int fromX = max(cullingTilesRect.topLeft().x(), 0);
-//        int toX = min(cullingTilesRect.bottomRight().x(), tilemap.getSizes().x());
-//        int fromY = max(cullingTilesRect.topLeft().y(), 0);
-//        int toY = min(cullingTilesRect.bottomRight().y(), tilemap.getSizes().y());
-
-        int fromX = 0;
-        int toX = tilemap.getSizes().x();
-        int fromY = 0;
-        int toY = tilemap.getSizes().y();
+        int fromX = max(cullingTilesRect.topLeft().x(), 0);
+        int toX = min(cullingTilesRect.bottomRight().x(), tilemap.getSizes().x());
+        int fromY = max(cullingTilesRect.topLeft().y(), 0);
+        int toY = min(cullingTilesRect.bottomRight().y(), tilemap.getSizes().y());
 
         for (int x = fromX; x < toX; x++) {
             for (int y = fromY; y < toY; y++) {
@@ -78,7 +78,7 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
         return meshService.createMesh(textId, vboData, tilemapMeshBuilder.getTotalVertices(), SPRITE_BUFFER_ATTRIBUTES);
     }
 
-    private static final class TilemapMeshBuilder {
+    private final class TilemapMeshBuilder {
 
         private final ByteBuffer buffer;
 
@@ -108,21 +108,15 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
             Vec2 texturePosition = sprite.normalizedTextureRect().topLeft();
             Vec2 textureSize = sprite.normalizedTextureRect().size();
 
-            Vec2 position = immutableVec2(gridX, gridY);
-            Vec2 xT = immutableVec2(0.5f * tileSize.x(), 0.25f * tileSize.y()).multiply(position.x());
-            Vec2 yT = immutableVec2(-0.5f * tileSize.x(), 0.25f * tileSize.y()).multiply(position.y());
-            Vec2 pT = yT.plus(xT);
+            Vec2 position = screenCoordinatesConverter.toScreenCoordinates(gridX, gridY, tileSize.x(), tileSize.y());
 
-            float positionX = pT.x();
-            float positionY = pT.y();
+            appendVertex(position.x(), position.y(), texturePosition.x(), texturePosition.y());
+            appendVertex(position.x() + tileSize.x(), position.y(), texturePosition.x() + textureSize.x(), texturePosition.y());
+            appendVertex(position.x(), position.y() + tileSize.y(), texturePosition.x(), texturePosition.y() + textureSize.y());
 
-            appendVertex(positionX, positionY, texturePosition.x(), texturePosition.y());
-            appendVertex(positionX + tileSize.x(), positionY, texturePosition.x() + textureSize.x(), texturePosition.y());
-            appendVertex(positionX, positionY + tileSize.y(), texturePosition.x(), texturePosition.y() + textureSize.y());
-
-            appendVertex(positionX + tileSize.x(), positionY, texturePosition.x() + textureSize.x(), texturePosition.y());
-            appendVertex(positionX, positionY + tileSize.y(), texturePosition.x(), texturePosition.y() + textureSize.y());
-            appendVertex(positionX + tileSize.y(), positionY + tileSize.y(), texturePosition.x() + textureSize.x(), texturePosition.y() + textureSize.y());
+            appendVertex(position.x() + tileSize.x(), position.y(), texturePosition.x() + textureSize.x(), texturePosition.y());
+            appendVertex(position.x(), position.y() + tileSize.y(), texturePosition.x(), texturePosition.y() + textureSize.y());
+            appendVertex(position.x() + tileSize.y(), position.y() + tileSize.y(), texturePosition.x() + textureSize.x(), texturePosition.y() + textureSize.y());
         }
 
         public ByteBuffer build() {
