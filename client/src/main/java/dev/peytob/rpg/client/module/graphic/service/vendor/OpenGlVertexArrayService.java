@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.module.graphic.service.vendor;
 
+import dev.peytob.rpg.client.module.graphic.repository.VertexArrayRepository;
 import dev.peytob.rpg.client.module.graphic.resource.VertexArray;
-import dev.peytob.rpg.engine.repositry.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,9 @@ public final class OpenGlVertexArrayService implements VertexArrayService {
 
     private static final Logger logger = LoggerFactory.getLogger(OpenGlVertexArrayService.class);
 
-    private final Repository<VertexArray> vertexArrayRepository;
+    private final VertexArrayRepository vertexArrayRepository;
 
-    public OpenGlVertexArrayService(Repository<VertexArray> vertexArrayRepository) {
+    public OpenGlVertexArrayService(VertexArrayRepository vertexArrayRepository) {
         this.vertexArrayRepository = vertexArrayRepository;
     }
 

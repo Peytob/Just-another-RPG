@@ -4,9 +4,9 @@ import dev.peytob.rpg.engine.module.archetype.exception.ArchetypeBuildingExcepti
 import dev.peytob.rpg.engine.module.archetype.exception.ArchetypeRegisteringException;
 import dev.peytob.rpg.engine.module.archetype.loader.provider.ArchetypeProvider;
 import dev.peytob.rpg.engine.module.archetype.loader.provider.classpath.ArchetypeTemplate;
-import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
-import dev.peytob.rpg.engine.repositry.Repository;
+import dev.peytob.rpg.engine.module.archetype.repository.ArchetypeRepository;
 import dev.peytob.rpg.engine.module.archetype.resource.Archetype;
+import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,11 +18,11 @@ public final class LoadArchetypesInitializingPipelineStep implements Initializin
 
     private static final Logger logger = LoggerFactory.getLogger(LoadArchetypesInitializingPipelineStep.class);
 
-    private final Repository<Archetype> archetypeRepository;
+    private final ArchetypeRepository archetypeRepository;
 
     private final Collection<ArchetypeProvider> archetypeProviders;
 
-    public LoadArchetypesInitializingPipelineStep(Repository<Archetype> archetypeRepository, Collection<ArchetypeProvider> archetypeProviders) {
+    public LoadArchetypesInitializingPipelineStep(ArchetypeRepository archetypeRepository, Collection<ArchetypeProvider> archetypeProviders) {
         this.archetypeRepository = archetypeRepository;
         this.archetypeProviders = archetypeProviders;
     }

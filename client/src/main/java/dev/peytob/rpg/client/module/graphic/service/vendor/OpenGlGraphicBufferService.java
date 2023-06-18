@@ -1,21 +1,22 @@
 package dev.peytob.rpg.client.module.graphic.service.vendor;
 
+import dev.peytob.rpg.client.module.graphic.repository.BufferRepository;
 import dev.peytob.rpg.client.module.graphic.resource.Buffer;
-import dev.peytob.rpg.engine.repositry.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import static org.lwjgl.opengl.GL33.*;
+import static org.lwjgl.opengl.GL33.glDeleteBuffers;
+import static org.lwjgl.opengl.GL33.glGenBuffers;
 
 @Service
 public final class OpenGlGraphicBufferService implements GraphicBufferService {
 
     private static final Logger logger = LoggerFactory.getLogger(OpenGlGraphicBufferService.class);
 
-    private final Repository<Buffer> bufferRepository;
+    private final BufferRepository bufferRepository;
 
-    public OpenGlGraphicBufferService(Repository<Buffer> bufferRepository) {
+    public OpenGlGraphicBufferService(BufferRepository bufferRepository) {
         this.bufferRepository = bufferRepository;
     }
 

@@ -1,9 +1,9 @@
 package dev.peytob.rpg.client.module.graphic.service.vendor;
 
+import dev.peytob.rpg.client.module.graphic.repository.MeshRepository;
 import dev.peytob.rpg.client.module.graphic.resource.Buffer;
 import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.VertexArray;
-import dev.peytob.rpg.engine.repositry.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,9 +22,9 @@ public class OpenGlMeshService implements MeshService {
 
     private final GraphicBufferService graphicBufferService;
 
-    private final Repository<Mesh> meshRepository;
+    private final MeshRepository meshRepository;
 
-    public OpenGlMeshService(VertexArrayService vertexArrayService, GraphicBufferService graphicBufferService, Repository<Mesh> meshRepository) {
+    public OpenGlMeshService(VertexArrayService vertexArrayService, GraphicBufferService graphicBufferService, MeshRepository meshRepository) {
         this.vertexArrayService = vertexArrayService;
         this.graphicBufferService = graphicBufferService;
         this.meshRepository = meshRepository;

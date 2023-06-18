@@ -1,10 +1,11 @@
 package dev.peytob.rpg.client.module.graphic.service.vendor;
 
-import dev.peytob.rpg.client.module.graphic.exception.ShaderProgramLinkException;
 import dev.peytob.rpg.client.module.graphic.exception.ShaderCompilationException;
+import dev.peytob.rpg.client.module.graphic.exception.ShaderProgramLinkException;
+import dev.peytob.rpg.client.module.graphic.repository.ShaderProgramRepository;
+import dev.peytob.rpg.client.module.graphic.repository.ShaderRepository;
 import dev.peytob.rpg.client.module.graphic.resource.Shader;
 import dev.peytob.rpg.client.module.graphic.resource.ShaderProgram;
-import dev.peytob.rpg.engine.repositry.Repository;
 import org.lwjgl.BufferUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +24,11 @@ public final class OpenGlShaderService implements ShaderService {
 
     private final static Logger logger = LoggerFactory.getLogger(OpenGlShaderService.class);
 
-    private final Repository<Shader> shaderRepository;
+    private final ShaderRepository shaderRepository;
 
-    private final Repository<ShaderProgram> shaderProgramRepository;
+    private final ShaderProgramRepository shaderProgramRepository;
 
-    public OpenGlShaderService(Repository<Shader> shaderRepository, Repository<ShaderProgram> shaderProgramRepository) {
+    public OpenGlShaderService(ShaderRepository shaderRepository, ShaderProgramRepository shaderProgramRepository) {
         this.shaderRepository = shaderRepository;
         this.shaderProgramRepository = shaderProgramRepository;
     }

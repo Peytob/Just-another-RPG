@@ -18,9 +18,7 @@ import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.List;
 
-import static dev.peytob.rpg.core.module.base.constants.PhysicsConstants.TILE_SIZE;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 
 @Component
@@ -48,23 +46,29 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
         RectI cullingTilesRect = renderableTilemap.getCullingTilesRect();
         Tilemap tilemap = renderableTilemap.getTilemap();
+        Vec2i tileSize = renderableTilemap.getTileSize();
 
         TilemapMeshBuilder tilemapMeshBuilder = new TilemapMeshBuilder(
-            cullingTilesRect.size().x() * cullingTilesRect.size().y(),
-            TILE_SIZE,
+            tilemap.getSizes().x() * tilemap.getSizes().y(),
+            tileSize,
             renderableTilemap.getTextureAtlas());
 
-        int fromX = max(cullingTilesRect.topLeft().x(), 0);
-        int toX = min(cullingTilesRect.bottomRight().x(), tilemap.getSizes().x());
-        int fromY = max(cullingTilesRect.topLeft().y(), 0);
-        int toY = min(cullingTilesRect.bottomRight().y(), tilemap.getSizes().y());
+//        int fromX = max(cullingTilesRect.topLeft().x(), 0);
+//        int toX = min(cullingTilesRect.bottomRight().x(), tilemap.getSizes().x());
+//        int fromY = max(cullingTilesRect.topLeft().y(), 0);
+//        int toY = min(cullingTilesRect.bottomRight().y(), tilemap.getSizes().y());
 
-        for (int x = fromX, positionX = fromX * TILE_SIZE.x(); x < toX; x++, positionX += TILE_SIZE.x()) {
-            for (int y = fromY, positionY = fromY * TILE_SIZE.y(); y < toY; y++, positionY += TILE_SIZE.y()) {
+        int fromX = 0;
+        int toX = tilemap.getSizes().x();
+        int fromY = 0;
+        int toY = tilemap.getSizes().y();
+
+        for (int x = fromX; x < toX; x++) {
+            for (int y = fromY; y < toY; y++) {
                 Tile tile = tilemap.getTile(x, y);
 
                 if (tile != null) {
-                    tilemapMeshBuilder.appendTile(positionX, positionY, tile);
+                    tilemapMeshBuilder.appendTile(x, y, tile);
                 }
             }
         }
@@ -93,7 +97,7 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
             this.totalVertices = 0;
         }
 
-        public void appendTile(float positionX, float positionY, Tile tile) {
+        public void appendTile(float gridX, float gridY, Tile tile) {
             Sprite sprite = textureAtlas.getSpriteByEntityId(tile.textId());
 
             if (sprite == null) {
@@ -103,6 +107,14 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
             Vec2 texturePosition = sprite.normalizedTextureRect().topLeft();
             Vec2 textureSize = sprite.normalizedTextureRect().size();
+
+            Vec2 position = immutableVec2(gridX, gridY);
+            Vec2 xT = immutableVec2(0.5f * tileSize.x(), 0.25f * tileSize.y()).multiply(position.x());
+            Vec2 yT = immutableVec2(-0.5f * tileSize.x(), 0.25f * tileSize.y()).multiply(position.y());
+            Vec2 pT = yT.plus(xT);
+
+            float positionX = pT.x();
+            float positionY = pT.y();
 
             appendVertex(positionX, positionY, texturePosition.x(), texturePosition.y());
             appendVertex(positionX + tileSize.x(), positionY, texturePosition.x() + textureSize.x(), texturePosition.y());
