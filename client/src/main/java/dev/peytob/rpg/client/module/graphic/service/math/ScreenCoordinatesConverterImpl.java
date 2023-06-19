@@ -17,7 +17,7 @@ public class ScreenCoordinatesConverterImpl implements ScreenCoordinatesConverte
     public Vec2 toScreenCoordinates(float x, float y, float tileSizeX, float tileSizeY) {
         return immutableVec2(
             (x - y) * (0.5f * tileSizeX),
-            (x + y) * (0.25f * tileSizeY)
+            (x + y) * (0.5f * tileSizeY)
         );
     }
 
@@ -27,8 +27,8 @@ public class ScreenCoordinatesConverterImpl implements ScreenCoordinatesConverte
     @Override
     public Vec2 fromScreenCoordinates(float x, float y, float tileSizeX, float tileSizeY) {
         return immutableVec2(
-            x / tileSizeX + 2 * y / tileSizeY,
-            2 * y / tileSizeY - x / tileSizeX
+            x / tileSizeX + y / tileSizeY,
+            y / tileSizeY - x / tileSizeX
         );
     }
 }

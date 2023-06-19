@@ -9,15 +9,15 @@ public class RenderableTilemap {
 
     private TextureAtlas textureAtlas;
 
-    private Vec2i tileSize;
+    private Vec2i renderingTileSize;
 
     private RectI cullingTilesRect;
 
     private Tilemap tilemap;
 
-    public RenderableTilemap(Tilemap tilemap, Vec2i tileSize, TextureAtlas textureAtlas) {
+    public RenderableTilemap(Tilemap tilemap, Vec2i renderingTileSize, TextureAtlas textureAtlas) {
         this.textureAtlas = textureAtlas;
-        this.tileSize = tileSize;
+        this.renderingTileSize = renderingTileSize;
         this.tilemap = tilemap;
         this.cullingTilesRect = Rectangles.rectI();
     }
@@ -30,12 +30,12 @@ public class RenderableTilemap {
         this.textureAtlas = textureAtlas;
     }
 
-    public Vec2i getTileSize() {
-        return tileSize;
+    public Vec2i getRenderingTileSize() {
+        return renderingTileSize;
     }
 
-    public void setTileSize(Vec2i tileSize) {
-        this.tileSize = tileSize;
+    public void setRenderingTileSize(Vec2i renderingTileSize) {
+        this.renderingTileSize = renderingTileSize;
     }
 
     public RectI getCullingTilesRect() {

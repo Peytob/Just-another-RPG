@@ -19,6 +19,8 @@ import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.List;
 
+import static dev.peytob.rpg.core.module.base.constants.PhysicsConstants.TILE_SIZE;
+import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
@@ -51,11 +53,12 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
         RectI cullingTilesRect = renderableTilemap.getCullingTilesRect();
         Tilemap tilemap = renderableTilemap.getTilemap();
-        Vec2i tileSize = renderableTilemap.getTileSize();
+        Vec2i renderingTileSize = renderableTilemap.getRenderingTileSize();
 
         TilemapMeshBuilder tilemapMeshBuilder = new TilemapMeshBuilder(
             tilemap.getSizes().x() * tilemap.getSizes().y(),
-            tileSize,
+            TILE_SIZE,
+            renderingTileSize,
             renderableTilemap.getTextureAtlas());
 
         int fromX = max(cullingTilesRect.topLeft().x(), 0);
@@ -81,18 +84,18 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
     private final class TilemapMeshBuilder {
 
         private final ByteBuffer buffer;
-
-        private final Vec2i tileSize;
-
+        private final Vec2 gridTileSize;
+        private final Vec2 renderingTileSize;
         private final TextureAtlas textureAtlas;
 
         private int totalVertices;
 
-        public TilemapMeshBuilder(int spritesCapacity, Vec2i tileSize, TextureAtlas textureAtlas) {
+        public TilemapMeshBuilder(int spritesCapacity, Vec2i gridTileSize, Vec2i renderingTileSize, TextureAtlas textureAtlas) {
             // One rectangle -> Two triangles -> Six vertexes.
             int bufferCapacity = spritesCapacity * 6 * BYTES_PER_VERTEX;
             this.buffer = BufferUtils.createByteBuffer(bufferCapacity);
-            this.tileSize = tileSize;
+            this.gridTileSize = immutableVec2(gridTileSize);
+            this.renderingTileSize = immutableVec2(renderingTileSize);
             this.textureAtlas = textureAtlas;
             this.totalVertices = 0;
         }
@@ -107,16 +110,36 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
             Vec2 texturePosition = sprite.normalizedTextureRect().topLeft();
             Vec2 textureSize = sprite.normalizedTextureRect().size();
+            Vec2 spritePosition = screenCoordinatesConverter.toScreenCoordinates(gridX, gridY, gridTileSize.x(), gridTileSize.y());
+            appendSprite(spritePosition, renderingTileSize, texturePosition, textureSize);
+        }
 
-            Vec2 position = screenCoordinatesConverter.toScreenCoordinates(gridX, gridY, tileSize.x(), tileSize.y());
+        public void appendSprite(Vec2 position, Vec2 spriteSize, Vec2 texturePosition, Vec2 textureSize) {
+            // First triangle
+            appendVertex(
+                position.x(), position.y(),
+                texturePosition.x(), texturePosition.y());
 
-            appendVertex(position.x(), position.y(), texturePosition.x(), texturePosition.y());
-            appendVertex(position.x() + tileSize.x(), position.y(), texturePosition.x() + textureSize.x(), texturePosition.y());
-            appendVertex(position.x(), position.y() + tileSize.y(), texturePosition.x(), texturePosition.y() + textureSize.y());
+            appendVertex(
+                position.x() + spriteSize.x(), position.y(),
+                texturePosition.x() + textureSize.x(), texturePosition.y());
 
-            appendVertex(position.x() + tileSize.x(), position.y(), texturePosition.x() + textureSize.x(), texturePosition.y());
-            appendVertex(position.x(), position.y() + tileSize.y(), texturePosition.x(), texturePosition.y() + textureSize.y());
-            appendVertex(position.x() + tileSize.y(), position.y() + tileSize.y(), texturePosition.x() + textureSize.x(), texturePosition.y() + textureSize.y());
+            appendVertex(
+                position.x(), position.y() + spriteSize.y(),
+                texturePosition.x(), texturePosition.y() + textureSize.y());
+
+            // Second triangle
+            appendVertex(
+                position.x() + spriteSize.x(), position.y(),
+                texturePosition.x() + textureSize.x(), texturePosition.y());
+
+            appendVertex(
+                position.x(), position.y() + spriteSize.y(),
+                texturePosition.x(), texturePosition.y() + textureSize.y());
+
+            appendVertex(
+                position.x() + spriteSize.x(), position.y() + spriteSize.y(),
+                texturePosition.x() + textureSize.x(), texturePosition.y() + textureSize.y());
         }
 
         public ByteBuffer build() {

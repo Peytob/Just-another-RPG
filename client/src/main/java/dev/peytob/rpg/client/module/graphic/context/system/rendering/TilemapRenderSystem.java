@@ -55,13 +55,12 @@ public class TilemapRenderSystem implements System {
 
     private void renderTilemap(CameraComponent cameraComponent, TilemapComponent tilemapComponent, TilemapTextureAtlasComponent textureAtlasComponent) {
         Camera camera = cameraComponent.getCamera();
-        Vec2i renderingTileSize = TILE_SIZE;
 
         // TODO Make renderable tilemap component and management entities
 
         RenderableTilemap renderableTilemap = new RenderableTilemap(
             tilemapComponent.getTilemap(),
-            renderingTileSize,
+            immutableVec2i(100, 58),
             textureAtlasComponent.getTextureAtlas());
 
         renderableTilemap.setCullingTilesRect(computeCullingTilesRect(camera, renderableTilemap));
