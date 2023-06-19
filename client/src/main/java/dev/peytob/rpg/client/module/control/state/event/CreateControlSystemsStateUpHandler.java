@@ -1,6 +1,7 @@
 package dev.peytob.rpg.client.module.control.state.event;
 
 import dev.peytob.rpg.client.module.control.context.system.PlayerMovingSystem;
+import dev.peytob.rpg.client.module.control.context.system.ScreenshotHandlerSystem;
 import dev.peytob.rpg.client.module.control.context.system.WindowCloseButtonHandlingSystem;
 import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
@@ -23,6 +24,7 @@ public class CreateControlSystemsStateUpHandler extends StateSetUpEventHandler<I
     public void onStateSetUp(InGameEngineState engineState, EcsContextBuilder contextBuilder) {
         contextBuilder
             .addSystem(systemFactory.getSystem(PlayerMovingSystem.class), INPUT_HANDLING)
+            .addSystem(systemFactory.getSystem(ScreenshotHandlerSystem.class), INPUT_HANDLING)
             .addSystem(systemFactory.getSystem(WindowCloseButtonHandlingSystem.class), INPUT_HANDLING);
     }
 }

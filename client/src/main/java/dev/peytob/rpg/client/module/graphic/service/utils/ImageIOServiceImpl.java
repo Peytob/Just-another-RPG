@@ -4,6 +4,7 @@ import dev.peytob.rpg.client.module.graphic.exception.ImageLoadingException;
 import dev.peytob.rpg.client.module.graphic.model.Image;
 import dev.peytob.rpg.math.vector.Vec2i;
 import dev.peytob.rpg.math.vector.Vectors;
+import org.lwjgl.stb.STBImageWrite;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -13,8 +14,11 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 @Component
-public class ImageLoaderImpl implements ImageLoader {
+public class ImageIOServiceImpl implements ImageIOService {
 
+    /**
+     * STB can't load images from classpath.
+     */
     @Override
     public Image loaderClasspathImage(String path) {
         try (InputStream imageResource = getClass().getResourceAsStream(path)) {
@@ -30,6 +34,12 @@ public class ImageLoaderImpl implements ImageLoader {
         } catch (IOException e) {
             throw new ImageLoadingException("Classpath image can't be loaded", e);
         }
+    }
+
+    @Override
+    public void saveImageFile(String filename, Image image) {
+        STBImageWrite.nstbi_flip_vertically_on_write(1);
+        STBImageWrite.stbi_write_jpg(filename + ".jpg", image.sizes().x(), image.sizes().y(), 4, image.data(), 100);
     }
 
     private ByteBuffer bufferedImageToByteBuffer(BufferedImage image) {
