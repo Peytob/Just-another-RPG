@@ -60,7 +60,7 @@ public class TilemapRenderSystem implements System {
 
         RenderableTilemap renderableTilemap = new RenderableTilemap(
             tilemapComponent.getTilemap(),
-            immutableVec2i(100, 58),
+            immutableVec2i(140, 140),
             textureAtlasComponent.getTextureAtlas());
 
         renderableTilemap.setCullingTilesRect(computeCullingTilesRect(camera, renderableTilemap));
