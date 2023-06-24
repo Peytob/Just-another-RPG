@@ -1,6 +1,6 @@
-package dev.peytob.rpg.core.module.location.context.component;
+package dev.peytob.rpg.core.module.level.context.component;
 
-import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.level.model.tilemap.Tilemap;
 import dev.peytob.rpg.ecs.component.SingletonComponent;
 
 public class TilemapComponent implements SingletonComponent {

@@ -1,6 +1,6 @@
 package dev.peytob.rpg.core.resource;
 
-import dev.peytob.rpg.core.module.location.resource.Tile;
+import dev.peytob.rpg.core.module.level.resource.Tile;
 
 public enum TestTiles {;
 

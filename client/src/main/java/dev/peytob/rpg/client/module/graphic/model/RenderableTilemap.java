@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.module.graphic.model;
 
-import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.level.model.tilemap.Tilemap;
 import dev.peytob.rpg.math.geometry.RectI;
 import dev.peytob.rpg.math.geometry.Rectangles;
 import dev.peytob.rpg.math.vector.Vec2i;
