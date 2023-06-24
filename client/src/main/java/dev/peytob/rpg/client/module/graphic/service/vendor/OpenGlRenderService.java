@@ -22,6 +22,6 @@ public final class OpenGlRenderService implements RenderService {
 
     @Override
     public void clearFramebuffer() {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
     }
 }

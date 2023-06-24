@@ -31,10 +31,10 @@ public class CreateMockGraphicEntities extends StateSetUpEventHandler<InGameEngi
     private Tilemap createTilemap() {
         Tilemap tilemap = Tilemaps.mutable(immutableVec2i(16, 16));
         Tile[] mockTiles = new Tile[] {
-            new Tile(1, "tile1"),
-            new Tile(2, "tile2"),
-            new Tile(3, "tile3"),
-            new Tile(4, "tile4")
+            new Tile(1, "blue_tile"),
+            new Tile(2, "red_tile"),
+            new Tile(3, "pink_tile"),
+            new Tile(4, "green_tile")
         };
         Random random = new Random();
 

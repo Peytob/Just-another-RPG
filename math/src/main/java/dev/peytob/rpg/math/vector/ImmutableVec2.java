@@ -39,4 +39,9 @@ record ImmutableVec2(
     public Vec2 division(float x, float y) {
         return new ImmutableVec2(this.x / x, this.y / y);
     }
+
+    @Override
+    public Vec2 multiply(float scalar) {
+        return new ImmutableVec2(this.x * scalar, this.y * scalar);
+    }
 }

@@ -25,7 +25,7 @@ public class OpenGlUniformBlockService implements UniformBlockService {
 
     @Override
     public UniformBlock createUniformBlock(String textId, String uniformBlockName, int sizesInBytes, int bindingIndex) {
-        logger.info("Creating new uniform block with id {}", textId);
+        logger.debug("Creating new uniform block with id {}", textId);
 
         Buffer buffer = graphicBufferService.createBuffer(textId + "_buffer", GL_UNIFORM_BUFFER);
         UniformBlock uniformBlock = new UniformBlock(
@@ -44,13 +44,13 @@ public class OpenGlUniformBlockService implements UniformBlockService {
 
         uniformBlockRepository.append(uniformBlock);
 
-        logger.info("Created new uniform block with id {} ({})", textId, uniformBlock.buffer().id());
+        logger.debug("Created new uniform block with id {} ({})", textId, uniformBlock.buffer().id());
         return uniformBlock;
     }
 
     @Override
     public boolean removeUniformBlock(UniformBlock uniformBlock) {
-        logger.info("Removing uniform block with id {} ({})", uniformBlock.textId(), uniformBlock.id());
+        logger.debug("Removing uniform block with id {} ({})", uniformBlock.textId(), uniformBlock.id());
 
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
 

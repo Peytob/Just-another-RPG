@@ -1,10 +1,11 @@
 package dev.peytob.rpg.client.module.graphic.service.vendor;
 
-import dev.peytob.rpg.client.module.graphic.exception.ShaderProgramLinkException;
 import dev.peytob.rpg.client.module.graphic.exception.ShaderCompilationException;
+import dev.peytob.rpg.client.module.graphic.exception.ShaderProgramLinkException;
+import dev.peytob.rpg.client.module.graphic.repository.ShaderProgramRepository;
+import dev.peytob.rpg.client.module.graphic.repository.ShaderRepository;
 import dev.peytob.rpg.client.module.graphic.resource.Shader;
 import dev.peytob.rpg.client.module.graphic.resource.ShaderProgram;
-import dev.peytob.rpg.engine.repositry.Repository;
 import org.lwjgl.BufferUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,18 +24,18 @@ public final class OpenGlShaderService implements ShaderService {
 
     private final static Logger logger = LoggerFactory.getLogger(OpenGlShaderService.class);
 
-    private final Repository<Shader> shaderRepository;
+    private final ShaderRepository shaderRepository;
 
-    private final Repository<ShaderProgram> shaderProgramRepository;
+    private final ShaderProgramRepository shaderProgramRepository;
 
-    public OpenGlShaderService(Repository<Shader> shaderRepository, Repository<ShaderProgram> shaderProgramRepository) {
+    public OpenGlShaderService(ShaderRepository shaderRepository, ShaderProgramRepository shaderProgramRepository) {
         this.shaderRepository = shaderRepository;
         this.shaderProgramRepository = shaderProgramRepository;
     }
 
     @Override
     public Shader compileShader(String code, String textId, int type) {
-        logger.info("Compiling shader with id {}", textId);
+        logger.debug("Compiling shader with id {}", textId);
 
         int shaderId = glCreateShader(type);
         glShaderSource(shaderId, code);
@@ -48,7 +49,7 @@ public final class OpenGlShaderService implements ShaderService {
             throw new ShaderCompilationException(shaderInfoLog);
         }
 
-        logger.info("Compiled shader with id {} ({})", textId, shaderId);
+        logger.debug("Compiled shader with id {} ({})", textId, shaderId);
 
         Shader shader = new Shader(shaderId, textId, type);
         shaderRepository.append(shader);
@@ -57,22 +58,22 @@ public final class OpenGlShaderService implements ShaderService {
 
     @Override
     public ShaderProgram createShaderProgram(Shader vertexShader, Shader fragmentShader, String textId) {
-        logger.info("Creating new shader program with id {}", textId);
+        logger.debug("Creating new shader program with id {}", textId);
 
         assert vertexShader.type() == GL_VERTEX_SHADER;
         assert fragmentShader.type() == GL_FRAGMENT_SHADER;
 
         int shaderProgramId = glCreateProgram();
 
-        logger.info("Attaching vertex shader with id {} ({}) to shader program {} ({})",
-                vertexShader.textId(), vertexShader.id(), textId, shaderProgramId);
+        logger.debug("Attaching vertex shader with id {} ({}) to shader program {} ({})",
+            vertexShader.textId(), vertexShader.id(), textId, shaderProgramId);
         glAttachShader(shaderProgramId, vertexShader.id());
 
-        logger.info("Attaching fragment shader with id {} ({}) to shader program {} ({})",
-                vertexShader.textId(), vertexShader.id(), textId, shaderProgramId);
+        logger.debug("Attaching fragment shader with id {} ({}) to shader program {} ({})",
+            vertexShader.textId(), vertexShader.id(), textId, shaderProgramId);
         glAttachShader(shaderProgramId, fragmentShader.id());
 
-        logger.info("Linking shader program with id {} ({})", textId, shaderProgramId);
+        logger.debug("Linking shader program with id {} ({})", textId, shaderProgramId);
         glLinkProgram(shaderProgramId);
 
         int programLinkStatus = glGetProgrami(shaderProgramId, GL_LINK_STATUS);
@@ -82,7 +83,7 @@ public final class OpenGlShaderService implements ShaderService {
             throw new ShaderProgramLinkException(infoLog);
         }
 
-        logger.info("Created shader program with id {} ({})", textId, shaderProgramId);
+        logger.debug("Created shader program with id {} ({})", textId, shaderProgramId);
         ShaderProgram shaderProgram = new ShaderProgram(shaderProgramId, textId, searchUniforms(shaderProgramId));
         shaderProgramRepository.append(shaderProgram);
         return shaderProgram;
@@ -90,7 +91,7 @@ public final class OpenGlShaderService implements ShaderService {
 
     @Override
     public boolean removeShader(Shader shader) {
-        logger.info("Removing shader with id {} ({})", shader.textId(), shader.id());
+        logger.debug("Removing shader with id {} ({})", shader.textId(), shader.id());
 
         if (!shaderRepository.contains(shader.id())) {
             logger.warn("Shader with id {} ({}) not found while removing", shader.textId(), shader.id());
@@ -100,13 +101,13 @@ public final class OpenGlShaderService implements ShaderService {
         Shader shaderFromRepository = shaderRepository.getById(shader.id());
         glDeleteShader(shader.id());
 
-        logger.info("Removed shader with id {} ({})", shader.textId(), shader.id());
+        logger.debug("Removed shader with id {} ({})", shader.textId(), shader.id());
         return shaderRepository.remove(shaderFromRepository);
     }
 
     @Override
     public boolean removeShaderProgram(ShaderProgram shaderProgram) {
-        logger.info("Removing shader program with id {} ({})", shaderProgram.textId(), shaderProgram.id());
+        logger.debug("Removing shader program with id {} ({})", shaderProgram.textId(), shaderProgram.id());
 
         if (!shaderProgramRepository.contains(shaderProgram.id())) {
             logger.warn("Shader with id {} ({}) not found while removing", shaderProgram.textId(), shaderProgram.id());
@@ -114,7 +115,7 @@ public final class OpenGlShaderService implements ShaderService {
         }
 
         ShaderProgram shaderProgramFromRepository = shaderProgramRepository.getById(shaderProgram.id());
-        logger.info("Removed shader with id {} ({})", shaderProgram.textId(), shaderProgram.id());
+        logger.debug("Removed shader with id {} ({})", shaderProgram.textId(), shaderProgram.id());
         return shaderProgramRepository.remove(shaderProgramFromRepository);
     }
 
@@ -134,12 +135,12 @@ public final class OpenGlShaderService implements ShaderService {
         IntBuffer typeBuffer = BufferUtils.createIntBuffer(totalUniforms);
 
         return IntStream
-                .range(0, totalUniforms)
-                .mapToObj(index -> {
-                    String uniformName = glGetActiveUniform(id, index, sizeBuffer, typeBuffer);
-                    int uniformLocation = glGetUniformLocation(id, uniformName);
-                    return new ShaderProgram.ShaderProgramUniform(uniformName, uniformLocation, sizeBuffer.get(), typeBuffer.get());
-                })
-                .collect(Collectors.toUnmodifiableMap(ShaderProgram.ShaderProgramUniform::name, Function.identity()));
+            .range(0, totalUniforms)
+            .mapToObj(index -> {
+                String uniformName = glGetActiveUniform(id, index, sizeBuffer, typeBuffer);
+                int uniformLocation = glGetUniformLocation(id, uniformName);
+                return new ShaderProgram.ShaderProgramUniform(uniformName, uniformLocation, sizeBuffer.get(), typeBuffer.get());
+            })
+            .collect(Collectors.toUnmodifiableMap(ShaderProgram.ShaderProgramUniform::name, Function.identity()));
     }
 }

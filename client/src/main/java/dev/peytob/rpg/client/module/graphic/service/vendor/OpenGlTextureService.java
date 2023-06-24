@@ -24,7 +24,7 @@ public class OpenGlTextureService implements TextureService {
 
     @Override
     public Texture createTexture(String textId, Integer format, Vec2i sizes, ByteBuffer data) {
-        logger.info("Creating new texture with id {}", textId);
+        logger.trace("Creating new texture with id {}", textId);
 
         int textureId = glGenTextures();
 
@@ -43,7 +43,7 @@ public class OpenGlTextureService implements TextureService {
             sizes,
             data.asReadOnlyBuffer());
 
-        logger.info("Created texture with id {} ({})", textId, textureId);
+        logger.trace("Created texture with id {} ({})", textId, textureId);
 
         textureRepository.append(texture);
 
@@ -52,7 +52,7 @@ public class OpenGlTextureService implements TextureService {
 
     @Override
     public boolean removeTexture(Texture texture) {
-        logger.info("Removing texture with id {} ({})", texture.textId(), texture.id());
+        logger.trace("Removing texture with id {} ({})", texture.textId(), texture.id());
 
         if (textureRepository.contains(texture.id())) {
             logger.warn("texture with id {} ({}) not found while removing", texture.textId(), texture.id());

@@ -6,5 +6,5 @@ import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 
 public enum PhysicsConstants {;
 
-    public static final Vec2i TILE_SIZE = immutableVec2i(64, 64);
+    public static final Vec2i TILE_SIZE = immutableVec2i(140, 70);
 }

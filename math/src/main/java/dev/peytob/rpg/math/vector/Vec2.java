@@ -39,4 +39,6 @@ public interface Vec2 {
      * @return (l.x / r.x, l.y / l.x)
      */
     Vec2 division(float x, float y);
+
+    Vec2 multiply(float scalar);
 }

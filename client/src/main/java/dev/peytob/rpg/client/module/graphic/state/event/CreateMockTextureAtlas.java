@@ -4,7 +4,7 @@ import dev.peytob.rpg.client.module.graphic.context.component.TilemapTextureAtla
 import dev.peytob.rpg.client.module.graphic.model.Image;
 import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
 import dev.peytob.rpg.client.module.graphic.resource.Texture;
-import dev.peytob.rpg.client.module.graphic.service.utils.ImageLoader;
+import dev.peytob.rpg.client.module.graphic.service.utils.ImageIOService;
 import dev.peytob.rpg.client.module.graphic.service.vendor.TextureService;
 import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
@@ -19,23 +19,23 @@ public class CreateMockTextureAtlas extends StateSetUpEventHandler<InGameEngineS
 
     private final TextureService textureService;
 
-    private final ImageLoader imageLoader;
+    private final ImageIOService imageIOService;
 
-    public CreateMockTextureAtlas(TextureService textureService, ImageLoader imageLoader) {
+    public CreateMockTextureAtlas(TextureService textureService, ImageIOService imageIOService) {
         this.textureService = textureService;
-        this.imageLoader = imageLoader;
+        this.imageIOService = imageIOService;
     }
 
     @Override
     public void onStateSetUp(InGameEngineState engineState, EcsContextBuilder contextBuilder) {
-        Image testAtlas = imageLoader.loaderClasspathImage("/images/tiles/test_tile.png");
+        Image testAtlas = imageIOService.loaderClasspathImage("/images/tiles/test_tile.png");
         Texture textureAtlas = textureService.createTexture("tilemap_test_atlas", GL_RGBA8, testAtlas);
 
         TextureAtlas.TextureAtlasBuilder textureAtlasBuilder = new TextureAtlas.TextureAtlasBuilder(textureAtlas);
-        textureAtlasBuilder.appendSprite("tile1", rect(0, 0, 0.5f, 0.5f));
-        textureAtlasBuilder.appendSprite("tile2", rect(0.5f, 0, 0.5f, 0.5f));
-        textureAtlasBuilder.appendSprite("tile3", rect(0, 0.5f, 0.5f, 0.5f));
-        textureAtlasBuilder.appendSprite("tile4", rect(0.5f, 0.5f, 0.5f, 0.5f));
+        textureAtlasBuilder.appendSprite("blue_tile", rect(0, 0, 0.5f, 0.5f));
+        textureAtlasBuilder.appendSprite("red_tile", rect(0.5f, 0, 0.5f, 0.5f));
+        textureAtlasBuilder.appendSprite("pink_tile", rect(0, 0.5f, 0.5f, 0.5f));
+        textureAtlasBuilder.appendSprite("green_tile", rect(0.5f, 0.5f, 0.5f, 0.5f));
         TextureAtlas builtAtlas = textureAtlasBuilder.build();
 
         contextBuilder.initializeEntity((entity, ecsContext) ->
