@@ -2,7 +2,8 @@ package dev.peytob.rpg.core.module.level.model.tilemap;
 
 import dev.peytob.rpg.core.module.level.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
-import dev.peytob.rpg.math.vector.Vectors;
+
+import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 
 /**
  * TODO Make memory-optimized quadtree implementation of tilemap.
@@ -11,23 +12,43 @@ class ArrayTilemap implements Tilemap {
 
     private final Vec2i sizes;
 
-    private final Tile[][] map;
+    private final PlacedTile[][] map;
 
     public ArrayTilemap(Vec2i sizes) {
-        this.sizes = Vectors.immutableVec2i(sizes);
-        this.map = new Tile[sizes.x()][sizes.y()];
+        this.sizes = immutableVec2i(sizes);
+        this.map = new PlacedTile[sizes.x()][sizes.y()];
     }
 
     @Override
-    public Tile getTile(int x, int y) {
+    public PlacedTile getTile(int x, int y) {
         return containsCoordinate(x, y) ? map[x][y] : null;
     }
 
     @Override
-    public Tile setTile(int x, int y, Tile tile) {
-        if (containsCoordinate(x, y)) {
-            Tile oldTile = map[x][y];
-            map[x][y] = tile;
+    public PlacedTile getTile(Vec2i position) {
+        return getTile(position.x(), position.y());
+    }
+
+    @Override
+    public PlacedTile setTile(int x, int y, Tile tile) {
+        PlacedTile alreadyPlacedTile = getTile(x, y);
+
+        if (alreadyPlacedTile != null) {
+            return setTile(alreadyPlacedTile.gridPosition(), tile);
+        } else {
+            return setTile(immutableVec2i(x, y), tile);
+        }
+    }
+
+    @Override
+    public PlacedTile setTile(Vec2i position, Tile tile) {
+        if (tile == null) {
+            return removeTile(position);
+        }
+
+        if (containsCoordinate(position.x(), position.y())) {
+            PlacedTile oldTile = map[position.x()][position.y()];
+            map[position.x()][position.y()] = new PlacedTile(tile, position);
             return oldTile;
         }
 
@@ -35,8 +56,19 @@ class ArrayTilemap implements Tilemap {
     }
 
     @Override
-    public Tile removeTile(int x, int y) {
-        return setTile(x, y, null);
+    public PlacedTile removeTile(int x, int y) {
+        PlacedTile placedTile = getTile(x, y);
+
+        if (placedTile != null) {
+            map[x][y] = null;
+        }
+
+        return placedTile;
+    }
+
+    @Override
+    public PlacedTile removeTile(Vec2i position) {
+        return removeTile(position.x(), position.y());
     }
 
     @Override

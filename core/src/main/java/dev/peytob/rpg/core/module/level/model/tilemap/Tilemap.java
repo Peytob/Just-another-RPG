@@ -8,29 +8,23 @@ public interface Tilemap {
     /**
      * Returns tile on (x, y) coordinates. If tile not exists or given wrong coordinates - returns null.
      */
-    Tile getTile(int x, int y);
+    PlacedTile getTile(int x, int y);
 
-    default Tile getTile(Vec2i position) {
-        return getTile(position.x(), position.y());
-    }
+    PlacedTile getTile(Vec2i position);
 
     /**
      * Sets tile on (x, y) coordinates. Returns old tile if there was, null otherwise.
      */
-    Tile setTile(int x, int y, Tile tile);
+    PlacedTile setTile(int x, int y, Tile tile);
 
-    default Tile setTile(Vec2i position, Tile tile) {
-        return setTile(position.x(), position.y(), tile);
-    }
+    PlacedTile setTile(Vec2i position, Tile tile);
 
     /**
      * Removes tile on (x, y) coordinates. If tile not exists or given wrong coordinates - returns null.
      */
-    Tile removeTile(int x, int y);
+    PlacedTile removeTile(int x, int y);
 
-    default Tile removeTile(Vec2i position) {
-        return removeTile(position.x(), position.y());
-    }
+    PlacedTile removeTile(Vec2i position);
 
     Vec2i getSizes();
 }

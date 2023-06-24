@@ -68,7 +68,7 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
         for (int x = fromX; x < toX; x++) {
             for (int y = fromY; y < toY; y++) {
-                Tile tile = tilemap.getTile(x, y);
+                Tile tile = tilemap.getTile(x, y).tile();
 
                 if (tile != null) {
                     tilemapMeshBuilder.appendTile(x, y, tile);

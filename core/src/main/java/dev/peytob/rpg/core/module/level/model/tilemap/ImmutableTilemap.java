@@ -12,27 +12,37 @@ final class ImmutableTilemap implements Tilemap {
     }
 
     @Override
-    public Tile getTile(int x, int y) {
+    public PlacedTile getTile(int x, int y) {
         return tilemap.getTile(x, y);
     }
 
     @Override
-    public Tile getTile(Vec2i position) {
+    public PlacedTile getTile(Vec2i position) {
         return tilemap.getTile(position);
+    }
+
+    @Override
+    public PlacedTile setTile(int x, int y, Tile tile) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PlacedTile setTile(Vec2i position, Tile tile) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PlacedTile removeTile(int x, int y) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PlacedTile removeTile(Vec2i position) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Vec2i getSizes() {
         return tilemap.getSizes();
-    }
-
-    @Override
-    public Tile setTile(int x, int y, Tile tile) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Tile removeTile(int x, int y) {
-        throw new UnsupportedOperationException();
     }
 }
