@@ -22,18 +22,24 @@ public final class ClientEngine {
 
     private final Window window;
 
+    private EngineState nextEngineState;
+
     public ClientEngine(EngineStateManager engineStateManager, EcsContextManager ecsContextManager, Window window) {
         this.engineStateManager = engineStateManager;
         this.ecsContextManager = ecsContextManager;
         this.window = window;
+        this.nextEngineState = null;
     }
 
     public ExitCode runCycle(EngineState startEngineState) {
-        Objects.requireNonNull(startEngineState, "Engine state should be specified before engine start");
-
-        engineStateManager.updateEngineState(startEngineState);
+        updateEngineState(startEngineState);
 
         while (!window.isShouldClose()) {
+            if (nextEngineState != null) {
+                engineStateManager.updateEngineState(nextEngineState);
+                nextEngineState = null;
+            }
+
             try {
                 ecsContextManager.executeSystems();
             } catch (Exception exception) {
@@ -43,5 +49,10 @@ public final class ClientEngine {
         }
 
         return ExitCode.SUCCESS;
+    }
+
+    public void updateEngineState(EngineState engineState) {
+        Objects.requireNonNull(engineStateManager, "Engine state should be specified");
+        this.nextEngineState = engineState;
     }
 }
