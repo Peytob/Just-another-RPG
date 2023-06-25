@@ -2,7 +2,7 @@ package dev.peytob.rpg.client.module.graphic.pipeline;
 
 import dev.peytob.rpg.client.module.control.context.event.MouseScrollEvent;
 import dev.peytob.rpg.client.module.graphic.model.Window;
-import dev.peytob.rpg.engine.event.MainEventBus;
+import dev.peytob.rpg.engine.event.EngineEventBus;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;
@@ -12,18 +12,18 @@ public final class WindowScrollEventBusRegistrationStep implements InitializingP
 
     private final Window window;
 
-    private final MainEventBus mainEventBus;
+    private final EngineEventBus engineEventBus;
 
-    public WindowScrollEventBusRegistrationStep(Window window, MainEventBus mainEventBus) {
+    public WindowScrollEventBusRegistrationStep(Window window, EngineEventBus engineEventBus) {
         this.window = window;
-        this.mainEventBus = mainEventBus;
+        this.engineEventBus = engineEventBus;
     }
 
     @Override
     public void execute() {
         GLFW.glfwSetScrollCallback(window.getPointer(), (window, xOffset, yOffset) -> {
             MouseScrollEvent event = createEvent(xOffset, yOffset);
-            mainEventBus.addEvent(event);
+            engineEventBus.publishEvent(event);
         });
     }
 

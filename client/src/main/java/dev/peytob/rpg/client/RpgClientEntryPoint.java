@@ -1,9 +1,9 @@
 package dev.peytob.rpg.client;
 
-import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.client.module.graphic.system.library.GlfwLibraryHandler;
+import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.client.system.library.StaticLibraryHandler;
-import dev.peytob.rpg.engine.Engine;
+import dev.peytob.rpg.engine.pipeline.InitializingPipeline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -18,21 +18,21 @@ public class RpgClientEntryPoint {
     // C libraries handlers, that allows application to initialize and free library resources.
     // Also, this guaranties, that libraries would be called from main application thread.
     private static final StaticLibraryHandler[] STATIC_LIBRARY_HANDLERS = {
-            new GlfwLibraryHandler()
+        new GlfwLibraryHandler()
     };
 
     public static void main(String[] args) {
         initializeStaticCLibraries();
 
         ConfigurableApplicationContext context = SpringApplication
-                .run(RpgClientEntryPoint.class);
+            .run(RpgClientEntryPoint.class);
 
-        Engine engine = context.getBean(Engine.class);
-        InGameEngineState startEngineState = context.getBean(InGameEngineState.class);
+        ClientEngine engine = context.getBean(ClientEngine.class);
+        InitializingPipeline initializingPipeline = context.getBean(InitializingPipeline.class); // TODO Make engine starter class
+        InGameEngineState startEngineState = context.getBean(InGameEngineState.class); // TODO Make default state constant
 
-        engine.initialize();
-        engine.updateEngineState(startEngineState); // TODO Make default state constant
-        engine.runCycle();
+        initializingPipeline.execute();
+        engine.runCycle(startEngineState);
 
         // Should be closed before destroying C libraries, because
         // some system resources may be not free after destroying libraries.
@@ -52,8 +52,9 @@ public class RpgClientEntryPoint {
 
     private static void destroyStaticCLibraries() {
         for (StaticLibraryHandler library : STATIC_LIBRARY_HANDLERS) {
-            logger.info("Library {} has been destroyed", library.getName());
+            logger.info("Destroying library {} has been destroyed", library.getName());
             library.destroy();
+            logger.info("Library {} has been destroyed", library.getName());
         }
     }
 }

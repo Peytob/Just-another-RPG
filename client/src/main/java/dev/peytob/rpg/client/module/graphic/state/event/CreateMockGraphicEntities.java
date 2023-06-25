@@ -2,13 +2,13 @@ package dev.peytob.rpg.client.module.graphic.state.event;
 
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
 import dev.peytob.rpg.client.module.graphic.model.Camera;
-import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.core.module.location.context.component.TilemapComponent;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
 import dev.peytob.rpg.core.module.location.model.tilemap.Tilemaps;
 import dev.peytob.rpg.core.module.location.resource.Tile;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
-import dev.peytob.rpg.engine.state.event.StateSetUpEventHandler;
+import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -17,10 +17,12 @@ import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 
 @Component
-public class CreateMockGraphicEntities extends StateSetUpEventHandler<InGameEngineState> {
+public class CreateMockGraphicEntities {
 
-    @Override
-    public void onStateSetUp(InGameEngineState engineState, EcsContextBuilder contextBuilder) {
+    @EventListener
+    public void createMockGraphicEntities(StateSetUpEvent stateSetUpEvent) {
+        EcsContextBuilder contextBuilder = stateSetUpEvent.contextBuilder();
+
         contextBuilder
             .initializeEntity((entity, ecsContext) ->
                 entity.bindComponent(new TilemapComponent(createTilemap())))

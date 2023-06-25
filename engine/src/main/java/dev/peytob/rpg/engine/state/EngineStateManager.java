@@ -3,7 +3,7 @@ package dev.peytob.rpg.engine.state;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.context.EcsContexts;
 import dev.peytob.rpg.engine.context.EcsContextManager;
-import dev.peytob.rpg.engine.event.EventBus;
+import dev.peytob.rpg.engine.event.EngineEventBus;
 import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
 import dev.peytob.rpg.engine.state.event.instance.StateTearDownEvent;
 import org.slf4j.Logger;
@@ -19,13 +19,13 @@ public final class EngineStateManager {
 
     private final EcsContextManager ecsContextManager;
 
-    private final EventBus eventBus;
+    private final EngineEventBus engineEventBus;
 
     private EngineState currentEngineState;
 
-    public EngineStateManager(EcsContextManager ecsContextManager, EventBus eventBus) {
+    public EngineStateManager(EcsContextManager ecsContextManager, EngineEventBus engineEventBus) {
         this.ecsContextManager = ecsContextManager;
-        this.eventBus = eventBus;
+        this.engineEventBus = engineEventBus;
         this.currentEngineState = null;
     }
 
@@ -34,15 +34,16 @@ public final class EngineStateManager {
 
         logger.info("Start updating engine state to {}", engineState.getName());
 
+        EcsContextBuilder ecsContextBuilder = EcsContexts.builder();
+
         if (currentEngineState != null) {
             logger.info("Tearing down previous engine state");
-            StateTearDownEvent stateTearDown = new StateTearDownEvent(currentEngineState, ecsContextManager.getRawEcsContext());
-            eventBus.addEvent(stateTearDown);
+            StateTearDownEvent stateTearDown = new StateTearDownEvent(currentEngineState, ecsContextBuilder, ecsContextManager.getRawEcsContext());
+            engineEventBus.publishEvent(stateTearDown);
         }
 
-        EcsContextBuilder ecsContextBuilder = EcsContexts.builder();
         StateSetUpEvent stateSetUpEvent = new StateSetUpEvent(engineState, ecsContextBuilder);
-        eventBus.addEvent(stateSetUpEvent);
+        engineEventBus.publishEvent(stateSetUpEvent);
         ecsContextManager.refreshContext(ecsContextBuilder);
 
         this.currentEngineState = engineState;

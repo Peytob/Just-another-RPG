@@ -5,7 +5,7 @@ import dev.peytob.rpg.client.module.control.model.KeyAction;
 import dev.peytob.rpg.client.module.control.model.KeyModifiers;
 import dev.peytob.rpg.client.module.control.model.MouseButton;
 import dev.peytob.rpg.client.module.graphic.model.Window;
-import dev.peytob.rpg.engine.event.MainEventBus;
+import dev.peytob.rpg.engine.event.EngineEventBus;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;
@@ -15,18 +15,18 @@ public final class WindowMouseButtonEventBusRegistrationStep implements Initiali
 
     private final Window window;
 
-    private final MainEventBus mainEventBus;
+    private final EngineEventBus engineEventBus;
 
-    public WindowMouseButtonEventBusRegistrationStep(Window window, MainEventBus mainEventBus) {
+    public WindowMouseButtonEventBusRegistrationStep(Window window, EngineEventBus engineEventBus) {
         this.window = window;
-        this.mainEventBus = mainEventBus;
+        this.engineEventBus = engineEventBus;
     }
 
     @Override
     public void execute() {
         GLFW.glfwSetMouseButtonCallback(window.getPointer(), (window, button, action, mods) -> {
             MouseButtonEvent event = createEvent(button, action, mods);
-            mainEventBus.addEvent(event);
+            engineEventBus.publishEvent(event);
         });
     }
 
