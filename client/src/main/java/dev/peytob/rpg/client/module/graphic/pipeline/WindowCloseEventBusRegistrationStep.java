@@ -2,7 +2,7 @@ package dev.peytob.rpg.client.module.graphic.pipeline;
 
 import dev.peytob.rpg.client.module.graphic.context.event.window.WindowCloseEvent;
 import dev.peytob.rpg.client.module.graphic.model.Window;
-import dev.peytob.rpg.engine.event.EventBus;
+import dev.peytob.rpg.engine.event.EngineEventBus;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;
@@ -12,17 +12,17 @@ public final class WindowCloseEventBusRegistrationStep implements InitializingPi
 
     private final Window window;
 
-    private final EventBus eventBus;
+    private final EngineEventBus engineEventBus;
 
-    public WindowCloseEventBusRegistrationStep(Window window, EventBus eventBus) {
+    public WindowCloseEventBusRegistrationStep(Window window, EngineEventBus engineEventBus) {
         this.window = window;
-        this.eventBus = eventBus;
+        this.engineEventBus = engineEventBus;
     }
 
     @Override
     public void execute() {
         GLFW.glfwSetWindowCloseCallback(window.getPointer(), (windowPointer) ->
-            eventBus.addEvent(new WindowCloseEvent()));
+            engineEventBus.publishEvent(new WindowCloseEvent()));
     }
 
     @Override

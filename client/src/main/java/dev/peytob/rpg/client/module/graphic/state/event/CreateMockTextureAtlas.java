@@ -6,16 +6,16 @@ import dev.peytob.rpg.client.module.graphic.model.TextureAtlas;
 import dev.peytob.rpg.client.module.graphic.resource.Texture;
 import dev.peytob.rpg.client.module.graphic.service.utils.ImageIOService;
 import dev.peytob.rpg.client.module.graphic.service.vendor.TextureService;
-import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
-import dev.peytob.rpg.engine.state.event.StateSetUpEventHandler;
+import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import static dev.peytob.rpg.math.geometry.Rectangles.rect;
 import static org.lwjgl.opengl.GL11.GL_RGBA8;
 
 @Component
-public class CreateMockTextureAtlas extends StateSetUpEventHandler<InGameEngineState> {
+public class CreateMockTextureAtlas {
 
     private final TextureService textureService;
 
@@ -26,8 +26,10 @@ public class CreateMockTextureAtlas extends StateSetUpEventHandler<InGameEngineS
         this.imageIOService = imageIOService;
     }
 
-    @Override
-    public void onStateSetUp(InGameEngineState engineState, EcsContextBuilder contextBuilder) {
+    @EventListener
+    public void onStateSetUp(StateSetUpEvent stateSetUpEvent) {
+        EcsContextBuilder contextBuilder = stateSetUpEvent.contextBuilder();
+
         Image testAtlas = imageIOService.loaderClasspathImage("/images/tiles/test_tile.png");
         Texture textureAtlas = textureService.createTexture("tilemap_test_atlas", GL_RGBA8, testAtlas);
 

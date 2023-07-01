@@ -6,22 +6,32 @@ import dev.peytob.rpg.client.module.control.context.system.WindowCloseButtonHand
 import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
-import dev.peytob.rpg.engine.state.event.StateSetUpEventHandler;
+import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import static dev.peytob.rpg.ecs.model.SystemDefaultOrder.INPUT_HANDLING;
 
 @Component
-public class CreateControlSystemsStateUpHandler extends StateSetUpEventHandler<InGameEngineState> {
+public class CreateControlSystemsStateUpHandler {
 
     private final SystemFactory systemFactory;
 
-    public CreateControlSystemsStateUpHandler(SystemFactory systemFactory) {
+    private final InGameEngineState inGameEngineState;
+
+    public CreateControlSystemsStateUpHandler(SystemFactory systemFactory, InGameEngineState inGameEngineState) {
         this.systemFactory = systemFactory;
+        this.inGameEngineState = inGameEngineState;
     }
 
-    @Override
-    public void onStateSetUp(InGameEngineState engineState, EcsContextBuilder contextBuilder) {
+    @EventListener
+    public void createInGameControlSystems(StateSetUpEvent event) {
+        if (event.engineState() != inGameEngineState) {
+            return;
+        }
+
+        EcsContextBuilder contextBuilder = event.contextBuilder();
+
         contextBuilder
             .addSystem(systemFactory.getSystem(PlayerMovingSystem.class), INPUT_HANDLING)
             .addSystem(systemFactory.getSystem(ScreenshotHandlerSystem.class), INPUT_HANDLING)
