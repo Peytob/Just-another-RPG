@@ -5,7 +5,7 @@ import dev.peytob.rpg.client.module.control.model.KeyAction;
 import dev.peytob.rpg.client.module.control.model.KeyModifiers;
 import dev.peytob.rpg.client.module.control.model.KeyboardKey;
 import dev.peytob.rpg.client.module.graphic.model.Window;
-import dev.peytob.rpg.engine.event.MainEventBus;
+import dev.peytob.rpg.engine.event.EngineEventBus;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;
@@ -15,18 +15,18 @@ public final class WindowKeyEventBusRegistrationStep implements InitializingPipe
 
     private final Window window;
 
-    private final MainEventBus mainEventBus;
+    private final EngineEventBus engineEventBus;
 
-    public WindowKeyEventBusRegistrationStep(Window window, MainEventBus mainEventBus) {
+    public WindowKeyEventBusRegistrationStep(Window window, EngineEventBus engineEventBus) {
         this.window = window;
-        this.mainEventBus = mainEventBus;
+        this.engineEventBus = engineEventBus;
     }
 
     @Override
     public void execute() {
         GLFW.glfwSetKeyCallback(window.getPointer(), (long window, int key, int scancode, int action, int mods) -> {
             KeyboardKeyEvent event = createEvent(key, scancode, action, mods);
-            mainEventBus.addEvent(event);
+            engineEventBus.publishEvent(event);
         });
     }
 
