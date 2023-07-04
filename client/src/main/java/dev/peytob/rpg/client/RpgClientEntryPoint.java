@@ -1,9 +1,10 @@
 package dev.peytob.rpg.client;
 
 import dev.peytob.rpg.client.module.graphic.system.library.GlfwLibraryHandler;
-import dev.peytob.rpg.client.state.InGameEngineState;
+import dev.peytob.rpg.client.state.InGameLoadingState;
 import dev.peytob.rpg.client.system.library.StaticLibraryHandler;
 import dev.peytob.rpg.engine.pipeline.InitializingPipeline;
+import dev.peytob.rpg.engine.state.EngineState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -29,7 +30,7 @@ public class RpgClientEntryPoint {
 
         ClientEngine engine = context.getBean(ClientEngine.class);
         InitializingPipeline initializingPipeline = context.getBean(InitializingPipeline.class); // TODO Make engine starter class
-        InGameEngineState startEngineState = context.getBean(InGameEngineState.class); // TODO Make default state constant
+        EngineState startEngineState = context.getBean(InGameLoadingState.class); // TODO Make default state constant
 
         initializingPipeline.execute();
         engine.runCycle(startEngineState);

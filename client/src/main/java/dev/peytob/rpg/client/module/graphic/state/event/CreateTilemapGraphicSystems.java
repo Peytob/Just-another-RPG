@@ -24,7 +24,7 @@ public class CreateTilemapGraphicSystems {
 
     @EventListener
     public void onStateSetUp(StateSetUpEvent stateSetUpEvent) {
-        if (stateSetUpEvent.engineState() != inGameEngineState) {
+        if (!stateSetUpEvent.engineState().equals(inGameEngineState)) {
             return;
         }
 
