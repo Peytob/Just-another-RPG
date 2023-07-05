@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.module.base.state.event;
 
-import dev.peytob.rpg.client.module.base.context.system.EngineStateChangeSystem;
+import dev.peytob.rpg.client.module.base.context.system.state.EngineStateChangeSystem;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
 import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;

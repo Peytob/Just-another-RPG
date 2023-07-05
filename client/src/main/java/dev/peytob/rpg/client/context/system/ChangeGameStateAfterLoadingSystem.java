@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.context.system;
 
-import dev.peytob.rpg.client.module.level.context.component.loading.TilemapAsyncLoadingComponent;
+import dev.peytob.rpg.client.module.base.context.component.loading.TilemapAsyncLoadingComponent;
 import dev.peytob.rpg.client.state.InGameEngineState;
 import dev.peytob.rpg.core.context.component.template.AsyncTaskComponent;
 import dev.peytob.rpg.ecs.context.EcsContext;

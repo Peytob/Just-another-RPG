@@ -1,7 +1,7 @@
 package dev.peytob.rpg.core.module.base.context.system;
 
-import dev.peytob.rpg.core.module.base.context.component.PositionComponent;
-import dev.peytob.rpg.core.module.base.context.component.EntitiesPositionsSyncRelationship;
+import dev.peytob.rpg.core.module.base.context.component.position.PositionComponent;
+import dev.peytob.rpg.core.module.base.context.component.position.EntitiesPositionsSyncRelationship;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.system.System;
