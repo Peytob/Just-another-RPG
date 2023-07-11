@@ -7,7 +7,7 @@ import dev.peytob.rpg.client.module.graphic.context.system.utils.ScreenshotRende
 import dev.peytob.rpg.client.module.graphic.context.system.window.WindowSwappingBuffersSystem;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
-import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
+import dev.peytob.rpg.client.fsm.event.instance.StateSetUpEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 

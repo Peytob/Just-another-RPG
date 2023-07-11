@@ -1,10 +1,10 @@
 package dev.peytob.rpg.client.module.graphic.state.event;
 
 import dev.peytob.rpg.client.module.graphic.context.system.rendering.TilemapRenderSystem;
-import dev.peytob.rpg.client.state.InGameEngineState;
+import dev.peytob.rpg.client.fsm.state.instance.InGameEngineState;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
-import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
+import dev.peytob.rpg.client.fsm.event.instance.StateSetUpEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 

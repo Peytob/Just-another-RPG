@@ -7,7 +7,7 @@ import dev.peytob.rpg.client.module.graphic.resource.Texture;
 import dev.peytob.rpg.client.module.graphic.service.utils.ImageIOService;
 import dev.peytob.rpg.client.module.graphic.service.vendor.TextureService;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
-import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
+import dev.peytob.rpg.client.fsm.event.instance.StateSetUpEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 

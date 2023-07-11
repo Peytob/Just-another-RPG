@@ -2,8 +2,8 @@ package dev.peytob.rpg.client;
 
 import dev.peytob.rpg.client.module.graphic.model.Window;
 import dev.peytob.rpg.engine.context.EcsContextManager;
-import dev.peytob.rpg.engine.state.EngineState;
-import dev.peytob.rpg.engine.state.EngineStateManager;
+import dev.peytob.rpg.client.fsm.EngineState;
+import dev.peytob.rpg.client.fsm.EngineStateManager;
 import dev.peytob.rpg.engine.utils.ExitCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

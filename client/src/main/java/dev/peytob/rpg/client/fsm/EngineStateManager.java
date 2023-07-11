@@ -1,11 +1,11 @@
-package dev.peytob.rpg.engine.state;
+package dev.peytob.rpg.client.fsm;
 
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.context.EcsContexts;
 import dev.peytob.rpg.engine.context.EcsContextManager;
 import dev.peytob.rpg.engine.event.EngineEventBus;
-import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
-import dev.peytob.rpg.engine.state.event.instance.StateTearDownEvent;
+import dev.peytob.rpg.client.fsm.event.instance.StateSetUpEvent;
+import dev.peytob.rpg.client.fsm.event.instance.StateTearDownEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

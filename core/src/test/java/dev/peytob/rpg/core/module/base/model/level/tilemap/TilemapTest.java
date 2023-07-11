@@ -1,4 +1,4 @@
-package dev.peytob.rpg.core.module.level.model.tilemap;
+package dev.peytob.rpg.core.module.base.model.level.tilemap;
 
 import dev.peytob.rpg.core.NonContextRpgCoreTest;
 import dev.peytob.rpg.math.vector.Vec2i;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static dev.peytob.rpg.core.resource.TestTiles.*;
+import static dev.peytob.rpg.core.module.base.resource.TestTiles.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class TilemapTest extends NonContextRpgCoreTest {
@@ -55,7 +55,7 @@ abstract class TilemapTest extends NonContextRpgCoreTest {
 
     @Test
     void negativeCoordinatesReturnsNullTile() {
-        PlacedTile tile = assertDoesNotThrow(() -> tilemap.getTile(-1, -1));
+        PlacedTile tile = Assertions.assertDoesNotThrow(() -> tilemap.getTile(-1, -1));
         assertNull(tile);
     }
 
@@ -64,7 +64,7 @@ abstract class TilemapTest extends NonContextRpgCoreTest {
         int tooBigX = tilemap.getSizes().x() + 1;
         int tooBigY = tilemap.getSizes().y() + 1;
 
-        PlacedTile tile = assertDoesNotThrow(() -> tilemap.getTile(tooBigX, tooBigY));
+        PlacedTile tile = Assertions.assertDoesNotThrow(() -> tilemap.getTile(tooBigX, tooBigY));
         assertNull(tile);
     }
 

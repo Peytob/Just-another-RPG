@@ -1,7 +1,7 @@
-package dev.peytob.rpg.client.state.event.handler;
+package dev.peytob.rpg.client.fsm.event.handler;
 
 import dev.peytob.rpg.client.ClientEngine;
-import dev.peytob.rpg.engine.state.event.instance.ChangeStateEvent;
+import dev.peytob.rpg.client.fsm.event.instance.ChangeStateEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 

@@ -4,7 +4,7 @@ import dev.peytob.rpg.client.module.base.context.event.ChangeStateEcsEvent;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.engine.event.EngineEventBus;
-import dev.peytob.rpg.engine.state.event.instance.ChangeStateEvent;
+import dev.peytob.rpg.client.fsm.event.instance.ChangeStateEvent;
 import org.springframework.stereotype.Component;
 
 @Component

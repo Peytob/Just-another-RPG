@@ -1,6 +1,6 @@
-package dev.peytob.rpg.client.state;
+package dev.peytob.rpg.client.fsm.state.instance;
 
-import dev.peytob.rpg.engine.state.EngineState;
+import dev.peytob.rpg.client.fsm.EngineState;
 import org.springframework.stereotype.Component;
 
 @Component

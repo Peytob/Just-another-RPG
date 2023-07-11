@@ -1,10 +1,10 @@
 package dev.peytob.rpg.client;
 
 import dev.peytob.rpg.client.module.graphic.system.library.GlfwLibraryHandler;
-import dev.peytob.rpg.client.state.InGameLoadingState;
+import dev.peytob.rpg.client.fsm.state.instance.InGameLoadingState;
 import dev.peytob.rpg.client.system.library.StaticLibraryHandler;
 import dev.peytob.rpg.engine.pipeline.InitializingPipeline;
-import dev.peytob.rpg.engine.state.EngineState;
+import dev.peytob.rpg.client.fsm.EngineState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

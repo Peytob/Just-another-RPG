@@ -1,11 +1,11 @@
-package dev.peytob.rpg.client.state.event.handler;
+package dev.peytob.rpg.client.fsm.event.handler;
 
 import dev.peytob.rpg.client.context.component.CopyEntityOnChangeStateFlag;
 import dev.peytob.rpg.ecs.component.Relationship;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.entity.Entity;
-import dev.peytob.rpg.engine.state.event.instance.StateTearDownEvent;
+import dev.peytob.rpg.client.fsm.event.instance.StateTearDownEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 

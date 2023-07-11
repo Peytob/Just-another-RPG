@@ -1,9 +1,9 @@
 package dev.peytob.rpg.client.module.base.state.event;
 
 import dev.peytob.rpg.client.module.base.context.system.loading.TilemapLevelLoadingSystem;
-import dev.peytob.rpg.client.state.InGameLoadingState;
+import dev.peytob.rpg.client.fsm.state.instance.InGameLoadingState;
 import dev.peytob.rpg.engine.context.system.SystemFactory;
-import dev.peytob.rpg.engine.state.event.instance.StateSetUpEvent;
+import dev.peytob.rpg.client.fsm.event.instance.StateSetUpEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
