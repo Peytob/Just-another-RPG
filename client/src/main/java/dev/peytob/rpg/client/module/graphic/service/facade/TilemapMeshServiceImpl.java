@@ -7,8 +7,8 @@ import dev.peytob.rpg.client.module.graphic.resource.Mesh;
 import dev.peytob.rpg.client.module.graphic.resource.VertexArray;
 import dev.peytob.rpg.client.module.graphic.service.math.ScreenCoordinatesConverter;
 import dev.peytob.rpg.client.module.graphic.service.vendor.MeshService;
-import dev.peytob.rpg.core.module.location.model.tilemap.Tilemap;
-import dev.peytob.rpg.core.module.location.resource.Tile;
+import dev.peytob.rpg.core.module.base.model.level.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.base.resource.Tile;
 import dev.peytob.rpg.math.geometry.RectI;
 import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vec2i;
@@ -68,7 +68,7 @@ public class TilemapMeshServiceImpl implements TilemapMeshService {
 
         for (int x = fromX; x < toX; x++) {
             for (int y = fromY; y < toY; y++) {
-                Tile tile = tilemap.getTile(x, y);
+                Tile tile = tilemap.getTile(x, y).tile();
 
                 if (tile != null) {
                     tilemapMeshBuilder.appendTile(x, y, tile);

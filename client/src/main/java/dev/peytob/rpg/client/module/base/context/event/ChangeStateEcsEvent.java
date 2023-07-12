@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.module.base.context.event;
 
 import dev.peytob.rpg.ecs.event.Event;
-import dev.peytob.rpg.engine.state.EngineState;
+import dev.peytob.rpg.client.fsm.EngineState;
 
 public class ChangeStateEcsEvent implements Event {
 
