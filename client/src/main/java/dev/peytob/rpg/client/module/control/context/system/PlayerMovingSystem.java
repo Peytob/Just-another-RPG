@@ -1,5 +1,7 @@
 package dev.peytob.rpg.client.module.control.context.system;
 
+import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
+import dev.peytob.rpg.client.fsm.state.instance.InGameEngineState;
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
 import dev.peytob.rpg.client.module.graphic.model.Window;
 import dev.peytob.rpg.ecs.context.EcsContext;
@@ -11,9 +13,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static dev.peytob.rpg.ecs.model.SystemDefaultOrder.INPUT_HANDLING;
+
 // Test implementation!
 
 @Component
+@IncludeInState(state = InGameEngineState.class, order = INPUT_HANDLING)
 public final class PlayerMovingSystem implements System {
 
     private final static Integer FORWARD = GLFW.GLFW_KEY_W;

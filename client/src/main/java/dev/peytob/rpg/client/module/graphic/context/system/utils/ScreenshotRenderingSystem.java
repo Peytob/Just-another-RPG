@@ -1,5 +1,6 @@
 package dev.peytob.rpg.client.module.graphic.context.system.utils;
 
+import dev.peytob.rpg.client.fsm.annotation.IncludeInAllStates;
 import dev.peytob.rpg.client.module.control.context.event.ScreenshotEvent;
 import dev.peytob.rpg.client.module.graphic.model.Image;
 import dev.peytob.rpg.client.module.graphic.model.Window;
@@ -13,9 +14,11 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+import static dev.peytob.rpg.client.module.graphic.model.RenderSystemDefaultOrder.AFTER_MAIN_RENDERING;
 import static dev.peytob.rpg.math.geometry.Rectangles.rectI;
 
 @Component
+@IncludeInAllStates(order = AFTER_MAIN_RENDERING - 1)
 public class ScreenshotRenderingSystem implements System {
 
     private static final Logger logger = LoggerFactory.getLogger(ScreenshotRenderingSystem.class);

@@ -49,7 +49,7 @@ public class StateAnnotatedSystemsManagerConfiguration {
 
                 for (IncludeInState stateSystem : systemStates) {
                     OrderedSystem orderedSystem = OrderedSystem.wrap(system, stateSystem.order());
-                    systemsMap.put(stateSystem.engineState(), orderedSystem);
+                    systemsMap.put(stateSystem.state(), orderedSystem);
                 }
             }
         }
