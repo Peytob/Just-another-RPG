@@ -54,6 +54,8 @@ dependencies {
     implementation libraries.springBootStarter
     implementation libraries.slf4j
 
+    implementation libraries.guava
+
     implementation libraries.jackson
 
     testImplementation libraries.junitApi

@@ -4,9 +4,9 @@ import static dev.peytob.rpg.ecs.model.SystemDefaultOrder.RENDERING;
 
 public enum RenderSystemDefaultOrder {;
 
-    public static final Integer BEFORE_MAIN_RENDERING = RENDERING;
+    public static final int BEFORE_MAIN_RENDERING = RENDERING;
 
-    public static final Integer MAIN_RENDERING = BEFORE_MAIN_RENDERING + 256;
+    public static final int MAIN_RENDERING = BEFORE_MAIN_RENDERING + 256;
 
-    public static final Integer AFTER_MAIN_RENDERING = MAIN_RENDERING + 512;
+    public static final int AFTER_MAIN_RENDERING = MAIN_RENDERING + 512;
 }

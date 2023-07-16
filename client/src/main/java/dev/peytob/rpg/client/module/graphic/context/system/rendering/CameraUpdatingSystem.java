@@ -1,5 +1,6 @@
 package dev.peytob.rpg.client.module.graphic.context.system.rendering;
 
+import dev.peytob.rpg.client.fsm.annotation.IncludeInAllStates;
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
 import dev.peytob.rpg.client.module.graphic.model.Camera;
 import dev.peytob.rpg.ecs.context.EcsContext;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static dev.peytob.rpg.client.module.graphic.model.RenderSystemDefaultOrder.MAIN_RENDERING;
+
 @Component
+@IncludeInAllStates(order = MAIN_RENDERING - 1)
 public class CameraUpdatingSystem implements System {
 
     @Override

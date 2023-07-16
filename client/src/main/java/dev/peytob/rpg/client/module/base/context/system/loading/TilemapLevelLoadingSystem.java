@@ -1,6 +1,8 @@
 package dev.peytob.rpg.client.module.base.context.system.loading;
 
 import dev.peytob.rpg.client.context.component.CopyEntityOnChangeStateFlag;
+import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
+import dev.peytob.rpg.client.fsm.state.instance.InGameLoadingState;
 import dev.peytob.rpg.client.module.base.context.component.loading.TilemapAsyncLoadingComponent;
 import dev.peytob.rpg.client.module.base.service.level.TilemapLoaderService;
 import dev.peytob.rpg.core.module.base.context.component.level.TilemapComponent;
@@ -15,6 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.Future;
 
 @Component
+@IncludeInState(state = InGameLoadingState.class)
 public class TilemapLevelLoadingSystem implements System {
 
     private final AsyncTaskExecutor asyncTaskExecutor;

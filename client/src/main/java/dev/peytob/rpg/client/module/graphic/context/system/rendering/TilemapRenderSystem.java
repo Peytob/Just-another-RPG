@@ -1,5 +1,7 @@
 package dev.peytob.rpg.client.module.graphic.context.system.rendering;
 
+import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
+import dev.peytob.rpg.client.fsm.state.instance.InGameEngineState;
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
 import dev.peytob.rpg.client.module.graphic.context.component.TilemapTextureAtlasComponent;
 import dev.peytob.rpg.client.module.graphic.model.Camera;
@@ -13,10 +15,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static dev.peytob.rpg.client.module.graphic.model.RenderSystemDefaultOrder.MAIN_RENDERING;
 import static dev.peytob.rpg.math.geometry.Rectangles.rectI;
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 
 @Component
+@IncludeInState(state = InGameEngineState.class, order = MAIN_RENDERING)
 public class TilemapRenderSystem implements System {
 
     private final TilemapRenderingService tilemapRenderingService;
