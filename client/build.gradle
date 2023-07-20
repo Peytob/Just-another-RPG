@@ -32,13 +32,13 @@ switch (OperatingSystem.current()) {
 }
 
 project.ext.lwjglVersion = '3.3.0'
-project.ext.slf4jVersion = '1.7.32'
 
 dependencies {
     implementation project(':core')
     implementation project(':ecs')
     implementation project(':engine')
     implementation project(':math')
+    implementation project(':client-server-rpc-interface')
 
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     implementation 'org.lwjgl:lwjgl'
@@ -52,6 +52,7 @@ dependencies {
 
     implementation libraries.spring
     implementation libraries.springBootStarter
+    implementation "net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE"
     implementation libraries.slf4j
 
     implementation libraries.guava
