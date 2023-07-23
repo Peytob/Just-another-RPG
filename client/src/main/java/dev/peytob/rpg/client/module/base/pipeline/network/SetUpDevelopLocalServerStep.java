@@ -1,20 +1,18 @@
 package dev.peytob.rpg.client.module.base.pipeline.network;
 
-import dev.peytob.rpg.client.module.base.service.network.grpc.DynamicGrpcService;
+import dev.peytob.rpg.client.module.base.service.network.service.grpc.RpcNetworkManager;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-
 @Component
 public class SetUpDevelopLocalServerStep implements InitializingPipelineStep {
 
-    private final Collection<DynamicGrpcService> grpcServices;
+    private final RpcNetworkManager rpcNetworkManager;
 
-    public SetUpDevelopLocalServerStep(Collection<DynamicGrpcService> grpcServices) {
-        this.grpcServices = grpcServices;
+    public SetUpDevelopLocalServerStep(RpcNetworkManager rpcNetworkManager) {
+        this.rpcNetworkManager = rpcNetworkManager;
     }
 
     @Override
@@ -23,7 +21,7 @@ public class SetUpDevelopLocalServerStep implements InitializingPipelineStep {
             .usePlaintext()
             .build();
 
-        grpcServices.forEach(grpcService -> grpcService.changeGrpcChannel(channel));
+        rpcNetworkManager.connectServices(channel);
     }
 
     @Override
