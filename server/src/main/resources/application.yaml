@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: Just-Another-RPG-Server
+
+rpg:
+  server:
+    details:
+      address: localhost # Server DNS / IP address
+      port: ${grpc.server.port} # Server port
+      name: Test server
+
+grpc:
+  server:
+    port: 9090
+    negotiationType: PLAINTEXT

@@ -1,0 +1,39 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'java'
+}
+
+group 'dev.peytob.rpg'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':core')
+    implementation project(':client-server-rpc-interface')
+
+    implementation libraries.spring
+    implementation libraries.springBootStarter
+    implementation libraries.slf4j
+    implementation "net.devh:grpc-server-spring-boot-starter:2.12.0.RELEASE"
+    implementation "io.grpc:grpc-protobuf:1.16.1"
+
+    implementation libraries.guava
+
+    implementation libraries.jackson
+
+    testImplementation libraries.junitApi
+    testRuntimeOnly libraries.junitEngine
+    testImplementation libraries.springTests
+}
+
+springBoot {
+    buildInfo()
+}
+
+test {
+    useJUnitPlatform()
+}
