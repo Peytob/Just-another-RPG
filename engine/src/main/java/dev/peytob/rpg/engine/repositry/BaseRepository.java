@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Just wraps Map class.
  */
-public abstract class BaseRepository<R extends Record & Resource> implements Repository<R> {
+public abstract class BaseRepository<R extends Resource> implements Repository<R> {
 
     private final Map<Integer, R> resourcesByNumberId = new ConcurrentHashMap<>();
 

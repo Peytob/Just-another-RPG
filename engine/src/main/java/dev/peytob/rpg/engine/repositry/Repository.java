@@ -4,7 +4,7 @@ import dev.peytob.rpg.engine.resource.Resource;
 
 import java.util.Collection;
 
-public interface Repository<R extends Record & Resource> {
+public interface Repository<R extends Resource> {
     R getById(Integer id);
 
     R getById(String textId);
