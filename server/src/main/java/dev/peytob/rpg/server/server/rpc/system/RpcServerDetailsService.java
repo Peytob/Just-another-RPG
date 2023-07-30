@@ -1,9 +1,9 @@
-package dev.peytob.rpg.server.rpc.system;
+package dev.peytob.rpg.server.server.rpc.system;
 
 import com.google.protobuf.Empty;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerConnectionDetailsRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerDetailsServiceGrpc;
-import dev.peytob.rpg.server.configuration.properties.GrpcServerDetailsProperties;
+import dev.peytob.rpg.server.server.configuration.properties.GrpcServerDetailsProperties;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

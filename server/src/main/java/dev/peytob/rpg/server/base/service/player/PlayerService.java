@@ -1,0 +1,10 @@
+package dev.peytob.rpg.server.base.service.player;
+
+import dev.peytob.rpg.server.base.resource.entity.Player;
+
+public interface PlayerService {
+
+    Player getPlayerById(int id);
+
+    Player getPlayerById(String textId);
+}

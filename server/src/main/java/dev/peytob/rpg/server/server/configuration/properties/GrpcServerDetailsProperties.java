@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.configuration.properties;
+package dev.peytob.rpg.server.server.configuration.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
