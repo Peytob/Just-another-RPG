@@ -7,4 +7,8 @@ public interface PlayerService {
     Player getPlayerById(int id);
 
     Player getPlayerById(String textId);
+
+    boolean createPlayer(Player player);
+
+    boolean removePlayer(Player player);
 }
