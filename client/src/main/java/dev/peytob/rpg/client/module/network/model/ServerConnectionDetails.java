@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.module.base.service.network.grpc.model.system;
+package dev.peytob.rpg.client.module.network.model;
 
 public record ServerConnectionDetails(
     String name,

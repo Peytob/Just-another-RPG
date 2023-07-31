@@ -1,9 +1,10 @@
-package dev.peytob.rpg.client.module.base.service.network.grpc.system;
+package dev.peytob.rpg.client.module.network.service.grpc.impl;
 
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import dev.peytob.rpg.client.module.base.service.network.grpc.DynamicGrpcService;
-import dev.peytob.rpg.client.module.base.service.network.grpc.model.system.ServerConnectionDetails;
+import dev.peytob.rpg.client.module.network.service.ServerDetailsService;
+import dev.peytob.rpg.client.module.network.model.ServerConnectionDetails;
+import dev.peytob.rpg.client.module.network.service.grpc.DynamicGrpcService;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerConnectionDetailsRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerDetailsServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerDetailsServiceGrpc.ServerDetailsServiceFutureStub;

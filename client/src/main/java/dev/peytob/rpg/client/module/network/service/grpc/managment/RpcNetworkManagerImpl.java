@@ -1,6 +1,6 @@
-package dev.peytob.rpg.client.module.base.service.network.service.grpc;
+package dev.peytob.rpg.client.module.network.service.grpc.managment;
 
-import dev.peytob.rpg.client.module.base.service.network.grpc.DynamicGrpcService;
+import dev.peytob.rpg.client.module.network.service.grpc.DynamicGrpcService;
 import io.grpc.Channel;
 import org.springframework.stereotype.Service;
 

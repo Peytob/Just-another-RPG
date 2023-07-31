@@ -1,6 +1,6 @@
-package dev.peytob.rpg.client.module.base.pipeline.network;
+package dev.peytob.rpg.client.module.network.pipeline;
 
-import dev.peytob.rpg.client.module.base.service.network.service.grpc.RpcNetworkManager;
+import dev.peytob.rpg.client.module.network.service.grpc.managment.RpcNetworkManager;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;

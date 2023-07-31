@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.module.base.service.network.grpc;
+package dev.peytob.rpg.client.module.network.service.grpc;
 
 import com.google.protobuf.Empty;
 import io.grpc.Channel;
