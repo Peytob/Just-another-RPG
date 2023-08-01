@@ -8,14 +8,14 @@ option java_package = "dev.peytob.rpg.rpc.interfaces.base.system";
 option java_outer_classname = "ServerAuthProto";
 
 service ServerAuthService {
-  rpc Login (AuthData) returns (AuthData) {
+  rpc Login (AuthDataRpcDto) returns (AuthDataRpcDto) {
   }
 
-  rpc Logout (AuthData) returns (google.protobuf.Empty) {
+  rpc Logout (AuthDataRpcDto) returns (google.protobuf.Empty) {
   }
 }
 
 // It will be possible to obtain a token using a separate authentication service.
-message AuthData {
+message AuthDataRpcDto {
     string token = 1;
 }

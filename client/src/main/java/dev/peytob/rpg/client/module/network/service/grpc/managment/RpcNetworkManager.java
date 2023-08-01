@@ -1,8 +1,16 @@
 package dev.peytob.rpg.client.module.network.service.grpc.managment;
 
-import io.grpc.Channel;
+import dev.peytob.rpg.client.module.network.model.ServerAuth;
+import dev.peytob.rpg.client.module.network.model.ServerConnectionDetails;
+
+import java.util.concurrent.Future;
 
 public interface RpcNetworkManager {
+    Future<ServerAuth> loginOnServer(String username, String password, ServerConnectionDetails serverConnectionDetails);
 
-    void connectServices(Channel channel);
+    Future<ServerConnectionDetails> logoutFromServer();
+
+    ServerAuth getServerAuth();
+
+    boolean isConnectedToServer();
 }

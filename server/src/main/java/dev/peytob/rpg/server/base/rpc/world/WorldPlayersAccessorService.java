@@ -1,7 +1,7 @@
 package dev.peytob.rpg.server.base.rpc.world;
 
 import com.google.protobuf.Empty;
-import dev.peytob.rpg.rpc.interfaces.base.model.PlayerDto;
+import dev.peytob.rpg.rpc.interfaces.base.model.PlayerRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.Vec2Dto;
 import dev.peytob.rpg.rpc.interfaces.base.world.WorldPlayersAccessorServiceGrpc;
 import dev.peytob.rpg.server.base.service.player.PlayerService;
@@ -14,15 +14,15 @@ import java.util.List;
 @GrpcService
 public class WorldPlayersAccessorService extends WorldPlayersAccessorServiceGrpc.WorldPlayersAccessorServiceImplBase {
 
-    private static final Collection<PlayerDto> MOCKED_PLAYERS = List.of(
-        PlayerDto.newBuilder()
+    private static final Collection<PlayerRpcDto> MOCKED_PLAYERS = List.of(
+        PlayerRpcDto.newBuilder()
             .setPosition(Vec2Dto
                 .newBuilder()
                 .setX(1).setY(5)
                 .build())
             .build(),
 
-        PlayerDto.newBuilder()
+        PlayerRpcDto.newBuilder()
             .setPosition(Vec2Dto
                 .newBuilder()
                 .setX(-15).setY(15)
@@ -37,7 +37,7 @@ public class WorldPlayersAccessorService extends WorldPlayersAccessorServiceGrpc
     }
 
     @Override
-    public void getNearPlayers(Empty request, StreamObserver<PlayerDto> responseObserver) {
+    public void getNearPlayers(Empty request, StreamObserver<PlayerRpcDto> responseObserver) {
         // TODO Temporary returns mocked players
 
         MOCKED_PLAYERS.forEach(responseObserver::onNext);

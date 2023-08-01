@@ -1,7 +1,7 @@
 package dev.peytob.rpg.server.server.rpc.system;
 
 import com.google.protobuf.Empty;
-import dev.peytob.rpg.rpc.interfaces.base.system.AuthData;
+import dev.peytob.rpg.rpc.interfaces.base.system.AuthDataRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc;
 import dev.peytob.rpg.server.base.resource.entity.Player;
 import dev.peytob.rpg.server.base.service.player.PlayerService;
@@ -24,7 +24,7 @@ public class ServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceIm
     }
 
     @Override
-    public void login(AuthData request, StreamObserver<AuthData> responseObserver) {
+    public void login(AuthDataRpcDto request, StreamObserver<AuthDataRpcDto> responseObserver) {
         log.info("New user is trying to login on server");
 
         // TODO Temporary just creates new player
@@ -40,7 +40,7 @@ public class ServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceIm
     }
 
     @Override
-    public void logout(AuthData request, StreamObserver<Empty> responseObserver) {
+    public void logout(AuthDataRpcDto request, StreamObserver<Empty> responseObserver) {
 
         // Getting player by token...
         // Invalidating token -> user cache...

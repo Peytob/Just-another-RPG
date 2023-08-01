@@ -8,6 +8,6 @@ option java_package = "dev.peytob.rpg.rpc.interfaces.base.world";
 option java_outer_classname = "WorldPlayersAccessorProto";
 
 service WorldPlayersAccessorService {
-  rpc GetNearPlayers (google.protobuf.Empty) returns (stream PlayerDto) {
+  rpc GetNearPlayers (google.protobuf.Empty) returns (stream PlayerRpcDto) {
   }
 }

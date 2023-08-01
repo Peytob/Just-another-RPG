@@ -4,6 +4,7 @@ import com.google.protobuf.Empty;
 import io.grpc.Channel;
 
 /**
+ * Base class for all GRPC stubs wrappers.
  * This is probably not the best solution for changing and updating channels dynamically. I think it will work as an
  * initial solution.
  */
