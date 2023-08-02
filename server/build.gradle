@@ -13,6 +13,8 @@ repositories {
 
 dependencies {
     implementation project(':core')
+    implementation project(':engine')
+    implementation project(':math')
     implementation project(':client-server-rpc-interface')
 
     implementation libraries.spring

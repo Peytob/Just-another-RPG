@@ -22,6 +22,10 @@ project.ext.libraries = [
                 'org.mockito:mockito-core:4.8.1'
         ],
 
+        futureConverters: [
+                'net.javacrumbs.future-converter:future-converter-java8-guava:1.2.0'
+        ],
+
         spring: [
                 "org.springframework.boot:spring-boot:${springBootVersion}"
         ],

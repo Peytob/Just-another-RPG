@@ -56,6 +56,7 @@ dependencies {
     implementation libraries.slf4j
 
     implementation libraries.guava
+    implementation libraries.futureConverters
 
     implementation libraries.jackson
 
