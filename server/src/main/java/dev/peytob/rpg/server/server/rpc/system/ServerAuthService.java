@@ -3,8 +3,7 @@ package dev.peytob.rpg.server.server.rpc.system;
 import com.google.protobuf.Empty;
 import dev.peytob.rpg.rpc.interfaces.base.system.AuthDataRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc;
-import dev.peytob.rpg.server.base.resource.entity.Player;
-import dev.peytob.rpg.server.base.service.player.PlayerService;
+import dev.peytob.rpg.server.server.service.AuthService;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.slf4j.Logger;
@@ -17,23 +16,17 @@ public class ServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceIm
 
     private static final Logger log = LoggerFactory.getLogger(ServerAuthService.class);
 
-    private final PlayerService playerService;
+    private final AuthService authService;
 
-    public ServerAuthService(PlayerService playerService) {
-        this.playerService = playerService;
+    public ServerAuthService(AuthService authService) {
+        this.authService = authService;
     }
 
     @Override
     public void login(AuthDataRpcDto request, StreamObserver<AuthDataRpcDto> responseObserver) {
         log.info("New user is trying to login on server");
 
-        // TODO Temporary just creates new player
-
-        // Getting user id by token...
-        // Getting user data by id...
-        // Making token -> user cache
-        playerService.createPlayer(new Player(request.getToken().hashCode(), request.getToken()));
-        // Sending player login events...
+        authService.login(request.getToken());
 
         responseObserver.onNext(request);
         responseObserver.onCompleted();
@@ -41,11 +34,9 @@ public class ServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceIm
 
     @Override
     public void logout(AuthDataRpcDto request, StreamObserver<Empty> responseObserver) {
+        log.info("Some player is logout...");
 
-        // Getting player by token...
-        // Invalidating token -> user cache...
-        playerService.removePlayer(new Player(request.getToken().hashCode(), request.getToken()));
-        // Sending player logout events...
+        authService.logout(request.getToken());
 
         responseObserver.onNext(EMPTY_MESSAGE);
         responseObserver.onCompleted();

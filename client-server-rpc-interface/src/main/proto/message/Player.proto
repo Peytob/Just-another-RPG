@@ -7,5 +7,5 @@ option java_package = "dev.peytob.rpg.rpc.interfaces.base.model";
 option java_outer_classname = "PlayerProto";
 
 message PlayerRpcDto {
-  Vec2Dto position = 1;
+  Vec2RpcDto position = 1;
 }

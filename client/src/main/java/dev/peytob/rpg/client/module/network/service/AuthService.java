@@ -1,10 +1,10 @@
 package dev.peytob.rpg.client.module.network.service;
 
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 public interface AuthService {
 
-    Future<String> login(String username, String password);
+    CompletableFuture<String> login(String username, String password);
 
-    Future<Void> logout(String token);
+    CompletableFuture<Void> logout(String token);
 }

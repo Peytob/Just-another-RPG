@@ -1,6 +1,5 @@
 package dev.peytob.rpg.client.module.network.service.grpc.impl;
 
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import dev.peytob.rpg.client.module.network.service.ServerDetailsService;
 import dev.peytob.rpg.client.module.network.model.ServerConnectionDetails;
@@ -11,7 +10,9 @@ import dev.peytob.rpg.rpc.interfaces.base.system.ServerDetailsServiceGrpc.Server
 import io.grpc.Channel;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
+
+import static net.javacrumbs.futureconverter.java8guava.FutureConverter.toCompletableFuture;
 
 @Service
 public class RpcServerDetailsService implements ServerDetailsService, DynamicGrpcService {
@@ -23,9 +24,9 @@ public class RpcServerDetailsService implements ServerDetailsService, DynamicGrp
     }
 
     @Override
-    public Future<ServerConnectionDetails> getServerConnectionDetails() {
+    public CompletableFuture<ServerConnectionDetails> getServerConnectionDetails() {
         ListenableFuture<ServerConnectionDetailsRpcDto> detailsFuture = serverDetailsServiceStub.getServerDetails(EMPTY_MESSAGE);
-        return Futures.lazyTransform(detailsFuture, RpcServerDetailsService::convertToServerDetailsDto);
+        return toCompletableFuture(detailsFuture).thenApply(RpcServerDetailsService::convertToServerDetailsDto);
     }
 
     @Override

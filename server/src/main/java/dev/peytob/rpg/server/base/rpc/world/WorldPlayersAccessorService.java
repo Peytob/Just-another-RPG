@@ -2,7 +2,7 @@ package dev.peytob.rpg.server.base.rpc.world;
 
 import com.google.protobuf.Empty;
 import dev.peytob.rpg.rpc.interfaces.base.model.PlayerRpcDto;
-import dev.peytob.rpg.rpc.interfaces.base.model.Vec2Dto;
+import dev.peytob.rpg.rpc.interfaces.base.model.Vec2RpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.world.WorldPlayersAccessorServiceGrpc;
 import dev.peytob.rpg.server.base.service.player.PlayerService;
 import io.grpc.stub.StreamObserver;
@@ -16,14 +16,14 @@ public class WorldPlayersAccessorService extends WorldPlayersAccessorServiceGrpc
 
     private static final Collection<PlayerRpcDto> MOCKED_PLAYERS = List.of(
         PlayerRpcDto.newBuilder()
-            .setPosition(Vec2Dto
+            .setPosition(Vec2RpcDto
                 .newBuilder()
                 .setX(1).setY(5)
                 .build())
             .build(),
 
         PlayerRpcDto.newBuilder()
-            .setPosition(Vec2Dto
+            .setPosition(Vec2RpcDto
                 .newBuilder()
                 .setX(-15).setY(15)
                 .build())

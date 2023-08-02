@@ -3,8 +3,6 @@ package dev.peytob.rpg.client.module.network.pipeline;
 import dev.peytob.rpg.client.module.network.model.ServerConnectionDetails;
 import dev.peytob.rpg.client.module.network.service.grpc.managment.RpcNetworkManager;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
-import io.grpc.Channel;
-import io.grpc.ManagedChannelBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,7 +17,7 @@ public class SetUpDevelopLocalServerStep implements InitializingPipelineStep {
     @Override
     public void execute() {
         ServerConnectionDetails serverConnectionDetails = new ServerConnectionDetails("dev server", "localhost", 9090);
-        rpcNetworkManager.connectToServer(serverConnectionDetails);
+        rpcNetworkManager.loginOnServer("mock", "dev", serverConnectionDetails);
     }
 
     @Override

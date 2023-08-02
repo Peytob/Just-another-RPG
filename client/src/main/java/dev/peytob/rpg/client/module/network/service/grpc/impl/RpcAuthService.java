@@ -1,6 +1,5 @@
 package dev.peytob.rpg.client.module.network.service.grpc.impl;
 
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.protobuf.Empty;
 import dev.peytob.rpg.client.module.network.service.AuthService;
@@ -11,7 +10,9 @@ import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc.ServerAut
 import io.grpc.Channel;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
+
+import static net.javacrumbs.futureconverter.java8guava.FutureConverter.toCompletableFuture;
 
 @Service
 public class RpcAuthService implements AuthService, DynamicGrpcService {
@@ -19,16 +20,16 @@ public class RpcAuthService implements AuthService, DynamicGrpcService {
     private ServerAuthServiceFutureStub serverAuthServiceStub;
 
     @Override
-    public Future<String> login(String username, String password) {
+    public CompletableFuture<String> login(String username, String password) {
         // TODO Make login by backend auth service
         ListenableFuture<AuthDataRpcDto> loginFuture = serverAuthServiceStub.login(createAuthData(username + password));
-        return Futures.lazyTransform(loginFuture, AuthDataRpcDto::getToken);
+        return toCompletableFuture(loginFuture).thenApply(AuthDataRpcDto::getToken);
     }
 
     @Override
-    public Future<Void> logout(String token) {
+    public CompletableFuture<Void> logout(String token) {
         ListenableFuture<Empty> logoutFuture = serverAuthServiceStub.logout(createAuthData(token));
-        return Futures.lazyTransform(logoutFuture, empty -> null);
+        return toCompletableFuture(logoutFuture).thenApply(empty -> null);
     }
 
     private AuthDataRpcDto createAuthData(String token) {

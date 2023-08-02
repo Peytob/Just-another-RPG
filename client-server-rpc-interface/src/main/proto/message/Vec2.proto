@@ -4,7 +4,7 @@ option java_multiple_files = true;
 option java_package = "dev.peytob.rpg.rpc.interfaces.base.model";
 option java_outer_classname = "Vec2Proto";
 
-message Vec2Dto {
+message Vec2RpcDto {
   float x = 1;
   float y = 2;
 }
