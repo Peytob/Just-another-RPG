@@ -1,16 +1,16 @@
 package dev.peytob.rpg.server.server.service;
 
-import dev.peytob.rpg.server.base.resource.entity.Player;
-import dev.peytob.rpg.server.base.service.player.PlayerService;
+import dev.peytob.rpg.server.base.resource.User;
+import dev.peytob.rpg.server.base.service.user.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final PlayerService playerService;
+    private final UserService userService;
 
-    public AuthServiceImpl(PlayerService playerService) {
-        this.playerService = playerService;
+    public AuthServiceImpl(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
         // Getting user id by token...
         // Getting user data by id...
         // Making token -> user cache
-        playerService.createPlayer(new Player(token.hashCode(), token));
+        userService.createUser(new User(token.hashCode(), token, token));
         // Sending player login events...
     }
 
@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
     public void logout(String token) {
         // Getting player by token...
         // Invalidating token -> user cache...
-        playerService.removePlayer(new Player(token.hashCode(), token));
+        userService.removeUser(new User(token.hashCode(), token, token));
         // Sending player logout events...
     }
 }
