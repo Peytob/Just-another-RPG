@@ -5,14 +5,14 @@ import dev.peytob.rpg.server.base.resource.world.World;
 
 public class Player extends Entity {
 
-    private final User connectedPlayer;
+    private final User connectedUser;
 
-    public Player(World world, User connectedPlayer) {
-        super(world, connectedPlayer.textId());
-        this.connectedPlayer = connectedPlayer;
+    public Player(World world, User connectedUser) {
+        super(world, connectedUser.textId());
+        this.connectedUser = connectedUser;
     }
 
-    public User getConnectedPlayer() {
-        return connectedPlayer;
+    public User getConnectedUser() {
+        return connectedUser;
     }
 }
