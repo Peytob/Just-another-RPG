@@ -1,4 +1,4 @@
-package dev.peytob.rpg.core.module.base.model.level.tilemap;
+package dev.peytob.rpg.core.module.base.model.world.tilemap;
 
 import dev.peytob.rpg.core.module.base.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;

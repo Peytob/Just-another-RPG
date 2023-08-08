@@ -1,13 +1,14 @@
 package dev.peytob.rpg.client.module.network.mapper;
 
-import dev.peytob.rpg.core.module.base.model.level.tilemap.Tilemap;
-import dev.peytob.rpg.core.module.base.model.level.tilemap.Tilemaps;
-import dev.peytob.rpg.core.module.base.repository.TileRepository;
+import dev.peytob.rpg.core.module.base.model.world.World;
+import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemaps;
 import dev.peytob.rpg.core.module.base.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 import dev.peytob.rpg.rpc.interfaces.base.model.Vec2iRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TileRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TilemapRpcDto;
+import dev.peytob.rpg.rpc.interfaces.base.model.world.WorldRpcDto;
 import org.springframework.stereotype.Service;
 
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
@@ -34,5 +35,11 @@ public class GrpcDtoMapperImpl implements GrpcDtoMapper {
         }
 
         return tilemap;
+    }
+
+    @Override
+    public World toWorld(WorldRpcDto worldRpcDto) {
+        return new World(
+            toTilemap(worldRpcDto.getTilemap()));
     }
 }

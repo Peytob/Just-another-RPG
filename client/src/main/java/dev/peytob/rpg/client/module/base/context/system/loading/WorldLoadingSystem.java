@@ -3,10 +3,10 @@ package dev.peytob.rpg.client.module.base.context.system.loading;
 import dev.peytob.rpg.client.context.component.CopyEntityOnChangeStateFlag;
 import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.state.instance.InGameLoadingState;
-import dev.peytob.rpg.client.module.base.context.component.loading.TilemapAsyncLoadingComponent;
 import dev.peytob.rpg.client.module.base.service.world.WorldService;
-import dev.peytob.rpg.core.module.base.context.component.level.TilemapComponent;
-import dev.peytob.rpg.core.module.base.model.level.tilemap.Tilemap;
+import dev.peytob.rpg.core.context.component.template.AsyncTaskComponent;
+import dev.peytob.rpg.core.module.base.context.component.world.TilemapComponent;
+import dev.peytob.rpg.core.module.base.model.world.World;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.ecs.system.System;
@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+
+import static dev.peytob.rpg.client.module.base.context.system.constant.DefaultBaseLoadingEntities.WORLD_LOADING_ENTITY;
 
 @Component
 @IncludeInState(state = InGameLoadingState.class)
@@ -31,24 +33,23 @@ public class WorldLoadingSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        Optional<TilemapAsyncLoadingComponent> asyncTask = context
-            .getSingletonComponentByType(TilemapAsyncLoadingComponent.class);
+        Optional<Entity> asyncTaskEntity = context.getEntityById(WORLD_LOADING_ENTITY);
 
-        if (asyncTask.isEmpty()) {
-            CompletableFuture<Tilemap> future = worldService.loadWorld().whenComplete((tilemap, throwable) -> {
+        if (asyncTaskEntity.isEmpty()) {
+            CompletableFuture<World> future = worldService.loadWorld().whenComplete((world, throwable) -> {
                 if (throwable != null) {
                     log.error("An exception thrown while loading the world: ", throwable);
                     return;
                 }
 
-                log.info("Tilemap loaded successfully!");
-                Entity tilemapEntity = context.createEntity("tilemap");
-                tilemapEntity.bindComponent(new TilemapComponent(tilemap));
-                tilemapEntity.bindComponent(new CopyEntityOnChangeStateFlag());
+                log.info("World loaded successfully!");
+                Entity worldEntity = context.createEntity("world");
+                worldEntity.bindComponent(new TilemapComponent(world.tilemap()));
+                worldEntity.bindComponent(new CopyEntityOnChangeStateFlag());
             });
 
-            Entity tilemapAsyncLoadingTaskEntity = context.createEntity("tilemap_async_loading_task");
-            tilemapAsyncLoadingTaskEntity.bindComponent(new TilemapAsyncLoadingComponent(future));
+            Entity tilemapAsyncLoadingTaskEntity = context.createEntity(WORLD_LOADING_ENTITY);
+            tilemapAsyncLoadingTaskEntity.bindComponent(new AsyncTaskComponent<>(future));
         }
     }
 }

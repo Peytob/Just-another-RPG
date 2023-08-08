@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.module.base.service.world;
 
 import dev.peytob.rpg.client.module.network.service.WorldAccessorService;
-import dev.peytob.rpg.core.module.base.model.level.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.base.model.world.World;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -16,7 +16,7 @@ public class RpcWorldService implements WorldService {
     }
 
     @Override
-    public CompletableFuture<Tilemap> loadWorld() {
-        return worldAccessorService.getTilemap();
+    public CompletableFuture<World> loadWorld() {
+        return worldAccessorService.getWorld();
     }
 }

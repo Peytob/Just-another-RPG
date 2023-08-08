@@ -4,10 +4,11 @@ import com.google.common.util.concurrent.ListenableFuture;
 import dev.peytob.rpg.client.module.network.mapper.GrpcDtoMapper;
 import dev.peytob.rpg.client.module.network.service.WorldAccessorService;
 import dev.peytob.rpg.client.module.network.service.grpc.DynamicGrpcService;
-import dev.peytob.rpg.core.module.base.model.level.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.base.model.world.World;
 import dev.peytob.rpg.rpc.interfaces.base.model.WorldAccessorServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.model.WorldAccessorServiceGrpc.WorldAccessorServiceFutureStub;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TilemapRpcDto;
+import dev.peytob.rpg.rpc.interfaces.base.model.world.WorldRpcDto;
 import io.grpc.Channel;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +28,9 @@ public class RpcWorldAccessorService implements WorldAccessorService, DynamicGrp
     }
 
     @Override
-    public CompletableFuture<Tilemap> getTilemap() {
-        ListenableFuture<TilemapRpcDto> tilemapFuture = worldAccessorServiceStub.getTilemap(EMPTY_MESSAGE);
-        return toCompletableFuture(tilemapFuture).thenApply(grpcDtoMapper::toTilemap);
+    public CompletableFuture<World> getWorld() {
+        ListenableFuture<WorldRpcDto> worldFuture = worldAccessorServiceStub.getWorld(EMPTY_MESSAGE);
+        return toCompletableFuture(worldFuture).thenApply(grpcDtoMapper::toWorld);
     }
 
     @Override

@@ -1,0 +1,12 @@
+// Make an size-optimized tilemap dto model, based on quadtree
+
+syntax = "proto3";
+import "message/Tilemap.proto";
+
+option java_multiple_files = true;
+option java_package = "dev.peytob.rpg.rpc.interfaces.base.model.world";
+option java_outer_classname = "WorldProto";
+
+message WorldRpcDto {
+  TilemapRpcDto tilemap = 1;
+}

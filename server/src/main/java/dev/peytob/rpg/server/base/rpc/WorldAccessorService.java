@@ -1,13 +1,14 @@
 package dev.peytob.rpg.server.base.rpc;
 
 import com.google.protobuf.Empty;
-import dev.peytob.rpg.core.module.base.model.level.tilemap.PlacedTile;
-import dev.peytob.rpg.core.module.base.model.level.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.base.model.world.tilemap.PlacedTile;
+import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemap;
 import dev.peytob.rpg.math.vector.Vec2i;
 import dev.peytob.rpg.rpc.interfaces.base.model.Vec2iRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.WorldAccessorServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TileRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TilemapRpcDto;
+import dev.peytob.rpg.rpc.interfaces.base.model.world.WorldRpcDto;
 import dev.peytob.rpg.server.base.repository.WorldRepository;
 import dev.peytob.rpg.server.base.service.user.UserService;
 import io.grpc.stub.StreamObserver;
@@ -29,18 +30,18 @@ public class WorldAccessorService extends WorldAccessorServiceGrpc.WorldAccessor
     }
 
     @Override
-    public void getTilemap(Empty request, StreamObserver<TilemapRpcDto> responseObserver) {
+    public void getWorld(Empty request, StreamObserver<WorldRpcDto> responseObserver) {
 //        User user = userService.getUserById("test");
 //        Player userPlayer = user.getWorldPlayer();
 //        TilemapRpcDto tilemapRpcDto = toTilemapDto(userPlayer.getWorld().getTilemap());
 
         Tilemap tilemap = worldRepository.getById(1).getTilemap();
-        responseObserver.onNext(toTilemapDto(tilemap));
+        responseObserver.onNext(toWorldDto(tilemap));
         responseObserver.onCompleted();
     }
 
-    private TilemapRpcDto toTilemapDto(Tilemap tilemap) {
-        TilemapRpcDto.Builder builder = TilemapRpcDto.newBuilder();
+    private WorldRpcDto toWorldDto(Tilemap tilemap) {
+        TilemapRpcDto.Builder tilemapBuilder = TilemapRpcDto.newBuilder();
 
         Vec2i sizes = tilemap.getSizes();
         List<TileRpcDto> tiles = new ArrayList<>(sizes.x() * sizes.y());
@@ -64,12 +65,12 @@ public class WorldAccessorService extends WorldAccessorServiceGrpc.WorldAccessor
             }
         }
 
-        builder.addAllTiles(tiles);
-        builder.setSizes(Vec2iRpcDto.newBuilder()
+        tilemapBuilder.addAllTiles(tiles);
+        tilemapBuilder.setSizes(Vec2iRpcDto.newBuilder()
             .setX(sizes.x())
             .setY(sizes.y())
             .build());
 
-        return builder.build();
+        return WorldRpcDto.newBuilder().setTilemap(tilemapBuilder.build()).build();
     }
 }

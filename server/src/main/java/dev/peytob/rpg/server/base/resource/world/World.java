@@ -1,6 +1,6 @@
 package dev.peytob.rpg.server.base.resource.world;
 
-import dev.peytob.rpg.core.module.base.model.level.tilemap.Tilemap;
+import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemap;
 import dev.peytob.rpg.engine.resource.Resource;
 import dev.peytob.rpg.server.base.resource.world.entity.Entity;
 
