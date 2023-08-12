@@ -2,18 +2,18 @@ package dev.peytob.rpg.core.context.component.template;
 
 import dev.peytob.rpg.ecs.component.Component;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 public class AsyncTaskComponent<T> implements Component {
 
-    private final Future<T> future;
+    private final CompletableFuture<T> future;
 
-    public AsyncTaskComponent(Future<T> future) {
+    public AsyncTaskComponent(CompletableFuture<T> future) {
         this.future = future;
     }
 
-    public Future<T> getFuture() {
+    public CompletableFuture<T> getFuture() {
         return future;
     }
 

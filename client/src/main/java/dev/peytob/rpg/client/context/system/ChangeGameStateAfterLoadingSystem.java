@@ -2,7 +2,6 @@ package dev.peytob.rpg.client.context.system;
 
 import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.state.instance.InGameLoadingState;
-import dev.peytob.rpg.client.module.base.context.component.loading.TilemapAsyncLoadingComponent;
 import dev.peytob.rpg.client.fsm.state.instance.InGameEngineState;
 import dev.peytob.rpg.core.context.component.template.AsyncTaskComponent;
 import dev.peytob.rpg.ecs.context.EcsContext;
@@ -28,7 +27,7 @@ public class ChangeGameStateAfterLoadingSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        boolean isAllComponentsLoaded = context.getComponentsByType(TilemapAsyncLoadingComponent.class).stream()
+        boolean isAllComponentsLoaded = context.getComponentsByType(AsyncTaskComponent.class).stream()
             .allMatch(AsyncTaskComponent::isDone);
 
         if (isAllComponentsLoaded) {
