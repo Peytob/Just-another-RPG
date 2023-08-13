@@ -1,10 +1,12 @@
 package dev.peytob.rpg.client.module.network.service;
 
+import dev.peytob.rpg.client.module.network.model.User;
+
 import java.util.concurrent.CompletableFuture;
 
-public interface AuthService {
+public interface ServerAuthService {
 
-    CompletableFuture<String> login(String username, String password);
+    CompletableFuture<User> login(String token);
 
     CompletableFuture<Void> logout(String token);
 }

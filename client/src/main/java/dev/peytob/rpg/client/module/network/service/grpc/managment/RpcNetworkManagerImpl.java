@@ -1,12 +1,9 @@
 package dev.peytob.rpg.client.module.network.service.grpc.managment;
 
-import dev.peytob.rpg.client.module.network.model.NetworkConnectionState;
-import dev.peytob.rpg.client.module.network.model.ServerAuth;
-import dev.peytob.rpg.client.module.network.model.ServerConnectionDetails;
-import dev.peytob.rpg.client.module.network.service.AuthService;
+import dev.peytob.rpg.client.module.network.model.*;
+import dev.peytob.rpg.client.module.network.service.ServerAuthService;
 import dev.peytob.rpg.client.module.network.service.grpc.DynamicGrpcService;
-import io.grpc.Channel;
-import io.grpc.ManagedChannelBuilder;
+import io.grpc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,13 +19,13 @@ public class RpcNetworkManagerImpl implements RpcNetworkManager {
 
     private final Collection<DynamicGrpcService> grpcServices;
 
-    private final AuthService authService;
+    private final ServerAuthService serverAuthService;
 
     private final NetworkConnectionState networkConnectionState;
 
-    public RpcNetworkManagerImpl(Collection<DynamicGrpcService> grpcServices, AuthService authService, NetworkConnectionState networkConnectionState) {
+    public RpcNetworkManagerImpl(Collection<DynamicGrpcService> grpcServices, ServerAuthService serverAuthService, NetworkConnectionState networkConnectionState) {
         this.grpcServices = grpcServices;
-        this.authService = authService;
+        this.serverAuthService = serverAuthService;
         this.networkConnectionState = networkConnectionState;
     }
 
@@ -36,16 +33,19 @@ public class RpcNetworkManagerImpl implements RpcNetworkManager {
     public Future<ServerAuth> loginOnServer(String username, String password, ServerConnectionDetails serverConnectionDetails) {
         log.info("Connecting to server: {}", serverConnectionDetails);
 
-        Channel channel = ManagedChannelBuilder.forAddress(serverConnectionDetails.address(), serverConnectionDetails.port())
-            .usePlaintext()
-            .build();
+        // TODO Make request to auth server
+        String token = username + ":" + password;
 
-        grpcServices.forEach(grpcService -> grpcService.changeGrpcChannel(channel));
+        Channel channel = ManagedChannelBuilder.forAddress(serverConnectionDetails.serverAddress(), serverConnectionDetails.port())
+                .usePlaintext()
+                .build();
+
+        CallCredentials credentials = new BearerTokenCredentials(token);
+
+        grpcServices.forEach(grpcService -> grpcService.updateStub(channel, credentials));
         networkConnectionState.setServerConnectionDetails(serverConnectionDetails);
 
-        log.info("Login on server from server {}", serverConnectionDetails.address());
-
-        return authService.login(username, password).thenApply(token -> {
+        return serverAuthService.login(token).thenApply(user -> {
             ServerAuth serverAuth = new ServerAuth(networkConnectionState.getServerConnectionDetails(), token);
             networkConnectionState.setServerAuth(serverAuth);
             return serverAuth;
@@ -61,7 +61,7 @@ public class RpcNetworkManagerImpl implements RpcNetworkManager {
             return CompletableFuture.completedFuture(null);
         }
 
-        return authService.logout(networkConnectionState.getServerAuth().token()).thenApply(literallyVoid -> {
+        return serverAuthService.logout(networkConnectionState.getServerAuth().token()).thenApply(literallyVoid -> {
             ServerConnectionDetails serverConnectionDetails = networkConnectionState.getServerConnectionDetails();
 
             networkConnectionState.setServerAuth(null);

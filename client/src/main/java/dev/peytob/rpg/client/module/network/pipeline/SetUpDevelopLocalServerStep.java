@@ -16,7 +16,7 @@ public class SetUpDevelopLocalServerStep implements InitializingPipelineStep {
 
     @Override
     public void execute() {
-        ServerConnectionDetails serverConnectionDetails = new ServerConnectionDetails("dev server", "localhost", 9090);
+        ServerConnectionDetails serverConnectionDetails = new ServerConnectionDetails("dev server", "localhost", "localhost", 9090);
         rpcNetworkManager.loginOnServer("mock", "dev", serverConnectionDetails);
     }
 

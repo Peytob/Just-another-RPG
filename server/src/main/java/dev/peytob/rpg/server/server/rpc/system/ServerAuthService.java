@@ -1,6 +1,7 @@
 package dev.peytob.rpg.server.server.rpc.system;
 
 import com.google.protobuf.Empty;
+import dev.peytob.rpg.rpc.interfaces.base.model.UserRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.AuthDataRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc;
 import dev.peytob.rpg.server.server.service.AuthService;
@@ -23,12 +24,12 @@ public class ServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceIm
     }
 
     @Override
-    public void login(AuthDataRpcDto request, StreamObserver<AuthDataRpcDto> responseObserver) {
+    public void login(AuthDataRpcDto request, StreamObserver<UserRpcDto> responseObserver) {
         log.info("New user is trying to login on server");
 
         authService.login(request.getToken());
 
-        responseObserver.onNext(request);
+        responseObserver.onNext(UserRpcDto.newBuilder().build());
         responseObserver.onCompleted();
     }
 

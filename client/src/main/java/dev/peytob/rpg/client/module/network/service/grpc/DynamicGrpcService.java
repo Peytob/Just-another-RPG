@@ -1,7 +1,9 @@
 package dev.peytob.rpg.client.module.network.service.grpc;
 
 import com.google.protobuf.Empty;
+import io.grpc.CallCredentials;
 import io.grpc.Channel;
+import io.grpc.stub.AbstractStub;
 
 /**
  * Base class for all GRPC stubs wrappers.
@@ -12,5 +14,5 @@ public interface DynamicGrpcService {
 
     Empty EMPTY_MESSAGE = Empty.newBuilder().build();
 
-    void changeGrpcChannel(Channel channel);
+    AbstractStub<?> updateStub(Channel channel, CallCredentials credentials);
 }
