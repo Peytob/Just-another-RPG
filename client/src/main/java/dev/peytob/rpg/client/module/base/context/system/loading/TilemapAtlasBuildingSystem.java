@@ -37,6 +37,13 @@ public class TilemapAtlasBuildingSystem implements System {
     @Override
     public void execute(EcsContext context) {
         // TODO Make it async (but createTexture works only from main thread!)
+
+        final String tilemapEntityId = "tilemap_texture_atlas";
+
+        if (context.getEntityById(tilemapEntityId).isPresent()) {
+            return;
+        }
+
         TextureAtlas textureAtlas = buildStaticTextureAtlas();
 
         Entity tilemapTextureAtlas = context.createEntity("tilemap_texture_atlas");
