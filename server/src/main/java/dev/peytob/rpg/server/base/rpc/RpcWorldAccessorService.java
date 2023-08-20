@@ -11,20 +11,21 @@ import dev.peytob.rpg.rpc.interfaces.base.model.world.TilemapRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.WorldRpcDto;
 import dev.peytob.rpg.server.base.repository.WorldRepository;
 import dev.peytob.rpg.server.base.service.user.UserService;
+import dev.peytob.rpg.server.server.rpc.security.AuthServerInterceptor;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@GrpcService
-public class WorldAccessorService extends WorldAccessorServiceGrpc.WorldAccessorServiceImplBase {
+@GrpcService(interceptors = AuthServerInterceptor.class)
+public class RpcWorldAccessorService extends WorldAccessorServiceGrpc.WorldAccessorServiceImplBase {
 
     private final UserService userService;
 
     private final WorldRepository worldRepository;
 
-    public WorldAccessorService(UserService userService, WorldRepository worldRepository) {
+    public RpcWorldAccessorService(UserService userService, WorldRepository worldRepository) {
         this.userService = userService;
         this.worldRepository = worldRepository;
     }

@@ -10,7 +10,7 @@ public class UserRepository extends BaseRepository<User> {
     private final BaseRepository<User>.RepositoryIndex<String> tokenIndex = new RepositoryIndex<String>() {
         @Override
         protected String extractKey(User resource) {
-        return resource.textId();
+        return resource.getToken();
         }
     };
 

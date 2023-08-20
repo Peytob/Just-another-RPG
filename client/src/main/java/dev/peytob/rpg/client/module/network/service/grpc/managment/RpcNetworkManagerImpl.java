@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 @Service
 public class RpcNetworkManagerImpl implements RpcNetworkManager {
@@ -30,7 +29,7 @@ public class RpcNetworkManagerImpl implements RpcNetworkManager {
     }
 
     @Override
-    public Future<ServerAuth> loginOnServer(String username, String password, ServerConnectionDetails serverConnectionDetails) {
+    public CompletableFuture<ServerAuth> loginOnServer(String username, String password, ServerConnectionDetails serverConnectionDetails) {
         log.info("Connecting to server: {}", serverConnectionDetails);
 
         // TODO Make request to auth server
@@ -48,6 +47,7 @@ public class RpcNetworkManagerImpl implements RpcNetworkManager {
         return serverAuthService.login(token).thenApply(user -> {
             ServerAuth serverAuth = new ServerAuth(networkConnectionState.getServerConnectionDetails(), token);
             networkConnectionState.setServerAuth(serverAuth);
+            log.info("Connected to server: {} as {}", serverAuth, user);
             return serverAuth;
         });
     }

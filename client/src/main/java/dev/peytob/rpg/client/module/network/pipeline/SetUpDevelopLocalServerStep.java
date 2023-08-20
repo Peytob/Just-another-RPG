@@ -17,7 +17,12 @@ public class SetUpDevelopLocalServerStep implements InitializingPipelineStep {
     @Override
     public void execute() {
         ServerConnectionDetails serverConnectionDetails = new ServerConnectionDetails("dev server", "localhost", "localhost", 9090);
-        rpcNetworkManager.loginOnServer("mock", "dev", serverConnectionDetails);
+        // TODO Потом будет перенесено в нормальное место, вероятно
+        try {
+            rpcNetworkManager.loginOnServer("mock", "dev", serverConnectionDetails).get();
+        } catch (Exception e) {
+            throw new IllegalStateException("Exception while login on server", e);
+        }
     }
 
     @Override

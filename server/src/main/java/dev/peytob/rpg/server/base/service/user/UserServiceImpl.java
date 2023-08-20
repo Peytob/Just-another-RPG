@@ -28,6 +28,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByToken(String token) {
+        return userRepository.getUserByToken(token);
+    }
+
+    @Override
     public boolean createUser(User user) {
         log.info("Creating new user with id {} and text id {}", user.id(), user.textId());
 

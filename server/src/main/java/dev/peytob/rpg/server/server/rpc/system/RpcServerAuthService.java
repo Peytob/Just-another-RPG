@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
 import static dev.peytob.rpg.server.server.rpc.constant.DefaultMessages.EMPTY_MESSAGE;
 
 @GrpcService
-public class ServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceImplBase {
+public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceImplBase {
 
-    private static final Logger log = LoggerFactory.getLogger(ServerAuthService.class);
+    private static final Logger log = LoggerFactory.getLogger(RpcServerAuthService.class);
 
     private final AuthService authService;
 
-    public ServerAuthService(AuthService authService) {
+    public RpcServerAuthService(AuthService authService) {
         this.authService = authService;
     }
 
