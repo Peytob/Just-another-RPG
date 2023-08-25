@@ -25,6 +25,8 @@ public class CopyingFlaggedEntitiesTearDownEventHandler {
             .stream()
             .map(context::getComponentEntity)
             .forEach(entity -> copyEntityToNextContext(entity, contextBuilder));
+
+        // TODO Create "CopyRelationship" component and event handler!
     }
 
     private void copyEntityToNextContext(Entity entity, EcsContextBuilder contextBuilder) {

@@ -8,8 +8,8 @@ import dev.peytob.rpg.rpc.interfaces.base.model.WorldAccessorServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TileRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TilemapRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.WorldRpcDto;
-import dev.peytob.rpg.server.base.repository.WorldRepository;
-import dev.peytob.rpg.server.base.service.user.UserService;
+import dev.peytob.rpg.server.base.resource.world.World;
+import dev.peytob.rpg.server.server.rpc.context.RpcContextService;
 import dev.peytob.rpg.server.server.rpc.security.AuthServerInterceptor;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -22,27 +22,21 @@ import static dev.peytob.rpg.server.server.rpc.utils.RpcMessageMapper.toVec2iDto
 @GrpcService(interceptors = AuthServerInterceptor.class)
 public class RpcWorldAccessorService extends WorldAccessorServiceGrpc.WorldAccessorServiceImplBase {
 
-    private final UserService userService;
+    private final RpcContextService rpcContextService;
 
-    private final WorldRepository worldRepository;
-
-    public RpcWorldAccessorService(UserService userService, WorldRepository worldRepository) {
-        this.userService = userService;
-        this.worldRepository = worldRepository;
+    public RpcWorldAccessorService(RpcContextService rpcContextService) {
+        this.rpcContextService = rpcContextService;
     }
 
     @Override
     public void getWorld(Empty request, StreamObserver<WorldRpcDto> responseObserver) {
-//        User user = userService.getUserById("test");
-//        Player userPlayer = user.getWorldPlayer();
-//        TilemapRpcDto tilemapRpcDto = toTilemapDto(userPlayer.getWorld().getTilemap());
-
-        Tilemap tilemap = worldRepository.getById(1).getTilemap();
-        responseObserver.onNext(toWorldDto(tilemap));
+        World world = rpcContextService.getAuthWorldPlayer().getWorld();
+        responseObserver.onNext(toWorldDto(world));
         responseObserver.onCompleted();
     }
 
-    private WorldRpcDto toWorldDto(Tilemap tilemap) {
+    private WorldRpcDto toWorldDto(World world) {
+        Tilemap tilemap = world.getTilemap();
         TilemapRpcDto.Builder tilemapBuilder = TilemapRpcDto.newBuilder();
 
         Vec2i sizes = tilemap.getSizes();

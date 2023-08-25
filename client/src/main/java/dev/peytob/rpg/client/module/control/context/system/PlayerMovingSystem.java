@@ -2,7 +2,7 @@ package dev.peytob.rpg.client.module.control.context.system;
 
 import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.state.instance.InGameEngineState;
-import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
+import dev.peytob.rpg.client.module.base.context.event.PlayerMovedEvent;
 import dev.peytob.rpg.client.module.graphic.model.Window;
 import dev.peytob.rpg.client.module.network.service.PlayerMovingService;
 import dev.peytob.rpg.ecs.context.EcsContext;
@@ -11,8 +11,6 @@ import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vectors;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 import static dev.peytob.rpg.ecs.model.SystemDefaultOrder.INPUT_HANDLING;
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
@@ -40,16 +38,7 @@ public final class PlayerMovingSystem implements System {
     // Temporary just controls camera position
     @Override
     public void execute(EcsContext context) {
-        Optional<CameraComponent> optionalCamera = context.getSingletonComponentByType(CameraComponent.class);
-
-        if (optionalCamera.isEmpty()) {
-            return;
-        }
-
-        CameraComponent camera = optionalCamera.get();
-
         Vec2 direction = immutableVec2();
-        float speed = 3f;
 
         if (GLFW.glfwGetKey(window.getPointer(), FORWARD) == GLFW.GLFW_PRESS) {
             direction = direction.plus(0.0f, -1);
@@ -70,9 +59,8 @@ public final class PlayerMovingSystem implements System {
         Vec2 normalizedDirection = Vectors.normalize(direction);
 
         if (!normalizedDirection.equals(immutableVec2())) {
-            Vec2 newCameraPosition = camera.getCamera().getPosition().plus(normalizedDirection.multiply(speed));
-            camera.getCamera().setPosition(newCameraPosition);
-            playerMovingService.directionalMove(normalizedDirection);
+            PlayerMovedEvent playerMovedEvent = new PlayerMovedEvent(normalizedDirection);
+            context.addEvent(playerMovedEvent);
         }
     }
 }
