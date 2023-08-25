@@ -5,7 +5,7 @@ import dev.peytob.rpg.server.base.service.user.UserService;
 import io.grpc.*;
 import org.springframework.stereotype.Component;
 
-import static dev.peytob.rpg.server.server.rpc.security.Constants.USER_ID_CONTEXT_KEY;
+import static dev.peytob.rpg.server.server.rpc.security.Constants.USER_TEXT_ID_CONTEXT_KEY;
 import static io.grpc.Metadata.ASCII_STRING_MARSHALLER;
 
 @Component
@@ -43,7 +43,7 @@ public class BearerAuthServerInterceptor implements AuthServerInterceptor {
             return (ServerCall.Listener<ReqT>) EMPTY_LISTENER;
         }
 
-        Context context = Context.current().withValue(USER_ID_CONTEXT_KEY, user.textId());
+        Context context = Context.current().withValue(USER_TEXT_ID_CONTEXT_KEY, user.textId());
         return Contexts.interceptCall(context, call, headers, next);
     }
 }

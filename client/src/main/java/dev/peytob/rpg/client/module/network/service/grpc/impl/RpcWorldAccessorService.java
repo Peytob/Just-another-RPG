@@ -1,9 +1,9 @@
 package dev.peytob.rpg.client.module.network.service.grpc.impl;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import dev.peytob.rpg.client.module.network.mapper.GrpcDtoMapper;
 import dev.peytob.rpg.client.module.network.service.WorldAccessorService;
 import dev.peytob.rpg.client.module.network.service.grpc.DynamicGrpcService;
+import dev.peytob.rpg.client.module.network.utils.RpcMessageMapper;
 import dev.peytob.rpg.core.module.base.model.world.World;
 import dev.peytob.rpg.rpc.interfaces.base.model.WorldAccessorServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.model.WorldAccessorServiceGrpc.WorldAccessorServiceFutureStub;
@@ -20,18 +20,12 @@ import static net.javacrumbs.futureconverter.java8guava.FutureConverter.toComple
 @Service
 public class RpcWorldAccessorService implements WorldAccessorService, DynamicGrpcService {
 
-    private final GrpcDtoMapper grpcDtoMapper;
-
     private WorldAccessorServiceFutureStub worldAccessorServiceStub;
-
-    public RpcWorldAccessorService(GrpcDtoMapper grpcDtoMapper) {
-        this.grpcDtoMapper = grpcDtoMapper;
-    }
 
     @Override
     public CompletableFuture<World> getWorld() {
         ListenableFuture<WorldRpcDto> worldFuture = worldAccessorServiceStub.getWorld(EMPTY_MESSAGE);
-        return toCompletableFuture(worldFuture).thenApply(grpcDtoMapper::toWorld);
+        return toCompletableFuture(worldFuture).thenApply(RpcMessageMapper::toWorld);
     }
 
     @Override

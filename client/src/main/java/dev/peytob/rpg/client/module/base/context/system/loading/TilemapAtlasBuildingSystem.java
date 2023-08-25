@@ -54,7 +54,7 @@ public class TilemapAtlasBuildingSystem implements System {
     private TextureAtlas buildStaticTextureAtlas() {
         log.info("Loading tilemap texture atlas data");
 
-        Image testAtlas = imageIOService.loaderClasspathImage("/images/tiles/test_tile.png");
+        Image testAtlas = imageIOService.loaderClasspathImage("/assets/sprites/tiles/tilemap.png");
         Texture textureAtlas = textureService.createTexture("tilemap_texture_atlas", GL_RGBA8, testAtlas);
 
         TextureAtlas.TextureAtlasBuilder textureAtlasBuilder = new TextureAtlas.TextureAtlasBuilder(textureAtlas);

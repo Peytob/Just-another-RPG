@@ -1,10 +1,9 @@
-package dev.peytob.rpg.server.base.rpc;
+package dev.peytob.rpg.server.base.rpc.world;
 
 import com.google.protobuf.Empty;
 import dev.peytob.rpg.core.module.base.model.world.tilemap.PlacedTile;
 import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemap;
 import dev.peytob.rpg.math.vector.Vec2i;
-import dev.peytob.rpg.rpc.interfaces.base.model.Vec2iRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.WorldAccessorServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TileRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TilemapRpcDto;
@@ -17,6 +16,8 @@ import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static dev.peytob.rpg.server.server.rpc.utils.RpcMessageMapper.toVec2iDto;
 
 @GrpcService(interceptors = AuthServerInterceptor.class)
 public class RpcWorldAccessorService extends WorldAccessorServiceGrpc.WorldAccessorServiceImplBase {
@@ -55,10 +56,7 @@ public class RpcWorldAccessorService extends WorldAccessorServiceGrpc.WorldAcces
                 }
 
                 TileRpcDto tileDto = TileRpcDto.newBuilder()
-                    .setPosition(Vec2iRpcDto.newBuilder()
-                        .setX(tile.gridPosition().x())
-                        .setY(tile.gridPosition().y())
-                        .build())
+                    .setPosition(toVec2iDto(tile.gridPosition()))
                     .setTextId(tile.tile().textId())
                     .build();
 
@@ -67,10 +65,7 @@ public class RpcWorldAccessorService extends WorldAccessorServiceGrpc.WorldAcces
         }
 
         tilemapBuilder.addAllTiles(tiles);
-        tilemapBuilder.setSizes(Vec2iRpcDto.newBuilder()
-            .setX(sizes.x())
-            .setY(sizes.y())
-            .build());
+        tilemapBuilder.setSizes(toVec2iDto(tilemap.getSizes()));
 
         return WorldRpcDto.newBuilder().setTilemap(tilemapBuilder.build()).build();
     }

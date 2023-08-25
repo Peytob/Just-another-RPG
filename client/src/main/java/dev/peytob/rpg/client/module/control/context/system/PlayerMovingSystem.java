@@ -4,6 +4,7 @@ import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.state.instance.InGameEngineState;
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
 import dev.peytob.rpg.client.module.graphic.model.Window;
+import dev.peytob.rpg.client.module.network.service.PlayerMovingService;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.math.vector.Vec2;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 import static dev.peytob.rpg.ecs.model.SystemDefaultOrder.INPUT_HANDLING;
+import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
 
 // Test implementation!
 
@@ -28,8 +30,11 @@ public final class PlayerMovingSystem implements System {
 
     private final Window window;
 
-    public PlayerMovingSystem(Window window) {
+    private final PlayerMovingService playerMovingService;
+
+    public PlayerMovingSystem(Window window, PlayerMovingService playerMovingService) {
         this.window = window;
+        this.playerMovingService = playerMovingService;
     }
 
     // Temporary just controls camera position
@@ -43,25 +48,31 @@ public final class PlayerMovingSystem implements System {
 
         CameraComponent camera = optionalCamera.get();
 
-        Vec2 currentPosition = camera.getCamera().getPosition();
+        Vec2 direction = immutableVec2();
         float speed = 3f;
 
         if (GLFW.glfwGetKey(window.getPointer(), FORWARD) == GLFW.GLFW_PRESS) {
-            currentPosition = currentPosition.plus(Vectors.immutableVec2(0.0f, -speed));
+            direction = direction.plus(0.0f, -1);
         }
 
         if (GLFW.glfwGetKey(window.getPointer(), BACK) == GLFW.GLFW_PRESS) {
-            currentPosition = currentPosition.plus(Vectors.immutableVec2(0.0f, speed));
+            direction = direction.plus(0.0f, 1);
         }
 
         if (GLFW.glfwGetKey(window.getPointer(), LEFT) == GLFW.GLFW_PRESS) {
-            currentPosition = currentPosition.plus(Vectors.immutableVec2(-speed, 0.0f));
+            direction = direction.plus(-1, 0.0f);
         }
 
         if (GLFW.glfwGetKey(window.getPointer(), RIGHT) == GLFW.GLFW_PRESS) {
-            currentPosition = currentPosition.plus(Vectors.immutableVec2(speed, 0.0f));
+            direction = direction.plus(1, 0.0f);
         }
 
-        camera.getCamera().setPosition(currentPosition);
+        Vec2 normalizedDirection = Vectors.normalize(direction);
+
+        if (!normalizedDirection.equals(immutableVec2())) {
+            Vec2 newCameraPosition = camera.getCamera().getPosition().plus(normalizedDirection.multiply(speed));
+            camera.getCamera().setPosition(newCameraPosition);
+            playerMovingService.directionalMove(normalizedDirection);
+        }
     }
 }

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "message/Vec2.proto";
+
+option java_multiple_files = true;
+option java_package = "dev.peytob.rpg.rpc.interfaces.base.control";
+option java_outer_classname = "PlayerMovingProto";
+
+service PlayerMovingService {
+  rpc DirectionalMove (Vec2RpcDto) returns (google.protobuf.Empty);
+}
