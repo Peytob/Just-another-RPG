@@ -1,7 +1,6 @@
 package dev.peytob.rpg.client.fsm.event.handler;
 
 import dev.peytob.rpg.client.context.component.CopyEntityOnChangeStateFlag;
-import dev.peytob.rpg.ecs.component.Relationship;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.entity.Entity;
@@ -25,8 +24,6 @@ public class CopyingFlaggedEntitiesTearDownEventHandler {
             .stream()
             .map(context::getComponentEntity)
             .forEach(entity -> copyEntityToNextContext(entity, contextBuilder));
-
-        // TODO Create "CopyRelationship" component and event handler!
     }
 
     private void copyEntityToNextContext(Entity entity, EcsContextBuilder contextBuilder) {
@@ -34,7 +31,6 @@ public class CopyingFlaggedEntitiesTearDownEventHandler {
 
         contextBuilder.initializeEntity((newEntity, context) ->
             components.stream()
-                .filter(component -> !(component instanceof Relationship))
                 .filter(component -> !(component instanceof CopyEntityOnChangeStateFlag))
                 .forEach(newEntity::bindComponent),
             entity.getId());

@@ -21,7 +21,7 @@ public final class EcsContextManager {
         this.ecsContext = EcsContexts.empty();
     }
 
-    public void refreshContext(EcsContextBuilder ecsContextBuilder) {
+    public EcsContext refreshContext(EcsContextBuilder ecsContextBuilder) {
         logger.info("Refreshing ECS context started");
 
         logger.info("Clearing current context");
@@ -31,6 +31,8 @@ public final class EcsContextManager {
         ecsContext = ecsContextBuilder.build();
 
         logger.info("ECS context has been refreshed");
+
+        return ecsContext;
     }
 
     public void executeSystems() {

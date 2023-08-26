@@ -3,6 +3,7 @@ package dev.peytob.rpg.client.module.graphic.context.system.rendering;
 import dev.peytob.rpg.client.fsm.annotation.IncludeInAllStates;
 import dev.peytob.rpg.client.module.graphic.context.component.CameraComponent;
 import dev.peytob.rpg.client.module.graphic.model.Camera;
+import dev.peytob.rpg.core.module.base.context.component.position.PositionComponent;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.math.matrix.Mat4;
@@ -10,8 +11,7 @@ import dev.peytob.rpg.math.matrix.Matrices;
 import dev.peytob.rpg.math.vector.Vec2;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
+import static dev.peytob.rpg.client.module.base.context.constant.DefaultContextEntitiesIds.CAMERA_ENTITY_ID;
 import static dev.peytob.rpg.client.module.graphic.model.RenderSystemDefaultOrder.MAIN_RENDERING;
 
 @Component
@@ -20,11 +20,13 @@ public class CameraUpdatingSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        Optional<CameraComponent> camera = context.getSingletonComponentByType(CameraComponent.class);
+        context.getEntityById(CAMERA_ENTITY_ID).ifPresent(cameraEntity -> {
+            CameraComponent camera = cameraEntity.getComponent(CameraComponent.class);
+            PositionComponent position = cameraEntity.getComponent(PositionComponent.class);
 
-        camera.ifPresent(component -> {
-            Mat4 orthoMatrix = computeOrthoMatrix(component.getCamera());
-            component.setProjectionMatrix(orthoMatrix);
+            camera.getCamera().setPosition(position.getPosition());
+            Mat4 orthoMatrix = computeOrthoMatrix(camera.getCamera());
+            camera.setProjectionMatrix(orthoMatrix);
         });
     }
 

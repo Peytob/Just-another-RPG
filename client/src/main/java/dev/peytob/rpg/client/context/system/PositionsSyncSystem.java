@@ -1,7 +1,6 @@
 package dev.peytob.rpg.client.context.system;
 
 import dev.peytob.rpg.client.fsm.annotation.IncludeInAllStates;
-import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.core.module.base.context.component.position.PositionComponent;
 import dev.peytob.rpg.core.module.base.context.component.position.EntitiesPositionsSyncRelationship;
 import dev.peytob.rpg.ecs.context.EcsContext;

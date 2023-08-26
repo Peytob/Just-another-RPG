@@ -1,5 +1,7 @@
 package dev.peytob.rpg.client.fsm;
 
+import dev.peytob.rpg.client.fsm.event.instance.StateContextRefreshed;
+import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.context.EcsContexts;
 import dev.peytob.rpg.engine.context.EcsContextManager;
@@ -44,7 +46,9 @@ public final class EngineStateManager {
 
         StateSetUpEvent stateSetUpEvent = new StateSetUpEvent(engineState, ecsContextBuilder);
         engineEventBus.publishEvent(stateSetUpEvent);
-        ecsContextManager.refreshContext(ecsContextBuilder);
+        EcsContext refreshedEcsContext = ecsContextManager.refreshContext(ecsContextBuilder);
+        StateContextRefreshed stateContextRefreshed = new StateContextRefreshed(engineState, refreshedEcsContext);
+        engineEventBus.publishEvent(stateContextRefreshed);
 
         this.currentEngineState = engineState;
 
