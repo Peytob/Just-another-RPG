@@ -4,7 +4,6 @@ import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.state.instance.InGameEngineState;
 import dev.peytob.rpg.client.module.base.context.event.PlayerMovedEvent;
 import dev.peytob.rpg.client.module.graphic.model.Window;
-import dev.peytob.rpg.client.module.network.service.PlayerMovingService;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
 import dev.peytob.rpg.math.vector.Vec2;
@@ -28,11 +27,8 @@ public final class PlayerMovingSystem implements System {
 
     private final Window window;
 
-    private final PlayerMovingService playerMovingService;
-
-    public PlayerMovingSystem(Window window, PlayerMovingService playerMovingService) {
+    public PlayerMovingSystem(Window window) {
         this.window = window;
-        this.playerMovingService = playerMovingService;
     }
 
     // Temporary just controls camera position
@@ -56,9 +52,8 @@ public final class PlayerMovingSystem implements System {
             direction = direction.plus(1, 0.0f);
         }
 
-        Vec2 normalizedDirection = Vectors.normalize(direction);
-
-        if (!normalizedDirection.equals(immutableVec2())) {
+        if (!direction.equals(immutableVec2())) {
+            Vec2 normalizedDirection = Vectors.normalize(direction);
             PlayerMovedEvent playerMovedEvent = new PlayerMovedEvent(normalizedDirection);
             context.addEvent(playerMovedEvent);
         }

@@ -1,8 +1,8 @@
-package dev.peytob.rpg.server.base.rpc.control;
+package dev.peytob.rpg.server.base.rpc.player;
 
 import com.google.protobuf.Empty;
-import dev.peytob.rpg.rpc.interfaces.base.control.PlayerMovingServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.model.Vec2RpcDto;
+import dev.peytob.rpg.rpc.interfaces.base.player.PlayerMovingServiceGrpc;
 import dev.peytob.rpg.server.base.resource.world.entity.Player;
 import dev.peytob.rpg.server.base.service.control.EntityMovingService;
 import dev.peytob.rpg.server.server.rpc.context.RpcContextService;

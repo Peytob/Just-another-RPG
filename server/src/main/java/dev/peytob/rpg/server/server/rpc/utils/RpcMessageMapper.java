@@ -2,8 +2,10 @@ package dev.peytob.rpg.server.server.rpc.utils;
 
 import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vec2i;
+import dev.peytob.rpg.rpc.interfaces.base.model.PlayerRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.Vec2RpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.Vec2iRpcDto;
+import dev.peytob.rpg.server.base.resource.world.entity.Player;
 
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
@@ -29,6 +31,12 @@ public enum RpcMessageMapper {;
         return Vec2iRpcDto.newBuilder()
             .setX(vec2i.x())
             .setY(vec2i.y())
+            .build();
+    }
+
+    public static PlayerRpcDto toPlayerDto(Player player) {
+        return PlayerRpcDto.newBuilder()
+            .setPosition(toVec2Dto(player.getPosition()))
             .build();
     }
 }

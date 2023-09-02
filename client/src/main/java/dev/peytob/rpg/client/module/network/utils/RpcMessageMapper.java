@@ -1,11 +1,13 @@
 package dev.peytob.rpg.client.module.network.utils;
 
+import dev.peytob.rpg.client.module.base.model.Player;
 import dev.peytob.rpg.core.module.base.model.world.World;
 import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemap;
 import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemaps;
 import dev.peytob.rpg.core.module.base.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2;
 import dev.peytob.rpg.math.vector.Vec2i;
+import dev.peytob.rpg.rpc.interfaces.base.model.PlayerRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.Vec2RpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.Vec2iRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TileRpcDto;
@@ -53,5 +55,9 @@ public enum RpcMessageMapper {;
 
     public static World toWorld(WorldRpcDto worldRpcDto) {
         return new World(toTilemap(worldRpcDto.getTilemap()));
+    }
+
+    public static Player toPlayerDto(PlayerRpcDto player) {
+        return new Player(toVec2(player.getPosition()));
     }
 }
