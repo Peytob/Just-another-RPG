@@ -1,10 +1,7 @@
 package dev.peytob.rpg.client;
 
-import dev.peytob.rpg.client.module.graphic.system.library.GlfwLibraryHandler;
-import dev.peytob.rpg.client.fsm.state.instance.InGameLoadingState;
+import dev.peytob.rpg.client.system.library.GlfwLibraryHandler;
 import dev.peytob.rpg.client.system.library.StaticLibraryHandler;
-import dev.peytob.rpg.engine.pipeline.InitializingPipeline;
-import dev.peytob.rpg.client.fsm.EngineState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -28,12 +25,8 @@ public class RpgClientEntryPoint {
         ConfigurableApplicationContext context = SpringApplication
             .run(RpgClientEntryPoint.class);
 
-        ClientEngine engine = context.getBean(ClientEngine.class);
-        InitializingPipeline initializingPipeline = context.getBean(InitializingPipeline.class); // TODO Make engine starter class
-        EngineState startEngineState = context.getBean(InGameLoadingState.class); // TODO Make default state constant
-
-        initializingPipeline.execute();
-        engine.runCycle(startEngineState);
+        ClientEngineStarter clientEngineStarter = context.getBean(ClientEngineStarter.class);
+        clientEngineStarter.initializeAndStartGameCycle();
 
         // Should be closed before destroying C libraries, because
         // some system resources may be not free after destroying libraries.
