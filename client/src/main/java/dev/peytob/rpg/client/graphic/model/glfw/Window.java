@@ -2,7 +2,6 @@ package dev.peytob.rpg.client.graphic.model.glfw;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -10,7 +9,6 @@ import static org.lwjgl.opengl.GL.createCapabilities;
 import static org.lwjgl.opengl.GL33.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-@Component
 public class Window implements AutoCloseable {
 
     private static final Logger logger = LoggerFactory.getLogger(Window.class);

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.system.library;
+package dev.peytob.rpg.client.configuration.library;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.slf4j.Logger;

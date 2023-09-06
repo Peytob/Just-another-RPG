@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client;
 
-import dev.peytob.rpg.client.system.library.GlfwLibraryHandler;
-import dev.peytob.rpg.client.system.library.StaticLibraryHandler;
+import dev.peytob.rpg.client.configuration.library.GlfwLibraryHandler;
+import dev.peytob.rpg.client.configuration.library.StaticLibraryHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

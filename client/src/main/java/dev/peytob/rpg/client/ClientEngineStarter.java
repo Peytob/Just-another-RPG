@@ -1,5 +1,6 @@
 package dev.peytob.rpg.client;
 
+import dev.peytob.rpg.client.fsm.MockEngineState;
 import dev.peytob.rpg.engine.pipeline.InitializingPipeline;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,6 @@ public class ClientEngineStarter {
 
     void initializeAndStartGameCycle() {
         initializingPipeline.execute();
-        clientEngine.runCycle();
+        clientEngine.runCycle(new MockEngineState());
     }
 }
