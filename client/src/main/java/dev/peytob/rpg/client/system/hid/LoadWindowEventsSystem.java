@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.system.common;
+package dev.peytob.rpg.client.system.hid;
 
 import dev.peytob.rpg.client.fsm.annotation.IncludeInAllStates;
 import dev.peytob.rpg.client.input.hid.event.HidEvent;
