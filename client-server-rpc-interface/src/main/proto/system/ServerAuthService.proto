@@ -14,5 +14,5 @@ service ServerAuthService {
 
 // It will be possible to obtain a token using a separate authentication service.
 message AuthDataRpcDto {
-    string token = 1;
+  string token = 1;
 }

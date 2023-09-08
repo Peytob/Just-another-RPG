@@ -4,6 +4,7 @@ import com.google.protobuf.Empty;
 import dev.peytob.rpg.rpc.interfaces.base.model.UserRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.AuthDataRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc;
+import dev.peytob.rpg.server.server.rpc.context.RpcContextService;
 import dev.peytob.rpg.server.server.service.AuthService;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -19,8 +20,11 @@ public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServic
 
     private final AuthService authService;
 
-    public RpcServerAuthService(AuthService authService) {
+    private final RpcContextService rpcContextService;
+
+    public RpcServerAuthService(AuthService authService, RpcContextService rpcContextService) {
         this.authService = authService;
+        this.rpcContextService = rpcContextService;
     }
 
     @Override

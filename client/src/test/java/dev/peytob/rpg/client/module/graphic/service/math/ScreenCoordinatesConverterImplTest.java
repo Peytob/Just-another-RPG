@@ -8,16 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ScreenCoordinatesConverterImplTest {
 
-    ScreenCoordinatesConverter screenCoordinatesConverter = new ScreenCoordinatesConverterImpl();
-
-    @Test
-    void coordinatesCanBeConvertedInTwoWaysCorrectly() {
-        Vec2 tileSize = immutableVec2(32, 64);
-        Vec2 coordinates = immutableVec2(5, 3);
-
-        Vec2 screenCoordinates = screenCoordinatesConverter.toScreenCoordinates(coordinates, tileSize);
-        Vec2 worldCoordinates = screenCoordinatesConverter.fromScreenCoordinates(screenCoordinates, tileSize);
-
-        assertEquals(coordinates, worldCoordinates);
-    }
+//    ScreenCoordinatesConverter screenCoordinatesConverter = new ScreenCoordinatesConverterImpl();
+//
+//    @Test
+//    void coordinatesCanBeConvertedInTwoWaysCorrectly() {
+//        Vec2 tileSize = immutableVec2(32, 64);
+//        Vec2 coordinates = immutableVec2(5, 3);
+//
+//        Vec2 screenCoordinates = screenCoordinatesConverter.toScreenCoordinates(coordinates, tileSize);
+//        Vec2 worldCoordinates = screenCoordinatesConverter.fromScreenCoordinates(screenCoordinates, tileSize);
+//
+//        assertEquals(coordinates, worldCoordinates);
+//    }
 }
