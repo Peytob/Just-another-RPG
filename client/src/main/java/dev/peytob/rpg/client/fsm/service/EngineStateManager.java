@@ -1,12 +1,19 @@
 package dev.peytob.rpg.client.fsm.service;
 
 import dev.peytob.rpg.client.fsm.EngineState;
+import dev.peytob.rpg.client.fsm.model.ExecutingEngineState;
 
 public interface EngineStateManager {
 
-    void updateState();
+    void pushEngineState(EngineState engineState);
 
-    void executeFrameSystems();
+    void popEngineState();
 
-    void changeState(EngineState engineState);
+    void chargeEngineState(EngineState engineState);
+
+    void flushEngineStates();
+
+    boolean isStatePresent();
+
+    ExecutingEngineState getCurrentEngineState();
 }
