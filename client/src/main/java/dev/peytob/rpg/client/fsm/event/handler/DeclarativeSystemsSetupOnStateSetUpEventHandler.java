@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.fsm.event.handler;
 
 import dev.peytob.rpg.client.fsm.EngineState;
-import dev.peytob.rpg.client.fsm.event.instance.BeforeEngineStateSetEvent;
+import dev.peytob.rpg.client.fsm.event.instance.BeforeEngineStatePushEvent;
 import dev.peytob.rpg.client.fsm.service.StateSystemsManager;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.system.OrderedSystem;
@@ -20,7 +20,7 @@ public class DeclarativeSystemsSetupOnStateSetUpEventHandler {
     }
 
     @EventListener
-    void setupDeclarativeSystems(BeforeEngineStateSetEvent stateSetUpEvent) {
+    void setupDeclarativeSystems(BeforeEngineStatePushEvent stateSetUpEvent) {
         EcsContextBuilder ecsContextBuilder = stateSetUpEvent.contextBuilder();
         EngineState engineState = stateSetUpEvent.engineState();
         Collection<OrderedSystem> systemsForState = stateSystemsManager.getSystemsForState(engineState);

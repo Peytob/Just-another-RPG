@@ -1,9 +1,13 @@
 package dev.peytob.rpg.client.fsm.service;
 
 import dev.peytob.rpg.client.fsm.EngineState;
-import dev.peytob.rpg.client.fsm.event.instance.BeforeEngineStateChangeEvent;
-import dev.peytob.rpg.client.fsm.event.instance.BeforeEngineStateSetEvent;
-import dev.peytob.rpg.client.fsm.event.instance.OnEngineStateSetEvent;
+import dev.peytob.rpg.client.fsm.event.instance.AfterEngineStatePushEvent;
+import dev.peytob.rpg.client.fsm.event.instance.BeforeEngineStatePopEvent;
+import dev.peytob.rpg.client.fsm.event.instance.BeforeEngineStatePushEvent;
+import dev.peytob.rpg.client.fsm.model.EngineStateOperation;
+import dev.peytob.rpg.client.fsm.model.EngineStateOperationQueue;
+import dev.peytob.rpg.client.fsm.model.EngineStateStack;
+import dev.peytob.rpg.client.fsm.model.ExecutingEngineState;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.context.EcsContexts;
@@ -12,9 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 @Service
 public class SimpleEngineStateManager implements EngineStateManager {
 
@@ -22,63 +23,95 @@ public class SimpleEngineStateManager implements EngineStateManager {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    private EngineState engineState;
+    private final EngineStateStack engineStateStack;
 
-    private EngineState nextEngineState;
+    private final EngineStateOperationQueue engineStateOperationQueue;
 
-    private EcsContext ecsContext;
-
-    public SimpleEngineStateManager(ApplicationEventPublisher applicationEventPublisher) {
+    public SimpleEngineStateManager(ApplicationEventPublisher applicationEventPublisher, EngineStateStack engineStateStack, EngineStateOperationQueue engineStateOperationQueue) {
         this.applicationEventPublisher = applicationEventPublisher;
-        ecsContext = EcsContexts.empty();
-        engineState = null;
-        nextEngineState = null;
+        this.engineStateStack = engineStateStack;
+        this.engineStateOperationQueue = engineStateOperationQueue;
+    }
+
+    // TODO Create engine state operations query
+    @Override
+    public void pushEngineState(EngineState engineState) {
+        logger.info("Pushing 'push {}' operation to engine states operation queue", engineState.getName());
+        EngineStateOperation operation = EngineStateOperation.push(engineState);
+        engineStateOperationQueue.push(operation);
     }
 
     @Override
-    public void updateState() {
-        if (nextEngineState != null) {
-            performChangeState(nextEngineState);
-            nextEngineState = null;
+    public void popEngineState() {
+        logger.info("Pushing 'pop' operation to engine states operation queue");
+        EngineStateOperation operation = EngineStateOperation.pop();
+        engineStateOperationQueue.push(operation);
+    }
+
+    @Override
+    public void chargeEngineState(EngineState engineState) {
+        popEngineState();
+        pushEngineState(engineState);
+    }
+
+    @Override
+    public void flushEngineStates() {
+        while (engineStateOperationQueue.isNotEmpty()) {
+            logger.info("Flushing engine state operations");
+
+            EngineStateOperation operation = engineStateOperationQueue.pop();
+
+            // TODO Use pattern-matching after switching to JDK 21 ( when (operation) { ... } )
+
+            if (operation instanceof EngineStateOperation.PopEngineStateOperation) {
+                executePopEngineState();
+            } else if (operation instanceof EngineStateOperation.PushEngineStateOperation push) {
+                executePushEngineState(push.engineState());
+            } else {
+                logger.error("Unknown engine state operation, skipping...");
+            }
         }
     }
 
     @Override
-    public void executeFrameSystems() {
-        try {
-            ecsContext.getSystems().forEach(system -> system.execute(ecsContext));
-        } catch (Exception exception) {
-            // TODO Make exception handlers
-        }
+    public boolean isStatePresent() {
+        return engineStateStack.isNotEmpty();
     }
 
     @Override
-    public void changeState(EngineState engineState) {
-        this.nextEngineState = engineState;
+    public ExecutingEngineState getCurrentEngineState() {
+        if (!isStatePresent()) {
+            logger.warn("Empty engine states stack on 'getCurrentEngineState' call");
+            return null;
+        }
+
+        return engineStateStack.peek();
     }
 
-    private void performChangeState(EngineState newEngineState) {
-        Objects.requireNonNull(newEngineState, "Engine state should be specified");
-
-        if (engineState != null) {
-            logger.info("Updating engine state from {} to {}", engineState.getName(), newEngineState.getName());
-            applicationEventPublisher.publishEvent(new BeforeEngineStateChangeEvent(ecsContext, engineState));
-        } else {
-            logger.info("Setting first engine state: {}", newEngineState.getName());
+    private void executePopEngineState() {
+        if (!isStatePresent()) {
+            throw new IllegalStateException("State cannot be pop: state is not present");
         }
+
+        ExecutingEngineState executingEngineState = engineStateStack.peek();
+        logger.info("Popping current engine state {}", executingEngineState.engineState().getName());
+
+        BeforeEngineStatePopEvent beforeEngineStatePopEvent = new BeforeEngineStatePopEvent(executingEngineState);
+        applicationEventPublisher.publishEvent(beforeEngineStatePopEvent);
+        engineStateStack.pop();
+    }
+
+    private void executePushEngineState(EngineState engineState) {
+        logger.info("Pushing engine state {}", engineState.getName());
 
         EcsContextBuilder builder = EcsContexts.builder();
-        applicationEventPublisher.publishEvent(new BeforeEngineStateSetEvent(builder, newEngineState));
-        this.engineState = newEngineState;
-        ecsContext = builder.build();
-        applicationEventPublisher.publishEvent(new OnEngineStateSetEvent(ecsContext, engineState));
+        BeforeEngineStatePushEvent beforeEngineStatePushEvent = new BeforeEngineStatePushEvent(builder, engineState);
+        applicationEventPublisher.publishEvent(beforeEngineStatePushEvent);
+        EcsContext ecsContext = builder.build();
 
-        if (logger.isDebugEnabled()) {
-            String systemsList = ecsContext.getSystems().stream()
-                    .map(system -> system.getClass().getSimpleName())
-                    .collect(Collectors.joining(";\n"));
-
-            logger.debug("Systems order in loaded ECS context for state:\n{}", systemsList);
-        }
+        ExecutingEngineState executingEngineState = new ExecutingEngineState(engineState, ecsContext);
+        engineStateStack.push(executingEngineState);
+        AfterEngineStatePushEvent afterEngineStatePushEvent = new AfterEngineStatePushEvent(executingEngineState);
+        applicationEventPublisher.publishEvent(afterEngineStatePushEvent);
     }
 }
