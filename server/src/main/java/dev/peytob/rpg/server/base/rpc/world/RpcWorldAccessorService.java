@@ -1,8 +1,8 @@
 package dev.peytob.rpg.server.base.rpc.world;
 
 import com.google.protobuf.Empty;
-import dev.peytob.rpg.core.module.base.model.world.tilemap.PlacedTile;
-import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemap;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.PlacedTile;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.layer.TilemapLayer;
 import dev.peytob.rpg.math.vector.Vec2i;
 import dev.peytob.rpg.rpc.interfaces.base.model.WorldAccessorServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.model.world.TileRpcDto;
@@ -36,14 +36,14 @@ public class RpcWorldAccessorService extends WorldAccessorServiceGrpc.WorldAcces
     }
 
     private WorldRpcDto toWorldDto(World world) {
-        Tilemap tilemap = world.getTilemap();
+        TilemapLayer tilemapLayer = world.getTilemap();
         TilemapRpcDto.Builder tilemapBuilder = TilemapRpcDto.newBuilder();
 
-        Vec2i sizes = tilemap.getSizes();
+        Vec2i sizes = tilemapLayer.getSizes();
         List<TileRpcDto> tiles = new ArrayList<>(sizes.x() * sizes.y());
         for (int x = 0; x < sizes.x(); x++) {
             for (int y = 0; y < sizes.y(); ++y) {
-                PlacedTile tile = tilemap.getTile(x, y);
+                PlacedTile tile = tilemapLayer.getTile(x, y);
 
                 if (tile == null) {
                     continue;
@@ -59,7 +59,7 @@ public class RpcWorldAccessorService extends WorldAccessorServiceGrpc.WorldAcces
         }
 
         tilemapBuilder.addAllTiles(tiles);
-        tilemapBuilder.setSizes(toVec2iDto(tilemap.getSizes()));
+        tilemapBuilder.setSizes(toVec2iDto(tilemapLayer.getSizes()));
 
         return WorldRpcDto.newBuilder().setTilemap(tilemapBuilder.build()).build();
     }

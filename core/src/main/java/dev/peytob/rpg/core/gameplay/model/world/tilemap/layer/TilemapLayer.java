@@ -1,9 +1,10 @@
-package dev.peytob.rpg.core.module.base.model.world.tilemap;
+package dev.peytob.rpg.core.gameplay.model.world.tilemap.layer;
 
-import dev.peytob.rpg.core.module.base.resource.Tile;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.PlacedTile;
+import dev.peytob.rpg.core.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 
-public interface Tilemap {
+public interface TilemapLayer {
 
     /**
      * Returns tile on (x, y) coordinates. If tile not exists or given wrong coordinates - returns null.

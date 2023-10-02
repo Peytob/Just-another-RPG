@@ -1,4 +1,4 @@
-package dev.peytob.rpg.core.module.base.constants;
+package dev.peytob.rpg.core.gameplay.constants;
 
 import dev.peytob.rpg.math.vector.Vec2;
 

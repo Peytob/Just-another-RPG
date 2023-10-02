@@ -1,6 +1,6 @@
-package dev.peytob.rpg.core.module.base.repository;
+package dev.peytob.rpg.core.repository;
 
-import dev.peytob.rpg.core.module.base.resource.Tile;
+import dev.peytob.rpg.core.resource.Tile;
 import dev.peytob.rpg.engine.repositry.BaseRepository;
 import org.springframework.stereotype.Component;
 

@@ -1,24 +1,25 @@
-package dev.peytob.rpg.core.module.base.model.world.tilemap;
+package dev.peytob.rpg.core.gameplay.model.world.tilemap.layer;
 
-import dev.peytob.rpg.core.module.base.resource.Tile;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.PlacedTile;
+import dev.peytob.rpg.core.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 
-final class ImmutableTilemap implements Tilemap {
+final class UnmodifiableTilemapLayer implements TilemapLayer {
 
-    private final Tilemap tilemap;
+    private final TilemapLayer tilemapLayer;
 
-    public ImmutableTilemap(Tilemap tilemap) {
-        this.tilemap = tilemap;
+    public UnmodifiableTilemapLayer(TilemapLayer tilemapLayer) {
+        this.tilemapLayer = tilemapLayer;
     }
 
     @Override
     public PlacedTile getTile(int x, int y) {
-        return tilemap.getTile(x, y);
+        return tilemapLayer.getTile(x, y);
     }
 
     @Override
     public PlacedTile getTile(Vec2i position) {
-        return tilemap.getTile(position);
+        return tilemapLayer.getTile(position);
     }
 
     @Override
@@ -43,6 +44,6 @@ final class ImmutableTilemap implements Tilemap {
 
     @Override
     public Vec2i getSizes() {
-        return tilemap.getSizes();
+        return tilemapLayer.getSizes();
     }
 }

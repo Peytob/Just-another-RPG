@@ -1,8 +1,8 @@
 package dev.peytob.rpg.server.base.event.player;
 
-import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemap;
-import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemaps;
-import dev.peytob.rpg.core.module.base.resource.Tile;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.layer.TilemapLayer;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.layer.TilemapLayers;
+import dev.peytob.rpg.core.resource.Tile;
 import dev.peytob.rpg.server.base.repository.WorldRepository;
 import dev.peytob.rpg.server.base.resource.User;
 import dev.peytob.rpg.server.base.resource.world.World;
@@ -56,8 +56,8 @@ public class WorldPlayerOnAuthCreator {
         }
     }
 
-    private Tilemap generateRandomTilemap() {
-        Tilemap tilemap = Tilemaps.mutable(immutableVec2i(16, 16));
+    private TilemapLayer generateRandomTilemap() {
+        TilemapLayer tilemapLayer = TilemapLayers.mutable(immutableVec2i(16, 16));
         Tile[] mockTiles = new Tile[] {
                 new Tile(1, "blue_tile"),
                 new Tile(2, "red_tile"),
@@ -67,13 +67,13 @@ public class WorldPlayerOnAuthCreator {
 
         Random random = new Random();
 
-        for (int x = 0; x < tilemap.getSizes().x(); x++) {
-            for (int y = 0; y < tilemap.getSizes().y(); y++) {
+        for (int x = 0; x < tilemapLayer.getSizes().x(); x++) {
+            for (int y = 0; y < tilemapLayer.getSizes().y(); y++) {
                 int mockTileIndex = random.nextInt(mockTiles.length);
-                tilemap.setTile(x, y, mockTiles[mockTileIndex]);
+                tilemapLayer.setTile(x, y, mockTiles[mockTileIndex]);
             }
         }
 
-        return tilemap;
+        return tilemapLayer;
     }
 }

@@ -1,6 +1,7 @@
-package dev.peytob.rpg.core.module.base.model.world.tilemap;
+package dev.peytob.rpg.core.gameplay.model.world.tilemap.layer;
 
-import dev.peytob.rpg.core.module.base.resource.Tile;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.PlacedTile;
+import dev.peytob.rpg.core.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
@@ -8,13 +9,13 @@ import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 /**
  * TODO Make memory-optimized quadtree implementation of tilemap.
  */
-class ArrayTilemap implements Tilemap {
+class ArrayTilemapLayer implements TilemapLayer {
 
     private final Vec2i sizes;
 
     private final PlacedTile[][] map;
 
-    public ArrayTilemap(Vec2i sizes) {
+    ArrayTilemapLayer(Vec2i sizes) {
         this.sizes = immutableVec2i(sizes);
         this.map = new PlacedTile[sizes.x()][sizes.y()];
     }

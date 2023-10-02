@@ -1,4 +1,4 @@
-package dev.peytob.rpg.core.module.base.resource;
+package dev.peytob.rpg.core.resource;
 
 public enum TestTiles {;
 

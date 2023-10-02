@@ -1,6 +1,6 @@
 package dev.peytob.rpg.server.base.resource.world;
 
-import dev.peytob.rpg.core.module.base.model.world.tilemap.Tilemap;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.layer.TilemapLayer;
 import dev.peytob.rpg.engine.resource.Resource;
 import dev.peytob.rpg.server.base.resource.world.entity.Entity;
 
@@ -13,14 +13,14 @@ public class World implements Resource {
 
     private final String textId;
 
-    private final Tilemap tilemap;
+    private final TilemapLayer tilemapLayer;
 
     private final Collection<Entity> entities;
 
-    public World(Integer id, String textId, Tilemap tilemap) {
+    public World(Integer id, String textId, TilemapLayer tilemapLayer) {
         this.id = id;
         this.textId = textId;
-        this.tilemap = tilemap;
+        this.tilemapLayer = tilemapLayer;
         this.entities = new ArrayList<>();
     }
 
@@ -32,8 +32,8 @@ public class World implements Resource {
         return textId;
     }
 
-    public Tilemap getTilemap() {
-        return tilemap;
+    public TilemapLayer getTilemap() {
+        return tilemapLayer;
     }
 
     public Collection<Entity> getEntities() {
