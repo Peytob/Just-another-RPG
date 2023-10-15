@@ -5,15 +5,12 @@ import dev.peytob.rpg.engine.resource.Resource;
 import java.util.Collection;
 
 public interface Repository<R extends Resource> {
-    R getById(Integer id);
 
     R getById(String textId);
 
     Collection<R> getAll();
 
     Integer getCount();
-
-    boolean contains(Integer id);
 
     boolean contains(String id);
 

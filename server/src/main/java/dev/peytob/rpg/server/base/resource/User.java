@@ -4,25 +4,18 @@ import dev.peytob.rpg.engine.resource.Resource;
 import dev.peytob.rpg.server.base.resource.world.entity.Player;
 
 public final class User implements Resource {
-    private final Integer id;
-    private final String textId;
+    private final String id;
     private final String token;
     private Player worldPlayer;
 
-    public User(Integer id, String textId, String token) {
+    public User(String id, String token) {
         this.id = id;
-        this.textId = textId;
         this.token = token;
     }
 
     @Override
-    public Integer id() {
+    public String id() {
         return id;
-    }
-
-    @Override
-    public String textId() {
-        return textId;
     }
 
     public String getToken() {

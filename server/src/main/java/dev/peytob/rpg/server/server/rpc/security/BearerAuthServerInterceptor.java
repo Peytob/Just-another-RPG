@@ -43,7 +43,7 @@ public class BearerAuthServerInterceptor implements AuthServerInterceptor {
             return (ServerCall.Listener<ReqT>) EMPTY_LISTENER;
         }
 
-        Context context = Context.current().withValue(USER_TEXT_ID_CONTEXT_KEY, user.textId());
+        Context context = Context.current().withValue(USER_TEXT_ID_CONTEXT_KEY, user.id());
         return Contexts.interceptCall(context, call, headers, next);
     }
 }

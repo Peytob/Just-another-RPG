@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
         // Getting user id by token...
         // Getting user data by id...
         // Making token -> user cache
-        User user = new User(token.hashCode(), token, token);
+        User user = new User(token, token);
         userService.createUser(user);
         serverEventBus.publishServerEvent(new UserLoginEvent(user.id()));
     }
@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Getting player by token...
         // Invalidating token -> user cache...
-        User user = new User(token.hashCode(), token, token);
+        User user = new User(token, token);
         userService.removeUser(user);
         serverEventBus.publishServerEvent(new UserLogoutEvent(user.id()));
     }

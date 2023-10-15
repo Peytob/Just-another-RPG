@@ -9,27 +9,21 @@ import java.util.Collection;
 
 public class World implements Resource {
 
-    private final Integer id;
-
-    private final String textId;
+    private final String id;
 
     private final TilemapLayer tilemapLayer;
 
     private final Collection<Entity> entities;
 
-    public World(Integer id, String textId, TilemapLayer tilemapLayer) {
+    public World(String id, TilemapLayer tilemapLayer) {
         this.id = id;
-        this.textId = textId;
         this.tilemapLayer = tilemapLayer;
         this.entities = new ArrayList<>();
     }
 
-    public Integer id() {
+    @Override
+    public String id() {
         return id;
-    }
-
-    public String textId() {
-        return textId;
     }
 
     public TilemapLayer getTilemap() {

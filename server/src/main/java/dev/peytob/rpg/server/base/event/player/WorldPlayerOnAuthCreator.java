@@ -51,7 +51,7 @@ public class WorldPlayerOnAuthCreator {
     private void createMockDefaultWorld() {
         if (!worldRepository.contains(MOCK_WORLD_ID)) {
             log.info("Creating beautiful mock world!");
-            World world = new World(1, MOCK_WORLD_ID, generateRandomTilemap());
+            World world = new World(MOCK_WORLD_ID, generateRandomTilemap());
             worldRepository.append(world);
         }
     }
@@ -59,10 +59,10 @@ public class WorldPlayerOnAuthCreator {
     private TilemapLayer generateRandomTilemap() {
         TilemapLayer tilemapLayer = TilemapLayers.mutable(immutableVec2i(16, 16));
         Tile[] mockTiles = new Tile[] {
-                new Tile(1, "blue_tile"),
-                new Tile(2, "red_tile"),
-                new Tile(3, "pink_tile"),
-                new Tile(4, "green_tile")
+                new Tile("blue_tile"),
+                new Tile("red_tile"),
+                new Tile("pink_tile"),
+                new Tile("green_tile")
         };
 
         Random random = new Random();

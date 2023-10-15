@@ -18,13 +18,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(String id) {
         return userRepository.getById(id);
-    }
-
-    @Override
-    public User getUserById(String textId) {
-        return userRepository.getById(textId);
     }
 
     @Override
@@ -34,15 +29,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean createUser(User user) {
-        log.info("Creating new user with id {} and text id {}", user.id(), user.textId());
-
-        if (userRepository.contains(user.textId())) {
-            log.warn("User with text id {} is already exists!", user.textId());
-            return false;
-        }
+        log.info("Creating new user with id {} and text id {}", user.id(), user.id());
 
         if (userRepository.contains(user.id())) {
-            log.warn("User with id {} is already exists!", user.textId());
+            log.warn("User with id {} is already exists!", user.id());
             return false;
         }
 
@@ -54,7 +44,7 @@ public class UserServiceImpl implements UserService {
         boolean isUserRemoved = userRepository.remove(user);
 
         if (!isUserRemoved) {
-            log.warn("Removing not exists user {} ({})", user.id(), user.textId());
+            log.warn("Removing not exists user {} ({})", user.id(), user.id());
         }
 
         return isUserRemoved;
