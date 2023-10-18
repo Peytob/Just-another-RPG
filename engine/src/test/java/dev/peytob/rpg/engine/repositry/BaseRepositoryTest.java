@@ -10,8 +10,8 @@ public class BaseRepositoryTest extends RepositoryTest<TestResource1> {
     }
 
     @Override
-    TestResource1 createTestResource(Integer id, String textId) {
-        return new TestResource1(id, textId);
+    TestResource1 createTestResource(String textId) {
+        return new TestResource1(textId);
     }
 
     private static class TestRepository extends BaseRepository<TestResource1> {

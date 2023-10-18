@@ -15,7 +15,7 @@ abstract class RepositoryTest<R extends Record & Resource> extends NonContextRpg
 
     abstract Repository<R> createInstance();
 
-    abstract R createTestResource(Integer id, String textId);
+    abstract R createTestResource(String textId);
 
     @BeforeEach
     void createNewRepository() {
@@ -30,36 +30,34 @@ abstract class RepositoryTest<R extends Record & Resource> extends NonContextRpg
 
     @Test
     void resourceCanBeCreatedSuccessfully() {
-        R resource = createTestResource(1, "b");
+        R resource = createTestResource("b");
         repository.append(resource);
 
         assertEquals(resource, repository.getById(resource.id()));
-        assertEquals(resource, repository.getById(resource.textId()));
         assertEquals(1, repository.getAll().size());
         assertTrue(repository.getAll().contains(resource));
     }
 
     @Test
     void resourceCanBeFoundedByContainsMethod() {
-        R resource = createTestResource(214, "some_text_id");
+        R resource = createTestResource("some_text_id");
         repository.append(resource);
 
         assertTrue(repository.contains(resource.id()));
-        assertTrue(repository.contains(resource.textId()));
     }
 
     @Test
     void containsReturnsFalseInResourceNotExists() {
-        R resource = createTestResource(1, "exists");
+        R resource = createTestResource("exists");
         repository.append(resource);
 
-        assertFalse(repository.contains(1254));
+        assertTrue(repository.contains(resource.id()));
         assertFalse(repository.contains("not_exists_id"));
     }
 
     @Test
     void resourceCantBeAppendedTwoTimes() {
-        R resource = createTestResource(1, "exists");
+        R resource = createTestResource("exists");
         assertTrue(repository.append(resource));
         assertFalse(repository.append(resource));
 
@@ -69,8 +67,8 @@ abstract class RepositoryTest<R extends Record & Resource> extends NonContextRpg
 
     @Test
     void resourceRemovedSuccessfully() {
-        R resource1 = createTestResource(1, "first");
-        R resource2 = createTestResource(2, "second");
+        R resource1 = createTestResource("first");
+        R resource2 = createTestResource("second");
 
         assertTrue(repository.append(resource1));
         assertTrue(repository.append(resource2));
@@ -81,12 +79,11 @@ abstract class RepositoryTest<R extends Record & Resource> extends NonContextRpg
 
         assertEquals(1, repository.getCount());
         assertFalse(repository.contains(resource2.id()));
-        assertFalse(repository.contains(resource2.textId()));
         assertFalse(repository.getAll().contains(resource2));
     }
 
     @Test
     void removeReturnsFalseIfResourceNotPresent() {
-        assertFalse(repository.remove(createTestResource(1231, "some_res")));
+        assertFalse(repository.remove(createTestResource("some_res")));
     }
 }

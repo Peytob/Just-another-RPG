@@ -7,4 +7,4 @@ include 'client'
 include 'client-server-rpc-interface'
 include 'server'
 include 'backend'
-
+include 'auth-gateway'
