@@ -2,9 +2,6 @@ plugins {
     id 'java'
 }
 
-group 'dev.peytob.rpg'
-version '1.0-SNAPSHOT'
-
 project.ext.libraries = [
         junitApi: [
                 'org.junit.jupiter:junit-jupiter-api:5.8.0'

@@ -4,9 +4,6 @@ plugins {
     id 'java'
 }
 
-group 'dev.peytob.rpg'
-version '1.0-SNAPSHOT'
-
 repositories {
     mavenCentral()
 }
