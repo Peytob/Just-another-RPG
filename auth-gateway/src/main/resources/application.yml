@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: rpg-application-gateway
+  datasource:
+#    jdbc-url:
+#    username:
+#    password:
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+  jpa:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  server:
+    port: 8085
