@@ -1,7 +1,7 @@
 package dev.peytob.rpg.auth.gateway.service;
 
 import dev.peytob.rpg.auth.gateway.entity.Realm;
-import dev.peytob.rpg.auth.gateway.exception.EntityNotFoundException;
+import dev.peytob.rpg.auth.gateway.exception.NotFoundException;
 import dev.peytob.rpg.auth.gateway.repository.RealmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,6 @@ public class RealmCrudServiceImpl implements RealmCrudService {
     @Transactional(readOnly = true)
     public Realm getRealmByName(String realmName) {
         return findRealmByName(realmName)
-            .orElseThrow(() -> new EntityNotFoundException("Realm with name '" + realmName + "' not found"));
+            .orElseThrow(() -> new NotFoundException("Realm with name '" + realmName + "' not found"));
     }
 }

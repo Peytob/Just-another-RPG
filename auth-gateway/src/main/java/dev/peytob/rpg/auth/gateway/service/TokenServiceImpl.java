@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,17 +32,29 @@ public class TokenServiceImpl implements TokenService {
         String tokenHash = hashService.hashTokenString(tokenValue);
 
         Token token = Token.builder()
-                .hash(tokenHash)
-                .user(user)
-                .type(tokenType)
-                .expirationAt(generateExpirationTime(tokenType))
-                .build();
+            .hash(tokenHash)
+            .user(user)
+            .type(tokenType)
+            .expirationAt(generateExpirationTime(tokenType))
+            .build();
 
         tokenCrudService.saveToken(token);
 
         log.info("Saved new {} token for user with username {} in realm {} with id {}", tokenType, user.getUsername(), realmName, token.getId());
 
         return tokenValue;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Token> getTokenByValue(String tokenValue) {
+        String tokenHash = hashService.hashTokenString(tokenValue);
+        return tokenCrudService.findTokenByHash(tokenHash);
+    }
+
+    @Override
+    public void removeToken(Token token) {
+        tokenCrudService.deleteToken(token);
     }
 
     private Instant generateExpirationTime(TokenType tokenType) {
