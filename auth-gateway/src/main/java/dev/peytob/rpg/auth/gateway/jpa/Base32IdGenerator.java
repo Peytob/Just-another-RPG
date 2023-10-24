@@ -1,5 +1,6 @@
 package dev.peytob.rpg.auth.gateway.jpa;
 
+import jakarta.persistence.SequenceGenerator;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.lang3.Conversion;
@@ -8,7 +9,6 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.SequenceGenerator;
 import java.io.Serializable;
 import java.util.UUID;
 

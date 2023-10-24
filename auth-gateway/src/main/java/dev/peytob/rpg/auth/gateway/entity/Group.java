@@ -1,6 +1,6 @@
 package dev.peytob.rpg.auth.gateway.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "GROUPS")

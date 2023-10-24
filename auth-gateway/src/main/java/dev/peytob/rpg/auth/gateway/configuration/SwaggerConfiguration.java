@@ -11,11 +11,20 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfiguration {
 
     @Bean
-    GroupedOpenApi restApi() {
+    GroupedOpenApi publicAuth() {
         return GroupedOpenApi.builder()
             .group("public")
-            .displayName("Authentication")
-            .pathsToMatch("/auth/**")
+            .displayName("Public authentication")
+            .pathsToMatch("/*/auth/**")
             .build();
+    }
+
+    @Bean
+    GroupedOpenApi allAvailableApi() {
+        return GroupedOpenApi.builder()
+                .group("management")
+                .displayName("All available API")
+                .pathsToMatch("/**")
+                .build();
     }
 }
