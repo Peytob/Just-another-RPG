@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionLoggingControllerAdvice {
 
     @ExceptionHandler(Exception.class)
-    void logException(Exception e, HttpServletRequest httpServletRequest) {
+    void logException(Exception e, HttpServletRequest httpServletRequest) throws Exception {
         String requestURI = httpServletRequest.getRequestURI();
         String requestMethod = httpServletRequest.getMethod();
         log.error("Unhandled exception on {} '{}' request", requestMethod, requestURI, e);
+        throw e;
     }
 }

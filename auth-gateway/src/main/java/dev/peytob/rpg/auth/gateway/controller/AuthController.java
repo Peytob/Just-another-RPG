@@ -18,13 +18,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static dev.peytob.rpg.auth.gateway.configuration.SecurityConfiguration.AUTHORIZATION_HEADER;
+
 @RestController
 @RequestMapping("/{realmName}/auth")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
-
-    private static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final LoginService loginService;
 
