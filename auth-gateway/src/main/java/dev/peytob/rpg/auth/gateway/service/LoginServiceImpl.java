@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
             return new LoginFailed();
         });
 
-        if (!user.isActivated()) {
+        if (user.isBlocked()) {
             log.info("Deactivated user with username '{}' is trying to login in realm '{}'", username, realm.getName());
             throw new LoginFailed();
         }
@@ -40,6 +40,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
+    @Transactional
     public void logout(String tokenValue, Realm realm) {
         Token token = tokenService.getTokenByValue(tokenValue).orElseThrow(() -> {
             log.info("Deactivation token not found");
@@ -50,25 +51,24 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean validateToken(String tokenValue, Realm realm) {
+    @Transactional(readOnly = true)
+    public Optional<Token> validateToken(String tokenValue, Realm realm) {
         Optional<Token> optionalToken = tokenService.getTokenByValue(tokenValue);
 
         if (optionalToken.isEmpty()) {
-            return false;
+            return Optional.empty();
         }
 
         Token token = optionalToken.get();
 
         if (Instant.now().isAfter(token.getExpirationAt())) {
-            return false;
+            return Optional.empty();
         }
 
         if (!token.getUser().getRealm().equals(realm)) {
-            return false;
+            return Optional.empty();
         }
 
-        // Other token conditions, if it will be present
-
-        return true;
+        return optionalToken;
     }
 }

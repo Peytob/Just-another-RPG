@@ -1,7 +1,10 @@
 package dev.peytob.rpg.auth.gateway.service;
 
 import dev.peytob.rpg.auth.gateway.entity.Realm;
+import dev.peytob.rpg.auth.gateway.entity.Token;
 import dev.peytob.rpg.auth.gateway.entity.TokenType;
+
+import java.util.Optional;
 
 /**
  * Contains logic to perform directly user authorization.
@@ -13,5 +16,5 @@ public interface LoginService {
 
     void logout(String tokenValue, Realm realm);
 
-    boolean validateToken(String tokenValue, Realm realm);
+    Optional<Token> validateToken(String tokenValue, Realm realm);
 }

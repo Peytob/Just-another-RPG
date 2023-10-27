@@ -36,5 +36,5 @@ public class User extends AbstractEntity {
     private String email;
 
     @Column(name = "IS_ACTIVATED", nullable = false)
-    private boolean isActivated;
+    private boolean isBlocked = false;
 }
