@@ -1,14 +1,15 @@
 package dev.peytob.rpg.auth.gateway.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "GROUPS")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Group extends AbstractEntity {
 
     @ManyToOne(optional = false)

@@ -27,4 +27,16 @@ public class RealmCrudServiceImpl implements RealmCrudService {
         return findRealmByName(realmName)
             .orElseThrow(() -> new NotFoundException("Realm with name '" + realmName + "' not found"));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Realm> findRealmById(String realmId) {
+        return realmRepository.findById(realmId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Realm getRealmById(String realmId) {
+        return findRealmById(realmId).orElseThrow(() -> new NotFoundException("Realm with id '" + realmId + "' not found"));
+    }
 }

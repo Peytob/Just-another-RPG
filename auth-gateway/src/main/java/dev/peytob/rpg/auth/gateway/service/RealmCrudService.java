@@ -9,4 +9,8 @@ public interface RealmCrudService {
     Optional<Realm> findRealmByName(String realmName);
 
     Realm getRealmByName(String realmName);
+
+    Optional<Realm> findRealmById(String realmId);
+
+    Realm getRealmById(String realmId);
 }
