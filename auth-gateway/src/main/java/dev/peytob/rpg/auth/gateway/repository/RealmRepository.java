@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface RealmRepository extends BaseRepository<Realm> {
 
     Optional<Realm> findByName(String realmName);
+
+    boolean existsByName(String realmName);
 }

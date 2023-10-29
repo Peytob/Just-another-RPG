@@ -1,8 +1,10 @@
-package dev.peytob.rpg.auth.gateway.dto;
+package dev.peytob.rpg.auth.gateway.dto.group;
+
+import dev.peytob.rpg.auth.gateway.dto.NamedIdDto;
 
 import java.time.Instant;
 
-public record GroupDto(
+public record GroupGetDto(
     String id,
     NamedIdDto realm,
     String name,

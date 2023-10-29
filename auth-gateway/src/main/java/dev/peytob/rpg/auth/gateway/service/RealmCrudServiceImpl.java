@@ -1,7 +1,10 @@
 package dev.peytob.rpg.auth.gateway.service;
 
-import dev.peytob.rpg.auth.gateway.dto.RealmDto;
+import dev.peytob.rpg.auth.gateway.dto.realm.RealmCreateDto;
+import dev.peytob.rpg.auth.gateway.dto.realm.RealmGetDto;
+import dev.peytob.rpg.auth.gateway.dto.realm.RealmUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
+import dev.peytob.rpg.auth.gateway.exception.EntityAlreadyExistsException;
 import dev.peytob.rpg.auth.gateway.exception.NotFoundException;
 import dev.peytob.rpg.auth.gateway.repository.RealmRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,9 +54,13 @@ public class RealmCrudServiceImpl implements RealmCrudService {
 
     @Override
     @Transactional
-    public Realm createRealm(RealmDto realmDto) {
+    public Realm createRealm(RealmCreateDto realmCreateDto) {
+        if (realmRepository.existsByName(realmCreateDto.name())) {
+            throw buildRealmAlreadyExistsException(realmCreateDto.name());
+        }
+
         Realm realm = Realm.builder()
-            .name(realmDto.name())
+            .name(realmCreateDto.name())
             .build();
 
         return realmRepository.save(realm);
@@ -61,8 +68,13 @@ public class RealmCrudServiceImpl implements RealmCrudService {
 
     @Override
     @Transactional
-    public Realm updateRealm(Realm realm, RealmDto realmDto) {
-        realm.setName(realm.getName());
+    public Realm updateRealm(Realm realm, RealmUpdateDto realmUpdateDto) {
+        if (realmRepository.existsByName(realmUpdateDto.name())) {
+            throw buildRealmAlreadyExistsException(realmUpdateDto.name());
+        }
+
+        realm.setName(realmUpdateDto.name());
+
         return realmRepository.save(realm);
     }
 
@@ -70,5 +82,9 @@ public class RealmCrudServiceImpl implements RealmCrudService {
     @Transactional
     public void deleteRealm(Realm realm) {
         realmRepository.delete(realm);
+    }
+
+    private RuntimeException buildRealmAlreadyExistsException(String name) {
+        return new EntityAlreadyExistsException("Realm with name '" + name + "' already exists!");
     }
 }

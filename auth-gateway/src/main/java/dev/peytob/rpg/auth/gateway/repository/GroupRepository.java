@@ -13,4 +13,6 @@ public interface GroupRepository extends BaseRepository<Group> {
     Optional<Group> findByIdAndRealm(String id, Realm realm);
 
     Page<Group> findAllByRealm(Realm realm, Pageable pageable);
+
+    boolean existsByNameAndRealm(String name, Realm realm);
 }

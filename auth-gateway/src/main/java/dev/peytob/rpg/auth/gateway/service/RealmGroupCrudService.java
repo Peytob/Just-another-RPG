@@ -1,6 +1,8 @@
 package dev.peytob.rpg.auth.gateway.service;
 
-import dev.peytob.rpg.auth.gateway.dto.GroupDto;
+import dev.peytob.rpg.auth.gateway.dto.group.GroupCreateDto;
+import dev.peytob.rpg.auth.gateway.dto.group.GroupGetDto;
+import dev.peytob.rpg.auth.gateway.dto.group.GroupUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Group;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import org.springframework.data.domain.Page;
@@ -24,7 +26,7 @@ public interface RealmGroupCrudService {
 
     void deleteGroup(Group group, Realm realm);
 
-    Group createGroup(String name, Realm realm);
+    Group createGroup(GroupCreateDto groupCreateDto, Realm realm);
 
-    Group updateGroup(Group group, GroupDto groupDto, Realm realm);
+    Group updateGroup(Group group, GroupUpdateDto groupUpdateDto, Realm realm);
 }

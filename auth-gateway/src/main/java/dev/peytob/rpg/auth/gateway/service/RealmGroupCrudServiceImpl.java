@@ -1,8 +1,11 @@
 package dev.peytob.rpg.auth.gateway.service;
 
-import dev.peytob.rpg.auth.gateway.dto.GroupDto;
+import dev.peytob.rpg.auth.gateway.dto.group.GroupCreateDto;
+import dev.peytob.rpg.auth.gateway.dto.group.GroupGetDto;
+import dev.peytob.rpg.auth.gateway.dto.group.GroupUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Group;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
+import dev.peytob.rpg.auth.gateway.exception.EntityAlreadyExistsException;
 import dev.peytob.rpg.auth.gateway.exception.NotFoundException;
 import dev.peytob.rpg.auth.gateway.repository.GroupRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,9 +63,13 @@ public class RealmGroupCrudServiceImpl implements RealmGroupCrudService {
 
     @Override
     @Transactional
-    public Group createGroup(String name, Realm realm) {
+    public Group createGroup(GroupCreateDto groupCreateDto, Realm realm) {
+        if (checkGroupExists(groupCreateDto.name(), realm)) {
+            throw buildGroupExistsException(groupCreateDto.name(), realm);
+        }
+
         Group group = Group.builder()
-            .name(name)
+            .name(groupCreateDto.name())
             .realm(realm)
             .build();
 
@@ -71,12 +78,16 @@ public class RealmGroupCrudServiceImpl implements RealmGroupCrudService {
 
     @Override
     @Transactional
-    public Group updateGroup(Group group, GroupDto groupDto, Realm realm) {
+    public Group updateGroup(Group group, GroupUpdateDto groupUpdateDto, Realm realm) {
+        if (checkGroupExists(groupUpdateDto.name(), realm)) {
+            throw buildGroupExistsException(groupUpdateDto.name(), realm);
+        }
+
         if (checkGroupRealm(group, realm)) {
             throw buildIllegalRealmException(group, realm);
         }
 
-        group.setName(groupDto.name());
+        group.setName(groupUpdateDto.name());
 
         return saveGroup(group, realm);
     }
@@ -89,5 +100,13 @@ public class RealmGroupCrudServiceImpl implements RealmGroupCrudService {
     private boolean checkGroupRealm(Group group, Realm realm) {
         Realm groupRealm = group.getRealm();
         return realm.equals(groupRealm);
+    }
+
+    private boolean checkGroupExists(String name, Realm realm) {
+        return groupRepository.existsByNameAndRealm(name, realm);
+    }
+
+    private RuntimeException buildGroupExistsException(String name, Realm realm) {
+        return new EntityAlreadyExistsException("Group with name '" + name + "' already exists in realm with name " + realm.getName());
     }
 }

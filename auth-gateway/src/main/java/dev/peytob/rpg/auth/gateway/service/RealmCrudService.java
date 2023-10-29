@@ -1,6 +1,8 @@
 package dev.peytob.rpg.auth.gateway.service;
 
-import dev.peytob.rpg.auth.gateway.dto.RealmDto;
+import dev.peytob.rpg.auth.gateway.dto.realm.RealmCreateDto;
+import dev.peytob.rpg.auth.gateway.dto.realm.RealmGetDto;
+import dev.peytob.rpg.auth.gateway.dto.realm.RealmUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +21,9 @@ public interface RealmCrudService {
 
     Page<Realm> getRealmsPage(Pageable pageable);
 
-    Realm createRealm(RealmDto realmDto);
+    Realm createRealm(RealmCreateDto realmCreateDto);
 
-    Realm updateRealm(Realm realm, RealmDto realmDto);
+    Realm updateRealm(Realm realm, RealmUpdateDto realmUpdateDto);
 
     void deleteRealm(Realm realm);
 }

@@ -1,8 +1,8 @@
-package dev.peytob.rpg.auth.gateway.dto;
+package dev.peytob.rpg.auth.gateway.dto.realm;
 
 import java.time.Instant;
 
-public record RealmDto(
+public record RealmGetDto(
     String id,
     String name,
     Instant createdAt,

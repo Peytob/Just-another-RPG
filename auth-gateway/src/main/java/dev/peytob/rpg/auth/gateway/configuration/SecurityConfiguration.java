@@ -43,8 +43,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, RequestHeaderAuthenticationFilter requestHeaderAuthenticationFilter) throws Exception {
+        return http
             .authorizeHttpRequests((authorize) -> authorize.requestMatchers(
                 "/v3/api-docs/**",
                 "/swagger-ui.html",
@@ -56,7 +56,8 @@ public class SecurityConfiguration {
             .sessionManagement(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable);
-        return http.build();
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .addFilter(requestHeaderAuthenticationFilter)
+            .build();
     }
 }
