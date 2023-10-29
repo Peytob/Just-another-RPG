@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/{realmId}/groups")
+@RequestMapping("realm/{realmId}/group")
 @RequiredArgsConstructor
 public class GroupController {
 
@@ -31,7 +31,7 @@ public class GroupController {
     }
 
     @GetMapping("/{groupId}")
-    GroupDto getGroup(String realmId, String groupId) {
+    GroupDto getGroup(@PathVariable String realmId, @PathVariable String groupId) {
         Realm realm = realmCrudService.getRealmById(realmId);
         Group group = realmGroupCrudService.getGroupById(groupId, realm);
         return groupMapper.toGroupDto(group);
@@ -39,14 +39,14 @@ public class GroupController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    GroupDto createGroup(String realmId, GroupDto groupDto) {
+    GroupDto createGroup(@PathVariable String realmId, GroupDto groupDto) {
         Realm realm = realmCrudService.getRealmById(realmId);
         Group group = realmGroupCrudService.createGroup(groupDto.name(), realm);
         return groupMapper.toGroupDto(group);
     }
 
     @PutMapping("/{groupId}")
-    GroupDto updateGroup(String realmId, String groupId, GroupDto groupDto) {
+    GroupDto updateGroup(@PathVariable String realmId, @PathVariable String groupId, GroupDto groupDto) {
         Realm realm = realmCrudService.getRealmById(realmId);
         Group group = realmGroupCrudService.getGroupById(groupId, realm);
         Group updatedGroup = realmGroupCrudService.updateGroup(group, groupDto, realm);
@@ -55,7 +55,7 @@ public class GroupController {
 
     @DeleteMapping("/{groupId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteGroup(String realmId, String groupId) {
+    void deleteGroup(@PathVariable String realmId, @PathVariable String groupId) {
         Realm realm = realmCrudService.getRealmById(realmId);
         Group group = realmGroupCrudService.getGroupById(groupId, realm);
         realmGroupCrudService.deleteGroup(group, realm);

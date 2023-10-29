@@ -23,11 +23,11 @@ public class AbstractEntity {
 
     @CreationTimestamp
     @Setter(AccessLevel.NONE)
-    private Instant created;
+    private Instant createdAt;
 
     @UpdateTimestamp
     @Setter(AccessLevel.NONE)
-    private Instant updated;
+    private Instant updatedAt;
 
     @Override
     public boolean equals(Object o) {
