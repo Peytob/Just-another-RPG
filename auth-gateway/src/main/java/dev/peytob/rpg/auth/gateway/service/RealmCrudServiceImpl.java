@@ -1,13 +1,14 @@
 package dev.peytob.rpg.auth.gateway.service;
 
 import dev.peytob.rpg.auth.gateway.dto.realm.RealmCreateDto;
-import dev.peytob.rpg.auth.gateway.dto.realm.RealmGetDto;
 import dev.peytob.rpg.auth.gateway.dto.realm.RealmUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import dev.peytob.rpg.auth.gateway.exception.EntityAlreadyExistsException;
 import dev.peytob.rpg.auth.gateway.exception.NotFoundException;
+import dev.peytob.rpg.auth.gateway.exception.UnresolvedReferencesConflictException;
 import dev.peytob.rpg.auth.gateway.repository.RealmRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -81,7 +82,11 @@ public class RealmCrudServiceImpl implements RealmCrudService {
     @Override
     @Transactional
     public void deleteRealm(Realm realm) {
-        realmRepository.delete(realm);
+        try {
+            realmRepository.delete(realm);
+        } catch (ConstraintViolationException e) {
+            throw new UnresolvedReferencesConflictException();
+        }
     }
 
     private RuntimeException buildRealmAlreadyExistsException(String name) {

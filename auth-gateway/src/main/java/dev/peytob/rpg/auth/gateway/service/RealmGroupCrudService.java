@@ -1,7 +1,6 @@
 package dev.peytob.rpg.auth.gateway.service;
 
 import dev.peytob.rpg.auth.gateway.dto.group.GroupCreateDto;
-import dev.peytob.rpg.auth.gateway.dto.group.GroupGetDto;
 import dev.peytob.rpg.auth.gateway.dto.group.GroupUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Group;
 import dev.peytob.rpg.auth.gateway.entity.Realm;

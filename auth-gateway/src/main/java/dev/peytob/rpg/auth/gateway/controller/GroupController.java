@@ -28,7 +28,7 @@ public class GroupController {
     private final GroupMapper groupMapper;
 
     @GetMapping("/")
-    Page<GroupGetDto> getGroupsPage(String realmId, @ParameterObject Pageable pageable) {
+    Page<GroupGetDto> getGroupsPage(@PathVariable String realmId, @ParameterObject Pageable pageable) {
         Realm realm = realmCrudService.getRealmById(realmId);
         return realmGroupCrudService.getGroupsPage(realm, pageable).map(groupMapper::toGroupDto);
     }

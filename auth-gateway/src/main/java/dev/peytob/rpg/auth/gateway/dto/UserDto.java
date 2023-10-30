@@ -11,7 +11,7 @@ public record UserDto(
     RealmGetDto realm,
     String username,
     String email,
-    Boolean isActivated,
+    Boolean isBlocked,
     Instant createdAt,
     Instant updatedAt
 ) {

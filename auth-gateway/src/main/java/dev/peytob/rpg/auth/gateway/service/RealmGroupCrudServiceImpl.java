@@ -1,14 +1,15 @@
 package dev.peytob.rpg.auth.gateway.service;
 
 import dev.peytob.rpg.auth.gateway.dto.group.GroupCreateDto;
-import dev.peytob.rpg.auth.gateway.dto.group.GroupGetDto;
 import dev.peytob.rpg.auth.gateway.dto.group.GroupUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Group;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import dev.peytob.rpg.auth.gateway.exception.EntityAlreadyExistsException;
 import dev.peytob.rpg.auth.gateway.exception.NotFoundException;
+import dev.peytob.rpg.auth.gateway.exception.UnresolvedReferencesConflictException;
 import dev.peytob.rpg.auth.gateway.repository.GroupRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class RealmGroupCrudServiceImpl implements RealmGroupCrudService {
     @Transactional(readOnly = true)
     public Group getGroupById(String groupId, Realm realm) {
         return findGroupById(groupId, realm)
-            .orElseThrow(() -> new NotFoundException("Group with id " + groupId + " not found in realm {}"));
+            .orElseThrow(() -> new NotFoundException("Group with id " + groupId + " not found in realm " + realm.getName()));
     }
 
     @Override
@@ -58,7 +59,11 @@ public class RealmGroupCrudServiceImpl implements RealmGroupCrudService {
             throw buildIllegalRealmException(group, realm);
         }
 
-        groupRepository.delete(group);
+        try {
+            groupRepository.delete(group);
+        } catch (ConstraintViolationException e) {
+            throw new UnresolvedReferencesConflictException();
+        }
     }
 
     @Override

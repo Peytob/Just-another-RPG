@@ -11,13 +11,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserCrudService userCrudService;
+    private final RealmUserCrudService realmUserCrudService;
 
     private final HashService hashService;
 
     @Override
     public Optional<User> getUserByCredentials(String username, String password, Realm realm) {
         String hashedPassword = hashService.hashPasswordString(password);
-        return userCrudService.findByCredentials(username, hashedPassword, realm);
+        return realmUserCrudService.findUserByCredentials(username, hashedPassword, realm);
     }
 }
