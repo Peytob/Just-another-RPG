@@ -7,6 +7,7 @@ import dev.peytob.rpg.auth.gateway.entity.Realm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -14,6 +15,8 @@ import java.util.Optional;
  * carried out exclusively within specified Realm.
  */
 public interface RealmGroupCrudService {
+
+    Collection<Group> getGroupsByIds(Collection<String> groupsIds, Realm realm);
 
     Group saveGroup(Group group, Realm realm);
 

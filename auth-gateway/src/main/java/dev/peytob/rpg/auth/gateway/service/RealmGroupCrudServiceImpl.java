@@ -8,6 +8,7 @@ import dev.peytob.rpg.auth.gateway.exception.EntityAlreadyExistsException;
 import dev.peytob.rpg.auth.gateway.exception.NotFoundException;
 import dev.peytob.rpg.auth.gateway.exception.UnresolvedReferencesConflictException;
 import dev.peytob.rpg.auth.gateway.repository.GroupRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -22,6 +24,18 @@ import java.util.Optional;
 public class RealmGroupCrudServiceImpl implements RealmGroupCrudService {
 
     private final GroupRepository groupRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<Group> getGroupsByIds(Collection<String> groupsIds, Realm realm) {
+        Collection<Group> groups = groupRepository.findAllByIdAndRealm(groupsIds, realm);
+
+        if (groups.size() != groupsIds.size()) {
+            throw new EntityNotFoundException();
+        }
+
+        return groups;
+    }
 
     @Override
     @Transactional
@@ -104,7 +118,7 @@ public class RealmGroupCrudServiceImpl implements RealmGroupCrudService {
 
     private boolean checkGroupRealm(Group group, Realm realm) {
         Realm groupRealm = group.getRealm();
-        return realm.equals(groupRealm);
+        return !realm.equals(groupRealm);
     }
 
     private boolean checkGroupExists(String name, Realm realm) {

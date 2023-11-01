@@ -2,28 +2,26 @@ package dev.peytob.rpg.auth.gateway.jpa;
 
 import jakarta.persistence.SequenceGenerator;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.codec.binary.Base32;
-import org.apache.commons.lang3.Conversion;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Component
-@SequenceGenerator(name = "base32id")
+@SequenceGenerator(name = "stringId")
 @RequiredArgsConstructor
-public class Base32IdGenerator implements IdentifierGenerator {
+public class StringIdGenerator implements IdentifierGenerator {
 
-    private final Base32 base32;
+    // ZBase32 alphabet
+    private final String GENERATION_ALPHABET = "ybndrfg8ejkmcpqxot1uwisza345h769";
+
+    private final int GENERATION_ID_LENGTH = 16;
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        UUID uuid = UUID.randomUUID();
-        byte[] bytes = new byte[16];
-        Conversion.uuidToByteArray(uuid, bytes, 0, bytes.length);
-        return base32.encodeAsString(bytes);
+        return RandomStringUtils.random(GENERATION_ID_LENGTH, GENERATION_ALPHABET);
     }
 }

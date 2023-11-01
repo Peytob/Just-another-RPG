@@ -8,6 +8,7 @@ import dev.peytob.rpg.auth.gateway.entity.User;
 import dev.peytob.rpg.auth.gateway.mapper.UserMapper;
 import dev.peytob.rpg.auth.gateway.service.RealmCrudService;
 import dev.peytob.rpg.auth.gateway.service.RealmUserCrudService;
+import dev.peytob.rpg.auth.gateway.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -24,6 +25,8 @@ public class UserController {
     private final RealmCrudService realmCrudService;
 
     private final RealmUserCrudService realmUserCrudService;
+
+    private final UserService userService;
 
     private final UserMapper userMapper;
 
@@ -44,7 +47,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     UserDto createUser(@PathVariable String realmId, @Valid @RequestBody UserCreateDto userCreateDto) {
         Realm realm = realmCrudService.getRealmById(realmId);
-        User user = realmUserCrudService.createUser(userCreateDto, realm);
+        User user = userService.createUser(userCreateDto, realm);
         return userMapper.toUserDto(user);
     }
 
@@ -52,7 +55,7 @@ public class UserController {
     UserDto updateRealm(@PathVariable String realmId, @PathVariable String userId, @Valid @RequestBody UserUpdateDto userUpdateDto) {
         Realm realm = realmCrudService.getRealmById(realmId);
         User user = realmUserCrudService.getUserById(userId, realm);
-        User updatedUser = realmUserCrudService.updateUser(user, userUpdateDto, realm);
+        User updatedUser = userService.updateUser(user, userUpdateDto, realm);
         return userMapper.toUserDto(updatedUser);
     }
 
@@ -61,6 +64,6 @@ public class UserController {
     void deleteUser(@PathVariable String realmId, @PathVariable String groupId) {
         Realm realm = realmCrudService.getRealmById(realmId);
         User user = realmUserCrudService.getUserById(groupId, realm);
-        realmUserCrudService.deleteUser(user, realm);
+        userService.deleteUser(user, realm);
     }
 }

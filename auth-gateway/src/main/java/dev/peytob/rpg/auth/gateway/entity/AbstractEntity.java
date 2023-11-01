@@ -1,5 +1,6 @@
 package dev.peytob.rpg.auth.gateway.entity;
 
+import dev.peytob.rpg.auth.gateway.jpa.StringIdGenerator;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -7,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
@@ -18,7 +20,8 @@ import java.util.Objects;
 public class AbstractEntity {
 
     @Id
-    @GeneratedValue(generator = "base32id")
+    @GeneratedValue(generator = "stringId")
+    @GenericGenerator(name = "stringId", type = StringIdGenerator.class)
     private String id;
 
     @CreationTimestamp

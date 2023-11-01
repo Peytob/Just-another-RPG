@@ -51,8 +51,8 @@ public class SecurityConfiguration {
                 "/error",
                 "/actuator/**",
                 "/*/auth/**",
-                "/swagger-ui/**").permitAll())
-            .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+                "/swagger-ui/**").permitAll()
+                .anyRequest().authenticated())
             .sessionManagement(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)

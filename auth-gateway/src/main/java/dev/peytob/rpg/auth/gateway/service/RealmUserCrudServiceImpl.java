@@ -1,13 +1,13 @@
 package dev.peytob.rpg.auth.gateway.service;
 
-import dev.peytob.rpg.auth.gateway.dto.user.UserCreateDto;
-import dev.peytob.rpg.auth.gateway.dto.user.UserUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import dev.peytob.rpg.auth.gateway.entity.User;
 import dev.peytob.rpg.auth.gateway.exception.EntityAlreadyExistsException;
+import dev.peytob.rpg.auth.gateway.exception.UnresolvedReferencesConflictException;
+import dev.peytob.rpg.auth.gateway.repository.TokenRepository;
 import dev.peytob.rpg.auth.gateway.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.NotImplementedException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,8 @@ import java.util.Optional;
 public class RealmUserCrudServiceImpl implements RealmUserCrudService {
 
     private final UserRepository userRepository;
+
+    private final TokenRepository tokenRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -47,17 +49,35 @@ public class RealmUserCrudServiceImpl implements RealmUserCrudService {
     }
 
     @Override
-    public User createUser(UserCreateDto userCreateDto, Realm realm) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public User updateUser(User user, UserUpdateDto userUpdateDto, Realm realm) {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public void deleteUser(User user, Realm realm) {
-        throw new NotImplementedException();
+        if (checkUserRealm(user, realm)) {
+            throw buildIllegalRealmException(user, realm);
+        }
+
+        try {
+            tokenRepository.deleteAllByUser(user);
+            userRepository.delete(user);
+        } catch (ConstraintViolationException e) {
+            throw new UnresolvedReferencesConflictException();
+        }
+    }
+
+    @Override
+    public User saveUser(User user, Realm realm) {
+        if (checkUserRealm(user, realm)) {
+            throw buildIllegalRealmException(user, realm);
+        }
+
+        return userRepository.save(user);
+    }
+
+    private RuntimeException buildIllegalRealmException(User user, Realm realm) {
+        String userRealmName = user.getRealm().getName();
+        return new IllegalArgumentException("User realm " + userRealmName + " is not equal to given realm " + realm.getName());
+    }
+
+    private boolean checkUserRealm(User user, Realm realm) {
+        Realm userRealm = user.getRealm();
+        return !realm.equals(userRealm);
     }
 }

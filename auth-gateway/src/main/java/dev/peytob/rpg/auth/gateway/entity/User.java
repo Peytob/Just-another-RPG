@@ -1,9 +1,7 @@
 package dev.peytob.rpg.auth.gateway.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Collection;
 
@@ -11,9 +9,12 @@ import java.util.Collection;
 @Table(name = "USERS")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends AbstractEntity {
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name="USERS_GROUPS",
         joinColumns = @JoinColumn(name="USER_ID", referencedColumnName="ID"),
@@ -35,6 +36,7 @@ public class User extends AbstractEntity {
     @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "IS_ACTIVATED", nullable = false)
+    @Column(name = "IS_BLOCKED", nullable = false)
+    @Builder.Default
     private boolean isBlocked = false;
 }

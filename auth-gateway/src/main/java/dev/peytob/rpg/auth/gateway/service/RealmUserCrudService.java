@@ -1,7 +1,5 @@
 package dev.peytob.rpg.auth.gateway.service;
 
-import dev.peytob.rpg.auth.gateway.dto.user.UserCreateDto;
-import dev.peytob.rpg.auth.gateway.dto.user.UserUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import dev.peytob.rpg.auth.gateway.entity.User;
 import org.springframework.data.domain.Page;
@@ -23,9 +21,7 @@ public interface RealmUserCrudService {
 
     User getUserById(String userId, Realm realm);
 
-    User createUser(UserCreateDto userCreateDto, Realm realm);
-
-    User updateUser(User user, UserUpdateDto userUpdateDto, Realm realm);
-
     void deleteUser(User user, Realm realm);
+
+    User saveUser(User user, Realm realm);
 }
