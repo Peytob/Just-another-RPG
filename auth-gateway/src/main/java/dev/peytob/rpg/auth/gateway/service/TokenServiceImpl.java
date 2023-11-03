@@ -3,6 +3,7 @@ package dev.peytob.rpg.auth.gateway.service;
 import dev.peytob.rpg.auth.gateway.entity.Token;
 import dev.peytob.rpg.auth.gateway.entity.TokenType;
 import dev.peytob.rpg.auth.gateway.entity.User;
+import dev.peytob.rpg.auth.gateway.exception.FeatureDisabledException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -22,9 +23,15 @@ public class TokenServiceImpl implements TokenService {
 
     private final HashService hashService;
 
+    private final ApplicationConfigurationService applicationConfigurationService;
+
     @Override
     @Transactional
     public String createUserToken(User user, TokenType tokenType) {
+        if (tokenType.equals(TokenType.LONGTIME) && !applicationConfigurationService.isLongTimeTokensEnabled()) {
+            throw new FeatureDisabledException();
+        }
+
         String realmName = user.getRealm().getName();
         log.info("Creating new {} token for user with username {} in realm {}", tokenType, user.getUsername(), realmName);
 

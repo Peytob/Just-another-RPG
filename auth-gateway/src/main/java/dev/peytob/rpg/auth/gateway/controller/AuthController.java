@@ -1,6 +1,7 @@
 package dev.peytob.rpg.auth.gateway.controller;
 
 import dev.peytob.rpg.auth.gateway.dto.LoginDto;
+import dev.peytob.rpg.auth.gateway.dto.RegistrationRequest;
 import dev.peytob.rpg.auth.gateway.dto.TokenDto;
 import dev.peytob.rpg.auth.gateway.dto.TokenInfoDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
@@ -43,7 +44,7 @@ public class AuthController {
     ResponseEntity<Void> login(@PathVariable @NotEmpty String realmName, @RequestBody @Valid LoginDto loginDto) {
         log.info("User with username '{}' is trying to login in realm with name '{}'", loginDto.username(), realmName);
         Realm realm = realmCrudService.getRealmByName(realmName);
-        String token = loginService.loginUser(loginDto.username(), loginDto.password(), loginDto.tokenType(), realm);
+        String token = loginService.loginUser(loginDto.username(), loginDto.password(), realm);
         return ResponseEntity.noContent().header(AUTHORIZATION_HEADER, token).build();
     }
 
@@ -54,6 +55,15 @@ public class AuthController {
         Realm realm = realmCrudService.getRealmByName(realmName);
         loginService.logout(authorization, realm);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "User logout", description = "Creates new user and returns new session token from 'Authorization' header")
+    @PostMapping("/register")
+    ResponseEntity<Void> register(@PathVariable @NotEmpty String realmName, @RequestBody @Valid RegistrationRequest registrationDto) {
+        log.info("Registering new user  in realm '{}' by user request", realmName);
+        Realm realm = realmCrudService.getRealmByName(realmName);
+        String token = loginService.register(registrationDto.username(), registrationDto.password(), registrationDto.email(), realm);
+        return ResponseEntity.status(HttpStatus.CREATED).header(AUTHORIZATION_HEADER, token).build();
     }
 
     @Operation(summary = "Validation for token", description = "Validates session token from 'Authorization' header. Returns auth details.")

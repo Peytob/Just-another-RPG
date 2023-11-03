@@ -1,17 +1,20 @@
 package dev.peytob.rpg.auth.gateway.service;
 
+import dev.peytob.rpg.auth.gateway.dto.user.UserCreateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import dev.peytob.rpg.auth.gateway.entity.Token;
 import dev.peytob.rpg.auth.gateway.entity.TokenType;
 import dev.peytob.rpg.auth.gateway.entity.User;
-import dev.peytob.rpg.auth.gateway.exception.NotFoundException;
+import dev.peytob.rpg.auth.gateway.exception.FeatureDisabledException;
 import dev.peytob.rpg.auth.gateway.exception.LoginFailed;
+import dev.peytob.rpg.auth.gateway.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -23,9 +26,11 @@ public class LoginServiceImpl implements LoginService {
 
     private final TokenService tokenService;
 
+    private final ApplicationConfigurationService applicationConfigurationService;
+
     @Override
     @Transactional
-    public String loginUser(String username, String password, TokenType tokenType, Realm realm) {
+    public String loginUser(String username, String password, Realm realm) {
         User user = userService.getUserByCredentials(username, password, realm).orElseThrow(() -> {
             log.info("User with username '{}' and password **** not found in realm '{}'", username, realm.getName());
             return new LoginFailed();
@@ -36,7 +41,7 @@ public class LoginServiceImpl implements LoginService {
             throw new LoginFailed();
         }
 
-        return tokenService.createUserToken(user, tokenType);
+        return tokenService.createUserToken(user, TokenType.SESSION);
     }
 
     @Override
@@ -53,22 +58,27 @@ public class LoginServiceImpl implements LoginService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Token> validateToken(String tokenValue, Realm realm) {
-        Optional<Token> optionalToken = tokenService.getTokenByValue(tokenValue);
+        return tokenService.getTokenByValue(tokenValue)
+            .filter(token -> Instant.now().isAfter(token.getExpirationAt()))
+            .filter(token -> !token.getUser().getRealm().equals(realm));
+    }
 
-        if (optionalToken.isEmpty()) {
-            return Optional.empty();
+    @Override
+    @Transactional
+    public String register(String username, String password, String email, Realm realm) {
+        if (!applicationConfigurationService.isRegistrationByUserEnabled()) {
+            throw new FeatureDisabledException();
         }
 
-        Token token = optionalToken.get();
+        // TODO Make realm default user groups
+        UserCreateDto userCreateDto = UserCreateDto.builder()
+            .username(username)
+            .email(email)
+            .password(password)
+            .groups(Collections.emptyList())
+            .build();
 
-        if (Instant.now().isAfter(token.getExpirationAt())) {
-            return Optional.empty();
-        }
-
-        if (!token.getUser().getRealm().equals(realm)) {
-            return Optional.empty();
-        }
-
-        return optionalToken;
+        userService.createUser(userCreateDto, realm);
+        return loginUser(username, password, realm);
     }
 }

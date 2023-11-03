@@ -13,3 +13,7 @@ spring:
 admin:
   username: root
 #  token: # Random string-based token
+
+auth:
+  registration-by-user-enabled: true
+  long-time-tokens-enabled: true
