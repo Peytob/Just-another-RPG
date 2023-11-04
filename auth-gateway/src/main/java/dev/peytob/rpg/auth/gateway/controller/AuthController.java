@@ -1,9 +1,8 @@
 package dev.peytob.rpg.auth.gateway.controller;
 
-import dev.peytob.rpg.auth.gateway.dto.LoginDto;
-import dev.peytob.rpg.auth.gateway.dto.RegistrationRequest;
-import dev.peytob.rpg.auth.gateway.dto.TokenDto;
-import dev.peytob.rpg.auth.gateway.dto.TokenInfoDto;
+import dev.peytob.rpg.auth.gateway.dto.auth.LoginDto;
+import dev.peytob.rpg.auth.gateway.dto.auth.RegistrationDto;
+import dev.peytob.rpg.auth.gateway.dto.auth.TokenInfoDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import dev.peytob.rpg.auth.gateway.entity.Token;
 import dev.peytob.rpg.auth.gateway.mapper.TokenMapper;
@@ -18,6 +17,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +31,7 @@ import static dev.peytob.rpg.auth.gateway.configuration.SecurityConfiguration.AU
 @RequestMapping("/{realmName}/auth")
 @RequiredArgsConstructor
 @Slf4j
+@ConditionalOnProperty(name = "auth.public-endpoints-enabled")
 public class AuthController {
 
     private final LoginService loginService;
@@ -59,16 +60,16 @@ public class AuthController {
 
     @Operation(summary = "User logout", description = "Creates new user and returns new session token from 'Authorization' header")
     @PostMapping("/register")
-    ResponseEntity<Void> register(@PathVariable @NotEmpty String realmName, @RequestBody @Valid RegistrationRequest registrationDto) {
+    ResponseEntity<Void> register(@PathVariable @NotEmpty String realmName, @RequestBody @Valid RegistrationDto registrationDto) {
         log.info("Registering new user  in realm '{}' by user request", realmName);
         Realm realm = realmCrudService.getRealmByName(realmName);
-        String token = loginService.register(registrationDto.username(), registrationDto.password(), registrationDto.email(), realm);
+        String token = loginService.registerUser(registrationDto.username(), registrationDto.password(), registrationDto.email(), realm);
         return ResponseEntity.status(HttpStatus.CREATED).header(AUTHORIZATION_HEADER, token).build();
     }
 
     @Operation(summary = "Validation for token", description = "Validates session token from 'Authorization' header. Returns auth details.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Token is valid.", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = TokenDto.class))),
+        @ApiResponse(responseCode = "200", description = "Token is valid", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = TokenInfoDto.class))),
         @ApiResponse(responseCode = "403", description = "Token is invalid or expired")
     })
     @PostMapping("/validate")

@@ -71,6 +71,16 @@ public class RealmUserCrudServiceImpl implements RealmUserCrudService {
         return userRepository.save(user);
     }
 
+    @Override
+    public boolean isUserExistsByUsername(String username, Realm realm) {
+        return userRepository.existsByUsernameAndRealm(username, realm);
+    }
+
+    @Override
+    public boolean isUserExistsByEmail(String email, Realm realm) {
+        return userRepository.existsByEmailAndRealm(email, realm);
+    }
+
     private RuntimeException buildIllegalRealmException(User user, Realm realm) {
         String userRealmName = user.getRealm().getName();
         return new IllegalArgumentException("User realm " + userRealmName + " is not equal to given realm " + realm.getName());

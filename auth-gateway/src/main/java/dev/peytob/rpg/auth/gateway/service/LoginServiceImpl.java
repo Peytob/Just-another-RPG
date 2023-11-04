@@ -65,7 +65,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     @Transactional
-    public String register(String username, String password, String email, Realm realm) {
+    public String registerUser(String username, String password, String email, Realm realm) {
         if (!applicationConfigurationService.isRegistrationByUserEnabled()) {
             throw new FeatureDisabledException();
         }

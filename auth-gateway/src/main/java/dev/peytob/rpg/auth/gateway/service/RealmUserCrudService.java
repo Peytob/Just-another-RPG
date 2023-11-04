@@ -24,4 +24,8 @@ public interface RealmUserCrudService {
     void deleteUser(User user, Realm realm);
 
     User saveUser(User user, Realm realm);
+
+    boolean isUserExistsByUsername(String username, Realm realm);
+
+    boolean isUserExistsByEmail(String email, Realm realm);
 }

@@ -1,6 +1,6 @@
 package dev.peytob.rpg.auth.gateway.mapper;
 
-import dev.peytob.rpg.auth.gateway.dto.TokenInfoDto;
+import dev.peytob.rpg.auth.gateway.dto.auth.TokenInfoDto;
 import dev.peytob.rpg.auth.gateway.entity.Group;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import dev.peytob.rpg.auth.gateway.entity.Token;

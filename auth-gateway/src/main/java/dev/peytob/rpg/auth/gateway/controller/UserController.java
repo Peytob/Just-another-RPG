@@ -1,6 +1,6 @@
 package dev.peytob.rpg.auth.gateway.controller;
 
-import dev.peytob.rpg.auth.gateway.dto.UserDto;
+import dev.peytob.rpg.auth.gateway.dto.user.UserDto;
 import dev.peytob.rpg.auth.gateway.dto.user.UserCreateDto;
 import dev.peytob.rpg.auth.gateway.dto.user.UserUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
@@ -11,6 +11,7 @@ import dev.peytob.rpg.auth.gateway.service.RealmUserCrudService;
 import dev.peytob.rpg.auth.gateway.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/{realmId}/users")
+@RequestMapping("/realm/{realmId}/users")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     private final RealmCrudService realmCrudService;
@@ -46,6 +48,7 @@ public class UserController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     UserDto createUser(@PathVariable String realmId, @Valid @RequestBody UserCreateDto userCreateDto) {
+        log.info("Creating new user in realm with id {}", realmId);
         Realm realm = realmCrudService.getRealmById(realmId);
         User user = userService.createUser(userCreateDto, realm);
         return userMapper.toUserDto(user);

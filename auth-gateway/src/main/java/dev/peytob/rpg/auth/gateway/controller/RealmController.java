@@ -8,6 +8,7 @@ import dev.peytob.rpg.auth.gateway.mapper.RealmMapper;
 import dev.peytob.rpg.auth.gateway.service.RealmCrudService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/realm")
 @RequiredArgsConstructor
+@Slf4j
 public class RealmController {
 
     private final RealmCrudService realmCrudService;
@@ -37,12 +39,14 @@ public class RealmController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     RealmGetDto createRealm(@Valid @RequestBody RealmCreateDto realmCreateDto) {
+        log.info("Creating new realm with name '{}'", realmCreateDto.name());
         Realm realm = realmCrudService.createRealm(realmCreateDto);
         return realmMapper.toRealmDto(realm);
     }
 
     @PutMapping("/{realmId}")
     RealmGetDto updateRealm(@PathVariable String realmId, @Valid @RequestBody RealmUpdateDto realmUpdateDto) {
+        log.info("Updating realm with id '{}'", realmId);
         Realm realm = realmCrudService.getRealmById(realmId);
         Realm updatedRealm = realmCrudService.updateRealm(realm, realmUpdateDto);
         return realmMapper.toRealmDto(updatedRealm);
@@ -51,6 +55,7 @@ public class RealmController {
     @DeleteMapping("/{realmId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteRealm(@PathVariable String realmId) {
+        log.info("Deleting realm with id '{}'", realmId);
         Realm realm = realmCrudService.getRealmById(realmId);
         realmCrudService.deleteRealm(realm);
     }

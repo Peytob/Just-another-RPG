@@ -15,5 +15,6 @@ admin:
 #  token: # Random string-based token
 
 auth:
+  public-endpoints-enabled: true
   registration-by-user-enabled: true
   long-time-tokens-enabled: true

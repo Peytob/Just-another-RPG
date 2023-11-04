@@ -51,6 +51,7 @@ public class SecurityConfiguration {
                 "/error",
                 "/actuator/**",
                 "/*/auth/**",
+                "/realm/*/token/validate",
                 "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated())
             .sessionManagement(AbstractHttpConfigurer::disable)

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -28,5 +30,15 @@ public class TokenCrudServiceImpl implements TokenCrudService {
     @Override
     public void deleteToken(Token token) {
         tokenRepository.delete(token);
+    }
+
+    @Override
+    public Collection<Token> findExpiredTokens() {
+        return tokenRepository.findByExpirationAtAfter(Instant.now());
+    }
+
+    @Override
+    public void deleteTokens(Collection<Token> expiredTokens) {
+        tokenRepository.deleteAll(expiredTokens);
     }
 }

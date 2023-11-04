@@ -17,5 +17,5 @@ public interface LoginService {
 
     Optional<Token> validateToken(String tokenValue, Realm realm);
 
-    String register(String username, String password, String email, Realm realm);
+    String registerUser(String username, String password, String email, Realm realm);
 }

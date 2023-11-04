@@ -1,4 +1,6 @@
-package dev.peytob.rpg.auth.gateway.dto;
+package dev.peytob.rpg.auth.gateway.dto.user;
+
+import dev.peytob.rpg.auth.gateway.dto.NamedIdDto;
 
 import java.time.Instant;
 import java.util.Collection;

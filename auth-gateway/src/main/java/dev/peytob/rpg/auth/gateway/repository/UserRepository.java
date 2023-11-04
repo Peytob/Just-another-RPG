@@ -16,4 +16,8 @@ public interface UserRepository extends BaseRepository<User> {
     Page<User> findAllByRealm(Realm realm, Pageable pageable);
 
     Optional<User> findByIdAndRealm(String userId, Realm realm);
+
+    boolean existsByUsernameAndRealm(String username, Realm realm);
+
+    boolean existsByEmailAndRealm(String email, Realm realm);
 }
