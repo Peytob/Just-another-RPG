@@ -41,6 +41,8 @@ public class LoginServiceImpl implements LoginService {
             throw new LoginFailed();
         }
 
+        user.setLastLoginAt(Instant.now());
+
         return tokenService.createUserToken(user, TokenType.SESSION);
     }
 

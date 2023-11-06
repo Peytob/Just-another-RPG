@@ -5,13 +5,14 @@ import dev.peytob.rpg.auth.gateway.dto.NamedIdDto;
 import java.time.Instant;
 import java.util.Collection;
 
-public record UserDto(
+public record UserGetDto(
     String id,
     Collection<NamedIdDto> groups,
     NamedIdDto realm,
     String username,
     String email,
     Boolean isBlocked,
+    Instant lastLoginAt,
     Instant createdAt,
     Instant updatedAt
 ) {

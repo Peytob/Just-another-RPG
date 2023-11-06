@@ -1,12 +1,14 @@
 package dev.peytob.rpg.auth.gateway.service;
 
 import dev.peytob.rpg.auth.gateway.dto.realm.RealmCreateDto;
-import dev.peytob.rpg.auth.gateway.dto.realm.RealmGetDto;
+import dev.peytob.rpg.auth.gateway.dto.realm.RealmMetricDto;
 import dev.peytob.rpg.auth.gateway.dto.realm.RealmUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.Duration;
+import java.util.Collection;
 import java.util.Optional;
 
 public interface RealmCrudService {
@@ -26,4 +28,8 @@ public interface RealmCrudService {
     Realm updateRealm(Realm realm, RealmUpdateDto realmUpdateDto);
 
     void deleteRealm(Realm realm);
+
+    long getRealmCount();
+
+    Collection<RealmMetricDto> getAllRealmsMetrics(Duration userActiveDuration);
 }

@@ -1,6 +1,6 @@
 package dev.peytob.rpg.auth.gateway.controller;
 
-import dev.peytob.rpg.auth.gateway.dto.user.UserDto;
+import dev.peytob.rpg.auth.gateway.dto.user.UserGetDto;
 import dev.peytob.rpg.auth.gateway.dto.user.UserCreateDto;
 import dev.peytob.rpg.auth.gateway.dto.user.UserUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
@@ -33,13 +33,13 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping("/")
-    Page<UserDto> getUsersPage(@PathVariable String realmId, @ParameterObject Pageable pageable) {
+    Page<UserGetDto> getUsersPage(@PathVariable String realmId, @ParameterObject Pageable pageable) {
         Realm realm = realmCrudService.getRealmById(realmId);
         return realmUserCrudService.getUsersPage(pageable, realm).map(userMapper::toUserDto);
     }
 
     @GetMapping("/{userId}")
-    UserDto getUser(@PathVariable String realmId, @PathVariable String userId) {
+    UserGetDto getUser(@PathVariable String realmId, @PathVariable String userId) {
         Realm realm = realmCrudService.getRealmById(realmId);
         User user = realmUserCrudService.getUserById(userId, realm);
         return userMapper.toUserDto(user);
@@ -47,7 +47,7 @@ public class UserController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    UserDto createUser(@PathVariable String realmId, @Valid @RequestBody UserCreateDto userCreateDto) {
+    UserGetDto createUser(@PathVariable String realmId, @Valid @RequestBody UserCreateDto userCreateDto) {
         log.info("Creating new user in realm with id {}", realmId);
         Realm realm = realmCrudService.getRealmById(realmId);
         User user = userService.createUser(userCreateDto, realm);
@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    UserDto updateRealm(@PathVariable String realmId, @PathVariable String userId, @Valid @RequestBody UserUpdateDto userUpdateDto) {
+    UserGetDto updateRealm(@PathVariable String realmId, @PathVariable String userId, @Valid @RequestBody UserUpdateDto userUpdateDto) {
         Realm realm = realmCrudService.getRealmById(realmId);
         User user = realmUserCrudService.getUserById(userId, realm);
         User updatedUser = userService.updateUser(user, userUpdateDto, realm);

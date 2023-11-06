@@ -1,6 +1,7 @@
 package dev.peytob.rpg.auth.gateway.service;
 
 import dev.peytob.rpg.auth.gateway.dto.realm.RealmCreateDto;
+import dev.peytob.rpg.auth.gateway.dto.realm.RealmMetricDto;
 import dev.peytob.rpg.auth.gateway.dto.realm.RealmUpdateDto;
 import dev.peytob.rpg.auth.gateway.entity.Realm;
 import dev.peytob.rpg.auth.gateway.exception.EntityAlreadyExistsException;
@@ -14,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -87,6 +91,19 @@ public class RealmCrudServiceImpl implements RealmCrudService {
         } catch (ConstraintViolationException e) {
             throw new UnresolvedReferencesConflictException();
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long getRealmCount() {
+        return realmRepository.count();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<RealmMetricDto> getAllRealmsMetrics(Duration userActiveDuration) {
+        Instant userActiveBorder = Instant.now().minus(userActiveDuration);
+        return realmRepository.getAllRealmsMetrics(userActiveBorder);
     }
 
     private RuntimeException buildRealmAlreadyExistsException(String name) {

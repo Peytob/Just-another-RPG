@@ -1,6 +1,6 @@
 package dev.peytob.rpg.auth.gateway.mapper;
 
-import dev.peytob.rpg.auth.gateway.dto.user.UserDto;
+import dev.peytob.rpg.auth.gateway.dto.user.UserGetDto;
 import dev.peytob.rpg.auth.gateway.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,5 +12,5 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 public interface UserMapper {
 
     @Mapping(target = "isBlocked", expression = "java(user.isBlocked())")
-    UserDto toUserDto(User user);
+    UserGetDto toUserDto(User user);
 }

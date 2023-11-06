@@ -3,6 +3,7 @@ package dev.peytob.rpg.auth.gateway.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
 import java.util.Collection;
 
 @Entity
@@ -39,4 +40,7 @@ public class User extends AbstractEntity {
     @Column(name = "IS_BLOCKED", nullable = false)
     @Builder.Default
     private boolean isBlocked = false;
+
+    @Column(name = "LAST_LOGIN_TIME", nullable = false)
+    private Instant lastLoginAt;
 }

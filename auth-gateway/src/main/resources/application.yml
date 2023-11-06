@@ -9,6 +9,13 @@ spring:
     platform: postgres
   jpa:
     dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: create-update
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
 
 admin:
   username: root

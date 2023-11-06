@@ -9,6 +9,7 @@ import dev.peytob.rpg.auth.gateway.exception.EntityAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -64,6 +65,7 @@ public class UserServiceImpl implements UserService {
             .isBlocked(false)
             .realm(realm)
             .groups(groups)
+            .lastLoginAt(Instant.now())
             .username(userCreateDto.username())
             .build();
 
