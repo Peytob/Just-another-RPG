@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:rpg
+    url: jdbc:h2:mem:rpg-auth
     username: rpg
     password: rpg
     driver-class-name: org.h2.Driver

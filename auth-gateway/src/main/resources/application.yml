@@ -9,7 +9,7 @@ spring:
     platform: postgres
   jpa:
     dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: create-update
+    hibernate.ddl-auto: create
 
 management:
   endpoints:

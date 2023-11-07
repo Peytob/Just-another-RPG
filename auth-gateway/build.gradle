@@ -1,8 +1,8 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.4'
-    id 'io.spring.dependency-management' version '1.1.3'
-    id 'io.freefair.lombok' version '6.5.0.3'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'io.freefair.lombok' version "${lombokPluginVersion}"
 }
 
 repositories {
@@ -11,8 +11,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.2.0'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiVersion}"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:${openApiVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -21,21 +21,21 @@ dependencies {
 
     runtimeOnly "io.micrometer:micrometer-registry-prometheus"
 
-    runtimeOnly "com.h2database:h2:2.2.224"
+    runtimeOnly "com.h2database:h2:${h2Version}"
     runtimeOnly "org.postgresql:postgresql"
 
     implementation 'commons-codec:commons-codec:1.15'
 
     compileOnly "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
 
-    compileOnly "org.mapstruct:mapstruct:1.5.5.Final"
-    annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
+    compileOnly "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
-    testImplementation libraries.junitApi
-    testRuntimeOnly libraries.junitEngine
-    testImplementation libraries.springTests
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitApiVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitApiVersion}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
