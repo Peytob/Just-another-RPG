@@ -61,7 +61,7 @@ public class AuthController {
     @Operation(summary = "User logout", description = "Creates new user and returns new session token from 'Authorization' header")
     @PostMapping("/register")
     ResponseEntity<Void> register(@PathVariable @NotEmpty String realmName, @RequestBody @Valid RegistrationDto registrationDto) {
-        log.info("Registering new user  in realm '{}' by user request", realmName);
+        log.info("Registering new user in realm '{}' by user request", realmName);
         Realm realm = realmCrudService.getRealmByName(realmName);
         String token = loginService.registerUser(registrationDto.username(), registrationDto.password(), registrationDto.email(), realm);
         return ResponseEntity.status(HttpStatus.CREATED).header(AUTHORIZATION_HEADER, token).build();
