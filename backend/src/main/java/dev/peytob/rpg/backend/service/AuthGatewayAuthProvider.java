@@ -19,21 +19,21 @@ public class AuthGatewayAuthProvider implements AuthProvider {
     }
 
     @Override
-    public Optional<String> login(String username, String password) {
+    public Optional<String> loginUser(String username, String password) {
         AuthGatewayLoginDto request = new AuthGatewayLoginDto(username, password);
         ResponseEntity<Void> responseEntity = restTemplate.postForEntity("/auth/login", request, Void.class);
         return responseEntity.getHeaders().getOrEmpty(AUTH_GATEWAY_AUTHORIZATION_HEADER).stream().findFirst();
     }
 
     @Override
-    public void logout(String token) {
+    public void logoutUser(String token) {
         restTemplate.postForEntity("/auth/logout", null, Void.class);
     }
 
     @Override
-    public Optional<TokenDto> validate(String token) {
+    public Optional<TokenDto> validateRawToken(String rawToken) {
         RequestEntity<Void> request = RequestEntity.post("/auth/validate")
-            .header(AUTH_GATEWAY_AUTHORIZATION_HEADER, token)
+            .header(AUTH_GATEWAY_AUTHORIZATION_HEADER, rawToken)
             .build();
 
         ResponseEntity<TokenDto> response = restTemplate.exchange(request, TokenDto.class);
@@ -46,7 +46,7 @@ public class AuthGatewayAuthProvider implements AuthProvider {
     }
 
     @Override
-    public String register(String username, String password, String email) {
+    public String registerPlayerUser(String username, String password, String email) {
         AuthGatewayRegistrationDto request = new AuthGatewayRegistrationDto(password, username, email);
         ResponseEntity<Void> response = restTemplate.postForEntity("/auth/register", request, Void.class);
 

@@ -6,11 +6,11 @@ import java.util.Optional;
 
 public interface AuthProvider {
 
-    Optional<String> login(String username, String password);
+    Optional<String> loginUser(String username, String password);
 
-    void logout(String token);
+    void logoutUser(String tokenValue);
 
-    Optional<TokenDto> validate(String token);
+    Optional<TokenDto> validateRawToken(String rawToken);
 
-    String register(String username, String password, String email);
+    String registerPlayerUser(String username, String password, String email);
 }

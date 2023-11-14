@@ -18,11 +18,11 @@ public class UserEntity extends AbstractEntity {
     @ElementCollection
     private Collection<UserRole> roles;
 
-    @Column(name = "USERNAME", nullable = false)
+    @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "PASSWORD_HASH", nullable = false)
-    private String passwordHash;
+    @Column(name = "ENCODED_PASSWORD", nullable = false)
+    private String encodedPassword;
 
     @Column(name = "EMAIL")
     private String email;

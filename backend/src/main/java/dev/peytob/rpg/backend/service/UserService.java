@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public interface UserService {
 
-    Optional<UserEntity> getUserByCredentials(String username, String password);
+    Optional<UserEntity> findUserByCredentials(String username, String password);
 
-    UserEntity createUser(String username, String password, String email);
+    UserEntity createPlayerUser(String username, String password, String email);
 
 }

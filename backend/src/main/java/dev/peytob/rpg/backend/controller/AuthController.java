@@ -3,7 +3,7 @@ package dev.peytob.rpg.backend.controller;
 import dev.peytob.rpg.backend.dto.auth.LoginDto;
 import dev.peytob.rpg.backend.dto.auth.RegistrationDto;
 import dev.peytob.rpg.backend.dto.auth.TokenDto;
-import dev.peytob.rpg.backend.service.UserAuthService;
+import dev.peytob.rpg.backend.service.AuthProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class AuthController {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    private final UserAuthService userAuthService;
+    private final AuthProvider userAuthService;
 
     @Operation(summary = "User login", description = "Generates session token and return it in 'Authorization' header")
     @RequestMapping("/login")
@@ -45,13 +45,13 @@ public class AuthController {
 
     @RequestMapping("/register")
     ResponseEntity<Void> register(@RequestBody @Valid RegistrationDto registrationDto) {
-        String token = userAuthService.registerUser(registrationDto.username(), registrationDto.password(), registrationDto.email());
+        String token = userAuthService.registerPlayerUser(registrationDto.username(), registrationDto.password(), registrationDto.email());
         return ResponseEntity.status(HttpStatus.CREATED).header(AUTHORIZATION_HEADER, token).build();
     }
 
     @RequestMapping("/validate")
     ResponseEntity<TokenDto> validate(@RequestHeader(AUTHORIZATION_HEADER) String authorization) {
-        Optional<TokenDto> token = userAuthService.validateToken(authorization);
+        Optional<TokenDto> token = userAuthService.validateRawToken(authorization);
         if (token.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } else {
