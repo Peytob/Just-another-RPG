@@ -20,9 +20,10 @@ import static dev.peytob.rpg.backend.service.AuthGatewayAuthProvider.AUTH_GATEWA
 
 @Configuration
 @ConditionalOnProperty(prefix = "auth", name = "type", havingValue = "auth-gateway")
-@EnableConfigurationProperties(AuthGatewayConfiguration.AuthGatewayProperties.class)
+@EnableConfigurationProperties(GatewayAuthProviderConfiguration.AuthGatewayProperties.class)
 @Slf4j
-public class AuthGatewayConfiguration {
+@Deprecated
+public class GatewayAuthProviderConfiguration {
 
     @Bean(name = "authGatewayRestTemplate")
     RestTemplate authGatewayRestTemplate(AuthGatewayProperties authGatewayProperties) {
@@ -44,6 +45,7 @@ public class AuthGatewayConfiguration {
 
     @ConfigurationProperties(prefix = "auth.auth-gateway")
     @Validated
+    @Deprecated
     record AuthGatewayProperties(
         @URL
         String address,

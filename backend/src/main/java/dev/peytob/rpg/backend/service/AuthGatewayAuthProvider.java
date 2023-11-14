@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+@Deprecated
 public class AuthGatewayAuthProvider implements AuthProvider {
 
     public static String AUTH_GATEWAY_AUTHORIZATION_HEADER = "Authorization";

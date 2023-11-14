@@ -9,7 +9,7 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
 auth:
-  type: auth-gateway
+  type: internal
   auth-gateway:
     address: http://localhost:8080/
     token: ___localtoken___
