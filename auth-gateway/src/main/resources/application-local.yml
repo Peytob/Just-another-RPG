@@ -12,4 +12,4 @@ server:
   port: 8080
 
 admin:
-  token: 1234567890123456
+  token: ___localtoken___

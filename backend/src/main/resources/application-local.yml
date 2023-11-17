@@ -7,3 +7,10 @@ spring:
     platform: h2
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
+auth:
+  type: internal
+  auth-gateway:
+    address: http://localhost:8080/
+    token: ___localtoken___
+    realm-name: local-rpg
