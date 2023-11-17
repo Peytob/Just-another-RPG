@@ -1,9 +1,7 @@
 package dev.peytob.rpg.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.Collection;
@@ -13,6 +11,8 @@ import java.util.Collection;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity extends AbstractEntity {
 
     @ElementCollection

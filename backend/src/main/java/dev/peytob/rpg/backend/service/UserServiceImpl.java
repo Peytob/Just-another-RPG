@@ -50,6 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserEntity createUser(String username, String password, String email, Collection<UserRole> roles) {
+        log.info("Creating new user with username '{}', email '{}' and roles {}", username, email, roles);
+
         if (userCrudService.isUserExistsByUsername(username)) {
             throw new EntityAlreadyExistsException("User with username '" + username + "' is already exists");
         }

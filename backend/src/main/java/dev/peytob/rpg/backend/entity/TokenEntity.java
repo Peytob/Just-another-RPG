@@ -1,10 +1,7 @@
 package dev.peytob.rpg.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 
@@ -13,6 +10,8 @@ import java.time.Instant;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TokenEntity extends AbstractEntity {
 
     @ManyToOne(optional = false)

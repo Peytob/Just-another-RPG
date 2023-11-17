@@ -2,6 +2,7 @@ package dev.peytob.rpg.backend.service;
 
 import dev.peytob.rpg.backend.dto.auth.TokenDto;
 import dev.peytob.rpg.backend.entity.TokenEntity;
+import dev.peytob.rpg.backend.entity.TokenType;
 import dev.peytob.rpg.backend.entity.UserEntity;
 import dev.peytob.rpg.backend.exception.LoginFailed;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -24,6 +26,8 @@ public class InternalAuthProvider implements AuthProvider {
     @Override
     @Transactional
     public Optional<String> loginUser(String username, String password) {
+        log.info("Login user with username '{}' by credentials", username);
+
         UserEntity user = userService.findUserByCredentials(username, password).orElseThrow(() -> {
             log.debug("User with username '{}' and password **** not found", username);
             return new LoginFailed();
@@ -33,20 +37,34 @@ public class InternalAuthProvider implements AuthProvider {
     }
 
     @Override
+    @Transactional
     public void logoutUser(String tokenValue) {
-        TokenEntity token = tokenService.getTokenByRawValue(tokenValue).orElseThrow(LoginFailed::new);
+        log.info("Logout user by token");
+
+        TokenEntity token = tokenService
+            .getTokenByRawValue(tokenValue)
+            .filter(tokenEntity -> tokenEntity.getType().equals(TokenType.SESSION))
+            .orElseThrow(() -> {
+                log.debug("Session token with given raw value '{}' not found", tokenValue);
+                return new LoginFailed();
+            });
+
         tokenService.removeToken(token);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<TokenDto> validateRawToken(String rawToken) {
         return tokenService.getTokenByRawValue(rawToken)
-            .filter(token -> Instant.now().isAfter(token.getExpirationAt()))
+            .filter(token -> Instant.now().isBefore(token.getExpirationAt()))
             .map(this::toTokenDto);
     }
 
     @Override
+    @Transactional
     public String registerPlayerUser(String username, String password, String email) {
+        log.info("Registering new user with username '{}' and email '{}'", username, email);
+
         UserEntity user = userService.createPlayerUser(username, password, email);
         return performLogin(user);
     }
@@ -54,7 +72,7 @@ public class InternalAuthProvider implements AuthProvider {
     private TokenDto toTokenDto(TokenEntity tokenEntity) {
         return new TokenDto(
             tokenEntity.getUser().getUsername(),
-            tokenEntity.getUser().getRoles(),
+            List.copyOf(tokenEntity.getUser().getRoles()),
             tokenEntity.getType(),
             tokenEntity.getExpirationAt());
     }
