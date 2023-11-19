@@ -10,9 +10,6 @@ spring:
   jpa:
     dialect: org.hibernate.dialect.PostgreSQLDialect
 
-server:
-  port: 8081
-
 #auth:
 #  type: # Enum: auth-gateway
 #  auth-gateway:

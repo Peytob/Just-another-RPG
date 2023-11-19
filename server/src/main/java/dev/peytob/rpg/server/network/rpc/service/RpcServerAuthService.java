@@ -1,38 +1,31 @@
-package dev.peytob.rpg.server.server.rpc.system;
+package dev.peytob.rpg.server.network.rpc.service;
 
 import com.google.protobuf.Empty;
 import dev.peytob.rpg.rpc.interfaces.base.model.UserRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.AuthDataRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc;
-import dev.peytob.rpg.server.server.rpc.context.RpcContextService;
-import dev.peytob.rpg.server.server.service.AuthService;
+import dev.peytob.rpg.server.network.service.AuthService;
 import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import static dev.peytob.rpg.server.server.rpc.constant.DefaultMessages.EMPTY_MESSAGE;
+import static dev.peytob.rpg.server.network.constant.DefaultMessages.EMPTY_MESSAGE;
 
 @GrpcService
+@RequiredArgsConstructor
+@Slf4j
 public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceImplBase {
-
-    private static final Logger log = LoggerFactory.getLogger(RpcServerAuthService.class);
 
     private final AuthService authService;
 
     private final RpcContextService rpcContextService;
 
-    public RpcServerAuthService(AuthService authService, RpcContextService rpcContextService) {
-        this.authService = authService;
-        this.rpcContextService = rpcContextService;
-    }
-
     @Override
     public void login(AuthDataRpcDto request, StreamObserver<UserRpcDto> responseObserver) {
-        log.info("New user is trying to login on server");
+        authService.login(request.getUsername(), request.getPassword());
 
-        authService.login(request.getToken());
-
+        // TODO Return user info...
         responseObserver.onNext(UserRpcDto.newBuilder().build());
         responseObserver.onCompleted();
     }
@@ -41,7 +34,7 @@ public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServic
     public void logout(AuthDataRpcDto request, StreamObserver<Empty> responseObserver) {
         log.info("Some player is logout...");
 
-        authService.logout(request.getToken());
+        authService.logout(rpcContextService.getAuthenticationToken());
 
         responseObserver.onNext(EMPTY_MESSAGE);
         responseObserver.onCompleted();

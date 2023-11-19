@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.server.rpc.constant;
+package dev.peytob.rpg.server.network.constant;
 
 import com.google.protobuf.Empty;
 
