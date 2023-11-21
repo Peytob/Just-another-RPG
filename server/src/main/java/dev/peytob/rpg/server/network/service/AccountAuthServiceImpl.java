@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AccountAuthServiceImpl implements AuthService {
+public class AccountAuthServiceImpl implements AccountAuthService {
 
     private static final String BACKEND_AUTHORIZATION_HEADER = "Authorization";
 

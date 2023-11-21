@@ -1,10 +1,12 @@
 package dev.peytob.rpg.server.network.rpc.service;
 
 import com.google.protobuf.Empty;
+import com.google.protobuf.Timestamp;
 import dev.peytob.rpg.rpc.interfaces.base.model.UserRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.AuthDataRpcDto;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc;
-import dev.peytob.rpg.server.network.service.AuthService;
+import dev.peytob.rpg.server.network.dto.TokenDto;
+import dev.peytob.rpg.server.network.service.AccountAuthService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,16 +19,25 @@ import static dev.peytob.rpg.server.network.constant.DefaultMessages.EMPTY_MESSA
 @Slf4j
 public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServiceImplBase {
 
-    private final AuthService authService;
+    private final AccountAuthService accountAuthService;
 
     private final RpcContextService rpcContextService;
 
     @Override
     public void login(AuthDataRpcDto request, StreamObserver<UserRpcDto> responseObserver) {
-        authService.login(request.getUsername(), request.getPassword());
+        String rawToken = accountAuthService.login(request.getUsername(), request.getPassword());
+        TokenDto tokenDto = accountAuthService.validate(rawToken).orElseThrow(IllegalStateException::new);
 
-        // TODO Return user info...
-        responseObserver.onNext(UserRpcDto.newBuilder().build());
+        UserRpcDto userRpcDto = UserRpcDto.newBuilder()
+            .setToken(rawToken)
+            .setUsername(tokenDto.username())
+            .setTokenExpiredAt(Timestamp.newBuilder()
+                .setSeconds(tokenDto.tokenExpiredAt().getEpochSecond())
+                .setNanos(tokenDto.tokenExpiredAt().getNano())
+                .build())
+            .build();
+
+        responseObserver.onNext(userRpcDto);
         responseObserver.onCompleted();
     }
 
@@ -34,7 +45,7 @@ public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServic
     public void logout(AuthDataRpcDto request, StreamObserver<Empty> responseObserver) {
         log.info("Some player is logout...");
 
-        authService.logout(rpcContextService.getAuthenticationToken());
+        accountAuthService.logout(rpcContextService.getAuthenticationToken());
 
         responseObserver.onNext(EMPTY_MESSAGE);
         responseObserver.onCompleted();

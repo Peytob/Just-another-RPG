@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * This service allow user to auth in backend.
  */
-public interface AuthService {
+public interface AccountAuthService {
 
     String login(String username, String password);
 
