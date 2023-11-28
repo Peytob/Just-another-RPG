@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.gameplay.context;
+package dev.peytob.rpg.server.gameplay.service.context;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +11,14 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class EcsContextRunnerManager {
+public class EcsContextRunnerStarter {
 
     private final ExecutorService executorService;
 
     private final Collection<EcsContextRunner> ecsContextRunners;
 
     @PostConstruct
-    public void startContextsExecuting() {
+    void startContextsExecuting() {
         log.info("Starting {} ecs contexts executing threads", ecsContextRunners.size());
         ecsContextRunners.forEach(executorService::execute);
         log.info("Ecs contexts threads was started");

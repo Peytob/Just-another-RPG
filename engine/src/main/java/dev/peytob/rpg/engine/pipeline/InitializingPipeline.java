@@ -18,10 +18,12 @@ public final class InitializingPipeline {
     }
 
     public void execute() {
+        logger.info("Executing engine initializing pipeline");
         pipelineSteps.forEach(step -> {
             logger.info("Executing engine pipeline initializing step {}", step.getName());
             step.execute();
             logger.info("Initializing step {} was executed", step.getName());
         });
+        logger.info("Engine initializing pipeline has been executed");
     }
 }

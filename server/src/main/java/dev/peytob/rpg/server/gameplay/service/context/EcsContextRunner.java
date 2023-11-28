@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.gameplay.context;
+package dev.peytob.rpg.server.gameplay.service.context;
 
 import dev.peytob.rpg.ecs.context.EcsContext;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +42,10 @@ public class EcsContextRunner implements Runnable {
 
     public EcsContext getRawContext() {
         return ecsContext;
+    }
+
+    public String getContextName() {
+        return contextName;
     }
 
     public boolean isExecuting() {
