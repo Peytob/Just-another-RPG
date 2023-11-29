@@ -5,9 +5,9 @@ spring:
 rpg:
   loader:
     file-structure:
-      tiles: /asset/tile
-      tilemaps: /asset/tilemap
-      worlds: /asset/worlds
+      tiles: ./asset/tile
+      tilemaps: ./asset/tilemap
+      worlds: ./asset/worlds
   server:
     details:
 #      address: # Server URL / IP address

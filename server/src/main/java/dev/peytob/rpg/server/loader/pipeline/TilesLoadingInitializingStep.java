@@ -3,8 +3,8 @@ package dev.peytob.rpg.server.loader.pipeline;
 import dev.peytob.rpg.core.repository.TileRepository;
 import dev.peytob.rpg.core.resource.Tile;
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
+import dev.peytob.rpg.server.loader.service.DataProvider;
 import dev.peytob.rpg.server.loader.service.FileStructureService;
-import dev.peytob.rpg.server.loader.service.TileLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,16 +18,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TilesLoadingInitializingStep implements InitializingPipelineStep {
 
-    private final TileLoader tileLoader;
-
-    private final FileStructureService fileStructureService;
+    private final Collection<DataProvider<Tile>> tileProviders;
 
     private final TileRepository tileRepository;
 
     @Override
     public void execute() {
-        Path tilesDirectoryPath = fileStructureService.getTilesDirectoryPath();
-        Collection<Tile> tiles = tileLoader.loadTiles(tilesDirectoryPath);
+        Collection<Tile> tiles = tileProviders.stream()
+            .map(DataProvider::loadData)
+            .flatMap(Collection::stream)
+            .toList();
+
         tiles.forEach(tileRepository::append);
 
         if (log.isDebugEnabled()) {
