@@ -30,13 +30,17 @@ public class EcsContextRunner implements Runnable {
 
         isExecuting = true;
 
-        while (!currentThread.isInterrupted()) {
-            executeBeforeFrameConsumer();
+        while (!currentThread.isInterrupted() && isExecuting) {
+            executeFrame();
             Thread.yield();
         }
 
         log.info("Ecs context {} executing in thread {} was stopped", contextName, currentThread.getName());
 
+        isExecuting = false;
+    }
+
+    public void stopRunning() {
         isExecuting = false;
     }
 
@@ -52,7 +56,7 @@ public class EcsContextRunner implements Runnable {
         return isExecuting;
     }
 
-    private void executeBeforeFrameConsumer() {
+    private void executeFrame() {
         if (beforeFrameConsumer != null) {
             beforeFrameConsumer.accept(ecsContext);
         }
