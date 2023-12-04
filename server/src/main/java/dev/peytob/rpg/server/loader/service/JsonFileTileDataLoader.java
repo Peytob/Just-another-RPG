@@ -14,6 +14,8 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.Collections;
 
+import static dev.peytob.rpg.server.loader.constants.DefaultFileFilters.JSON_FILE_FILTER;
+
 /**
  * Implements loading collection of tiles, because one file can contain array of tiles.
  */
@@ -21,9 +23,6 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Slf4j
 public class JsonFileTileDataLoader extends FileDataLoader<Collection<Tile>> {
-
-    private static final FileFilter JSON_FILE_FILTER = innerFile ->
-        innerFile.canRead() && innerFile.getName().endsWith(".json");
 
     private final ObjectMapper objectMapper;
 

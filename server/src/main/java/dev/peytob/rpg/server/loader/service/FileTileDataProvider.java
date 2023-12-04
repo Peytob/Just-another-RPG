@@ -19,6 +19,7 @@ public class FileTileDataProvider implements DataProvider<Tile> {
         return tileFileDataLoader
             .loadData(fileStructureService.getTilesDirectoryPath())
             .stream()
-            .flatMap(Collection::stream).toList();
+            .flatMap(Collection::stream)
+            .toList();
     }
 }

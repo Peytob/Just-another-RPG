@@ -4,6 +4,7 @@ import dev.peytob.rpg.core.gameplay.model.world.tilemap.PlacedTile;
 import dev.peytob.rpg.core.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 
+import static dev.peytob.rpg.math.coordinate.CoordinatesUtils.isCoordinatesInRectI;
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 
 /**
@@ -22,7 +23,7 @@ class ArrayTilemapLayer implements TilemapLayer {
 
     @Override
     public PlacedTile getTile(int x, int y) {
-        return containsCoordinate(x, y) ? map[x][y] : null;
+        return isCoordinatesInRectI(x, y, sizes) ? map[x][y] : null;
     }
 
     @Override
@@ -47,7 +48,7 @@ class ArrayTilemapLayer implements TilemapLayer {
             return removeTile(position);
         }
 
-        if (containsCoordinate(position.x(), position.y())) {
+        if (isCoordinatesInRectI(position, sizes)) {
             PlacedTile oldTile = map[position.x()][position.y()];
             map[position.x()][position.y()] = new PlacedTile(tile, position);
             return oldTile;
@@ -75,9 +76,5 @@ class ArrayTilemapLayer implements TilemapLayer {
     @Override
     public Vec2i getSizes() {
         return sizes;
-    }
-
-    private boolean containsCoordinate(int x, int y) {
-        return 0 <= x && x < getSizes().x() && 0 <= y && y < getSizes().y();
     }
 }
