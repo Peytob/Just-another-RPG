@@ -15,6 +15,7 @@ import static java.util.Objects.requireNonNullElse;
  * Base service, that loads data from given file or directory.
  * Can be split into two classes - DataParser (can parse Reader data) and DataReader (can build {@link Reader} from
  * some source). For this class: FileDataReader and JsonDataParser. But this action useless now...
+ * upd TODO So, DTOs parsing should be separated from loaders too...
  * @param <T> Type, that should be loaded from files.
  */
 @Slf4j

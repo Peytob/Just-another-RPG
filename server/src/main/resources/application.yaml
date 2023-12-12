@@ -7,7 +7,7 @@ rpg:
     file-structure:
       tiles: ./asset/tile
       tilemaps: ./asset/tilemap
-      worlds: ./asset/worlds
+      worlds: ./asset/world
   server:
     details:
 #      address: # Server URL / IP address

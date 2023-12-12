@@ -1,8 +1,10 @@
 package dev.peytob.rpg.core.gameplay.model.world;
 
-import dev.peytob.rpg.core.gameplay.model.world.tilemap.layer.TilemapLayer;
+import dev.peytob.rpg.core.gameplay.model.world.tilemap.Tilemap;
+import dev.peytob.rpg.engine.resource.Resource;
 
 public record World(
-    TilemapLayer tilemapLayer
-) {
+    String id,
+    Tilemap tilemap
+) implements Resource {
 }
