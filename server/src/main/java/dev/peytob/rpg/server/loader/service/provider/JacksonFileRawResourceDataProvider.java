@@ -1,6 +1,10 @@
-package dev.peytob.rpg.server.loader.service;
+package dev.peytob.rpg.server.loader.service.provider;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.GenericTypeResolver;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -11,27 +15,19 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNullElse;
 
-/**
- * Base service, that loads data from given file or directory.
- * Can be split into two classes - DataParser (can parse Reader data) and DataReader (can build {@link Reader} from
- * some source). For this class: FileDataReader and JsonDataParser. But this action useless now...
- * upd TODO So, DTOs parsing should be separated from loaders too...
- * @param <T> Type, that should be loaded from files.
- */
+@Service
+@RequiredArgsConstructor
 @Slf4j
-public abstract class FileDataLoader<T> {
+public abstract class JacksonFileRawResourceDataProvider<T> implements RawResourceDataProvider<T> {
+
+    private static final FileFilter JSON_FILE_FILTER = innerFile ->
+        innerFile.canRead() && innerFile.getName().endsWith(".json");
 
     private static final File[] EMPTY_DIRECTORY_FILES = new File[0];
 
-    protected abstract T parseFile(Reader fileReader) throws Exception;
+    private final ObjectMapper objectMapper;
 
-    protected abstract FileFilter getDirectoryFileFilter(File file);
-
-    /**
-     * Loads data from given file or directory.
-     * @throws IllegalArgumentException If file not exists, cant be read or parsed
-     */
-    public Collection<T> loadData(Path path) {
+    protected Collection<T> loadResourcesData(Path path) {
         log.info("Trying to load data from {}. Loader: {}", path, getClass().getName());
 
         File baseFile = path.toFile();
@@ -60,8 +56,7 @@ public abstract class FileDataLoader<T> {
     }
 
     private Collection<T> loadDirectoryFiles(File directory) {
-        FileFilter fileFilter = getDirectoryFileFilter(directory);
-        File[] innerFiles = requireNonNullElse(directory.listFiles(fileFilter), EMPTY_DIRECTORY_FILES);
+        File[] innerFiles = requireNonNullElse(directory.listFiles(JSON_FILE_FILTER), EMPTY_DIRECTORY_FILES);
         return Arrays.stream(innerFiles).map(this::loadFile).toList();
     }
 
@@ -76,5 +71,11 @@ public abstract class FileDataLoader<T> {
             log.error("Unresolved exception while reading or parsing file {}", file.getAbsolutePath());
             throw new IllegalArgumentException("Unresolved exception while reading or parsing file", e);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private T parseFile(Reader reader) throws IOException {
+        Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), RawResourceDataProvider.class);
+        return objectMapper.readValue(reader, type);
     }
 }
