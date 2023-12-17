@@ -1,4 +1,4 @@
-package dev.peytob.rpg.core.resource;
+package dev.peytob.rpg.core.gameplay.resource;
 
 import dev.peytob.rpg.engine.resource.Resource;
 

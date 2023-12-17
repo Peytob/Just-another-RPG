@@ -1,7 +1,7 @@
-package dev.peytob.rpg.core.gameplay.model.world.tilemap;
+package dev.peytob.rpg.core.gameplay.resource.tilemap;
 
-import dev.peytob.rpg.core.gameplay.model.world.tilemap.layer.TilemapLayer;
-import dev.peytob.rpg.core.gameplay.model.world.tilemap.layer.TilemapLayers;
+import dev.peytob.rpg.core.gameplay.resource.tilemap.layer.TilemapLayer;
+import dev.peytob.rpg.core.gameplay.resource.tilemap.layer.TilemapLayers;
 import dev.peytob.rpg.engine.resource.Resource;
 import dev.peytob.rpg.math.vector.Vec2i;
 

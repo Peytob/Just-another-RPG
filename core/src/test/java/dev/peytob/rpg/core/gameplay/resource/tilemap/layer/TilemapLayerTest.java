@@ -1,8 +1,7 @@
-package dev.peytob.rpg.core.gameplay.model.world.tilemap.layer;
+package dev.peytob.rpg.core.gameplay.resource.tilemap.layer;
 
 import dev.peytob.rpg.core.NonContextRpgCoreTest;
-import dev.peytob.rpg.core.gameplay.model.world.tilemap.PlacedTile;
-import dev.peytob.rpg.core.gameplay.model.world.tilemap.layer.TilemapLayer;
+import dev.peytob.rpg.core.gameplay.resource.tilemap.PlacedTile;
 import dev.peytob.rpg.math.vector.Vec2i;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static dev.peytob.rpg.core.resource.TestTiles.*;
+import static dev.peytob.rpg.core.gameplay.resource.TestTiles.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class TilemapLayerTest extends NonContextRpgCoreTest {

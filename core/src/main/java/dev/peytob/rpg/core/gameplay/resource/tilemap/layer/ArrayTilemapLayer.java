@@ -1,7 +1,7 @@
-package dev.peytob.rpg.core.gameplay.model.world.tilemap.layer;
+package dev.peytob.rpg.core.gameplay.resource.tilemap.layer;
 
-import dev.peytob.rpg.core.gameplay.model.world.tilemap.PlacedTile;
-import dev.peytob.rpg.core.resource.Tile;
+import dev.peytob.rpg.core.gameplay.resource.tilemap.PlacedTile;
+import dev.peytob.rpg.core.gameplay.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 
 import static dev.peytob.rpg.math.coordinate.CoordinatesUtils.isCoordinatesInRectI;

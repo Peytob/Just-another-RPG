@@ -1,6 +1,6 @@
 package dev.peytob.rpg.server.loader.pipeline;
 
-import dev.peytob.rpg.core.resource.Tile;
+import dev.peytob.rpg.core.gameplay.resource.Tile;
 import dev.peytob.rpg.engine.repositry.Repository;
 import dev.peytob.rpg.server.loader.service.loader.ResourceDataLoader;
 import org.springframework.stereotype.Component;

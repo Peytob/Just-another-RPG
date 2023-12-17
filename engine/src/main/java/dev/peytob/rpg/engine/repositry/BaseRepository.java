@@ -4,6 +4,7 @@ import dev.peytob.rpg.engine.resource.Resource;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,8 +18,8 @@ public abstract class BaseRepository<R extends Resource> implements Repository<R
     private final Collection<RepositoryIndex<?>> repositoryIndices = new CopyOnWriteArrayList<>();
 
     @Override
-    public final R getById(String id) {
-        return resourcesById.get(id);
+    public final Optional<R> getById(String textId) {
+        return Optional.ofNullable(resourcesById.get(textId));
     }
 
     @Override

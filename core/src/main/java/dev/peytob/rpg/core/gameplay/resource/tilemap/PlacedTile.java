@@ -1,6 +1,6 @@
-package dev.peytob.rpg.core.gameplay.model.world.tilemap;
+package dev.peytob.rpg.core.gameplay.resource.tilemap;
 
-import dev.peytob.rpg.core.resource.Tile;
+import dev.peytob.rpg.core.gameplay.resource.Tile;
 import dev.peytob.rpg.math.vector.Vec2i;
 
 public record PlacedTile(

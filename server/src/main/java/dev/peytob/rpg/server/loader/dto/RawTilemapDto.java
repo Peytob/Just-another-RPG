@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.loader.service.dto;
+package dev.peytob.rpg.server.loader.dto;
 
 import dev.peytob.rpg.math.vector.Vec2i;
 

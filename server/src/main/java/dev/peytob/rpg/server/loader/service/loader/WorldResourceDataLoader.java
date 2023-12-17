@@ -1,9 +1,10 @@
 package dev.peytob.rpg.server.loader.service.loader;
 
-import dev.peytob.rpg.core.gameplay.model.world.World;
-import dev.peytob.rpg.core.gameplay.model.world.tilemap.Tilemap;
-import dev.peytob.rpg.core.repository.TilemapRepository;
-import dev.peytob.rpg.server.loader.service.dto.RawWorldDto;
+import dev.peytob.rpg.core.exception.ResourceNotFoundException;
+import dev.peytob.rpg.core.gameplay.resource.World;
+import dev.peytob.rpg.core.gameplay.resource.tilemap.Tilemap;
+import dev.peytob.rpg.core.gameplay.repository.TilemapRepository;
+import dev.peytob.rpg.server.loader.dto.RawWorldDto;
 import dev.peytob.rpg.server.loader.service.provider.RawResourceDataProvider;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,9 @@ public class WorldResourceDataLoader extends AbstractResourceDataLoader<RawWorld
 
     @Override
     protected World mapToResource(RawWorldDto rawResource) {
-        Tilemap tilemap = tilemapRepository.getById(rawResource.tilemap());
+        Tilemap tilemap = tilemapRepository.getById(rawResource.tilemap()).orElseThrow(() ->
+            new ResourceNotFoundException("Tilemap with id " + rawResource.tilemap() + " not found during loading world " + rawResource.id()));
+
         return new World(rawResource.id(), tilemap);
     }
 }

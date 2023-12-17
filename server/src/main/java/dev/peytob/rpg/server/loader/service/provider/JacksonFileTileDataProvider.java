@@ -2,7 +2,7 @@ package dev.peytob.rpg.server.loader.service.provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.peytob.rpg.server.loader.service.FileStructureService;
-import dev.peytob.rpg.server.loader.service.dto.RawTileDto;
+import dev.peytob.rpg.server.loader.dto.RawTileDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
