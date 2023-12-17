@@ -1,6 +1,6 @@
 package dev.peytob.rpg.math.vector;
 
-import static java.lang.Math.sqrt;
+import static java.lang.Math.hypot;
 
 public enum Vectors {;
 
@@ -48,7 +48,7 @@ public enum Vectors {;
     }
 
     public static float length(Vec2 vec2) {
-        return (float) sqrt(vec2.x() * vec2.x() + vec2.y() * vec2.y());
+        return (float) hypot(vec2.x(), vec2.y());
     }
 
     public static Vec2 normalize(Vec2 vec2) {

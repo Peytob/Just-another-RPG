@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=dev.peytob.rpg.core.CoreAutoconfiguration

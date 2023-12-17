@@ -33,7 +33,7 @@ public class GrpcServerAuthService implements ServerAuthService, DynamicGrpcServ
     @Override
     public CompletableFuture<User> login() {
         String serverToken = networkConnectionState.getServerToken();
-        AuthDataRpcDto authDataRpcDto = AuthDataRpcDto.newBuilder().setToken(serverToken).build();
+        AuthDataRpcDto authDataRpcDto = AuthDataRpcDto.newBuilder().build();
         ListenableFuture<UserRpcDto> loginFuture = stub.login(authDataRpcDto);
         return toCompletableFuture(loginFuture).thenApply(userRpc -> new User());
     }
@@ -41,7 +41,7 @@ public class GrpcServerAuthService implements ServerAuthService, DynamicGrpcServ
     @Override
     public CompletableFuture<Void> logout() {
         String serverToken = networkConnectionState.getServerToken();
-        AuthDataRpcDto authDataRpcDto = AuthDataRpcDto.newBuilder().setToken(serverToken).build();
+        AuthDataRpcDto authDataRpcDto = AuthDataRpcDto.newBuilder().build();
         ListenableFuture<Empty> loginFuture = stub.logout(authDataRpcDto);
         return toCompletableFuture(loginFuture).thenApply(NetworkUtils::emptyResponseAsVoid);
 

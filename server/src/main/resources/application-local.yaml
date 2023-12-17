@@ -1,0 +1,11 @@
+rpg:
+  server:
+    details:
+      address: localhost
+      name: Local RPG server
+  backend:
+    address: http://localhost:8081/
+    token: ___localtoken___
+
+server:
+  port: 8082

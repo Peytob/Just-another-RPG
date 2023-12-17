@@ -3,10 +3,11 @@ package dev.peytob.rpg.engine.repositry;
 import dev.peytob.rpg.engine.resource.Resource;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface Repository<R extends Resource> {
 
-    R getById(String textId);
+    Optional<R> getById(String textId);
 
     Collection<R> getAll();
 
