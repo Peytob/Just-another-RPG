@@ -13,6 +13,7 @@ import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc;
 import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc.ServerAuthServiceFutureStub;
 import io.grpc.CallCredentials;
 import io.grpc.Channel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -20,15 +21,12 @@ import java.util.concurrent.CompletableFuture;
 import static net.javacrumbs.futureconverter.java8guava.FutureConverter.toCompletableFuture;
 
 @Service
+@RequiredArgsConstructor
 public class GrpcServerAuthService implements ServerAuthService, DynamicGrpcService {
 
     private ServerAuthServiceFutureStub stub;
 
     private final NetworkConnectionState networkConnectionState;
-
-    public GrpcServerAuthService(NetworkConnectionState networkConnectionState) {
-        this.networkConnectionState = networkConnectionState;
-    }
 
     @Override
     public CompletableFuture<User> login() {

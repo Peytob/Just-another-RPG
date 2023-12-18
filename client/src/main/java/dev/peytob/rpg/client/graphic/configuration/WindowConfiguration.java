@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.spring.configuration;
+package dev.peytob.rpg.client.graphic.configuration;
 
 import dev.peytob.rpg.client.graphic.model.glfw.Window;
 import org.springframework.context.annotation.Bean;

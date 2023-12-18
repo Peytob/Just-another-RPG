@@ -2,9 +2,11 @@ package dev.peytob.rpg.client;
 
 import dev.peytob.rpg.client.fsm.state.GameLoadingState;
 import dev.peytob.rpg.engine.pipeline.InitializingPipeline;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ClientEngineStarter {
 
     private final ClientEngine clientEngine;
@@ -12,12 +14,6 @@ public class ClientEngineStarter {
     private final GameLoadingState gameLoadingState;
 
     private final InitializingPipeline initializingPipeline;
-
-    public ClientEngineStarter(ClientEngine clientEngine, GameLoadingState gameLoadingState, InitializingPipeline initializingPipeline) {
-        this.clientEngine = clientEngine;
-        this.gameLoadingState = gameLoadingState;
-        this.initializingPipeline = initializingPipeline;
-    }
 
     void initializeAndStartGameCycle() {
         initializingPipeline.execute();

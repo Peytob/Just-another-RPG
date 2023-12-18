@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.spring.configuration;
+package dev.peytob.rpg.client.fsm.configuration;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;

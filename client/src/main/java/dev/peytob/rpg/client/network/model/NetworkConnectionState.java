@@ -1,31 +1,15 @@
 package dev.peytob.rpg.client.network.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Component
+@Getter
+@Setter
 public class NetworkConnectionState {
 
     private ServerDetails connectedServer;
 
     private String serverToken;
-
-    public ServerDetails getConnectedServer() {
-        return connectedServer;
-    }
-
-    public void setConnectedServer(ServerDetails connectedServer) {
-        this.connectedServer = connectedServer;
-    }
-
-    public String getServerToken() {
-        return serverToken;
-    }
-
-    public void setServerToken(String serverToken) {
-        this.serverToken = serverToken;
-    }
-
-    public boolean isConnectedToServer() {
-        return serverToken != null;
-    }
 }

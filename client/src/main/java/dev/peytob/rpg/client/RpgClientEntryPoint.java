@@ -2,16 +2,14 @@ package dev.peytob.rpg.client;
 
 import dev.peytob.rpg.client.configuration.library.GlfwLibraryHandler;
 import dev.peytob.rpg.client.configuration.library.StaticLibraryHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
+@Slf4j
 public class RpgClientEntryPoint {
-
-    private final static Logger logger = LoggerFactory.getLogger(RpgClientEntryPoint.class);
 
     // C libraries handlers, that allows application to initialize and free library resources.
     // Also, this guaranties, that libraries would be called from main application thread.
@@ -46,9 +44,9 @@ public class RpgClientEntryPoint {
 
     private static void destroyStaticCLibraries() {
         for (StaticLibraryHandler library : STATIC_LIBRARY_HANDLERS) {
-            logger.info("Destroying library {} has been destroyed", library.getName());
+            log.info("Destroying library {} has been destroyed", library.getName());
             library.destroy();
-            logger.info("Library {} has been destroyed", library.getName());
+            log.info("Library {} has been destroyed", library.getName());
         }
     }
 }

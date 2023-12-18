@@ -11,15 +11,13 @@ import dev.peytob.rpg.client.fsm.model.ExecutingEngineState;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;
 import dev.peytob.rpg.ecs.context.EcsContexts;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class SimpleEngineStateManager implements EngineStateManager {
-
-    private static final Logger logger = LoggerFactory.getLogger(SimpleEngineStateManager.class);
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -33,17 +31,16 @@ public class SimpleEngineStateManager implements EngineStateManager {
         this.engineStateOperationQueue = engineStateOperationQueue;
     }
 
-    // TODO Create engine state operations query
     @Override
     public void pushEngineState(EngineState engineState) {
-        logger.info("Pushing 'push {}' operation to engine states operation queue", engineState.getName());
+        log.info("Pushing 'push {}' operation to engine states operation queue", engineState.getName());
         EngineStateOperation operation = EngineStateOperation.push(engineState);
         engineStateOperationQueue.push(operation);
     }
 
     @Override
     public void popEngineState() {
-        logger.info("Pushing 'pop' operation to engine states operation queue");
+        log.info("Pushing 'pop' operation to engine states operation queue");
         EngineStateOperation operation = EngineStateOperation.pop();
         engineStateOperationQueue.push(operation);
     }
@@ -57,7 +54,7 @@ public class SimpleEngineStateManager implements EngineStateManager {
     @Override
     public void flushEngineStates() {
         while (engineStateOperationQueue.isNotEmpty()) {
-            logger.info("Flushing engine state operations");
+            log.info("Flushing engine state operations");
 
             EngineStateOperation operation = engineStateOperationQueue.pop();
 
@@ -68,7 +65,7 @@ public class SimpleEngineStateManager implements EngineStateManager {
             } else if (operation instanceof EngineStateOperation.PushEngineStateOperation push) {
                 executePushEngineState(push.engineState());
             } else {
-                logger.error("Unknown engine state operation, skipping...");
+                log.error("Unknown engine state operation, skipping...");
             }
         }
     }
@@ -81,7 +78,7 @@ public class SimpleEngineStateManager implements EngineStateManager {
     @Override
     public ExecutingEngineState getCurrentEngineState() {
         if (!isStatePresent()) {
-            logger.warn("Empty engine states stack on 'getCurrentEngineState' call");
+            log.warn("Empty engine states stack on 'getCurrentEngineState' call");
             return null;
         }
 
@@ -94,7 +91,7 @@ public class SimpleEngineStateManager implements EngineStateManager {
         }
 
         ExecutingEngineState executingEngineState = engineStateStack.peek();
-        logger.info("Popping current engine state {}", executingEngineState.engineState().getName());
+        log.info("Popping current engine state {}", executingEngineState.engineState().getName());
 
         BeforeEngineStatePopEvent beforeEngineStatePopEvent = new BeforeEngineStatePopEvent(executingEngineState);
         applicationEventPublisher.publishEvent(beforeEngineStatePopEvent);
@@ -102,7 +99,7 @@ public class SimpleEngineStateManager implements EngineStateManager {
     }
 
     private void executePushEngineState(EngineState engineState) {
-        logger.info("Pushing engine state {}", engineState.getName());
+        log.info("Pushing engine state {}", engineState.getName());
 
         EcsContextBuilder builder = EcsContexts.builder();
         BeforeEngineStatePushEvent beforeEngineStatePushEvent = new BeforeEngineStatePushEvent(builder, engineState);

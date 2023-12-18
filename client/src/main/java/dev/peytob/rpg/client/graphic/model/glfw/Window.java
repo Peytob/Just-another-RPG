@@ -1,7 +1,6 @@
 package dev.peytob.rpg.client.graphic.model.glfw;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -9,9 +8,8 @@ import static org.lwjgl.opengl.GL.createCapabilities;
 import static org.lwjgl.opengl.GL33.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+@Slf4j
 public class Window implements AutoCloseable {
-
-    private static final Logger logger = LoggerFactory.getLogger(Window.class);
 
     private final long pointer;
 
@@ -20,7 +18,7 @@ public class Window implements AutoCloseable {
     private int height;
 
     public static Window create(String title, int width, int height) {
-        logger.info("Creating new GLFW window");
+        log.info("Creating new GLFW window");
 
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -39,16 +37,16 @@ public class Window implements AutoCloseable {
         // TODO Getting window framebuffer sizes
         glViewport(0, 0, width, height);
 
-        logger.info("Window ({}) has been created", pointer);
+        log.info("Window ({}) has been created", pointer);
 
         return new Window(pointer, width, height);
     }
 
     public static void destroy(long pointer) {
-        logger.info("Destroying window ({})", pointer);
+        log.info("Destroying window ({})", pointer);
         glfwFreeCallbacks(pointer);
         glfwDestroyWindow(pointer);
-        logger.info("Window ({}) has been destroyed", pointer);
+        log.info("Window ({}) has been destroyed", pointer);
     }
 
     private Window(long pointer, int width, int height) {
