@@ -8,6 +8,7 @@ import dev.peytob.rpg.rpc.interfaces.base.system.ServerAuthServiceGrpc;
 import dev.peytob.rpg.server.network.dto.TokenDto;
 import dev.peytob.rpg.server.network.service.AccountAuthService;
 import io.grpc.stub.StreamObserver;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -24,6 +25,7 @@ public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServic
     private final RpcContextService rpcContextService;
 
     @Override
+    @PermitAll
     public void login(AuthDataRpcDto request, StreamObserver<UserRpcDto> responseObserver) {
         String rawToken = accountAuthService.login(request.getUsername(), request.getPassword());
         TokenDto tokenDto = accountAuthService.validate(rawToken).orElseThrow(IllegalStateException::new);
@@ -42,6 +44,7 @@ public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServic
     }
 
     @Override
+    @PermitAll
     public void logout(AuthDataRpcDto request, StreamObserver<Empty> responseObserver) {
         log.info("Some player is logout...");
 

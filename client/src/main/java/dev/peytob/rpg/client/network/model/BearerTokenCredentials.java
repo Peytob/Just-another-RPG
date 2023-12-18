@@ -10,7 +10,7 @@ import static io.grpc.Metadata.ASCII_STRING_MARSHALLER;
 
 public class BearerTokenCredentials extends CallCredentials {
 
-    private static final Metadata.Key<String> AUTHENTIFICATION_KEY = Metadata.Key.of("authentication", ASCII_STRING_MARSHALLER);
+    private static final Metadata.Key<String> AUTHENTIFICATION_KEY = Metadata.Key.of("Authentication", ASCII_STRING_MARSHALLER);
 
     private final Metadata metadata;
 

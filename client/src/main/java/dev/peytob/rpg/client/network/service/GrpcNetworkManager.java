@@ -38,20 +38,25 @@ public class GrpcNetworkManager implements NetworkManager {
     public CompletableFuture<User> refreshConnection(ServerDetails serverDetails, ServerCredentials serverCredentials) {
         log.info("Connection to server {} as {}", serverDetails.serverAddress(), serverCredentials.username());
 
-        // TODO Make request to auth server
-        String token = serverCredentials.username() + ":" + serverCredentials.password();
-
-        CallCredentials credentials = new BearerTokenCredentials(token);
-
         Channel channel = ManagedChannelBuilder.forAddress(serverDetails.serverAddress(), serverDetails.port())
             .usePlaintext()
             .build();
 
-        grpcServices.forEach(dynamicGrpcService -> dynamicGrpcService.refreshConnection(channel, credentials));
+        return serverAuthService.login(serverCredentials.username(), serverCredentials.password(), channel)
+            .thenApply(user -> {
+                log.info("Refreshing connection on gRPC services");
 
-        networkConnectionState.setConnectedServer(serverDetails);
-        networkConnectionState.setServerToken(token);
+                String token = user.token();
+                CallCredentials credentials = new BearerTokenCredentials(token);
 
-        return serverAuthService.login();
+                grpcServices.forEach(dynamicGrpcService -> dynamicGrpcService.refreshConnection(channel, credentials));
+
+                networkConnectionState.setConnectedServer(serverDetails);
+                networkConnectionState.setServerToken(token);
+
+                log.info("gRPC services connection data has been refreshed");
+
+                return user;
+            });
     }
 }

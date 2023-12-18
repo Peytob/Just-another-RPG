@@ -17,7 +17,7 @@ public class LocalServerConnectionStep implements InitializingPipelineStep {
 
     @Override
     public void execute() {
-        ServerCredentials serverCredentials = new ServerCredentials("a", "b");
+        ServerCredentials serverCredentials = new ServerCredentials("string", "pAssW0rd!");
         ServerDetails serverDetails = new ServerDetails("localhost", 9090);
 
         try {

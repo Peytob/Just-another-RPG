@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -26,20 +27,16 @@ public class AccountAuthServiceImpl implements AccountAuthService {
     @Override
     public String login(String username, String password) {
         LoginDto loginDto = new LoginDto(username, password);
-        ResponseEntity<Void> response = restTemplate.postForEntity("/auth/login", loginDto, Void.class);
 
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new LoginFailed();
-        }
-
-        List<String> authenticationHeaders = response.getHeaders().getOrEmpty("Authorization");
-
-        if (authenticationHeaders.isEmpty()) {
-            throw new LoginFailed();
-        }
-
-        return authenticationHeaders.get(0);
-    }
+        try {
+            ResponseEntity<Void> response = restTemplate.postForEntity("/auth/login", loginDto, Void.class);
+            List<String> authenticationHeaders = response.getHeaders().getOrEmpty("Authorization");
+            return authenticationHeaders.get(0);
+        } catch (HttpClientErrorException.Unauthorized unauthorized) {
+            throw new LoginFailed("Bad credentials", unauthorized);
+        } catch (HttpClientErrorException httpClientErrorException) {
+            throw new LoginFailed("Backend error, try again later", httpClientErrorException);
+        }}
 
     @Override
     public void logout(String token) {
@@ -66,8 +63,8 @@ public class AccountAuthServiceImpl implements AccountAuthService {
     }
 
     private record LoginDto(
-        String password,
-        String username
+        String username,
+        String password
     ) {
     }
 }
