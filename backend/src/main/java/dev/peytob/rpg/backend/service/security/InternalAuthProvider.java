@@ -1,10 +1,12 @@
-package dev.peytob.rpg.backend.service;
+package dev.peytob.rpg.backend.service.security;
 
 import dev.peytob.rpg.backend.dto.auth.TokenDto;
 import dev.peytob.rpg.backend.entity.TokenEntity;
 import dev.peytob.rpg.backend.entity.TokenType;
 import dev.peytob.rpg.backend.entity.UserEntity;
 import dev.peytob.rpg.backend.exception.LoginFailed;
+import dev.peytob.rpg.backend.service.TokenService;
+import dev.peytob.rpg.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -71,6 +73,7 @@ public class InternalAuthProvider implements AuthProvider {
 
     private TokenDto toTokenDto(TokenEntity tokenEntity) {
         return new TokenDto(
+            tokenEntity.getUser().getId(),
             tokenEntity.getUser().getUsername(),
             List.copyOf(tokenEntity.getUser().getRoles()),
             tokenEntity.getType(),

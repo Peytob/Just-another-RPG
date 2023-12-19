@@ -1,5 +1,6 @@
-package dev.peytob.rpg.backend.service;
+package dev.peytob.rpg.backend.service.security;
 
+import dev.peytob.rpg.backend.service.TokenEncoder;
 import org.springframework.security.core.token.Sha512DigestUtils;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package dev.peytob.rpg.backend.configuration;
 
-import dev.peytob.rpg.backend.service.TokenUserDetailsService;
+import dev.peytob.rpg.backend.service.security.TokenUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

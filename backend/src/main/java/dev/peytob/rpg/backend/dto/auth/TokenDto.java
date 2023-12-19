@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.Collection;
 
 public record TokenDto(
+    String userId,
     String username,
     Collection<UserRole> roles,
     TokenType type,

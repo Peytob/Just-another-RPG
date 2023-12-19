@@ -3,6 +3,7 @@ package dev.peytob.rpg.backend.service;
 import dev.peytob.rpg.backend.entity.UserEntity;
 import dev.peytob.rpg.backend.entity.UserRole;
 import dev.peytob.rpg.backend.exception.EntityAlreadyExistsException;
+import dev.peytob.rpg.backend.service.crud.UserCrudService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,6 +72,10 @@ public class UserServiceImpl implements UserService {
             .username(username)
             .build();
 
-        return userCrudService.saveUser(user);
+        user = userCrudService.saveUser(user);
+
+        log.info("Created new user with id {} and username {}", user.getId(), user.getUsername());
+
+        return user;
     }
 }

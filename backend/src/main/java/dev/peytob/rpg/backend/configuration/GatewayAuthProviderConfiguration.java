@@ -1,7 +1,7 @@
 package dev.peytob.rpg.backend.configuration;
 
-import dev.peytob.rpg.backend.service.AuthGatewayAuthProvider;
-import dev.peytob.rpg.backend.service.AuthProvider;
+import dev.peytob.rpg.backend.service.security.AuthGatewayAuthProvider;
+import dev.peytob.rpg.backend.service.security.AuthProvider;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.client.RestTemplate;
 
-import static dev.peytob.rpg.backend.service.AuthGatewayAuthProvider.AUTH_GATEWAY_AUTHORIZATION_HEADER;
+import static dev.peytob.rpg.backend.service.security.AuthGatewayAuthProvider.AUTH_GATEWAY_AUTHORIZATION_HEADER;
 
 @Configuration
 @ConditionalOnProperty(prefix = "auth", name = "type", havingValue = "auth-gateway")

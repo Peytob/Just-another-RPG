@@ -3,7 +3,7 @@ package dev.peytob.rpg.backend.controller;
 import dev.peytob.rpg.backend.dto.auth.LoginDto;
 import dev.peytob.rpg.backend.dto.auth.RegistrationDto;
 import dev.peytob.rpg.backend.dto.auth.TokenDto;
-import dev.peytob.rpg.backend.service.AuthProvider;
+import dev.peytob.rpg.backend.service.security.AuthProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.backend.service;
+package dev.peytob.rpg.backend.service.security;
 
 import dev.peytob.rpg.backend.dto.auth.TokenDto;
 import dev.peytob.rpg.backend.entity.UserRole;
@@ -31,7 +31,7 @@ public class TokenUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails toUserDetails(TokenDto token, String rawToken) {
-        return new User(token.username(), rawToken, toSecurityRoles(token.roles()));
+        return new User(token.userId(), rawToken, toSecurityRoles(token.roles()));
     }
 
     private Collection<? extends GrantedAuthority> toSecurityRoles(Collection<UserRole> roles) {
