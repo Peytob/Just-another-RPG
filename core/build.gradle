@@ -4,9 +4,6 @@ plugins {
     id 'java-library'
 }
 
-group 'dev.peytob.rpg'
-version '1.0-SNAPSHOT'
-
 repositories {
     mavenCentral()
 }
@@ -15,6 +12,8 @@ dependencies {
     implementation project(':ecs')
     implementation project(':engine')
     implementation project(':math')
+
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 
     implementation libraries.spring
     implementation libraries.slf4j

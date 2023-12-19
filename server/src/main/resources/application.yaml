@@ -3,11 +3,19 @@ spring:
     name: Just-Another-RPG-Server
 
 rpg:
+  loader:
+    file-structure:
+      tiles: ./asset/tile
+      tilemaps: ./asset/tilemap
+      worlds: ./asset/world
   server:
     details:
-      address: localhost # Server DNS / IP address
-      port: ${grpc.server.port} # Server port
-      name: Test server
+#      address: # Server URL / IP address
+      port: ${grpc.server.port} # Server GRPC port
+#      name: # Server display name
+  backend:
+#    address: URL
+#    token: Backend string-based token
 
 grpc:
   server:

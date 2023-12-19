@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: rpg-backend
+  datasource:
+#    jdbc-url:
+#    username:
+#    password:
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+  jpa:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+
+#auth:
+#  type: # Enum: auth-gateway
+#  auth-gateway:
+#    address: # URL: http://some-url.org:8855/
+#    realm-name: # Realm name: some-realm
+#    token: # String-based token

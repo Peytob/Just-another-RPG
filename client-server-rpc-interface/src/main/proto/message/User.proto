@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "dev.peytob.rpg.rpc.interfaces.base.model";
+option java_outer_classname = "UserProto";
+
+message UserRpcDto {
+  string username = 1;
+  string token = 2;
+  google.protobuf.Timestamp tokenExpiredAt = 3;
+}

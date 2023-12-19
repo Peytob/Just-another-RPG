@@ -50,19 +50,24 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
 
-    implementation libraries.spring
-    implementation libraries.springBootStarter
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation "net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE"
-    implementation libraries.slf4j
 
-    implementation libraries.guava
-    implementation libraries.futureConverters
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
 
-    implementation libraries.jackson
+    compileOnly "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
-    testImplementation libraries.junitApi
-    testRuntimeOnly libraries.junitEngine
-    testImplementation libraries.springTests
+    implementation "com.google.guava:guava:${guavaVersion}"
+    implementation "net.javacrumbs.future-converter:future-converter-java8-guava:${futureConvertersVersion}"
+
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitApiVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitApiVersion}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 springBoot {

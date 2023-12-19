@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: rpg-application-gateway
+  datasource:
+#    jdbc-url:
+#    username:
+#    password:
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+  jpa:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: create
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+
+admin:
+  username: root
+#  token: # Random string-based token
+
+auth:
+  public-endpoints-enabled: true
+  registration-by-user-enabled: true
+  long-time-tokens-enabled: true

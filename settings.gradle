@@ -1,4 +1,5 @@
 rootProject.name = 'JustAnotherRpg'
+
 include 'ecs'
 include 'engine'
 include 'core'
@@ -6,4 +7,5 @@ include 'math'
 include 'client'
 include 'client-server-rpc-interface'
 include 'server'
-
+include 'backend'
+include 'auth-gateway'

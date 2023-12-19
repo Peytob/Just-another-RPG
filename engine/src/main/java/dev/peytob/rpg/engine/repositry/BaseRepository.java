@@ -4,6 +4,7 @@ import dev.peytob.rpg.engine.resource.Resource;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -12,40 +13,28 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public abstract class BaseRepository<R extends Resource> implements Repository<R> {
 
-    private final Map<Integer, R> resourcesByNumberId = new ConcurrentHashMap<>();
-
-    private final Map<String, R> resourcesByTextId = new ConcurrentHashMap<>();
+    private final Map<String, R> resourcesById = new ConcurrentHashMap<>();
 
     private final Collection<RepositoryIndex<?>> repositoryIndices = new CopyOnWriteArrayList<>();
 
     @Override
-    public final R getById(Integer id)  {
-        return resourcesByNumberId.get(id);
-    }
-
-    @Override
-    public final R getById(String textId) {
-        return resourcesByTextId.get(textId);
+    public final Optional<R> getById(String textId) {
+        return Optional.ofNullable(resourcesById.get(textId));
     }
 
     @Override
     public final Collection<R> getAll() {
-        return resourcesByNumberId.values();
+        return resourcesById.values();
     }
 
     @Override
     public final Integer getCount() {
-        return resourcesByTextId.size();
-    }
-
-    @Override
-    public final boolean contains(Integer id) {
-        return resourcesByNumberId.containsKey(id);
+        return resourcesById.size();
     }
 
     @Override
     public final boolean contains(String id) {
-        return resourcesByTextId.containsKey(id);
+        return resourcesById.containsKey(id);
     }
 
     @Override
@@ -54,8 +43,7 @@ public abstract class BaseRepository<R extends Resource> implements Repository<R
             return false;
         }
 
-        resourcesByNumberId.put(resource.id(), resource);
-        resourcesByTextId.put(resource.textId(), resource);
+        resourcesById.put(resource.id(), resource);
         repositoryIndices.forEach(index -> index.append(resource));
         return true;
     }
@@ -66,14 +54,13 @@ public abstract class BaseRepository<R extends Resource> implements Repository<R
             return false;
         }
 
-        resourcesByNumberId.remove(resource.id(), resource);
-        resourcesByTextId.remove(resource.textId(), resource);
+        resourcesById.remove(resource.id(), resource);
         repositoryIndices.forEach(index -> index.remove(resource));
         return true;
     }
 
     private boolean contains(R resource) {
-        return contains(resource.id()) || contains(resource.textId());
+        return contains(resource.id());
     }
 
     protected void registerIndex(RepositoryIndex<?> repositoryIndex) {

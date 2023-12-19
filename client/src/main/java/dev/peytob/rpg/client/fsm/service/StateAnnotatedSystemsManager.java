@@ -2,7 +2,7 @@ package dev.peytob.rpg.client.fsm.service;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
-import dev.peytob.rpg.client.fsm.EngineState;
+import dev.peytob.rpg.client.fsm.state.EngineState;
 import dev.peytob.rpg.ecs.system.OrderedSystem;
 
 import java.util.Collection;

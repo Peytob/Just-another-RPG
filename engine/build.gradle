@@ -1,27 +1,26 @@
 plugins {
+    id 'java-library'
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'org.springframework.boot' version "${springBootVersion}"
-    id 'java-library'
 }
-
-group 'dev.peytob.rpg'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation project(':ecs')
-    implementation libraries.spring
-    implementation libraries.slf4j
+    implementation 'org.springframework.boot:spring-boot-starter'
 
-    implementation libraries.jackson
-    implementation libraries.guava
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
 
-    testImplementation libraries.junitApi
-    testRuntimeOnly libraries.junitEngine
-    testImplementation libraries.springTests
+    implementation "com.google.guava:guava:${guavaVersion}"
+
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitApiVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitApiVersion}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
