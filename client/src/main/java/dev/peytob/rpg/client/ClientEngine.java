@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client;
 
-import dev.peytob.rpg.client.fsm.EngineState;
+import dev.peytob.rpg.client.fsm.state.EngineState;
 import dev.peytob.rpg.client.fsm.model.ExecutingEngineState;
 import dev.peytob.rpg.client.fsm.service.EngineStateManager;
 import dev.peytob.rpg.client.graphic.model.glfw.Window;

@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.fsm.event.handler;
 
-import dev.peytob.rpg.client.fsm.EngineState;
+import dev.peytob.rpg.client.fsm.state.EngineState;
 import dev.peytob.rpg.client.fsm.event.instance.BeforeEngineStatePushEvent;
 import dev.peytob.rpg.client.fsm.service.StateSystemsManager;
 import dev.peytob.rpg.ecs.context.EcsContextBuilder;

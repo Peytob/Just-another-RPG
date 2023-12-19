@@ -2,7 +2,7 @@ package dev.peytob.rpg.client.fsm.configuration;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.peytob.rpg.client.fsm.EngineState;
+import dev.peytob.rpg.client.fsm.state.EngineState;
 import dev.peytob.rpg.client.fsm.annotation.IncludeInAllStates;
 import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.annotation.IncludeInStates;

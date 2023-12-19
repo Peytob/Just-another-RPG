@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.fsm.annotation;
 
-import dev.peytob.rpg.client.fsm.EngineState;
+import dev.peytob.rpg.client.fsm.state.EngineState;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

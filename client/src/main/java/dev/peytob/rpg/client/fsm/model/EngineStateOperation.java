@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.fsm.model;
 
-import dev.peytob.rpg.client.fsm.EngineState;
+import dev.peytob.rpg.client.fsm.state.EngineState;
 
 public sealed interface EngineStateOperation permits EngineStateOperation.PopEngineStateOperation, EngineStateOperation.PushEngineStateOperation {
 

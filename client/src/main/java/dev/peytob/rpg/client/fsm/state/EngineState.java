@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.fsm;
+package dev.peytob.rpg.client.fsm.state;
 
 public interface EngineState {
 

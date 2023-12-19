@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.List;
 
 public record RawTilemapDto(
-    Vec2i size,
-    String title,
     String id,
+    String title,
+    Vec2i size,
     List<RawTilemapLayerDto> layers
 ) {
 
