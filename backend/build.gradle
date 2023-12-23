@@ -22,6 +22,9 @@ dependencies {
     runtimeOnly "com.h2database:h2:${h2Version}"
     runtimeOnly "org.postgresql:postgresql"
 
+    compileOnly "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
     compileOnly "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.backend.service;
+package dev.peytob.rpg.backend.service.crud;
 
 import dev.peytob.rpg.backend.entity.UserEntity;
 import org.springframework.data.domain.Page;

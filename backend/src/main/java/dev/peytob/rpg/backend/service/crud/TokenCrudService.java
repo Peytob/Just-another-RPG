@@ -1,4 +1,4 @@
-package dev.peytob.rpg.backend.service;
+package dev.peytob.rpg.backend.service.crud;
 
 import dev.peytob.rpg.backend.entity.TokenEntity;
 import dev.peytob.rpg.backend.entity.UserEntity;
@@ -13,5 +13,5 @@ public interface TokenCrudService {
 
     Optional<TokenEntity> findByEncodedToken(String encodedToken);
 
-    void removeToken(TokenEntity token);
+    void deleteToken(TokenEntity token);
 }

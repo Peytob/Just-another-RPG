@@ -3,6 +3,7 @@ package dev.peytob.rpg.backend.service;
 import dev.peytob.rpg.backend.entity.TokenEntity;
 import dev.peytob.rpg.backend.entity.TokenType;
 import dev.peytob.rpg.backend.entity.UserEntity;
+import dev.peytob.rpg.backend.service.crud.TokenCrudService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -55,7 +56,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     @Transactional
     public void removeToken(TokenEntity token) {
-        tokenCrudService.removeToken(token);
+        tokenCrudService.deleteToken(token);
     }
 
     private String generateRawToken() {

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.backend.service;
+package dev.peytob.rpg.backend.service.crud;
 
 import dev.peytob.rpg.backend.entity.TokenEntity;
 import dev.peytob.rpg.backend.entity.TokenType;
@@ -33,12 +33,11 @@ public class TokenCrudServiceImpl implements TokenCrudService {
     }
 
     @Override
-    public void removeToken(TokenEntity token) {
+    public void deleteToken(TokenEntity token) {
         try {
             tokenRepository.delete(token);
         } catch (ConstraintViolationException exception) {
             throw new UnresolvedReferencesConflictException("Some references to token still exists", exception);
         }
-
     }
 }

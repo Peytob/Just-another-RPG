@@ -1,4 +1,4 @@
-package dev.peytob.rpg.backend.service;
+package dev.peytob.rpg.backend.service.security;
 
 import dev.peytob.rpg.backend.dto.auth.TokenDto;
 import org.springframework.http.RequestEntity;
