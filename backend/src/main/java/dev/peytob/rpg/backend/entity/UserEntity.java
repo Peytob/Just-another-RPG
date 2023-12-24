@@ -16,6 +16,7 @@ import java.util.Collection;
 public class UserEntity extends AbstractEntity {
 
     @ElementCollection
+    @Enumerated(EnumType.STRING)
     private Collection<UserRole> roles;
 
     @Column(name = "USERNAME", nullable = false, unique = true)

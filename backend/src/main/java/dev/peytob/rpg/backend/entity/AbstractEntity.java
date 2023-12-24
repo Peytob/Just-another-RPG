@@ -1,5 +1,6 @@
 package dev.peytob.rpg.backend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -25,10 +26,12 @@ public class AbstractEntity {
 
     @CreationTimestamp
     @Setter(AccessLevel.NONE)
+    @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
     @UpdateTimestamp
     @Setter(AccessLevel.NONE)
+    @Column(nullable = false, updatable = false)
     private Instant updatedAt;
 
     @Override

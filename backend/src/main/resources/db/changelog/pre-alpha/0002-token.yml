@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: pre-alpha-0001
+      author: Roman Reutov
+      changes:
+        - createTable:
+            tableName: token
+            columns:
+              - column:
+                  name: id
+                  type: varchar(32)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+                    references: users(id)
+                    foreignKeyName: token_to_user
+              - column:
+                  name: encoded_token
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expiration_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(32)
+                  constraints:
+                    nullable: false

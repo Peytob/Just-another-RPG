@@ -27,6 +27,6 @@ public class TokenEntity extends AbstractEntity {
     private Instant expirationAt;
 
     @Column(name = "TYPE", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TokenType type;
-
 }
