@@ -1,0 +1,67 @@
+databaseChangeLog:
+  - changeSet:
+      id: pre-alpha-0001
+      author: Roman Reutov
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: varchar(32)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: encoded_password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_blocked
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_login_time
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    references: users(id)
+                    foreignKeyName: user_role_to_user
+              - column:
+                  name: roles
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+                    primaryKey: true

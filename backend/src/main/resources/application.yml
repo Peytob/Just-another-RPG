@@ -2,13 +2,20 @@ spring:
   application:
     name: rpg-backend
   datasource:
-#    jdbc-url:
+#    url:
 #    username:
 #    password:
     driver-class-name: org.postgresql.Driver
     platform: postgres
   jpa:
+    hibernate.ddl-auto: none
     dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    enabled: true
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    change-log: classpath:db/changelog/changelog-master.yml
 
 #auth:
 #  type: # Enum: auth-gateway
