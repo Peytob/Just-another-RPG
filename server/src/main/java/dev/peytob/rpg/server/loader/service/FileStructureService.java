@@ -9,4 +9,6 @@ public interface FileStructureService {
     Path getTilemapsDirectoryPath();
 
     Path getWorldsDirectoryPath();
+
+    Path getWorldContextsPath();
 }

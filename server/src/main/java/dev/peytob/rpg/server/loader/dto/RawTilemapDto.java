@@ -18,7 +18,7 @@ public record RawTilemapDto(
 
         public record RawPlacedTileDto(
             Vec2i position,
-            String id
+            String tile
         ) {
         }
     }

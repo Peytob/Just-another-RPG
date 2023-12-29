@@ -28,4 +28,9 @@ public class PropertiesFileStructureService implements FileStructureService {
     public Path getWorldsDirectoryPath() {
         return fileStructureProperties.worlds();
     }
+
+    @Override
+    public Path getWorldContextsPath() {
+        return fileStructureProperties.worldContexts();
+    }
 }

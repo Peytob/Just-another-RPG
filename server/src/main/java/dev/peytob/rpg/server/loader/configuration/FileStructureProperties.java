@@ -16,6 +16,9 @@ public record FileStructureProperties(
     Path tilemaps,
 
     @NotNull
-    Path worlds
+    Path worlds,
+
+    @NotNull
+    Path worldContexts
 ) {
 }

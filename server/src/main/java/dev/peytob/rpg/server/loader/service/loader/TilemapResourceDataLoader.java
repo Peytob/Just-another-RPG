@@ -34,8 +34,8 @@ public class TilemapResourceDataLoader extends AbstractResourceDataLoader<RawTil
             TilemapLayer tilemapLayer = tilemap.getMutableLayer(layerIndex);
 
             for (RawTilemapDto.RawTilemapLayerDto.RawPlacedTileDto placedTile : jsonTilemapLayer.tiles()) {
-                Tile tile = tileRepository.getById(placedTile.id()).orElseThrow(() ->
-                    new ResourceNotFoundException("Tile with id " + placedTile.id() + " not found during loading tilemap " + rawResource.id()));
+                Tile tile = tileRepository.getById(placedTile.tile()).orElseThrow(() ->
+                    new ResourceNotFoundException("Tile with id " + placedTile.tile() + " not found during loading tilemap " + rawResource.id()));
 
                 tilemapLayer.setTile(placedTile.position(), tile);
             }

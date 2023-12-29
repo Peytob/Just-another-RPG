@@ -8,6 +8,7 @@ rpg:
       tiles: ./asset/tile
       tilemaps: ./asset/tilemap
       worlds: ./asset/world
+      world-contexts: ./config/world-contexts
   server:
     details:
 #      address: # Server URL / IP address
