@@ -36,7 +36,8 @@ public class AccountAuthServiceImpl implements AccountAuthService {
             throw new LoginFailed("Bad credentials", unauthorized);
         } catch (HttpClientErrorException httpClientErrorException) {
             throw new LoginFailed("Backend error, try again later", httpClientErrorException);
-        }}
+        }
+    }
 
     @Override
     public void logout(String token) {
