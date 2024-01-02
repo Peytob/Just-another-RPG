@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 public record CharacterGetDto(
     String id,
 
+    String userId,
+
     @NotBlank
     @Size(min = 6)
     String name

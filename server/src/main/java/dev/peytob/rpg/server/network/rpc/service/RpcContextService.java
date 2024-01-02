@@ -4,7 +4,7 @@ import dev.peytob.rpg.server.network.dto.TokenDto;
 
 public interface RpcContextService {
 
-    String getAuthenticationToken();
+    String getRawAuthenticationToken();
 
     TokenDto getAuthenticationTokenData();
 }

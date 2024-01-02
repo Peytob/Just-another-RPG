@@ -48,7 +48,7 @@ public class RpcServerAuthService extends ServerAuthServiceGrpc.ServerAuthServic
     public void logout(AuthDataRpcDto request, StreamObserver<Empty> responseObserver) {
         log.info("Some player is logout...");
 
-        accountAuthService.logout(rpcContextService.getAuthenticationToken());
+        accountAuthService.logout(rpcContextService.getRawAuthenticationToken());
 
         responseObserver.onNext(EMPTY_MESSAGE);
         responseObserver.onCompleted();

@@ -49,6 +49,7 @@ public class AccountAuthServiceImpl implements AccountAuthService {
     }
 
     @Override
+    // TODO Cache
     public Optional<TokenDto> validate(String token) {
         RequestEntity<Void> request = RequestEntity.post("/auth/validate")
             .header(BACKEND_AUTHORIZATION_HEADER, token)

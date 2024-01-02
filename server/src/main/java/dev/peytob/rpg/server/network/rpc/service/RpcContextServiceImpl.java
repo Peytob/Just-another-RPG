@@ -14,13 +14,12 @@ public class RpcContextServiceImpl implements RpcContextService {
     private final AccountAuthService accountAuthService;
 
     @Override
-    public String getAuthenticationToken() {
+    public String getRawAuthenticationToken() {
         return RAW_AUTHORIZATION_TOKEN_CONTEXT_KEY.get();
     }
 
     @Override
-    // TODO Cache
     public TokenDto getAuthenticationTokenData() {
-        return accountAuthService.validate(getAuthenticationToken()).orElseThrow(IllegalAccessError::new);
+        return accountAuthService.validate(getRawAuthenticationToken()).orElseThrow(IllegalStateException::new);
     }
 }
