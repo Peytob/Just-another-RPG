@@ -1,7 +1,6 @@
 package dev.peytob.rpg.server.gameplay.service.context;
 
 import dev.peytob.rpg.ecs.context.EcsContext;
-import dev.peytob.rpg.ecs.entity.Entity;
 import dev.peytob.rpg.server.gameplay.repository.CharacterSessionRepository;
 import dev.peytob.rpg.server.gameplay.resource.Character;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +32,6 @@ public class CharacterContextInteractionServiceImpl implements CharacterContextI
     private void createNewCharacter(EcsContext ecsContext, Character character) {
         log.info("Creating character {} ecs context entities", character.name());
 
-        Entity characterEntity = ecsContext.createEntity("Character " + character.name() + " (" + character.id() + ")");
+        ecsContext.createEntity("Character " + character.name() + " (" + character.id() + ")");
     }
 }

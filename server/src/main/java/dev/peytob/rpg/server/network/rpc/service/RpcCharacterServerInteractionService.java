@@ -28,8 +28,10 @@ public class RpcCharacterServerInteractionService extends CharacterServerInterac
         TokenDto token = rpcContextService.getAuthenticationTokenData();
         Character character = characterService.getCharacterById(request.getCharacterId());
 
-        if (token.userId().equals(character.userId())) {
+        if (!token.userId().equals(character.userId())) {
             responseObserver.onError(new IllegalAccessException());
+            responseObserver.onCompleted();
+            return;
         }
 
         characterContextInteractionService.enterToContext(character, "testWorld");

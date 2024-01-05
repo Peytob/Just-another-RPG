@@ -13,7 +13,3 @@ server:
 
 auth:
   type: internal
-  auth-gateway:
-    address: http://localhost:8080/
-    token: ___localtoken___
-    realm-name: local-rpg
