@@ -67,6 +67,7 @@ class AsyncEcsContextRunner implements Runnable, EcsContextRunner {
     private void executeFrame() {
         if (beforeFrameConsumer != null) {
             beforeFrameConsumer.accept(ecsContext);
+            beforeFrameConsumer = null;
         }
 
         ecsContext.getSystems().forEach(system -> system.execute(ecsContext));
