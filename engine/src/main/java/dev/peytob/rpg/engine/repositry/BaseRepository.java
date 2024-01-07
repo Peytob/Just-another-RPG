@@ -1,10 +1,9 @@
 package dev.peytob.rpg.engine.repositry;
 
+import com.google.common.collect.ArrayListMultimap;
 import dev.peytob.rpg.engine.resource.Resource;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -69,11 +68,10 @@ public abstract class BaseRepository<R extends Resource> implements Repository<R
 
     protected abstract class RepositoryIndex<K> {
 
-        // Todo Make guava multimap later
-        private final Map<K, R> resourceByKey;
+        private final ArrayListMultimap<K, R> resourceByKey;
 
         public RepositoryIndex() {
-            this.resourceByKey = new ConcurrentHashMap<>();
+            this.resourceByKey = ArrayListMultimap.create();
         }
 
         final public void append(R resource) {
@@ -88,11 +86,22 @@ public abstract class BaseRepository<R extends Resource> implements Repository<R
 
         final public boolean contains(R resource) {
             K key = extractKey(resource);
+            return contains(key);
+        }
+
+        final public boolean contains(K key) {
             return resourceByKey.containsKey(key);
         }
 
-        final public R get(K key) {
-            return resourceByKey.get(key);
+        final public R getSingle(K key) {
+            List<R> resourceList = resourceByKey.get(key);
+            return resourceList.isEmpty() ? null : resourceList.get(0);
+
+        }
+
+        final public Collection<R> get(K key) {
+            List<R> resourceList = resourceByKey.get(key);
+            return Collections.unmodifiableList(resourceList);
         }
 
         protected abstract K extractKey(R resource);

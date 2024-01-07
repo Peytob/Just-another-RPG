@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: pre-alpha-0001
+      id: pre-alpha-0003
       author: Roman Reutov
       changes:
         - createTable:

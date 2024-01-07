@@ -4,6 +4,7 @@ import dev.peytob.rpg.backend.entity.CharacterEntity;
 import dev.peytob.rpg.backend.entity.UserEntity;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface CharacterCrudService {
 
@@ -12,4 +13,8 @@ public interface CharacterCrudService {
     boolean existsByName(String characterName);
 
     Collection<CharacterEntity> getByUser(UserEntity user);
+
+    Optional<CharacterEntity> findById(String characterId);
+
+    CharacterEntity getById(String characterId);
 }

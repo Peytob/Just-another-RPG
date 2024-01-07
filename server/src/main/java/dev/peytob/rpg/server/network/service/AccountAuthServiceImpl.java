@@ -36,7 +36,8 @@ public class AccountAuthServiceImpl implements AccountAuthService {
             throw new LoginFailed("Bad credentials", unauthorized);
         } catch (HttpClientErrorException httpClientErrorException) {
             throw new LoginFailed("Backend error, try again later", httpClientErrorException);
-        }}
+        }
+    }
 
     @Override
     public void logout(String token) {
@@ -48,6 +49,7 @@ public class AccountAuthServiceImpl implements AccountAuthService {
     }
 
     @Override
+    // TODO Cache
     public Optional<TokenDto> validate(String token) {
         RequestEntity<Void> request = RequestEntity.post("/auth/validate")
             .header(BACKEND_AUTHORIZATION_HEADER, token)
