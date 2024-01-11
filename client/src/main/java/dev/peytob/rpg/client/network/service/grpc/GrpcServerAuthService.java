@@ -26,8 +26,6 @@ public class GrpcServerAuthService implements ServerAuthService, DynamicGrpcServ
 
     private ServerAuthServiceFutureStub stub;
 
-    private final NetworkConnectionState networkConnectionState;
-
     @Override
     public CompletableFuture<User> login(String username, String password, Channel channel) {
         AuthDataRpcDto authDataRpcDto = AuthDataRpcDto.newBuilder()
@@ -43,7 +41,6 @@ public class GrpcServerAuthService implements ServerAuthService, DynamicGrpcServ
 
     @Override
     public CompletableFuture<Void> logout() {
-        String serverToken = networkConnectionState.getServerToken();
         AuthDataRpcDto authDataRpcDto = AuthDataRpcDto.newBuilder().build();
         ListenableFuture<Empty> loginFuture = stub.logout(authDataRpcDto);
         return toCompletableFuture(loginFuture).thenApply(NetworkUtils::emptyResponseAsVoid);
