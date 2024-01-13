@@ -15,12 +15,11 @@ dependencies {
 
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 
-    implementation libraries.spring
-    implementation libraries.slf4j
+    implementation 'org.springframework.boot:spring-boot-starter'
 
-    testImplementation libraries.junitApi
-    testRuntimeOnly libraries.junitEngine
-    testImplementation libraries.springTests
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitApiVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitApiVersion}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
