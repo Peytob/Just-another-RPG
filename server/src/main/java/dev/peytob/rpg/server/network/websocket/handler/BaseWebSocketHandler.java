@@ -21,5 +21,7 @@ public abstract class BaseWebSocketHandler<T> extends TextWebSocketHandler {
         handleDeserializedMessage(session, deserializedMessage);
     }
 
-    abstract protected T handleDeserializedMessage(WebSocketSession session, T message);
+    public abstract String getPath();
+
+    protected abstract void handleDeserializedMessage(WebSocketSession session, T message);
 }

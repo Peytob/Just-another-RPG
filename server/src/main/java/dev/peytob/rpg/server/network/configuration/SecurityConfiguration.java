@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                     "/swagger-ui.html",
                     "/error",
                     "/actuator/**",
-                    "/*/auth/**",
+                    "/auth/**",
                     "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated())
             .sessionManagement(AbstractHttpConfigurer::disable)

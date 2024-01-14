@@ -1,9 +1,3 @@
 spring:
   application:
     name: Just-Another-RPG-Client
-
-grpc:
-  client:
-    test:
-      address: static://localhost:9090
-      negotiationType: PLAINTEXT

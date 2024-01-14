@@ -50,7 +50,6 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
 
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation "net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE"
 
     compileOnly "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"
