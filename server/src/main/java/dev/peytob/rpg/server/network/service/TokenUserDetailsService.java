@@ -1,7 +1,7 @@
-package dev.peytob.rpg.server.network.rpc.security;
+package dev.peytob.rpg.server.network.service;
 
 import dev.peytob.rpg.server.network.dto.TokenDto;
-import dev.peytob.rpg.server.network.service.AccountAuthService;
+import dev.peytob.rpg.server.network.constant.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

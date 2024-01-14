@@ -38,7 +38,6 @@ dependencies {
     implementation project(':ecs')
     implementation project(':engine')
     implementation project(':math')
-    implementation project(':client-server-rpc-interface')
 
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     implementation 'org.lwjgl:lwjgl'

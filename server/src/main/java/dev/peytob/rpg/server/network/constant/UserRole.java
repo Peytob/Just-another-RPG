@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.network.rpc.security;
+package dev.peytob.rpg.server.network.constant;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

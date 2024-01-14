@@ -13,14 +13,13 @@ dependencies {
     implementation project(':ecs')
     implementation project(':engine')
     implementation project(':math')
-    implementation project(':client-server-rpc-interface')
 
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation "net.devh:grpc-server-spring-boot-starter:${grpcServerStarterVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
     compileOnly "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"

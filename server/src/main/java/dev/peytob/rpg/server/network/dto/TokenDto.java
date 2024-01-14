@@ -1,6 +1,6 @@
 package dev.peytob.rpg.server.network.dto;
 
-import dev.peytob.rpg.server.network.rpc.security.UserRole;
+import dev.peytob.rpg.server.network.constant.UserRole;
 
 import java.time.Instant;
 import java.util.Collection;

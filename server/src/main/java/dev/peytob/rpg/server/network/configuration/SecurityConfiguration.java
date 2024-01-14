@@ -1,10 +1,12 @@
 package dev.peytob.rpg.server.network.configuration;
 
-import dev.peytob.rpg.server.network.rpc.security.TokenUserDetailsService;
+import dev.peytob.rpg.server.network.service.TokenAuthenticationProvider;
+import dev.peytob.rpg.server.network.service.TokenUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
@@ -12,10 +14,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 
-import static net.devh.boot.grpc.common.security.SecurityConstants.AUTHORIZATION_HEADER;
+import java.util.Collections;
 
 @Configuration
 public class SecurityConfiguration {
+
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     @Bean
     AuthenticationProvider preAuthenticatedAuthenticationProvider(TokenUserDetailsService tokenUserDetailsService) {
@@ -27,10 +31,15 @@ public class SecurityConfiguration {
     @Bean
     RequestHeaderAuthenticationFilter requestHeaderAuthenticationFilter(AuthenticationManager authenticationManager) {
         RequestHeaderAuthenticationFilter requestHeaderAuthenticationFilter = new RequestHeaderAuthenticationFilter();
-        requestHeaderAuthenticationFilter.setPrincipalRequestHeader(AUTHORIZATION_HEADER.originalName());
+        requestHeaderAuthenticationFilter.setPrincipalRequestHeader(AUTHORIZATION_HEADER);
         requestHeaderAuthenticationFilter.setExceptionIfHeaderMissing(false);
         requestHeaderAuthenticationFilter.setAuthenticationManager(authenticationManager);
         return requestHeaderAuthenticationFilter;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(TokenAuthenticationProvider tokenAuthenticationProvider) {
+        return new ProviderManager(Collections.singletonList(tokenAuthenticationProvider));
     }
 
     @Bean
