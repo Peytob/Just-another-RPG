@@ -12,7 +12,7 @@ rpg:
   server:
     details:
 #      address: # Server URL / IP address
-      port: ${server.port} # Server GRPC port
+      port: ${server.port} # Server websocket port
 #      name: # Server display name
   backend:
 #    address: URL
