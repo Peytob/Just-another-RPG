@@ -12,25 +12,25 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CharacterContextInteractionServiceImpl implements CharacterContextInteractionService {
 
-    private final EcsContextService ecsContextService;
+    private final WorldContextService worldContextService;
 
     private final CharacterSessionRepository characterSessionRepository;
 
     @Override
-    public void enterToContext(Character character, String contextRunnerName) {
-        log.info("Character {} entering to context {}", character.name(), contextRunnerName);
+    public void enterToContext(Character character, String worldContextRunnerName) {
+        log.info("Character {} entering to context {}", character.name(), worldContextRunnerName);
 
         if (characterSessionRepository.containsCharacterSession(character)) {
             log.error("Character {} is already connected to context runner", character.name());
             throw new IllegalStateException("Character already in context");
         }
 
-        EcsContextRunner ecsContextRunner = ecsContextService.getEcsContextRunner(contextRunnerName);
-        ecsContextRunner.executeBeforeFrame(ecsContext -> createNewCharacter(ecsContext, character));
+        WorldContextRunner worldContextRunner = worldContextService.getWorldContextRunner(worldContextRunnerName);
+        worldContextRunner.executeBeforeFrame(ecsContext -> createNewCharacter(ecsContext, character));
     }
 
     private void createNewCharacter(EcsContext ecsContext, Character character) {
-        log.info("Creating character {} ecs context entities", character.name());
+        log.info("Creating character {} world context entities", character.name());
 
         ecsContext.createEntity("Character " + character.name() + " (" + character.id() + ")");
     }

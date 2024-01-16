@@ -10,14 +10,14 @@ public class CharacterSessionRepository extends BaseRepository<CharacterSession>
 
     private final CharacterRepositoryIndex characterRepositoryIndex;
 
-    private final EcsContextRunnerRepositoryIndex ecsContextRunnerRepositoryIndex;
+    private final WorldContextRunnerRepositoryIndex worldContextRunnerRepositoryIndex;
 
     public CharacterSessionRepository() {
         this.characterRepositoryIndex = new CharacterRepositoryIndex();
         registerIndex(this.characterRepositoryIndex);
 
-        this.ecsContextRunnerRepositoryIndex = new EcsContextRunnerRepositoryIndex();
-        registerIndex(this.ecsContextRunnerRepositoryIndex);
+        this.worldContextRunnerRepositoryIndex = new WorldContextRunnerRepositoryIndex();
+        registerIndex(this.worldContextRunnerRepositoryIndex);
     }
 
     public boolean containsCharacterSession(Character character) {
@@ -31,10 +31,10 @@ public class CharacterSessionRepository extends BaseRepository<CharacterSession>
         }
     }
 
-    private final class EcsContextRunnerRepositoryIndex extends RepositoryIndex<String> {
+    private final class WorldContextRunnerRepositoryIndex extends RepositoryIndex<String> {
         @Override
         protected String extractKey(CharacterSession resource) {
-            return resource.getEcsContextRunnerId();
+            return resource.getWorldContextRunnerId();
         }
     }
 }

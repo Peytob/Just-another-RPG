@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.function.Consumer;
 
 @Slf4j
-class AsyncEcsContextRunner implements Runnable, EcsContextRunner {
+class AsyncWorldContextRunner implements Runnable, WorldContextRunner {
 
     private final EcsContext ecsContext;
 
@@ -16,7 +16,7 @@ class AsyncEcsContextRunner implements Runnable, EcsContextRunner {
 
     private boolean isExecuting;
 
-    public AsyncEcsContextRunner(EcsContext ecsContext, String contextName) {
+    public AsyncWorldContextRunner(EcsContext ecsContext, String contextName) {
         this.ecsContext = ecsContext;
         this.beforeFrameConsumer = null;
         this.isExecuting = false;
@@ -26,7 +26,7 @@ class AsyncEcsContextRunner implements Runnable, EcsContextRunner {
     @Override
     public void run() {
         final Thread currentThread = Thread.currentThread();
-        log.info("Starting ecs context {} executing in thread {}", contextName, currentThread.getName());
+        log.info("Starting world context {} executing in thread {}", contextName, currentThread.getName());
 
         isExecuting = true;
 
@@ -35,7 +35,7 @@ class AsyncEcsContextRunner implements Runnable, EcsContextRunner {
             Thread.yield();
         }
 
-        log.info("Ecs context {} executing in thread {} was stopped", contextName, currentThread.getName());
+        log.info("World context {} executing in thread {} was stopped", contextName, currentThread.getName());
 
         isExecuting = false;
     }

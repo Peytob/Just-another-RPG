@@ -4,5 +4,5 @@ import dev.peytob.rpg.server.gameplay.resource.Character;
 
 public interface CharacterContextInteractionService {
 
-    void enterToContext(Character character, String contextRunnerName);
+    void enterToContext(Character character, String worldContextRunnerName);
 }

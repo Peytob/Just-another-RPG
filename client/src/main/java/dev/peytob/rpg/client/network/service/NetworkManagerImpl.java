@@ -26,7 +26,7 @@ public class NetworkManagerImpl implements NetworkManager {
     }
 
     @Override
-    public void loginToServer(String login, String password, ServerDetails serverDetails) {
+    public void loginToServer(String username, String password, ServerDetails serverDetails) {
         log.info("Trying to connect to server {}", serverDetails.host());
 
         String rootUri = UriComponentsBuilder.newInstance()
@@ -39,11 +39,11 @@ public class NetworkManagerImpl implements NetworkManager {
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
             .rootUri(rootUri);
 
-        String token = authService.login(login, password, restTemplateBuilder.build());
+        String token = authService.login(username, password, restTemplateBuilder.build());
 
         RestTemplate restTemplate = restTemplateBuilder.defaultHeader("Authorization", token).build();
 
-        WebSocketClient webSocketClient = new StandardWebSocketClient();
+        StandardWebSocketClient webSocketClient = new StandardWebSocketClient();
 
         this.networkConnectionState = NetworkConnectionState.builder()
             .authorizationToken(token)
@@ -57,7 +57,8 @@ public class NetworkManagerImpl implements NetworkManager {
 
     @Override
     public void logoutFromServer() {
-        authService.logout();
+        NetworkConnectionState connectionState = getConnectionState();
+        authService.logout(connectionState.getRestTemplate());
         networkConnectionState = null;
     }
 

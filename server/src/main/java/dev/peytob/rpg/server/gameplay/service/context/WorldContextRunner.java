@@ -4,7 +4,7 @@ import dev.peytob.rpg.ecs.context.EcsContext;
 
 import java.util.function.Consumer;
 
-public interface EcsContextRunner {
+public interface WorldContextRunner {
 
     EcsContext getRawContext();
 
