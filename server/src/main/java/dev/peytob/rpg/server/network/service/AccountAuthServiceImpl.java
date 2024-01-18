@@ -14,12 +14,12 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
 
+import static dev.peytob.rpg.server.network.utils.DefaultHeaders.AUTHORIZATION_HEADER;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class AccountAuthServiceImpl implements AccountAuthService {
-
-    private static final String BACKEND_AUTHORIZATION_HEADER = "Authorization";
 
     @Qualifier("backendRestTemplate")
     private final RestTemplate restTemplate;
@@ -42,7 +42,7 @@ public class AccountAuthServiceImpl implements AccountAuthService {
     @Override
     public void logout(String token) {
         RequestEntity<Void> request = RequestEntity.post("/auth/logout")
-            .header(BACKEND_AUTHORIZATION_HEADER, token)
+            .header(AUTHORIZATION_HEADER, token)
             .build();
 
         restTemplate.exchange(request, TokenDto.class);
@@ -52,7 +52,7 @@ public class AccountAuthServiceImpl implements AccountAuthService {
     // TODO Cache
     public Optional<TokenDto> validate(String token) {
         RequestEntity<Void> request = RequestEntity.post("/auth/validate")
-            .header(BACKEND_AUTHORIZATION_HEADER, token)
+            .header(AUTHORIZATION_HEADER, token)
             .build();
 
         ResponseEntity<TokenDto> response = restTemplate.exchange(request, TokenDto.class);

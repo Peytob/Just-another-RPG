@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.network.constant;
+package dev.peytob.rpg.backend.utils;
 
 public enum DefaultHeaders {;
 

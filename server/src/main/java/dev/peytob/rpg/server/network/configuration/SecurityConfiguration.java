@@ -16,10 +16,10 @@ import org.springframework.security.web.authentication.preauth.RequestHeaderAuth
 
 import java.util.Collections;
 
+import static dev.peytob.rpg.server.network.utils.DefaultHeaders.AUTHORIZATION_HEADER;
+
 @Configuration
 public class SecurityConfiguration {
-
-    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     @Bean
     AuthenticationProvider preAuthenticatedAuthenticationProvider(TokenUserDetailsService tokenUserDetailsService) {

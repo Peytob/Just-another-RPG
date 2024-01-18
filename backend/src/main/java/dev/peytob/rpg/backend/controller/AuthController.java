@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+import static dev.peytob.rpg.backend.utils.DefaultHeaders.AUTHORIZATION_HEADER;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
-    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final AuthProvider userAuthService;
 

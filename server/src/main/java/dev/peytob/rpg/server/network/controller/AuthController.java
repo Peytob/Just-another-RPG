@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
-import static dev.peytob.rpg.server.network.configuration.SecurityConfiguration.AUTHORIZATION_HEADER;
+import static dev.peytob.rpg.server.network.utils.DefaultHeaders.AUTHORIZATION_HEADER;
 
 @Controller
 @RequestMapping("/auth")

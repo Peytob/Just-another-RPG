@@ -16,11 +16,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 
+import static dev.peytob.rpg.backend.utils.DefaultHeaders.AUTHORIZATION_HEADER;
+
 @Configuration
 @EnableMethodSecurity(proxyTargetClass = true)
 public class SecurityConfiguration {
-
-    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     public static final String PASSWORD_PATTERN_STRING = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$";
 

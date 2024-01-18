@@ -81,6 +81,11 @@ public class NetworkManagerImpl implements NetworkManager {
     }
 
     @Override
+    public String getConnectionToken() {
+        return networkConnectionState.getAuthorizationToken();
+    }
+
+    @Override
     public boolean isConnectedToServer() {
         return networkConnectionState != null;
     }

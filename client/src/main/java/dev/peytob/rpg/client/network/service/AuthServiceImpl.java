@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-import static dev.peytob.rpg.client.network.constant.DefaultHeaders.AUTHORIZATION_HEADER;
+import static dev.peytob.rpg.client.network.utils.DefaultHeaders.AUTHORIZATION_HEADER;
 
 @Service
 @Slf4j

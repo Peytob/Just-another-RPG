@@ -10,7 +10,7 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static dev.peytob.rpg.backend.configuration.SecurityConfiguration.AUTHORIZATION_HEADER;
+import static dev.peytob.rpg.backend.utils.DefaultHeaders.AUTHORIZATION_HEADER;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "RPG-backend API", version = "v1"), security = @SecurityRequirement(name = "authorization_token_auth"))
