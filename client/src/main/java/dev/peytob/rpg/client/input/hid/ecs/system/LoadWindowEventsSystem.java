@@ -1,7 +1,7 @@
-package dev.peytob.rpg.client.input.hid.system;
+package dev.peytob.rpg.client.input.hid.ecs.system;
 
 import dev.peytob.rpg.client.fsm.annotation.IncludeInAllStates;
-import dev.peytob.rpg.client.input.hid.event.HidEvent;
+import dev.peytob.rpg.client.input.hid.ecs.event.HidEvent;
 import dev.peytob.rpg.client.input.hid.service.GlfwHidEventQueue;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;

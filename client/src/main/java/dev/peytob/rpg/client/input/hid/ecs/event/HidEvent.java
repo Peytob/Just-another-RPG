@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.input.hid.event;
+package dev.peytob.rpg.client.input.hid.ecs.event;
 
 import dev.peytob.rpg.ecs.event.Event;
 

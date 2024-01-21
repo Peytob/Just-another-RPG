@@ -13,10 +13,7 @@ public class ClientEngineStarter {
 
     private final GameLoadingState gameLoadingState;
 
-    private final InitializingPipeline initializingPipeline;
-
     void initializeAndStartGameCycle() {
-        initializingPipeline.execute();
         clientEngine.runCycle(gameLoadingState);
     }
 }

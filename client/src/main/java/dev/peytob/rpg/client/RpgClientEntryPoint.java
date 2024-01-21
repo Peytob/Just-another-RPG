@@ -3,8 +3,11 @@ package dev.peytob.rpg.client;
 import dev.peytob.rpg.client.configuration.library.GlfwLibraryHandler;
 import dev.peytob.rpg.client.configuration.library.StaticLibraryHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
@@ -20,8 +23,10 @@ public class RpgClientEntryPoint {
     public static void main(String[] args) {
         initializeStaticCLibraries();
 
-        ConfigurableApplicationContext context = SpringApplication
-            .run(RpgClientEntryPoint.class);
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(RpgClientEntryPoint.class)
+            .web(WebApplicationType.NONE)
+            .bannerMode(Banner.Mode.OFF)
+            .run(args);
 
         ClientEngineStarter clientEngineStarter = context.getBean(ClientEngineStarter.class);
         clientEngineStarter.initializeAndStartGameCycle();

@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.input.hid.service;
 
 import dev.peytob.rpg.client.graphic.model.glfw.Window;
-import dev.peytob.rpg.client.input.hid.event.*;
+import dev.peytob.rpg.client.input.hid.ecs.event.*;
 import dev.peytob.rpg.client.input.hid.model.KeyAction;
 import dev.peytob.rpg.client.input.hid.model.KeyModifiers;
 import dev.peytob.rpg.client.input.hid.model.KeyboardKey;

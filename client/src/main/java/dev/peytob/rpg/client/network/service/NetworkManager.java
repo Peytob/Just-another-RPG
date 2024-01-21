@@ -16,7 +16,5 @@ public interface NetworkManager {
 
     ServerDetails getServerDetails();
 
-    String getConnectionToken();
-
     boolean isConnectedToServer();
 }
