@@ -35,7 +35,7 @@ public class NetworkManagerImpl implements NetworkManager {
         log.info("Trying to connect to server {}", serverDetails.host());
 
         String httpRootUri = UriComponentsBuilder.newInstance()
-            .scheme(serverDetails.networkScheme().name())
+            .scheme(serverDetails.networkScheme().getSchemeName())
             .host(serverDetails.host())
             .port(serverDetails.port())
             .path("/")
@@ -49,7 +49,7 @@ public class NetworkManagerImpl implements NetworkManager {
         RestTemplate restTemplate = restTemplateBuilder.defaultHeader(AUTHORIZATION_HEADER, token).build();
 
         String wsRootUri = UriComponentsBuilder.fromUriString(httpRootUri)
-            .scheme(NetworkScheme.WEB_SOCKET.name())
+            .scheme(NetworkScheme.WEB_SOCKET.getSchemeName())
             .toUriString();
 
         WebSocketClient webSocketClient = new StandardWebSocketClient();

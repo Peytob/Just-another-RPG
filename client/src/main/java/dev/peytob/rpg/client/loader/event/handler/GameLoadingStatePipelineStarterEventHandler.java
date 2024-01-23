@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class GameLoadingStateLoadingStarterEventHandler {
+public class GameLoadingStatePipelineStarterEventHandler {
 
     private final GameLoadingState gameLoadingState;
 

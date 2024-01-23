@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -12,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public final class InitializingPipeline {
 
-    private final Collection<InitializingPipelineStep> pipelineSteps;
+    private final List<InitializingPipelineStep> pipelineSteps;
 
     private boolean isExecuted = false;
 

@@ -38,6 +38,7 @@ public class GameLoadingAwaitSystem implements System {
 
         for (AsyncTaskComponent<?> asyncTask : asyncTasks) {
             Entity componentEntity = context.getComponentEntity(asyncTask);
+
             String taskName = asyncTask.getTaskName();
             CompletableFuture<?> future = asyncTask.getFuture();
 
