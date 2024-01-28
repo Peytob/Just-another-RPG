@@ -37,7 +37,11 @@ public class GameLoadingStatePipelineStarterEventHandler {
         Entity loadingTaskEntity = ecsContext.createEntity();
 
         CompletableFuture<Void> loadingFuture = CompletableFuture
-            .runAsync(initializingPipeline::execute);
+            .runAsync(initializingPipeline::execute)
+            .exceptionally(throwable -> {
+                log.error("Exception while executing initializing pipeline", throwable);
+                return null;
+            });
 
         AsyncTaskComponent<Void> loadingTaskComponent =
             new AsyncTaskComponent<>(loadingFuture, "Initializing pipeline task");

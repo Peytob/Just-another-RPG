@@ -6,7 +6,9 @@ import dev.peytob.rpg.client.network.model.ServerDetails;
 import dev.peytob.rpg.client.network.utils.DefaultValuesWebSocketClientDecorator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.WebSocketClient;
@@ -42,6 +44,12 @@ public class NetworkManagerImpl implements NetworkManager {
             .toUriString();
 
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
+            .errorHandler(new DefaultResponseErrorHandler() {
+                @Override
+                public boolean hasError(ClientHttpResponse response) {
+                    return false;
+                }
+            })
             .rootUri(httpRootUri);
 
         String token = authService.login(username, password, restTemplateBuilder.build());
