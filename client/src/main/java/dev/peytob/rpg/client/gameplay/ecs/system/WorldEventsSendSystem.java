@@ -30,10 +30,6 @@ public class WorldEventsSendSystem implements System {
     public void execute(EcsContext context) {
         Collection<ClientEvent> clientEvents = context.getEventsByType(ClientEvent.class);
 
-        if (clientEvents.isEmpty()) {
-            return;
-        }
-
         context.getSingletonComponentByType(WebsocketSessionComponent.class)
             .map(WebsocketSessionComponent::getWebSocketSession)
             .ifPresent(websocketSession -> sendEvents(websocketSession, clientEvents));
