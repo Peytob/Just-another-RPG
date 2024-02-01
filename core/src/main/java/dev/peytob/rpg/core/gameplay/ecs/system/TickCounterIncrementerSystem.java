@@ -3,7 +3,9 @@ package dev.peytob.rpg.core.gameplay.ecs.system;
 import dev.peytob.rpg.core.gameplay.ecs.component.TickCounterComponent;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import dev.peytob.rpg.ecs.system.System;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TickCounterIncrementerSystem implements System {
 
     @Override

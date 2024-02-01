@@ -2,6 +2,7 @@ package dev.peytob.rpg.client.network.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.peytob.rpg.client.gameplay.ecs.event.WorldUpdatedEvent;
 import dev.peytob.rpg.client.network.ecs.component.WebsocketSessionComponent;
 import dev.peytob.rpg.client.network.model.ServerDetails;
 import dev.peytob.rpg.core.network.model.server.WorldState;
@@ -35,7 +36,7 @@ public class ClientInGameWebsocketHandler implements WebSocketHandler {
 
         if (message instanceof TextMessage textMessage) {
             WorldState worldState = objectMapper.readValue(textMessage.getPayload(), WorldState.class);
-            log.info("Received world state data from server...");
+            ecsContext.addEvent(new WorldUpdatedEvent(worldState));
         } else {
             log.error("Unknown type of message, cannot be deserialized");
         }
@@ -52,7 +53,10 @@ public class ClientInGameWebsocketHandler implements WebSocketHandler {
         log.info("Websocket connection closed with status {}", closeStatus);
 
         getSessionComponentEntity(session)
-            .ifPresent(entity -> entity.removeComponent(WebsocketSessionComponent.class));
+            .ifPresentOrElse(
+                entity -> entity.removeComponent(WebsocketSessionComponent.class),
+                () -> log.error("Websocket connection component not found, cant be deleted")
+            );
     }
 
     @Override

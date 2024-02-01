@@ -64,7 +64,6 @@ public class StateAnnotatedSystemsManagerConfiguration {
                 processIncludeInStates(system, targetSystemMixins);
 
             systemsMap.putAll(Multimaps.forMap(includeInStateResult));
-
         }
 
         return systemsMap;
@@ -96,18 +95,29 @@ public class StateAnnotatedSystemsManagerConfiguration {
             throw new IllegalStateException("Orders from system and mixins 'Include in all states' should be equal");
         }
 
+        int systemOrder;
+        if (systemIncludeInAllStates != null) {
+            systemOrder = systemIncludeInAllStates.order();
+        } else {
+            systemOrder = mixinIncludeInAllStates.get(0).order();
+        }
+
         Collection<Class<? extends EngineState>> excludeAccumulator = new HashSet<>(EXPECTED_SYSTEMS_COUNT_PER_STATE);
 
-        excludeAccumulator.addAll(Arrays.asList(systemIncludeInAllStates.exclude()));
+        if (systemIncludeInAllStates != null) {
+            excludeAccumulator.addAll(Arrays.asList(systemIncludeInAllStates.exclude()));
+        }
+
         mixinIncludeInAllStates.stream()
             .map(IncludeInAllStates::exclude)
+            .filter(Objects::nonNull)
             .map(Arrays::asList)
             .forEach(excludeAccumulator::addAll);
 
         return engineStates.stream()
             .map(EngineState::getClass)
             .filter(engineStateClass -> !excludeAccumulator.contains(engineStateClass))
-            .collect(Collectors.toMap(identity(), engineStateClass -> OrderedSystem.wrap(system, systemIncludeInAllStates.order())));
+            .collect(Collectors.toMap(identity(), engineStateClass -> OrderedSystem.wrap(system, systemOrder)));
     }
 
     private Map<Class<? extends EngineState>, OrderedSystem> processIncludeInStates(System system, Collection<SystemMixin> systemMixinIndex) {
