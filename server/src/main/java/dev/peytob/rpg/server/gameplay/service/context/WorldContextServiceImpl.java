@@ -5,6 +5,7 @@ import dev.peytob.rpg.ecs.context.EcsContexts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -31,6 +32,11 @@ public class WorldContextServiceImpl implements WorldContextService {
         }
 
         return worldContextRunner;
+    }
+
+    @Override
+    public Collection<WorldContextRunner> getAllWorldContextRunners() {
+        return worldContextRunners.values();
     }
 
     @Override

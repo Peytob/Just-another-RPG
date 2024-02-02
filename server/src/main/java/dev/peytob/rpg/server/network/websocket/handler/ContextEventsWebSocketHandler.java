@@ -1,22 +1,32 @@
 package dev.peytob.rpg.server.network.websocket.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.peytob.rpg.core.network.model.client.ClientEvent;
+import dev.peytob.rpg.core.network.model.server.WorldState;
 import dev.peytob.rpg.server.gameplay.repository.CharacterSessionRepository;
+import dev.peytob.rpg.server.gameplay.resource.Character;
 import dev.peytob.rpg.server.gameplay.resource.CharacterSession;
+import dev.peytob.rpg.server.gameplay.service.context.CharacterContextInteractionService;
 import dev.peytob.rpg.server.gameplay.service.context.WorldContextRunner;
 import dev.peytob.rpg.server.gameplay.service.context.WorldContextService;
+import dev.peytob.rpg.server.gameplay.service.data.CharacterService;
 import dev.peytob.rpg.server.network.dto.TokenDto;
 import dev.peytob.rpg.server.network.service.AccountAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Optional;
 
+import static dev.peytob.rpg.server.network.utils.DefaultHeaders.CHARACTER_ID_HEADER;
+
+// TODO Decomposition
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -28,9 +38,15 @@ public class ContextEventsWebSocketHandler extends BaseWebSocketHandler<Collecti
 
     private final AccountAuthService accountAuthService;
 
+    private final CharacterContextInteractionService characterContextInteractionService;
+
     private final WorldContextService worldContextService;
 
     private final CharacterSessionRepository characterSessionRepository;
+
+    private final CharacterService characterService;
+
+    private final ObjectMapper objectMapper;
 
     @Override
     public String getPath() {
@@ -46,13 +62,23 @@ public class ContextEventsWebSocketHandler extends BaseWebSocketHandler<Collecti
         String userId = session.getAttributes().get(USER_ID_ATTRIBUTE).toString();
 
         CharacterSession userCharacterSession = characterSessionRepository.getUserCharacterSession(userId);
-        String worldContextRunnerId = userCharacterSession.getWorldContextRunnerId();
+        String worldContextRunnerName = userCharacterSession.getWorldContextRunnerName();
 
-        WorldContextRunner worldContextRunner = worldContextService.getWorldContextRunner(worldContextRunnerId);
+        WorldContextRunner worldContextRunner = worldContextService.getWorldContextRunner(worldContextRunnerName);
 
         worldContextRunner.executeBeforeFrame(context -> message.stream()
             .map(ClientEvent::data)
             .forEach(context::addEvent));
+
+        worldContextRunner.executeBeforeFrame(context -> {
+            try {
+                WorldState worldState = characterContextInteractionService.getAwailableWorldState(userCharacterSession.getCharacter());
+                String worldStateJson = objectMapper.writeValueAsString(worldState);
+                session.sendMessage(new TextMessage(worldStateJson));
+            } catch (IOException e) {
+                log.error("Exception while serializing world state", e);
+            }
+        });
     }
 
     @Override
@@ -75,6 +101,10 @@ public class ContextEventsWebSocketHandler extends BaseWebSocketHandler<Collecti
             return;
         }
 
+        if (!session.getHandshakeHeaders().containsKey(CHARACTER_ID_HEADER)) {
+            log.error("Websocket handshake headers is invalid: character id not found");
+        }
+
         TokenDto tokenDetails = tokenDetailsOptional.get();
 
         if (characterSessionRepository.containsUserCharacterSession(tokenDetails.userId())) {
@@ -88,6 +118,11 @@ public class ContextEventsWebSocketHandler extends BaseWebSocketHandler<Collecti
         session.getAttributes().put(USERNAME_ATTRIBUTE, tokenDetails.username());
         session.getAttributes().put(USER_ID_ATTRIBUTE, tokenDetails.userId());
         session.getAttributes().put(TOKEN_ATTRIBUTE, token);
+
+        String characterId = session.getHandshakeHeaders().getFirst(CHARACTER_ID_HEADER);
+        Character character = characterService.getUserCharacterById(tokenDetails.userId(), characterId);
+
+        characterContextInteractionService.enterToContext(character);
     }
 
     @Override

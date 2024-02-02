@@ -82,3 +82,21 @@ databaseChangeLog:
               - column:
                   name: type
                   value: LONGTIME
+        - insert:
+            tableName: character
+            columns:
+              - column:
+                  name: id
+                  value: ${user.id}
+              - column:
+                  name: created_at
+                  value: ${now}
+              - column:
+                  name: updated_at
+                  value: ${now}
+              - column:
+                  name: user_id
+                  value: ${user.id}
+              - column:
+                  name: name
+                  value: "admin user local character"

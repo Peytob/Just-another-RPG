@@ -54,7 +54,7 @@ public class CharacterSessionRepository extends BaseRepository<CharacterSession>
     private final class WorldContextRunnerRepositoryIndex extends RepositoryIndex<String> {
         @Override
         protected String extractKey(CharacterSession resource) {
-            return resource.getWorldContextRunnerId();
+            return resource.getWorldContextRunnerName();
         }
     }
 }

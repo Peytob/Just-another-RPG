@@ -44,4 +44,15 @@ public class CharacterCrudServiceImpl implements CharacterCrudService {
         return findById(characterId)
             .orElseThrow(() -> new EntityNotFoundException("Character with id '" + characterId + "' not found"));
     }
+
+    @Override
+    public CharacterEntity getByUserAndId(UserEntity user, String characterId) {
+        return findByUserAndId(user, characterId)
+            .orElseThrow(() -> new EntityNotFoundException("User " + user.getId() + " character with id '" + characterId + "' not found"));
+    }
+
+    @Override
+    public Optional<CharacterEntity> findByUserAndId(UserEntity user, String characterId) {
+        return characterRepository.findByUserAndId(user, characterId);
+    }
 }

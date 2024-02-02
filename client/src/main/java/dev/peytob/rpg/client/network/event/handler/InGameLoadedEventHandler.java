@@ -12,8 +12,14 @@ import dev.peytob.rpg.ecs.entity.Entity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.WebSocketClient;
+
+import java.net.URI;
+
+import static dev.peytob.rpg.client.network.utils.DefaultHeaders.CHARACTER_ID_HEADER;
 
 @Component
 @RequiredArgsConstructor
@@ -37,8 +43,12 @@ public class InGameLoadedEventHandler {
         WebSocketClient websocketClient = networkManager.getWebsocketClient();
         ServerDetails serverDetails = networkManager.getServerDetails();
 
+        HttpHeaders httpHeaders = new HttpHeaders();
+        // TODO Remove. otbdtipxasybzxb8 - default local admin character id
+        httpHeaders.add(CHARACTER_ID_HEADER, "otbdtipxasybzxb8");
+
         websocketClient
-            .execute(new ClientInGameWebsocketHandler(serverDetails, ecsContext), "/context/events")
+            .execute(new ClientInGameWebsocketHandler(serverDetails, ecsContext), new WebSocketHttpHeaders(httpHeaders), URI.create("/context/events"))
             .thenApply(webSocketSession -> {
                 log.info("Connection to server {} was established; making ECS entities", serverDetails);
 

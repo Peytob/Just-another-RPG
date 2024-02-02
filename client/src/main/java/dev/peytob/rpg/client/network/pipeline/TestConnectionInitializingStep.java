@@ -18,7 +18,7 @@ public class TestConnectionInitializingStep implements InitializingPipelineStep 
     @Override
     public void execute() {
         ServerDetails serverDetails = new ServerDetails("localhost", 8082, NetworkScheme.HTTP);
-        networkManager.loginToServer("string", "pAssW0rd!", serverDetails);
+        networkManager.loginToServer("localadmin", "pAssW0rd!", serverDetails);
     }
 
     @Override

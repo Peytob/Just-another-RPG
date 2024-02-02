@@ -50,8 +50,9 @@ public class DefaultValuesWebSocketClientDecorator implements WebSocketClient {
     }
 
     private WebSocketHttpHeaders mergeHeaders(WebSocketHttpHeaders firstHeaders, WebSocketHttpHeaders secondHeaders) {
-        WebSocketHttpHeaders targetHeaders = new WebSocketHttpHeaders(firstHeaders);
-        targetHeaders.forEach(secondHeaders::addAll);
+        WebSocketHttpHeaders targetHeaders = new WebSocketHttpHeaders();
+        targetHeaders.putAll(firstHeaders);
+        targetHeaders.putAll(secondHeaders);
         return targetHeaders;
     }
 }

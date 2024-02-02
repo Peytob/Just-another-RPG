@@ -38,8 +38,6 @@ public class WorldEventsSendSystem implements System {
     }
 
     private void sendEvents(WebSocketSession websocketSession, Collection<ClientEvent> clientEvents) {
-        log.info("Sending events... {}", clientEvents);
-
         try {
             String jsonData = objectMapper.writeValueAsString(clientEvents);
             TextMessage textMessage = new TextMessage(jsonData);
