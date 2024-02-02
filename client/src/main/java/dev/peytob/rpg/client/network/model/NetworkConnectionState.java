@@ -1,19 +1,21 @@
 package dev.peytob.rpg.client.network.model;
 
-import dev.peytob.rpg.rpc.interfaces.base.gameplay.ClientEventsDto;
-import io.grpc.stub.StreamObserver;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.socket.client.WebSocketClient;
 
-@Component
 @Getter
 @Setter
+@Builder
 public class NetworkConnectionState {
 
-    private ServerDetails connectedServer;
+    private ServerDetails serverDetails;
 
-    private String serverToken;
+    private String authorizationToken;
 
-    private StreamObserver<ClientEventsDto> networkStreamObserver;
+    private WebSocketClient webSocketClient;
+
+    private RestTemplate restTemplate;
 }

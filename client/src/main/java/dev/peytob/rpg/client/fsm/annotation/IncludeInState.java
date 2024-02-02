@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IncludeInState {
 
-    Class<? extends EngineState> state();
+    Class<? extends EngineState> value();
 
     int order() default 0;
 }

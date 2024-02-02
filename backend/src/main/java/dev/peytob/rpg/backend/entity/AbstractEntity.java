@@ -31,7 +31,7 @@ public class AbstractEntity {
 
     @UpdateTimestamp
     @Setter(AccessLevel.NONE)
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private Instant updatedAt;
 
     @Override

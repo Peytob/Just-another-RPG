@@ -39,6 +39,15 @@ public class UserCharacterController {
         return ResponseEntity.ok(characterMapper.toCharacterDto(characters));
     }
 
+    @Operation(description = "Get user character")
+    @GetMapping("/{characterId}")
+    @OwnerOrAdminReader
+    ResponseEntity<CharacterGetDto> getUserCharacter(@PathVariable String userId, @PathVariable String characterId) {
+        UserEntity user = userCrudService.getUserById(userId);
+        CharacterEntity characters = characterCrudService.getByUserAndId(user, characterId);
+        return ResponseEntity.ok(characterMapper.toCharacterDto(characters));
+    }
+
     @Operation(description = "Create new user character")
     @PostMapping
     @OwnerOrAdminWriter

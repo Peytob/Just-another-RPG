@@ -1,7 +1,8 @@
 package dev.peytob.rpg.client.network.model;
 
 public record ServerDetails(
-    String serverAddress,
-    int port
+    String host,
+    int port,
+    NetworkScheme networkScheme
 ) {
 }

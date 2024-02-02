@@ -13,7 +13,14 @@ public final class InitializingPipeline {
 
     private final List<InitializingPipelineStep> pipelineSteps;
 
+    private boolean isExecuted = false;
+
     public void execute() {
+        if (isExecuted) {
+            log.warn("Engine initializing pipeline is already executed, skipping...");
+            return;
+        }
+
         log.info("Executing engine initializing pipeline");
 
         pipelineSteps.forEach(step -> {
@@ -22,6 +29,12 @@ public final class InitializingPipeline {
             log.info("Initializing step {} was executed", step.getName());
         });
 
+        this.isExecuted = true;
+
         log.info("Engine initializing pipeline has been executed");
+    }
+
+    public boolean isExecuted() {
+        return isExecuted;
     }
 }

@@ -1,6 +1,6 @@
 package dev.peytob.rpg.client.input.hid.service;
 
-import dev.peytob.rpg.client.input.hid.event.HidEvent;
+import dev.peytob.rpg.client.input.hid.ecs.event.HidEvent;
 
 public interface HidEventQueue {
     boolean appendEvent(HidEvent hidEvent);

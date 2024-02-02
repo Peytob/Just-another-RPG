@@ -17,4 +17,8 @@ public interface CharacterCrudService {
     Optional<CharacterEntity> findById(String characterId);
 
     CharacterEntity getById(String characterId);
+
+    CharacterEntity getByUserAndId(UserEntity user, String characterId);
+
+    Optional<CharacterEntity> findByUserAndId(UserEntity user, String characterId);
 }

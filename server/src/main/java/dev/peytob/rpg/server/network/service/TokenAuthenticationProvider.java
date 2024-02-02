@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 
-import static dev.peytob.rpg.server.network.rpc.security.UserRole.toSecurityRoles;
+import static dev.peytob.rpg.server.network.constant.UserRole.toSecurityRoles;
 
 @Component
 @RequiredArgsConstructor

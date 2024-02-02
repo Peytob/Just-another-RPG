@@ -1,27 +1,20 @@
 package dev.peytob.rpg.client.network.service;
 
-import dev.peytob.rpg.client.network.model.ServerCredentials;
 import dev.peytob.rpg.client.network.model.ServerDetails;
-import dev.peytob.rpg.client.network.model.User;
-import dev.peytob.rpg.core.network.model.client.ClientEvent;
-import dev.peytob.rpg.core.network.model.server.WorldState;
-import io.grpc.stub.StreamObserver;
-
-import java.util.Collection;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.socket.client.WebSocketClient;
 
 public interface NetworkManager {
 
-    Collection<ServerDetails> getAvailableServers();
+    void loginToServer(String username, String password, ServerDetails serverDetails);
 
-    Optional<ServerDetails> getConnectedServer();
+    void logoutFromServer();
 
-    StreamObserver<Collection<ClientEvent>> startEventsStream(StreamObserver<WorldState> responseObserver);
+    WebSocketClient getWebsocketClient();
 
-    void stopEventsStream();
+    RestTemplate getRestTemplateClient();
 
-    boolean isEventsStreamingRunning();
+    ServerDetails getServerDetails();
 
-    CompletableFuture<User> refreshConnection(ServerDetails serverDetails, ServerCredentials serverCredentials);
+    boolean isConnectedToServer();
 }

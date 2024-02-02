@@ -2,53 +2,6 @@ plugins {
     id 'java'
 }
 
-project.ext.libraries = [
-        junitApi: [
-                "org.junit.jupiter:junit-jupiter-api:${junitApiVersion}"
-        ],
-
-        junitEngine: [
-                "org.junit.jupiter:junit-jupiter-engine:${junitApiVersion}"
-        ],
-
-        guava: [
-                "com.google.guava:guava:${guavaVersion}"
-        ],
-
-        mockito: [
-                "org.mockito:mockito-core:${mockitoVersion}"
-        ],
-
-        futureConverters: [
-                "net.javacrumbs.future-converter:future-converter-java8-guava:${futureConvertersVersion}"
-        ],
-
-        spring: [
-                "org.springframework.boot:spring-boot:${springBootVersion}"
-        ],
-
-        springBootStarter: [
-                'org.springframework.boot:spring-boot-starter'
-        ],
-
-        jackson: [
-                "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-        ],
-
-        springTests: [
-                'org.springframework.boot:spring-boot-starter-test'
-        ],
-
-        slf4j: [
-                "org.slf4j:slf4j-api:${slf4jVersion}",
-                "ch.qos.logback:logback-classic:${logbackVersion}"
-        ],
-
-        apacheCommon: [
-                "org.apache.commons:commons-lang3:${apacheCommonVersion}"
-        ]
-]
-
 group = "dev.peytob.rpg"
 version = "0.0.1"
 

@@ -23,5 +23,5 @@ public class CharacterSession implements Resource {
 
     private Character character;
 
-    private String ecsContextRunnerId;
+    private String worldContextRunnerName;
 }

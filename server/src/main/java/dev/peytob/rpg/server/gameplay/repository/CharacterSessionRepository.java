@@ -10,18 +10,31 @@ public class CharacterSessionRepository extends BaseRepository<CharacterSession>
 
     private final CharacterRepositoryIndex characterRepositoryIndex;
 
-    private final EcsContextRunnerRepositoryIndex ecsContextRunnerRepositoryIndex;
+    private final WorldContextRunnerRepositoryIndex worldContextRunnerRepositoryIndex;
+
+    private final UserIdRepositoryIndex userIdRepositoryIndex;
 
     public CharacterSessionRepository() {
         this.characterRepositoryIndex = new CharacterRepositoryIndex();
         registerIndex(this.characterRepositoryIndex);
 
-        this.ecsContextRunnerRepositoryIndex = new EcsContextRunnerRepositoryIndex();
-        registerIndex(this.ecsContextRunnerRepositoryIndex);
+        this.worldContextRunnerRepositoryIndex = new WorldContextRunnerRepositoryIndex();
+        registerIndex(this.worldContextRunnerRepositoryIndex);
+
+        this.userIdRepositoryIndex = new UserIdRepositoryIndex();
+        registerIndex(this.userIdRepositoryIndex);
     }
 
     public boolean containsCharacterSession(Character character) {
         return characterRepositoryIndex.contains(character.id());
+    }
+
+    public boolean containsUserCharacterSession(String userId) {
+        return userIdRepositoryIndex.contains(userId);
+    }
+
+    public CharacterSession getUserCharacterSession(String userId) {
+        return userIdRepositoryIndex.getSingle(userId);
     }
 
     private final class CharacterRepositoryIndex extends RepositoryIndex<String> {
@@ -31,10 +44,17 @@ public class CharacterSessionRepository extends BaseRepository<CharacterSession>
         }
     }
 
-    private final class EcsContextRunnerRepositoryIndex extends RepositoryIndex<String> {
+    private final class UserIdRepositoryIndex extends RepositoryIndex<String> {
         @Override
         protected String extractKey(CharacterSession resource) {
-            return resource.getEcsContextRunnerId();
+            return resource.getCharacter().userId();
+        }
+    }
+
+    private final class WorldContextRunnerRepositoryIndex extends RepositoryIndex<String> {
+        @Override
+        protected String extractKey(CharacterSession resource) {
+            return resource.getWorldContextRunnerName();
         }
     }
 }

@@ -1,7 +1,7 @@
 package dev.peytob.rpg.server.loader.pipeline;
 
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
-import dev.peytob.rpg.server.gameplay.service.context.EcsContextService;
+import dev.peytob.rpg.server.gameplay.service.context.WorldContextService;
 import dev.peytob.rpg.server.loader.dto.WorldContextDto;
 import dev.peytob.rpg.server.loader.service.loader.WorldContextsDataLoader;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class WorldContextsStartingInitializeStep implements InitializingPipeline
 
     private final WorldContextsDataLoader worldContextsDataLoader;
 
-    private final EcsContextService ecsContextService;
+    private final WorldContextService worldContextService;
 
     @Override
     public void execute() {
@@ -26,10 +26,10 @@ public class WorldContextsStartingInitializeStep implements InitializingPipeline
 
         Collection<WorldContextDto> worldContexts = worldContextsDataLoader.loadResources();
 
-        log.info("Starting {} loaded ECS context runners", worldContexts.size());
+        log.info("Starting {} loaded world context runners", worldContexts.size());
 
         worldContexts.forEach(worldContextDto ->
-            ecsContextService.startEcsContextRunner(worldContextDto.world(), worldContextDto.world().id()));
+            worldContextService.startWorldContextRunner(worldContextDto.world(), worldContextDto.world().id()));
     }
 
     @Override

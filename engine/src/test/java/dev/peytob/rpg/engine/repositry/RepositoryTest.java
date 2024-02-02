@@ -5,6 +5,8 @@ import dev.peytob.rpg.engine.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,7 +35,10 @@ abstract class RepositoryTest<R extends Record & Resource> extends NonContextRpg
         R resource = createTestResource("b");
         repository.append(resource);
 
-        assertEquals(resource, repository.getById(resource.id()));
+        Optional<R> resourceOptional = repository.getById(resource.id());
+
+        assertTrue(resourceOptional.isPresent());
+        assertEquals(resource, resourceOptional.get());
         assertEquals(1, repository.getAll().size());
         assertTrue(repository.getAll().contains(resource));
     }

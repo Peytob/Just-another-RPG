@@ -12,13 +12,8 @@ rpg:
   server:
     details:
 #      address: # Server URL / IP address
-      port: ${grpc.server.port} # Server GRPC port
+      port: ${server.port} # Server websocket port
 #      name: # Server display name
   backend:
 #    address: URL
 #    token: Backend string-based token
-
-grpc:
-  server:
-    port: 9090
-    negotiationType: PLAINTEXT
