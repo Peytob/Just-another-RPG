@@ -1,3 +1,11 @@
 spring:
   application:
     name: Just-Another-RPG-Client
+
+rpg:
+  loader:
+    file-structure:
+      tiles: ./asset/tile
+      tilemaps: ./asset/tilemap
+      worlds: ./asset/world
+      world-contexts: ./config/world-contexts

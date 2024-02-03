@@ -1,12 +1,12 @@
-package dev.peytob.rpg.server.loader.service.loader;
+package dev.peytob.rpg.core.loading.service.loader;
 
 import dev.peytob.rpg.core.exception.ResourceNotFoundException;
 import dev.peytob.rpg.core.gameplay.repository.TileRepository;
 import dev.peytob.rpg.core.gameplay.resource.Tile;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.Tilemap;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.layer.TilemapLayer;
-import dev.peytob.rpg.server.loader.dto.RawTilemapDto;
-import dev.peytob.rpg.server.loader.service.provider.RawResourceDataProvider;
+import dev.peytob.rpg.core.loading.dto.RawTilemapDto;
+import dev.peytob.rpg.core.loading.service.provider.RawResourceDataProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

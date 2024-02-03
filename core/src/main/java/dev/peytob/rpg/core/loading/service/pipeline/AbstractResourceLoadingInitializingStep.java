@@ -1,9 +1,9 @@
-package dev.peytob.rpg.server.loader.pipeline;
+package dev.peytob.rpg.core.loading.service.pipeline;
 
 import dev.peytob.rpg.engine.pipeline.InitializingPipelineStep;
 import dev.peytob.rpg.engine.repositry.Repository;
 import dev.peytob.rpg.engine.resource.Resource;
-import dev.peytob.rpg.server.loader.service.loader.ResourceDataLoader;
+import dev.peytob.rpg.core.loading.service.loader.ResourceDataLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.GenericTypeResolver;

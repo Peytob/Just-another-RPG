@@ -1,6 +1,6 @@
-package dev.peytob.rpg.server.loader.service.loader;
+package dev.peytob.rpg.core.loading.service.loader;
 
-import dev.peytob.rpg.server.loader.service.provider.RawResourceDataProvider;
+import dev.peytob.rpg.core.loading.service.provider.RawResourceDataProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

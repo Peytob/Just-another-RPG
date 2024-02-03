@@ -1,11 +1,11 @@
-package dev.peytob.rpg.server.loader.service.loader;
+package dev.peytob.rpg.core.loading.service.loader;
 
 import dev.peytob.rpg.core.exception.ResourceNotFoundException;
 import dev.peytob.rpg.core.gameplay.resource.World;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.Tilemap;
 import dev.peytob.rpg.core.gameplay.repository.TilemapRepository;
-import dev.peytob.rpg.server.loader.dto.RawWorldDto;
-import dev.peytob.rpg.server.loader.service.provider.RawResourceDataProvider;
+import dev.peytob.rpg.core.loading.dto.RawWorldDto;
+import dev.peytob.rpg.core.loading.service.provider.RawResourceDataProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

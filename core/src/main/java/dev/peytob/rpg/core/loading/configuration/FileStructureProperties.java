@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.loader.configuration;
+package dev.peytob.rpg.core.loading.configuration;
 
 import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
