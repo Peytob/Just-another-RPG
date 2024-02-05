@@ -1,5 +1,6 @@
 package dev.peytob.rpg.server.gameplay.service.context;
 
+import dev.peytob.rpg.core.gameplay.resource.World;
 import dev.peytob.rpg.ecs.context.EcsContext;
 
 import java.util.function.Consumer;
@@ -13,4 +14,6 @@ public interface WorldContextRunner {
     boolean isExecuting();
 
     void executeBeforeFrame(Consumer<EcsContext> consumer);
+
+    World getWorld();
 }

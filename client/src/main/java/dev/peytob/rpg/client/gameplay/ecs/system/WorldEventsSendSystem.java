@@ -34,7 +34,7 @@ public class WorldEventsSendSystem implements System {
             .map(WebsocketSessionComponent::getWebSocketSession)
             .ifPresent(websocketSession -> sendEvents(websocketSession, clientEvents));
 
-        clientEvents.forEach(context::removeEvent);
+        context.removeAllEventsByType(ClientEvent.class);
     }
 
     private void sendEvents(WebSocketSession websocketSession, Collection<ClientEvent> clientEvents) {

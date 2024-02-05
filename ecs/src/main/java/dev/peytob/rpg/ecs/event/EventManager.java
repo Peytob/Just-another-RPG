@@ -15,4 +15,6 @@ public interface EventManager {
     int getEventsCount();
 
     void clear();
+
+    void removeAllEventsByType(Class<? extends Event> event);
 }

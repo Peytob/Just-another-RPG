@@ -35,6 +35,8 @@ public interface EcsContext {
 
     <T extends Event> Collection<T> getEventsByType(Class<T> event);
 
+    void removeAllEventsByType(Class<? extends Event> event);
+
     Collection<Class<? extends Event>> getEventTypes();
 
     void clearEvents();

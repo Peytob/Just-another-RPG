@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.*;
 
+import java.time.Instant;
 import java.util.Optional;
 
 public class ClientInGameWebsocketHandler implements WebSocketHandler {
@@ -36,7 +37,7 @@ public class ClientInGameWebsocketHandler implements WebSocketHandler {
 
         if (message instanceof TextMessage textMessage) {
             WorldState worldState = objectMapper.readValue(textMessage.getPayload(), WorldState.class);
-            ecsContext.addEvent(new WorldUpdatedEvent(worldState));
+            ecsContext.addEvent(new WorldUpdatedEvent(worldState, Instant.now()));
         } else {
             log.error("Unknown type of message, cannot be deserialized");
         }

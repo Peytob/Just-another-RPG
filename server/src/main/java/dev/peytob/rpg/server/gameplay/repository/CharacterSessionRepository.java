@@ -37,6 +37,10 @@ public class CharacterSessionRepository extends BaseRepository<CharacterSession>
         return userIdRepositoryIndex.getSingle(userId);
     }
 
+    public CharacterSession getCharacterSession(Character character) {
+        return characterRepositoryIndex.getSingle(character.id());
+    }
+
     private final class CharacterRepositoryIndex extends RepositoryIndex<String> {
         @Override
         protected String extractKey(CharacterSession resource) {
