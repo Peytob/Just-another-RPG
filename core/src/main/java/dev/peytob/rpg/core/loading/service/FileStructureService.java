@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.loader.service;
+package dev.peytob.rpg.core.loading.service;
 
 import java.nio.file.Path;
 

@@ -2,6 +2,7 @@ package dev.peytob.rpg.ecs.event;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,7 +12,7 @@ public class SimpleEventManager implements EventManager {
     private final Multimap<Class<? extends Event>, Event> events;
 
     public SimpleEventManager() {
-        this.events = HashMultimap.create();
+        this.events = Multimaps.synchronizedMultimap(HashMultimap.create());
     }
 
     @Override
@@ -36,6 +37,11 @@ public class SimpleEventManager implements EventManager {
     public <T extends Event> Collection<T> getEventsByType(Class<T> eventClass) {
         Collection<T> eventsCollection = (Collection<T>) events.get(eventClass);
         return Collections.unmodifiableCollection(eventsCollection);
+    }
+
+    @Override
+    public void removeAllEventsByType(Class<? extends Event> event) {
+        events.removeAll(event);
     }
 
     @Override

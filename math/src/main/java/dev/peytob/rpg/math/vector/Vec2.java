@@ -2,7 +2,7 @@ package dev.peytob.rpg.math.vector;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(as = ImmutableVec2i.class)
+@JsonDeserialize(as = ImmutableVec2.class)
 public interface Vec2 {
 
     float x();

@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.loader.service.provider;
+package dev.peytob.rpg.core.loading.service.provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

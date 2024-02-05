@@ -1,5 +1,6 @@
 package dev.peytob.rpg.server.gameplay.service.context;
 
+import dev.peytob.rpg.core.gameplay.resource.World;
 import dev.peytob.rpg.ecs.context.EcsContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,15 +13,18 @@ class AsyncWorldContextRunner implements Runnable, WorldContextRunner {
 
     private final String contextName;
 
+    private final World world;
+
     private Consumer<EcsContext> beforeFrameConsumer;
 
     private boolean isExecuting;
 
-    public AsyncWorldContextRunner(EcsContext ecsContext, String contextName) {
+    public AsyncWorldContextRunner(EcsContext ecsContext, String contextName, World world) {
         this.ecsContext = ecsContext;
+        this.world = world;
+        this.contextName = contextName;
         this.beforeFrameConsumer = null;
         this.isExecuting = false;
-        this.contextName = contextName;
     }
 
     @Override
@@ -58,6 +62,11 @@ class AsyncWorldContextRunner implements Runnable, WorldContextRunner {
     @Override
     public void executeBeforeFrame(Consumer<EcsContext> consumer) {
         beforeFrameConsumer = beforeFrameConsumer == null ? consumer : beforeFrameConsumer.andThen(consumer);
+    }
+
+    @Override
+    public World getWorld() {
+        return this.world;
     }
 
     void stopRunning() {

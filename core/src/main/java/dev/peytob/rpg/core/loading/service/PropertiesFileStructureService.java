@@ -1,6 +1,6 @@
-package dev.peytob.rpg.server.loader.service;
+package dev.peytob.rpg.core.loading.service;
 
-import dev.peytob.rpg.server.loader.configuration.FileStructureProperties;
+import dev.peytob.rpg.core.loading.configuration.FileStructureProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;

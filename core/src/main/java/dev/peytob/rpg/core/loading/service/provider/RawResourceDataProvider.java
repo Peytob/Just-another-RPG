@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.loader.service.provider;
+package dev.peytob.rpg.core.loading.service.provider;
 
 import java.util.Collection;
 

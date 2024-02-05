@@ -116,6 +116,11 @@ class SimpleEcsContext implements EcsContext {
     }
 
     @Override
+    public void removeAllEventsByType(Class<? extends Event> event) {
+        eventManager.removeAllEventsByType(event);
+    }
+
+    @Override
     public Collection<Class<? extends Event>> getEventTypes() {
         return eventManager.getEventTypes();
     }

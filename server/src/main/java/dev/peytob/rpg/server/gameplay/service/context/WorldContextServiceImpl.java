@@ -47,7 +47,7 @@ public class WorldContextServiceImpl implements WorldContextService {
             throw new IllegalArgumentException("World context with name " + worldContextRunnerName + " already exists");
         }
 
-        AsyncWorldContextRunner worldContextRunner = new AsyncWorldContextRunner(EcsContexts.empty(), worldContextRunnerName);
+        AsyncWorldContextRunner worldContextRunner = new AsyncWorldContextRunner(EcsContexts.empty(), worldContextRunnerName, world);
         executorService.submit(worldContextRunner);
 
         return worldContextRunners.put(worldContextRunner.getContextName(), worldContextRunner);

@@ -8,5 +8,7 @@ public interface CharacterContextInteractionService {
 
     CharacterSession enterToContext(Character character);
 
+    CharacterSession exitFromContext(Character character);
+
     WorldState getAwailableWorldState(Character character);
 }

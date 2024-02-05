@@ -55,10 +55,6 @@ public class ContextEventsWebSocketHandler extends BaseWebSocketHandler<Collecti
 
     @Override
     protected void handleDeserializedMessage(WebSocketSession session, Collection<ClientEvent<?>> message) {
-        if (message.isEmpty()) {
-            return;
-        }
-
         String userId = session.getAttributes().get(USER_ID_ATTRIBUTE).toString();
 
         CharacterSession userCharacterSession = characterSessionRepository.getUserCharacterSession(userId);
@@ -107,6 +103,10 @@ public class ContextEventsWebSocketHandler extends BaseWebSocketHandler<Collecti
 
         TokenDto tokenDetails = tokenDetailsOptional.get();
 
+        session.getAttributes().put(USERNAME_ATTRIBUTE, tokenDetails.username());
+        session.getAttributes().put(USER_ID_ATTRIBUTE, tokenDetails.userId());
+        session.getAttributes().put(TOKEN_ATTRIBUTE, token);
+
         if (characterSessionRepository.containsUserCharacterSession(tokenDetails.userId())) {
             log.error("Websocket authorization failed: user character session not found");
             session.close(CloseStatus.GOING_AWAY);
@@ -114,10 +114,6 @@ public class ContextEventsWebSocketHandler extends BaseWebSocketHandler<Collecti
         }
 
         log.info("Established connection {} with user {} ({})", session.getId(), tokenDetails.username(), session.getRemoteAddress());
-
-        session.getAttributes().put(USERNAME_ATTRIBUTE, tokenDetails.username());
-        session.getAttributes().put(USER_ID_ATTRIBUTE, tokenDetails.userId());
-        session.getAttributes().put(TOKEN_ATTRIBUTE, token);
 
         String characterId = session.getHandshakeHeaders().getFirst(CHARACTER_ID_HEADER);
         Character character = characterService.getUserCharacterById(tokenDetails.userId(), characterId);
@@ -127,8 +123,18 @@ public class ContextEventsWebSocketHandler extends BaseWebSocketHandler<Collecti
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        if (!session.getAttributes().containsKey(USER_ID_ATTRIBUTE)) {
+            log.warn("Connection {} closed with status {}. User data not found in session attributes.", session.getId(), status);
+            return;
+        }
+
         String username = session.getAttributes().get(USERNAME_ATTRIBUTE).toString();
 
         log.info("Connection {} with user {} closed with status {}", session.getId(), username, status);
+
+        String userId = session.getAttributes().get(USER_ID_ATTRIBUTE).toString();
+
+        CharacterSession userCharacterSession = characterSessionRepository.getUserCharacterSession(userId);
+        characterContextInteractionService.exitFromContext(userCharacterSession.getCharacter());
     }
 }

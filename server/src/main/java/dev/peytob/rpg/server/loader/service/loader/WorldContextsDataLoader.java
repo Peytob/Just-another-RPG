@@ -3,9 +3,10 @@ package dev.peytob.rpg.server.loader.service.loader;
 import dev.peytob.rpg.core.exception.ResourceNotFoundException;
 import dev.peytob.rpg.core.gameplay.repository.WorldRepository;
 import dev.peytob.rpg.core.gameplay.resource.World;
+import dev.peytob.rpg.core.loading.service.loader.AbstractResourceDataLoader;
 import dev.peytob.rpg.server.loader.dto.RawWorldContextDto;
 import dev.peytob.rpg.server.loader.dto.WorldContextDto;
-import dev.peytob.rpg.server.loader.service.provider.RawResourceDataProvider;
+import dev.peytob.rpg.core.loading.service.provider.RawResourceDataProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

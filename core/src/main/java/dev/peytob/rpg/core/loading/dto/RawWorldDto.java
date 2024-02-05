@@ -1,4 +1,4 @@
-package dev.peytob.rpg.server.loader.dto;
+package dev.peytob.rpg.core.loading.dto;
 
 public record RawWorldDto(
     String id,
