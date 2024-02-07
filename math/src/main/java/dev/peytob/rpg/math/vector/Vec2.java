@@ -13,8 +13,8 @@ public interface Vec2 {
         return plus(right.x(), right.y());
     }
 
-    default Vec2 plus(Vec2i resolution) {
-        return plus(resolution.x(), resolution.y());
+    default Vec2 plus(Vec2i right) {
+        return plus(right.x(), right.y());
     }
 
     Vec2 plus(float x, float y);
