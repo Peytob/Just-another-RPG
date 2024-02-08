@@ -2,9 +2,15 @@ package dev.peytob.rpg.client.graphic.resource;
 
 import dev.peytob.rpg.engine.resource.Resource;
 import dev.peytob.rpg.math.geometry.RectI;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Sprite implements Resource {
 
+    @Getter(AccessLevel.NONE)
     private final String id;
 
     private Texture texture;
@@ -17,23 +23,7 @@ public class Sprite implements Resource {
         this.normalizedRect = normalizedRect;
     }
 
-    public Texture getTexture() {
-        return texture;
-    }
-
     public String id() {
         return this.id;
-    }
-
-    public RectI getNormalizedRect() {
-        return normalizedRect;
-    }
-
-    public void setTexture(Texture texture) {
-        this.texture = texture;
-    }
-
-    public void setNormalizedRect(RectI normalizedRect) {
-        this.normalizedRect = normalizedRect;
     }
 }

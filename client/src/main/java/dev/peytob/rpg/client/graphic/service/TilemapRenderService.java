@@ -1,7 +1,7 @@
 package dev.peytob.rpg.client.graphic.service;
 
 import dev.peytob.rpg.client.graphic.model.Camera;
-import dev.peytob.rpg.client.graphic.model.RenderContext;
+import dev.peytob.rpg.client.graphic.model.RenderingContext;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.Tilemap;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.layer.TilemapLayer;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +15,9 @@ public class TilemapRenderService {
 
     private final SpriteService spriteService;
 
-    public void renderTilemap(Tilemap tilemap, RenderContext renderContext) {
+    public void renderTilemap(Tilemap tilemap, RenderingContext renderingContext) {
         for (int layerIndex = 0; layerIndex < tilemap.getLayersCount(); ++layerIndex) {
-            renderTilemapLayer(tilemap.getUnmodifiableLayer(layerIndex), renderContext.getCamera());
+            renderTilemapLayer(tilemap.getUnmodifiableLayer(layerIndex), renderingContext.getCamera());
         }
     }
 

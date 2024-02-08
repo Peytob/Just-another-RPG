@@ -4,7 +4,7 @@ import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.state.InGameState;
 import dev.peytob.rpg.client.gameplay.ecs.component.WorldComponent;
 import dev.peytob.rpg.client.graphic.ecs.component.RenderContextComponent;
-import dev.peytob.rpg.client.graphic.model.RenderContext;
+import dev.peytob.rpg.client.graphic.model.RenderingContext;
 import dev.peytob.rpg.client.graphic.service.TilemapRenderService;
 import dev.peytob.rpg.core.gameplay.resource.World;
 import dev.peytob.rpg.ecs.context.EcsContext;
@@ -25,13 +25,13 @@ public class TilemapRenderSystem implements System {
     public void execute(EcsContext context) {
         context.getSingletonComponentByType(RenderContextComponent.class)
             .map(RenderContextComponent::getRenderContext)
-            .ifPresent(renderContext -> renderTilemap(context, renderContext));
+            .ifPresent(renderingContext -> renderTilemap(context, renderingContext));
     }
 
-    private void renderTilemap(EcsContext ecsContext, RenderContext renderContext) {
+    private void renderTilemap(EcsContext ecsContext, RenderingContext renderingContext) {
         ecsContext.getSingletonComponentByType(WorldComponent.class)
             .map(WorldComponent::getWorld)
             .map(World::tilemap)
-            .ifPresent(tilemap -> tilemapRenderService.renderTilemap(tilemap, renderContext));
+            .ifPresent(tilemap -> tilemapRenderService.renderTilemap(tilemap, renderingContext));
     }
 }

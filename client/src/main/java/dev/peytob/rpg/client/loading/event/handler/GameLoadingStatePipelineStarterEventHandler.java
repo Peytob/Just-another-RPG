@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.loader.event.handler;
+package dev.peytob.rpg.client.loading.event.handler;
 
 import dev.peytob.rpg.client.fsm.event.instance.AfterEngineStatePushEvent;
 import dev.peytob.rpg.client.fsm.state.EngineState;

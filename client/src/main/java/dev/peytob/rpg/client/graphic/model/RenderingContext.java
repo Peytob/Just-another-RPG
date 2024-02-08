@@ -7,7 +7,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class RenderContext {
+public class RenderingContext {
 
     private Camera camera;
 }

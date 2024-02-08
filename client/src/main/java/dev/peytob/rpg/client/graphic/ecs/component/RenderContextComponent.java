@@ -1,17 +1,17 @@
 package dev.peytob.rpg.client.graphic.ecs.component;
 
-import dev.peytob.rpg.client.graphic.model.RenderContext;
+import dev.peytob.rpg.client.graphic.model.RenderingContext;
 import dev.peytob.rpg.ecs.component.SingletonComponent;
 
 public class RenderContextComponent implements SingletonComponent {
 
-    private RenderContext renderContext;
+    private RenderingContext renderingContext;
 
-    public RenderContextComponent(RenderContext renderContext) {
-        this.renderContext = renderContext;
+    public RenderContextComponent(RenderingContext renderingContext) {
+        this.renderingContext = renderingContext;
     }
 
-    public RenderContext getRenderContext() {
-        return renderContext;
+    public RenderingContext getRenderContext() {
+        return renderingContext;
     }
 }

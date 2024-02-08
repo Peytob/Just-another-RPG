@@ -1,4 +1,4 @@
-package dev.peytob.rpg.client.loader.ecs.system;
+package dev.peytob.rpg.client.loading.ecs.system;
 
 import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.service.EngineStateManager;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @Component
