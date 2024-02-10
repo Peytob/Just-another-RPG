@@ -1,10 +1,10 @@
 package dev.peytob.rpg.client.graphic.resource;
 
-import dev.peytob.rpg.math.vector.Vec2i;
+import dev.peytob.rpg.client.graphic.model.opengl.BufferTarget;
 
-public record Texture(
+public record GraphicBuffer(
     String id,
     int vendorId,
-    Vec2i sizes
+    BufferTarget target
 ) implements GraphicVendorResource {
 }

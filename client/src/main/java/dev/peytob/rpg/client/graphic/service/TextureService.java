@@ -1,23 +1,15 @@
 package dev.peytob.rpg.client.graphic.service;
 
-import dev.peytob.rpg.client.graphic.repository.TextureRepository;
+import dev.peytob.rpg.client.graphic.model.Image;
 import dev.peytob.rpg.client.graphic.resource.Texture;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-@Slf4j
-public class TextureService {
+import java.util.Optional;
 
-    private final TextureRepository textureRepository;
+public interface TextureService {
 
-    public Texture createTexture() {
-        return null;
-    }
+    Texture createTexture(String id, Image image);
 
-    public boolean removeTexture(Texture texture) {
-        return false;
-    }
+    boolean removeTexture(Texture texture);
+
+    Optional<Texture> getTextureById(String id);
 }

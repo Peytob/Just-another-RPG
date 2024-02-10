@@ -1,10 +1,10 @@
 package dev.peytob.rpg.client.graphic.resource;
 
-import dev.peytob.rpg.math.vector.Vec2i;
+import dev.peytob.rpg.client.graphic.model.opengl.ShaderType;
 
-public record Texture(
+public record Shader(
     String id,
     int vendorId,
-    Vec2i sizes
+    ShaderType shaderType
 ) implements GraphicVendorResource {
 }

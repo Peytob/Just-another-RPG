@@ -19,6 +19,7 @@ import static dev.peytob.rpg.math.vector.Vectors.immutableVec2i;
 @Service
 @Slf4j
 public class ImageIoImageLoader implements ImageLoader {
+
     @Override
     public Image loadFileImageResource(String filePath) {
         log.info("Loading image from file: {}", filePath);
@@ -39,7 +40,6 @@ public class ImageIoImageLoader implements ImageLoader {
         ByteBuffer data = bufferedImageToByteBuffer(image);
         return new Image(sizes, data);
     }
-
 
     private ByteBuffer bufferedImageToByteBuffer(BufferedImage image) {
         int[] pixels = new int[image.getWidth() * image.getHeight()];

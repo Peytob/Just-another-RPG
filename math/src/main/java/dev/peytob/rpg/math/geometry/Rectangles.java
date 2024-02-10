@@ -34,4 +34,20 @@ public enum Rectangles {;
     public static Rect rect() {
         return ZERO_RECT;
     }
+
+    public static Rect normalizeInside(Rect rect, Vec2 outerSizes) {
+        return rect(
+            rect.topLeft().division(outerSizes),
+            rect.size().division(outerSizes)
+        );
+    }
+
+    public static Rect normalizeInside(RectI rect, Vec2i outerSizes) {
+        return rect(
+            (float) rect.topLeft().x() / outerSizes.x(),
+            (float) rect.topLeft().y() / outerSizes.y(),
+            (float) rect.size().x() / outerSizes.x(),
+            (float) rect.size().y() / outerSizes.y()
+        );
+    }
 }
