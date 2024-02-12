@@ -3,8 +3,8 @@ package dev.peytob.rpg.client.graphic.ecs.system;
 import dev.peytob.rpg.client.fsm.annotation.IncludeInState;
 import dev.peytob.rpg.client.fsm.state.InGameState;
 import dev.peytob.rpg.client.gameplay.ecs.component.WorldComponent;
-import dev.peytob.rpg.client.graphic.ecs.component.RenderContextComponent;
-import dev.peytob.rpg.client.graphic.model.RenderingContext;
+import dev.peytob.rpg.client.graphic.ecs.component.CameraComponent;
+import dev.peytob.rpg.client.graphic.model.Camera;
 import dev.peytob.rpg.client.graphic.service.TilemapRenderService;
 import dev.peytob.rpg.core.gameplay.resource.World;
 import dev.peytob.rpg.ecs.context.EcsContext;
@@ -23,15 +23,15 @@ public class TilemapRenderSystem implements System {
 
     @Override
     public void execute(EcsContext context) {
-        context.getSingletonComponentByType(RenderContextComponent.class)
-            .map(RenderContextComponent::getRenderContext)
-            .ifPresent(renderingContext -> renderTilemap(context, renderingContext));
+        context.getSingletonComponentByType(CameraComponent.class)
+            .map(CameraComponent::getCamera)
+            .ifPresent(camera -> renderTilemap(context, camera));
     }
 
-    private void renderTilemap(EcsContext ecsContext, RenderingContext renderingContext) {
+    private void renderTilemap(EcsContext ecsContext, Camera camera) {
         ecsContext.getSingletonComponentByType(WorldComponent.class)
             .map(WorldComponent::getWorld)
             .map(World::tilemap)
-            .ifPresent(tilemap -> tilemapRenderService.renderTilemap(tilemap, renderingContext));
+            .ifPresent(tilemap -> tilemapRenderService.renderTilemap(tilemap, camera));
     }
 }

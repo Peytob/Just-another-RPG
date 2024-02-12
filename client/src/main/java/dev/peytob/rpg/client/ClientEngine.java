@@ -21,6 +21,7 @@ public final class ClientEngine {
 
     public ExitCode runCycle(EngineState startEngineState) {
         engineStateManager.pushEngineState(startEngineState);
+        window.show();
 
         while (!window.isShouldClose()) {
             engineStateManager.flushEngineStates();

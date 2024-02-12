@@ -20,28 +20,28 @@ public class OpenGlGraphicBufferService implements dev.peytob.rpg.client.graphic
 
     @Override
     public GraphicBuffer createBuffer(String id, BufferTarget target) {
-        log.info("Creating new buffer with id {}", id);
+        log.debug("Creating new buffer with id {}", id);
 
         int bufferId = glGenBuffers();
         GraphicBuffer buffer = new GraphicBuffer(id, bufferId, target);
         graphicBufferRepository.append(buffer);
 
-        log.info("Created new buffer with id {} ({})", id, bufferId);
+        log.debug("Created new buffer with id {} ({})", id, bufferId);
         return buffer;
     }
 
     @Override
     public boolean removeBuffer(GraphicBuffer buffer) {
-        log.info("Removing buffer with id {} ({})", buffer.id(), buffer.vendorId());
+        log.debug("Removing buffer with id {} ({})", buffer.id(), buffer.vendorId());
 
         glDeleteBuffers(buffer.vendorId());
 
-        log.info("Removed buffer with id {} ({})", buffer.id(), buffer.vendorId());
+        log.debug("Removed buffer with id {} ({})", buffer.id(), buffer.vendorId());
         return graphicBufferRepository.remove(buffer);
     }
 
     @Override
     public void updateBufferData(GraphicBuffer buffer, ByteBuffer data, int usage) {
-        glBufferData(buffer.vendorId(), data, usage);
+        glBufferData(buffer.target().getGlTarget(), data, usage);
     }
 }

@@ -3,9 +3,20 @@ package dev.peytob.rpg.client.graphic.model;
 import dev.peytob.rpg.math.geometry.Rect;
 import dev.peytob.rpg.math.vector.Vec2;
 
+import static dev.peytob.rpg.math.geometry.Rectangles.rect;
+import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
+
 public class Camera {
 
     private Rect cameraRect;
+
+    public Camera(Rect cameraRect) {
+        this.cameraRect = cameraRect;
+    }
+
+    public Camera(Vec2 resolution) {
+        this(rect(immutableVec2(), resolution));
+    }
 
     /**
      * Returns top-left corner of the camera rect

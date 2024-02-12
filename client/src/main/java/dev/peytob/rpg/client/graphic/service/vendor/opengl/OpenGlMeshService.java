@@ -32,7 +32,7 @@ public class OpenGlMeshService implements MeshService {
 
     @Override
     public Mesh createMesh(String id, ByteBuffer buffer, Collection<VertexArrayAttribute> vertexArrayAttributes, int verticesCount) {
-        log.info("Creating mesh with id {}", id);
+        log.debug("Creating mesh with id {}", id);
 
         VertexArray vertexArray = vertexArrayService.createVertexArray(id + "_vertexArray");
         GraphicBuffer vertexBuffer = graphicBufferService.createBuffer(id + "_vbo", BufferTarget.ARRAY_BUFFER);
@@ -44,7 +44,7 @@ public class OpenGlMeshService implements MeshService {
 
         vertexArrayService.enableVertexAttributes(vertexArrayAttributes);
 
-        log.info("Mesh with id {} created and bound to vertex array id {}", id, vertexArray.vendorId());
+        log.debug("Mesh with id {} created and bound to vertex array id {}", id, vertexArray.vendorId());
 
         Mesh mesh = new Mesh(
             id,

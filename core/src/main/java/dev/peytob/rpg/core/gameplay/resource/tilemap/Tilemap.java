@@ -21,17 +21,20 @@ public class Tilemap implements Resource {
             tilemapLayers.add(layer);
         }
 
-        return new Tilemap(tilemapLayers, title, id);
+        return new Tilemap(tilemapLayers, layerSize, title, id);
     }
 
     private final List<TilemapLayer> layers;
+
+    private final Vec2i layerSize;
 
     private final String id;
 
     private final String title;
 
-    Tilemap(List<TilemapLayer> layers, String title, String id) {
+    Tilemap(List<TilemapLayer> layers, Vec2i layerSize, String title, String id) {
         this.layers = layers;
+        this.layerSize = layerSize;
         this.id = id;
         this.title = title;
     }
@@ -50,6 +53,10 @@ public class Tilemap implements Resource {
 
     public String getTitle() {
         return title;
+    }
+
+    public Vec2i getLayerSize() {
+        return layerSize;
     }
 
     public TilemapLayer getUnmodifiableLayer(int index) {

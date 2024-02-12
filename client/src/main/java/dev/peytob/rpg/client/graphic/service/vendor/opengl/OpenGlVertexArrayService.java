@@ -20,21 +20,21 @@ public class OpenGlVertexArrayService implements VertexArrayService {
 
     @Override
     public VertexArray createVertexArray(String id) {
-        log.info("Creating new vertex array with id {}", id);
+        log.debug("Creating new vertex array with id {}", id);
 
         int vertexArrayId = glGenVertexArrays();
         VertexArray vertexArray = new VertexArray(id, vertexArrayId);
         vertexArrayRepository.append(vertexArray);
 
-        log.info("Created new vertex array with id {}", id);
+        log.debug("Created new vertex array with id {}", id);
         return vertexArray;
     }
 
     @Override
     public boolean removeVertexArray(VertexArray vertexArray) {
-        log.info("Removing vertex array with id {} ({})", vertexArray.id(), vertexArray.vendorId());
+        log.debug("Removing vertex array with id {} ({})", vertexArray.id(), vertexArray.vendorId());
         glDeleteVertexArrays(vertexArray.vendorId());
-        log.info("Removed vertex array with id {} ({})", vertexArray.id(), vertexArray.vendorId());
+        log.debug("Removed vertex array with id {} ({})", vertexArray.id(), vertexArray.vendorId());
 
         return vertexArrayRepository.remove(vertexArray);
     }
