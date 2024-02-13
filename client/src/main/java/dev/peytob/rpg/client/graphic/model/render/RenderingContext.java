@@ -18,4 +18,6 @@ public class RenderingContext {
 
     @Builder.Default
     private RenderMode renderMode = RenderMode.TRIANGLES;
+
+    private String renderingMeshName;
 }

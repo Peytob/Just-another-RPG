@@ -6,6 +6,8 @@ import dev.peytob.rpg.math.vector.Vec2;
 public record RenderingSprite(
     Sprite sprite,
 
-    Vec2 position
+    Vec2 position,
+
+    Vec2 renderingSize
 ) {
 }

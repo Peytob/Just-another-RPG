@@ -4,13 +4,18 @@ import dev.peytob.rpg.client.graphic.model.Camera;
 import dev.peytob.rpg.client.graphic.model.render.RenderingContext;
 import dev.peytob.rpg.client.graphic.model.render.RenderingQueue;
 import dev.peytob.rpg.client.graphic.resource.ShaderProgram;
+import dev.peytob.rpg.client.graphic.resource.Sprite;
+import dev.peytob.rpg.core.gameplay.resource.tilemap.PlacedTile;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.Tilemap;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.layer.TilemapLayer;
 import dev.peytob.rpg.math.geometry.RectI;
+import dev.peytob.rpg.math.vector.Vec2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static dev.peytob.rpg.core.gameplay.constants.PhysicsConstants.TILE_SIZE;
 import static dev.peytob.rpg.math.geometry.Rectangles.rectI;
+import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -54,7 +59,16 @@ public class TilemapRenderService {
     private void renderTilemapLayer(TilemapLayer layer, RectI visibleTilesRect, RenderingQueue renderingQueue) {
         for (int x = visibleTilesRect.topLeft().x(); x < visibleTilesRect.topRight().x(); x++) {
             for (int y = visibleTilesRect.topLeft().y(); y < visibleTilesRect.bottomRight().y(); y++) {
-                // TODO Build tilemap rendering query
+                PlacedTile tile = layer.getTile(x, y);
+
+                if (tile == null) {
+                    continue;
+                }
+
+                // TODO Not found tile sprite
+                Sprite sprite = spriteService.getSpriteById(tile.tile().id()).orElseThrow();
+                Vec2 position = immutableVec2(TILE_SIZE.x() * x, TILE_SIZE.y() * y);
+                renderingQueue.add(sprite, position, TILE_SIZE);
             }
         }
     }

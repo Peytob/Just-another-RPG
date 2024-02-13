@@ -1,20 +1,14 @@
 package dev.peytob.rpg.client.graphic.service;
 
-import dev.peytob.rpg.client.graphic.model.glfw.Window;
 import dev.peytob.rpg.client.graphic.model.opengl.RenderMode;
 import dev.peytob.rpg.client.graphic.model.render.RenderingContext;
 import dev.peytob.rpg.client.graphic.model.render.RenderingQueue;
 import dev.peytob.rpg.client.graphic.resource.Mesh;
-import dev.peytob.rpg.client.graphic.resource.VertexArray;
 import lombok.RequiredArgsConstructor;
-import org.lwjgl.BufferUtils;
 import org.springframework.stereotype.Service;
 
-import java.nio.ByteBuffer;
-import java.util.Collection;
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
+import static java.util.Objects.requireNonNullElse;
 import static org.lwjgl.opengl.GL33.*;
 
 @Service
@@ -25,27 +19,17 @@ public class RenderService {
 
     private final MeshService meshService;
 
-    private final Window window;
-
     public void performRendering(RenderingContext renderingContext, RenderingQueue renderingQueue) {
-//        if (renderingQueue.isEmpty()) {
-//            return;
-//        }
+        if (renderingQueue.isEmpty()) {
+            return;
+        }
 
         requireNonNull(renderingContext.getShaderProgram(), "Rendering shader program is not set in context");
         glUseProgram(renderingContext.getShaderProgram().vendorId());
 
-        ByteBuffer allocate = BufferUtils.createByteBuffer(1024)
-            .putFloat(-0.5f).putFloat(-0.5f)
-            .putFloat(0.5f).putFloat(-0.5f)
-            .putFloat(0f).putFloat(0.5f)
-            .flip();
+        String meshNamePrefix = requireNonNullElse(renderingContext.getRenderingMeshName(), "temp_render");
 
-        Collection<VertexArray.VertexArrayAttribute> vertexArrayAttributes = List.of(
-            new VertexArray.VertexArrayAttribute(0, 2, GL_FLOAT, false, 2 * Float.BYTES, 0L)
-        );
-
-        Mesh mesh = meshService.createMesh("tilemap_frame_mesh", allocate, vertexArrayAttributes, 3);
+        Mesh mesh = meshFactory.buildSpritesMesh(meshNamePrefix, renderingQueue);
 
         renderMesh(mesh, renderingContext.getRenderMode());
 

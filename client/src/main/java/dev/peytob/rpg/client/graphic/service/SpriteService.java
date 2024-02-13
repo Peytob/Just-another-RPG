@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static dev.peytob.rpg.math.geometry.Rectangles.normalizeInside;
 
 @Service
@@ -34,5 +36,9 @@ public class SpriteService {
     public boolean removeSprite(Sprite sprite) {
         log.info("Removing sprite with id {}", sprite.id());
         return spriteRepository.remove(sprite);
+    }
+
+    public Optional<Sprite> getSpriteById(String spriteId) {
+        return spriteRepository.getById(spriteId);
     }
 }
