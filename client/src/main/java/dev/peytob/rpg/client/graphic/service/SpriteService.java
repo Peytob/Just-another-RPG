@@ -1,8 +1,11 @@
 package dev.peytob.rpg.client.graphic.service;
 
 import dev.peytob.rpg.client.graphic.repository.SpriteRepository;
+import dev.peytob.rpg.client.graphic.repository.TileSpriteRepository;
 import dev.peytob.rpg.client.graphic.resource.Sprite;
 import dev.peytob.rpg.client.graphic.resource.Texture;
+import dev.peytob.rpg.client.graphic.resource.TileSprite;
+import dev.peytob.rpg.core.gameplay.resource.Tile;
 import dev.peytob.rpg.math.geometry.Rect;
 import dev.peytob.rpg.math.geometry.RectI;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,8 @@ import static dev.peytob.rpg.math.geometry.Rectangles.normalizeInside;
 public class SpriteService {
 
     private final SpriteRepository spriteRepository;
+
+    private final TileSpriteRepository tileSpriteRepository;
 
     public Sprite createSprite(String id, Texture texture, Rect normalizedSpriteRect) {
         log.info("Creating new sprite with id {} from texture {}", id, texture);
@@ -40,5 +45,9 @@ public class SpriteService {
 
     public Optional<Sprite> getSpriteById(String spriteId) {
         return spriteRepository.getById(spriteId);
+    }
+
+    public Optional<Sprite> getTileSprite(Tile tile) {
+        return tileSpriteRepository.findByTile(tile).map(TileSprite::sprite);
     }
 }

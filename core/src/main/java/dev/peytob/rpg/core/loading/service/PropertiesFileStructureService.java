@@ -33,4 +33,9 @@ public class PropertiesFileStructureService implements FileStructureService {
     public Path getWorldContextsPath() {
         return fileStructureProperties.worldContexts();
     }
+
+    @Override
+    public Path getTexturesPath() {
+        return fileStructureProperties.textures();
+    }
 }

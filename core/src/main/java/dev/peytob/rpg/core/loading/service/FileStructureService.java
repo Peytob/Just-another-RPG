@@ -11,4 +11,6 @@ public interface FileStructureService {
     Path getWorldsDirectoryPath();
 
     Path getWorldContextsPath();
+
+    Path getTexturesPath();
 }

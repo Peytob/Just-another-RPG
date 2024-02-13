@@ -19,6 +19,9 @@ public record FileStructureProperties(
     Path worlds,
 
     @NotNull
-    Path worldContexts
+    Path worldContexts,
+
+    @NotNull
+    Path textures
 ) {
 }

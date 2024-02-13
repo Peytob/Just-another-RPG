@@ -2,9 +2,11 @@ package dev.peytob.rpg.client.graphic.model;
 
 import dev.peytob.rpg.client.graphic.resource.Sprite;
 import dev.peytob.rpg.client.graphic.resource.Texture;
+import dev.peytob.rpg.client.graphic.resource.VertexArray;
 import dev.peytob.rpg.client.graphic.resource.VertexArray.VertexArrayAttribute;
 import dev.peytob.rpg.math.geometry.Rect;
 import dev.peytob.rpg.math.vector.Vec2;
+import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
 import java.util.Collection;
@@ -18,12 +20,12 @@ import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
 
 public class MeshBuilder {
 
-    private static final int STRIDE = 2 * Float.BYTES + 2 * Float.BYTES + Integer.BYTES;
+    private static final int STRIDE = 4 * Float.BYTES + Integer.BYTES;
 
     private static final Collection<VertexArrayAttribute> VERTEX_ARRAY_ATTRIBUTES = List.of(
         new VertexArrayAttribute(0, 2, GL_FLOAT, false, STRIDE, 0L), // Position
         new VertexArrayAttribute(1, 2, GL_FLOAT, false, STRIDE, 2L * Float.BYTES), // Texture coordinates
-        new VertexArrayAttribute(2, 1, GL_UNSIGNED_INT, false, STRIDE, 2L * Float.BYTES) // Texture index
+        new VertexArrayAttribute(2, 1, GL_UNSIGNED_INT, false, STRIDE, 4L * Float.BYTES) // Texture index
     );
 
     public static final int BYTES_PER_VERTEX = STRIDE;
@@ -37,7 +39,7 @@ public class MeshBuilder {
     }
 
     public static MeshBuilder withCapacitySprites(int spritesCount) {
-        return withCapacityVertexes(spritesCount * 4);
+        return withCapacityVertexes(spritesCount * 6);
     }
 
     private final ByteBuffer byteBuffer;
@@ -49,7 +51,7 @@ public class MeshBuilder {
     private int nextTextureIndex;
 
     private MeshBuilder(int bytesCapacity) {
-        this(ByteBuffer.allocate(bytesCapacity), 0, new HashMap<>());
+        this(BufferUtils.createByteBuffer(bytesCapacity), 0, new HashMap<>());
     }
 
     private MeshBuilder(ByteBuffer byteBuffer, int verticesCount, Map<Texture, Integer> textureIndexes) {

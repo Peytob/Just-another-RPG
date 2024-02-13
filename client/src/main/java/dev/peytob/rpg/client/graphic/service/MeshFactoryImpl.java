@@ -6,6 +6,8 @@ import dev.peytob.rpg.client.graphic.resource.Mesh;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.nio.ByteBuffer;
+
 @Service
 @RequiredArgsConstructor
 public class MeshFactoryImpl implements MeshFactory {
@@ -14,14 +16,17 @@ public class MeshFactoryImpl implements MeshFactory {
 
     @Override
     public Mesh buildSpritesMesh(String meshNamePrefix, RenderingQueue renderingQueue) {
-        MeshBuilder meshBuilder = MeshBuilder.withCapacityVertexes(renderingQueue.size());
+        MeshBuilder meshBuilder = MeshBuilder.withCapacitySprites(renderingQueue.size());
 
         renderingQueue.forEach(renderingSprite ->
             meshBuilder.addSprite(renderingSprite.sprite(), renderingSprite.position(), renderingSprite.renderingSize()));
 
         renderingQueue.clear();
 
+        ByteBuffer byteBuffer = meshBuilder.getByteBuffer();
+        byteBuffer.flip();
+
         return meshService
-            .createMesh(meshNamePrefix, meshBuilder.getByteBuffer().flip(), meshBuilder.getAttributes(), meshBuilder.getVerticesCount());
+            .createMesh(meshNamePrefix, byteBuffer, meshBuilder.getAttributes(), meshBuilder.getVerticesCount());
     }
 }

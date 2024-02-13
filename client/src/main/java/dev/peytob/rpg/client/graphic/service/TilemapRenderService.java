@@ -66,7 +66,7 @@ public class TilemapRenderService {
                 }
 
                 // TODO Not found tile sprite
-                Sprite sprite = spriteService.getSpriteById(tile.tile().id()).orElseThrow();
+                Sprite sprite = spriteService.getTileSprite(tile.tile()).orElseThrow();
                 Vec2 position = immutableVec2(TILE_SIZE.x() * x, TILE_SIZE.y() * y);
                 renderingQueue.add(sprite, position, TILE_SIZE);
             }

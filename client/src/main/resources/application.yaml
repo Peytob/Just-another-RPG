@@ -9,3 +9,4 @@ rpg:
       tilemaps: ./asset/tilemap
       worlds: ./asset/world
       world-contexts: ./config/world-contexts
+      textures: ./asset/texture
