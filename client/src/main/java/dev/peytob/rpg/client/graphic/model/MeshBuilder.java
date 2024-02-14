@@ -2,7 +2,6 @@ package dev.peytob.rpg.client.graphic.model;
 
 import dev.peytob.rpg.client.graphic.resource.Sprite;
 import dev.peytob.rpg.client.graphic.resource.Texture;
-import dev.peytob.rpg.client.graphic.resource.VertexArray;
 import dev.peytob.rpg.client.graphic.resource.VertexArray.VertexArrayAttribute;
 import dev.peytob.rpg.math.geometry.Rect;
 import dev.peytob.rpg.math.vector.Vec2;

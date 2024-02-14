@@ -11,6 +11,14 @@ public enum Rectangles {;
     private static final Rect ZERO_RECT = new ImmutableRect(immutableVec2(), immutableVec2());
     private static final RectI ZERO_RECTI = new ImmutableRectI(immutableVec2i(), immutableVec2i());
 
+    public static RectI rectI(Rect rect) {
+        if (rect == ZERO_RECT) {
+            return ZERO_RECTI;
+        }
+
+        return rectI(immutableVec2i(rect.topLeft()), immutableVec2i(rect.size()));
+    }
+
     public static RectI rectI(Vec2i topLeft, Vec2i sizes) {
         return new ImmutableRectI(topLeft, sizes);
     }
@@ -21,6 +29,14 @@ public enum Rectangles {;
 
     public static RectI rectI() {
         return ZERO_RECTI;
+    }
+
+    public static Rect rect(RectI rect) {
+        if (rect == ZERO_RECTI) {
+            return ZERO_RECT;
+        }
+
+        return rect(immutableVec2(rect.topLeft()), immutableVec2(rect.size()));
     }
 
     public static Rect rect(Vec2 topLeft, Vec2 sizes) {

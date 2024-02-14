@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import static dev.peytob.rpg.client.graphic.model.RenderingConstants.RENDERING_COEFFICIENT;
 import static dev.peytob.rpg.math.vector.Vectors.immutableVec2;
 
 @Component
@@ -24,7 +25,7 @@ public class CameraCreateEventHandler {
         // TODO Temporary solution
         beforeEngineStatePushEvent.contextBuilder().initializeEntity((entity, ecsContext) -> {
             log.info("Creating camera ECS entity");
-            Vec2 windowResolution = immutableVec2(window.getWidth(), window.getHeight());
+            Vec2 windowResolution = immutableVec2(window.getWidth(), window.getHeight()).division(RENDERING_COEFFICIENT);
             Camera camera = new Camera(windowResolution);
             CameraComponent cameraComponent = new CameraComponent(camera);
             entity.bindComponent(cameraComponent);

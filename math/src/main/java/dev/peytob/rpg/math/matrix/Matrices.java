@@ -44,7 +44,6 @@ public enum Matrices {;
 
     /**
      * Creates 2D orthographic matrix. See <a href="https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/gluOrtho2D.xml">glOrtho2D method</a> for details.
-     * Computed matrix will be **mutable**!
      */
     public static Mat4 ortho2D(float left, float right, float bottom, float top) {
         return ortho(left, right, bottom, top, -1.0f, 1.0f);

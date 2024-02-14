@@ -8,6 +8,7 @@ import dev.peytob.rpg.client.graphic.resource.Sprite;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.PlacedTile;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.Tilemap;
 import dev.peytob.rpg.core.gameplay.resource.tilemap.layer.TilemapLayer;
+import dev.peytob.rpg.math.geometry.Rect;
 import dev.peytob.rpg.math.geometry.RectI;
 import dev.peytob.rpg.math.vector.Vec2;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class TilemapRenderService {
 
     public void renderTilemap(Tilemap tilemap, Camera camera) {
         // TODO Compute from camera
-        RectI cullingTilesRect = rectI(0, 0, 500, 500);
+        RectI cullingTilesRect = computeCullingTilesRect(camera.getRect());
 
         int fromX = max(cullingTilesRect.topLeft().x(), 0);
         int toX = min(cullingTilesRect.bottomRight().x(), tilemap.getLayerSize().x());
@@ -54,6 +55,10 @@ public class TilemapRenderService {
         renderingContext.setShaderProgram(tilemapShaderProgram);
 
         renderService.performRendering(renderingContext, renderingQueue);
+    }
+
+    private RectI computeCullingTilesRect(Rect cameraRect) {
+        return rectI(cameraRect);
     }
 
     private void renderTilemapLayer(TilemapLayer layer, RectI visibleTilesRect, RenderingQueue renderingQueue) {

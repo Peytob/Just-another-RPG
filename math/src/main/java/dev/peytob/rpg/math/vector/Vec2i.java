@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(as = ImmutableVec2i.class)
 public interface Vec2i {
 
+    int BYTES = Integer.BYTES * 2;
+
     int x();
 
     int y();
@@ -31,6 +33,10 @@ public interface Vec2i {
 
     default Vec2i division(Vec2i right) {
         return division(right.x(), right.y());
+    }
+
+    default Vec2i division(int scalar) {
+        return division(scalar, scalar);
     }
 
     default Vec2i division(Vec2 right) {
