@@ -8,6 +8,8 @@ import dev.peytob.rpg.math.vector.Vec2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static dev.peytob.rpg.client.graphic.model.RenderingConstants.RENDERING_COEFFICIENT;
 import static dev.peytob.rpg.math.matrix.Matrices.ortho2D;
 import static org.lwjgl.opengl.GL33.*;
@@ -25,9 +27,10 @@ public class DefaultUniformBlocksService {
      * };
      */
     public void updateCameraUniformBlock(Camera camera) {
-        UniformBlock cameraUniformBlock = getUniformBlock(DefaultUniformBlocks.CAMERA);
-        
-        updateCameraProjectionMatrix(cameraUniformBlock, camera);
+        getUniformBlock(DefaultUniformBlocks.CAMERA).ifPresent(uniformBlock -> {
+            updateCameraProjectionMatrix(uniformBlock, camera);
+        });
+
     }
 
     private void updateCameraProjectionMatrix(UniformBlock cameraUniformBlock, Camera camera) {
@@ -50,8 +53,7 @@ public class DefaultUniformBlocksService {
             topLeftScreenPoint.y());
     }
 
-    private UniformBlock getUniformBlock(DefaultUniformBlocks defaultUniformBlock) {
-        return uniformBlockService.getUniformBlock(defaultUniformBlock.getName())
-            .orElseThrow(() -> new IllegalStateException("Uniform block " + defaultUniformBlock.getName() + " is not created"));
+    private Optional<UniformBlock> getUniformBlock(DefaultUniformBlocks defaultUniformBlock) {
+        return uniformBlockService.getUniformBlock(defaultUniformBlock.getName());
     }
 }

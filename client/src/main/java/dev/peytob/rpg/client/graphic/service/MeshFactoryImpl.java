@@ -24,40 +24,7 @@ public class MeshFactoryImpl implements MeshFactory {
 
         renderingQueue.clear();
 
-//        ByteBuffer byteBuffer = meshBuilder.getByteBuffer();
-//        byteBuffer.flip();
-
-        ByteBuffer byteBuffer = BufferUtils.createByteBuffer(1024)
-            .putFloat(150).putFloat(100)
-            .putFloat(0.5f).putFloat(0.5f)
-            .putInt(1)
-
-            .putFloat(500).putFloat(500)
-            .putFloat(1).putFloat(2)
-            .putInt(1)
-
-            .putFloat(700).putFloat(50)
-            .putFloat(1).putFloat(2)
-            .putInt(1)
-
-            .flip();
-
-//        ByteBuffer byteBuffer = BufferUtils.createByteBuffer(1024)
-//            .putFloat( 0.5f).putFloat( -0.5f)
-//            .putFloat( 0.5f).putFloat( 0.5f)
-//            .putInt(1)
-//
-//            .putFloat( 0f).putFloat( 0.5f)
-//            .putFloat(1).putFloat(2)
-//            .putInt(1)
-//
-//            .putFloat( -0.5f).putFloat( 0.5f)
-//            .putFloat(1).putFloat(2)
-//            .putInt(1)
-//
-//            .flip();
-
         return meshService
-            .createMesh(meshNamePrefix, byteBuffer, meshBuilder.getAttributes(), 3);
+            .createMesh(meshNamePrefix, meshBuilder.getByteBuffer().flip(), meshBuilder.getAttributes(), meshBuilder.getVerticesCount());
     }
 }
