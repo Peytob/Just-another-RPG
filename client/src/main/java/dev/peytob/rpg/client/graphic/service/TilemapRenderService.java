@@ -34,10 +34,10 @@ public class TilemapRenderService {
         // TODO Compute from camera
         RectI cullingTilesRect = computeCullingTilesRect(camera.getRect());
 
-        int fromX = max(cullingTilesRect.topLeft().x(), 0);
-        int toX = min(cullingTilesRect.bottomRight().x(), tilemap.getLayerSize().x());
-        int fromY = max(cullingTilesRect.topLeft().y(), 0);
-        int toY = min(cullingTilesRect.bottomRight().y(), tilemap.getLayerSize().y());
+        int fromX = max(cullingTilesRect.topLeft().x() - 2, 0);
+        int toX = min(cullingTilesRect.bottomRight().x() + 2, tilemap.getLayerSize().x());
+        int fromY = max(cullingTilesRect.topLeft().y() - 2, 0);
+        int toY = min(cullingTilesRect.bottomRight().y() + 2, tilemap.getLayerSize().y());
 
         RectI visibleTilesRect = rectI(fromX, fromY, toX - fromX, toY - fromY);
 

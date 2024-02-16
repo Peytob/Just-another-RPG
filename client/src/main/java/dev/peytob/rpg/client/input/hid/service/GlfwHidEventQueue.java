@@ -6,6 +6,7 @@ import dev.peytob.rpg.client.input.hid.model.KeyAction;
 import dev.peytob.rpg.client.input.hid.model.KeyModifiers;
 import dev.peytob.rpg.client.input.hid.model.KeyboardKey;
 import dev.peytob.rpg.client.input.hid.model.MouseButton;
+import lombok.extern.slf4j.Slf4j;
 import org.lwjgl.glfw.GLFW;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Component
+@Slf4j
 public class GlfwHidEventQueue implements HidEventQueue {
 
     private final Queue<HidEvent> hidEventQueue;
@@ -42,6 +44,8 @@ public class GlfwHidEventQueue implements HidEventQueue {
     }
 
     public void subscribe(Window window) {
+        log.info("Subscribing keyboard handlers to window {}", window.getPointer());
+
         GLFW.glfwSetCursorPosCallback(window.getPointer(), (windowPointer, x, y) -> {
             CursorPositionEvent event = new CursorPositionEvent(x, y, x - window.getWidth() / 2.0, window.getHeight() / 2.0);
             appendEvent(event);

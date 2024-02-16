@@ -56,7 +56,7 @@ public class WorldStateUpdateSystem implements System {
             PositionComponent positionComponent = mainCharacterEntity.getComponent(PositionComponent.class);
 
             if (positionComponent != null) {
-                positionComponent.setPosition(position);
+//                positionComponent.setPosition(position); TODO now is always 0
             } else {
                 positionComponent = new PositionComponent(position);
                 mainCharacterEntity.bindComponent(positionComponent);

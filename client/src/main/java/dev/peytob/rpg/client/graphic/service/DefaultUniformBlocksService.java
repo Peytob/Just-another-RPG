@@ -27,10 +27,9 @@ public class DefaultUniformBlocksService {
      * };
      */
     public void updateCameraUniformBlock(Camera camera) {
-        getUniformBlock(DefaultUniformBlocks.CAMERA).ifPresent(uniformBlock -> {
-            updateCameraProjectionMatrix(uniformBlock, camera);
-        });
-
+        getUniformBlock(DefaultUniformBlocks.CAMERA).ifPresent(uniformBlock ->
+            updateCameraProjectionMatrix(uniformBlock, camera)
+        );
     }
 
     private void updateCameraProjectionMatrix(UniformBlock cameraUniformBlock, Camera camera) {

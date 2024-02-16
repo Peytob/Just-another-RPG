@@ -39,4 +39,8 @@ public class Camera {
     public Rect getRect() {
         return cameraRect;
     }
+
+    public void setPosition(Vec2 position) {
+        cameraRect = rect(position, cameraRect.size());
+    }
 }
