@@ -5,7 +5,7 @@ layout (location = 1) in vec2 a_texturePosition;
 layout (location = 2) in int a_textureIndex;
 
 layout (std140) uniform Camera {
-    mat4 projection;
+    mat4 u_projection;
 };
 
 out VS_OUT {
@@ -14,7 +14,7 @@ out VS_OUT {
 } vs_out;
 
 void main() {
-    gl_Position = projection * vec4(a_position, 0.0, 1.0);
+    gl_Position = u_projection * vec4(a_position, 0.0, 1.0);
     vs_out.texturePosition = a_texturePosition;
     vs_out.textureIndex = a_textureIndex;
 }

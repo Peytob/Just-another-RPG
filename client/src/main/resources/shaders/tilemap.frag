@@ -8,7 +8,13 @@ in VS_OUT {
     flat int textureIndex;
 } vs_out;
 
+uniform sampler2D u_texture;
+
+vec4 getTexel(in vec2 texturePosition, int textureIntex) {
+    return texture(u_texture, texturePosition);
+}
+
 void main() {
 //    fo_fragmentColor = texture(textureAtlas, vs_in.texturePosition);
-    fo_fragmentColor = vec4(vs_out.texturePosition, 0.2f, 1.0f);
+    fo_fragmentColor = getTexel(vs_out.texturePosition, vs_out.textureIndex);
 }

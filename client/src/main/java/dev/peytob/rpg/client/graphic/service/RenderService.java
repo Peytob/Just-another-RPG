@@ -1,9 +1,11 @@
 package dev.peytob.rpg.client.graphic.service;
 
+import dev.peytob.rpg.client.graphic.model.TexturedMesh;
 import dev.peytob.rpg.client.graphic.model.opengl.RenderMode;
 import dev.peytob.rpg.client.graphic.model.render.RenderingContext;
 import dev.peytob.rpg.client.graphic.model.render.RenderingQueue;
 import dev.peytob.rpg.client.graphic.resource.Mesh;
+import dev.peytob.rpg.client.graphic.resource.Texture;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +31,20 @@ public class RenderService {
 
         String meshNamePrefix = requireNonNullElse(renderingContext.getRenderingMeshName(), "temp_render");
 
-        Mesh mesh = meshFactory.buildSpritesMesh(meshNamePrefix, renderingQueue);
+        TexturedMesh texturedMesh = meshFactory.buildSpritesMesh(meshNamePrefix, renderingQueue);
 
-        renderMesh(mesh, renderingContext.getRenderMode());
+        setUpTextures(texturedMesh);
+        renderMesh(texturedMesh.getMesh(), renderingContext.getRenderMode());
 
-        meshService.removeMesh(mesh);
+        meshService.removeMesh(texturedMesh.getMesh());
+    }
+
+    private void setUpTextures(TexturedMesh texturedMesh) {
+        for (Texture texture : texturedMesh.getUsedTextures()) {
+            int textureIndex = texturedMesh.getTextureIndex(texture);
+            glActiveTexture(GL_TEXTURE0 + textureIndex);
+            glBindTexture(GL_TEXTURE_2D, texture.vendorId());
+        }
     }
 
     private void renderMesh(Mesh mesh, RenderMode renderMode) {
